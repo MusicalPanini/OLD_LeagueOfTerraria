@@ -1,0 +1,45 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace TerraLeague.Items.BasicItems
+{
+    public class BrawlersGlove : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Brawlers Glove");
+            Tooltip.SetDefault("3% increased critical strike chance");
+        }
+
+        public override void SetDefaults()
+        {
+            item.width = 34;
+            item.height = 32;
+            item.value = 10000;
+            item.rare = 2;
+            item.accessory = true;
+            item.material = true;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.magicCrit += 3;
+            player.meleeCrit += 3;
+            player.rangedCrit += 3;
+            player.thrownCrit += 3;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.Silk, 5);
+            recipe.AddIngredient(ItemID.Leather, 6);
+            recipe.AddTile(TileID.Loom);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+    }
+}

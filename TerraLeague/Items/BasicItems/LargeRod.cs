@@ -1,0 +1,45 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+
+namespace TerraLeague.Items.BasicItems
+{
+    public class LargeRod : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Needlessly Large Rod");
+            Tooltip.SetDefault("5% increased magic and minion damage");
+        }
+
+        public override void SetDefaults()
+        {
+            item.width = 32;
+            item.height = 32;
+            item.value = 15000;
+            item.rare = 2;
+            item.accessory = true;
+            item.material = true;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.magicDamage += 0.05f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.Wood, 10);
+            recipe.AddIngredient(ItemID.Bone, 5);
+            recipe.AddIngredient(ItemType<ManaBar>(), 2);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+    }
+}

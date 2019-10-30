@@ -1,0 +1,50 @@
+﻿using TerraLeague.Items.BasicItems;
+using TerraLeague.Items.CustomItems;
+using TerraLeague.Items.CustomItems.Passives;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+
+namespace TerraLeague.Items.AdvItems
+{
+    public class Bramble : LeagueItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Bramble Vest");
+            Tooltip.SetDefault("Increases armor by 3");
+        }
+
+        public override void SetDefaults()
+        {
+            item.width = 32;
+            item.height = 32;
+            item.value = 55000;
+            item.rare = 3;
+            item.accessory = true;
+            item.material = true;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemType<ClothArmor>(), 2);
+            recipe.AddIngredient(ItemType<DarksteelBar>(), 6);
+            recipe.AddIngredient(ItemID.Spike, 10);
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+
+        public override Passive GetPrimaryPassive()
+        {
+            return new Thorns();
+        }
+    }
+}

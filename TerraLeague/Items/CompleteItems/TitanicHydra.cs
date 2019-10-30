@@ -1,0 +1,70 @@
+﻿using TerraLeague.Items.AdvItems;
+using TerraLeague.Items.BasicItems;
+using TerraLeague.Items.CustomItems;
+using TerraLeague.Items.CustomItems.Passives;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+
+namespace TerraLeague.Items.CompleteItems
+{
+    public class TitanicHydra : LeagueItem
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Titanic Hydra");
+            Tooltip.SetDefault("10% increased melee damage" +
+                "\nIncreases maximum life by 20" +
+                "\nIncreases life regeneration by 30%" +
+                "\nCan only have one Hydra item equiped at a time");
+        }
+
+        public override bool CanEquipAccessory(Player player, int slot)
+        {
+            if (TerraLeague.FindAccessorySlotOnPlayer(player, GetInstance<RavenousHydra>()) == slot - 3)
+                return true;
+            if (TerraLeague.FindAccessorySlotOnPlayer(player, GetInstance<RavenousHydra>()) != -1)
+                return false;
+
+            return base.CanEquipAccessory(player, slot);
+        }
+
+        public override void SetDefaults()
+        {
+            item.width = 32;
+            item.height = 32;
+            item.value = 180000;
+            item.rare = 6;
+            item.accessory = true;
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+            player.meleeDamage += 0.1f;
+            player.lifeRegen += 2;
+            player.statLifeMax2 += 20;
+
+            base.UpdateAccessory(player, hideVisual);
+        }
+
+        public override void AddRecipes()
+        {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemType<Tiamat>(), 1);
+            recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
+            recipe.AddIngredient(ItemType<Jaurim>(), 1);
+            recipe.AddIngredient(ItemType<DarksteelBar>(), 10);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
+            recipe.AddIngredient(ItemID.Gungnir, 1);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+
+        public override Passive GetPrimaryPassive()
+        {
+            return new Cleave(30);
+        }
+    }
+}

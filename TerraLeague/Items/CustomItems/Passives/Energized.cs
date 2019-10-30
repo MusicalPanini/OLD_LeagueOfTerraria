@@ -1,0 +1,225 @@
+﻿using Microsoft.Xna.Framework;
+using TerraLeague.Items.AdvItems;
+using TerraLeague.Items.CompleteItems;
+using TerraLeague.Projectiles;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+
+namespace TerraLeague.Items.CustomItems.Passives
+{
+    public class Energized : Passive
+    {
+        int baseDamage = 35;
+        int rangedScaling;
+        bool superCharge = false;
+
+        public Energized(int BaseDamage, int RangedScaling, bool SuperCharge = false)
+        {
+            baseDamage = BaseDamage;
+            rangedScaling = RangedScaling;
+            superCharge = SuperCharge;
+        }
+
+        public override string Tooltip(Player player, ModItem modItem)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            string charge = superCharge ? "\n[c/007399:Ranged attacks will generate charge and moving will generate even more charge]" : "\n[c/007399:Moving and ranged attacks will generate charge]";
+            return "[c/0099cc:Passive: ENERGIZED -] [c/99e6ff:Your next melee or ranged attack will deal] " + baseDamage + " + [c/" + TerraLeague.RNGColor + ":" + (int)(modPlayer.RNG * rangedScaling / 100d) + "]" + charge;
+        }
+
+        public override void UpdateAccessory(Player player, ModItem modItem)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            int num;
+
+
+            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<StaticShiv>()));
+            if (num != -1)
+                if (modPlayer.accessoryStat[num] >= 100)
+                    modPlayer.EnergizedDischarge = true;
+
+            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<RapidFire>()));
+            if (num != -1)
+                if (modPlayer.accessoryStat[num] >= 100)
+                    modPlayer.EnergizedDetonate = true;
+
+            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<Stormrazer>()));
+            if (num != -1)
+                if (modPlayer.accessoryStat[num] >= 100)
+                    modPlayer.EnergizedStorm = true;
+
+            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<KircheisShard>()));
+            if (num != -1)
+                if (modPlayer.accessoryStat[num] >= 100)
+                    modPlayer.EnergizedShard = true;
+
+            base.UpdateAccessory(player, modItem);
+        }
+
+        public override void PostPlayerUpdate(Player player, ModItem modItem)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            double stat;
+            double chargeRate = superCharge ? 0.1 : 0.05;
+            if (player.velocity.X < 0)
+                stat = -player.velocity.X * chargeRate;
+            else
+                stat = player.velocity.X * chargeRate;
+
+            AddStat(player, modItem, 100, stat);
+
+            if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 100)
+            {
+                if (Main.rand.Next(0, 6) == 0)
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0, new Color(255, 255, 0, 150));
+                    dust.noGravity = true;
+                }
+                player.AddBuff(BuffType<Buffs.EnergizedStrike>(), 2);
+            }
+
+            base.PostPlayerUpdate(player, modItem);
+        }
+
+        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (modPlayer.energized)
+            {
+                int bonusDamage = baseDamage + (int)(modPlayer.RNG * rangedScaling / 100d);
+
+                int projID = -1;
+
+                if (modPlayer.EnergizedDischarge)
+                {
+                    projID = ProjectileType<StaticShivBolt>();
+                }
+                else if (modPlayer.EnergizedStorm)
+                {
+                    damage += bonusDamage;
+                    Efx(player, target);
+                    if (Main.netMode == 1)
+                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    target.AddBuff(BuffType<Buffs.Slowed>(), 180);
+                }
+
+                if (projID != -1)
+                {
+                    if (projID == ProjectileType<StaticShivBolt>())
+                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, -1, modPlayer.EnergizedStorm ? 1 : 0);
+                    else if (projID == ProjectileType<RapidfireExplosion>())
+                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
+                }
+                else if (modPlayer.EnergizedStorm)
+                {
+                    damage += bonusDamage;
+
+                    Efx(player, target);
+                    if (Main.netMode == 1)
+                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                }
+
+                modPlayer.FindAndSetPassiveStat(this, 0);
+            }
+
+            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
+        }
+
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (proj.ranged)
+            {
+                AddStat(player, modItem, 100, 2);
+            }
+
+            if (modPlayer.energized && (proj.melee || proj.ranged))
+            {
+                int bonusDamage = baseDamage + (int)(modPlayer.RNG * rangedScaling / 100d);
+
+                int projID = -1;
+
+                if (modPlayer.EnergizedDischarge)
+                {
+                    projID = ProjectileType<StaticShivBolt>();
+                }
+                else if (modPlayer.EnergizedDetonate)
+                {
+                    projID = ProjectileType<RapidfireExplosion>();
+                }
+                else if (modPlayer.EnergizedStorm)
+                {
+                    damage += bonusDamage;
+                    Efx(player, target);
+                    if (Main.netMode == 1)
+                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    target.AddBuff(BuffType<Buffs.Slowed>(), 180);
+                }
+
+                if (projID != -1)
+                {
+                    if (projID == ProjectileType<StaticShivBolt>())
+                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, -1, modPlayer.EnergizedStorm ? 1 : 0);
+                    else if (projID == ProjectileType<RapidfireExplosion>())
+                        Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
+                }
+                else if (modPlayer.EnergizedStorm)
+                {
+                    Efx(player, target);
+                    if (Main.netMode == 1)
+                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    damage += bonusDamage;
+                }
+
+                modPlayer.FindAndSetPassiveStat(this, 0);
+            }
+
+            // Energized Stuff
+            if (proj.type == ProjectileType<StaticShivBolt>())
+            {
+                int bonusDamage = baseDamage + (int)(modPlayer.RNG * rangedScaling / 100d);
+
+                if (modPlayer.EnergizedDetonate)
+                {
+                    Projectile.NewProjectile(target.Center, Vector2.Zero, ProjectileType<RapidfireExplosion>(), bonusDamage, 0, Main.player[proj.owner].whoAmI, modPlayer.EnergizedStorm ? 0 : 1);
+                }
+                if (modPlayer.EnergizedStorm)
+                {
+                    Efx(player, target);
+                    if (Main.netMode == 1)
+                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    target.AddBuff(BuffType<Buffs.Slowed>(), 180);
+                }
+            }
+            if (proj.type == ProjectileType<RapidfireExplosion>())
+            {
+                if (modPlayer.EnergizedStorm)
+                {
+                    Efx(player, target);
+                    if (Main.netMode == 1)
+                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    target.AddBuff(BuffType<Buffs.Slowed>(), 180);
+                }
+            }
+
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+        }
+
+        override public void Efx(Player player, NPC HitNPC)
+        {
+            Main.PlaySound(new LegacySoundStyle(3, 53), HitNPC.position);
+            for (int i = 0; i < 10; i++)
+            {
+                Dust dust = Dust.NewDustDirect(HitNPC.position, HitNPC.width, HitNPC.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 1.5f);
+                dust.velocity *= 3;
+                dust.noGravity = true;
+            }
+        }
+    }
+}

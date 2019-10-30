@@ -1,0 +1,94 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace TerraLeague.Projectiles
+{
+    public class TideCallerShot : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Water Pellet");
+        }
+
+        public override void SetDefaults()
+        {
+            projectile.width = 8;
+            projectile.height = 8;
+            projectile.alpha = 255;
+            projectile.timeLeft = 90;
+            projectile.penetrate = 1;
+            projectile.friendly = true;
+            projectile.hostile = false;
+            projectile.magic = true;
+            projectile.tileCollide = true;
+            projectile.ignoreWater = true;
+            projectile.aiStyle = 0;
+        }
+
+        public override void AI()
+        {
+            if (projectile.velocity.X < 0)
+            {
+                projectile.spriteDirection = -1;
+            }
+            //projectile.rotation += (float)projectile.direction * 0.5f; //Spins in a good speed
+            Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
+
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
+                int dustBoxWidth = projectile.width - 12;
+                int dustBoxHeight = projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 137, 0f, 0f, 100, default(Color), 1.5f);
+                dust.noGravity = true;
+                dust.velocity *= 0.1f;
+                dust.velocity += projectile.velocity * 0.1f;
+                dust.position.X -= projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
+            }
+            if (Main.rand.Next(5) == 0)
+            {
+                Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
+                int dustBoxWidth = projectile.width - 12;
+                int dustBoxHeight = projectile.height - 12;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 172, 0f, 0f, 100, default(Color), 0.5f);
+                dust.velocity *= 0.25f;
+                dust.velocity += projectile.velocity * 0.5f;
+            }
+            if (projectile.timeLeft < 30)
+            {
+                projectile.alpha += 9;
+            }
+        }
+
+        public virtual void PlaySound()
+        {
+            Main.PlaySound(SoundID.Item20, projectile.position);
+        }
+
+        public virtual string GetName()
+        {
+            return "Water Pellet";
+        }
+
+        public override void Kill(int timeLeft)
+        {
+            for (int i = 0; i < 17; i++)
+            {
+                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
+
+            }
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            // For going through platforms and such, javelins use a tad smaller size
+            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            return true;
+        }
+    }
+}
