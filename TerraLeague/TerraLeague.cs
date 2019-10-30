@@ -612,7 +612,7 @@ namespace TerraLeague
             {
                 if (!includeCritters && Main.npc[i].lifeMax != 5 && !Main.npc[i].friendly || !includeTownNPCS && !Main.npc[i].townNPC)
                 {
-                    if (Main.npc[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - 15, (int)Main.MouseWorld.Y - 15, 30, 30)) && !Main.npc[i].immortal && Main.npc[i].active)
+                    if (Main.npc[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - mouseLength/2, (int)Main.MouseWorld.Y - mouseLength/2, mouseLength, mouseLength)) && !Main.npc[i].immortal && Main.npc[i].active)
                     {
                         return i;
                     }
@@ -634,7 +634,7 @@ namespace TerraLeague
             {
                 if (Main.player[i].active)
                 {
-                    if (Main.player[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - 15, (int)Main.MouseWorld.Y - 15, 30, 30)))
+                    if (Main.player[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - mouseLength/2, (int)Main.MouseWorld.Y - mouseLength/2, mouseLength, mouseLength)))
                     {
                         return i;
                     }

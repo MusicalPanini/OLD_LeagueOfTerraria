@@ -1,3 +1,0 @@
-displayName = Sburb
-author = Tri-Gender Panini
-version = 0.1
