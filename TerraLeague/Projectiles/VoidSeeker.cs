@@ -39,7 +39,6 @@ namespace TerraLeague.Projectiles
             float float2 = (float)(System.Math.Sin(rad + System.Math.PI) * 12);
             int offsetX = 22;
             int offsetY = 14;
-            //Color color = projectile.ranged ? new Color(250, 114, 247) : new Color(59, 0, 255);
 
             if (projectile.ranged)
             {

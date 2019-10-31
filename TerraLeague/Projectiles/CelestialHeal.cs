@@ -26,15 +26,11 @@ namespace TerraLeague.Projectiles
             projectile.hostile = false;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            //aiType = ProjectileID.Bullet;
-            //projectile.aiStyle = 29;
 
         }
 
         public override void AI()
         {
-
-            //Lighting.AddLight(projectile.position, 0f, 1f, 0f);
             for (int i = 0; i < 2; i++)
             {
                 int num345 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 74, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
@@ -58,10 +54,6 @@ namespace TerraLeague.Projectiles
         {
             Main.PlaySound(SoundID.Item10, projectile.position);
             return true;
-        }
-
-        public override void Kill(int timeLeft)
-        {
         }
     }
 }

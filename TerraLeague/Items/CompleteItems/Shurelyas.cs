@@ -43,7 +43,6 @@ namespace TerraLeague.Items.CompleteItems
             player.magicDamage += 0.07f;
             player.moveSpeed += 0.05f;
             player.statLifeMax2 += 20;
-            //player.manaRegen = (int)(player.manaRegen * 1.6);
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
         }
@@ -54,7 +53,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<Kindlegem>(), 1);
             recipe.AddIngredient(ItemType<AetherWisp>(), 1);
             recipe.AddIngredient(ItemType<FaerieCharm>(), 1);
-            recipe.AddIngredient(3783, 1); //Forbidden Fragment
+            recipe.AddIngredient(3783, 1); // Forbidden Fragment
             recipe.AddIngredient(ItemType<Sunstone>(), 10);
             recipe.AddIngredient(ItemID.SoulofLight, 5);
             recipe.AddTile(TileID.Anvils);

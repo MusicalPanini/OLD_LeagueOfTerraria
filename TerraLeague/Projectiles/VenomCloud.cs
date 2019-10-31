@@ -103,18 +103,6 @@ namespace TerraLeague.Projectiles
 
             target.AddBuff(BuffType<DeadlyVenom>(), 300);
 
-            //target.AddBuff(BuffType("DeadlyVenom"), 300);
-            //if (target.HasBuff(BuffType("DeadlyVenomStacks")))
-            //{
-            //    int time = target.buffTime[target.FindBuffIndex(BuffType("DeadlyVenomStacks"))];
-
-            //    target.AddBuff(BuffType("DeadlyVenomStacks"), time + 200);
-
-            //}
-            //else
-            //{
-            //    target.AddBuff(BuffType("DeadlyVenomStacks"), 100);
-            //}
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -132,9 +120,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.velocity = Vector2.Zero;
             projectile.tileCollide = false;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 150;
@@ -144,7 +130,7 @@ namespace TerraLeague.Projectiles
             projectile.timeLeft = 3;
         }
 
-        public void AnimateProjectile() // Call this every frame, for example in the AI method.
+        public void AnimateProjectile() 
         {
             projectile.friendly = false;
             projectile.frameCounter++;

@@ -77,11 +77,8 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            //Projectile.NewProjectile(projectile.Center, new Vector2(0, 0), ProjectileType("ExplosionCollision"), (int)(projectile.damage), 10, Main.player[projectile.owner].whoAmI);
-            // Play explosion sound
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.position);
 
-            // Fire Dust spawn
             for (int i = 0; i < 20; i++)
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 87, 0, -4, 200, default(Color), 3f);
@@ -92,7 +89,6 @@ namespace TerraLeague.Projectiles
                 dust.noGravity = true;
                 dust.velocity *= 2f;
             }
-            // reset size to normal width and height.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 10;
@@ -111,7 +107,6 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
             width = 10;
             height = 10;
             return true;
@@ -122,9 +117,7 @@ namespace TerraLeague.Projectiles
             projectile.velocity = Vector2.Zero;
             projectile.tileCollide = false;
             projectile.knockBack = 8;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 115;

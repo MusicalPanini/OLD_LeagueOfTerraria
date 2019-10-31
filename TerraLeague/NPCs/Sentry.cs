@@ -39,7 +39,7 @@ namespace TerraLeague.NPCs
             npc.noTileCollide = false;
             npc.width = 36;
             npc.height = 40;
-            npc.aiStyle = -1; // This npc has a completely unique AI, so we set this to -1.
+            npc.aiStyle = -1;
 
 
             if (NPC.downedPlantBoss)
@@ -69,7 +69,6 @@ namespace TerraLeague.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            // we would like this npc to spawn in the overworld.
             if (spawnInfo.player.position.ToTileCoordinates16().X < Main.mapMaxX / 3 || spawnInfo.player.position.ToTileCoordinates16().X > (Main.mapMaxX * 2) / 3)
                 return SpawnCondition.OverworldDaySlime.Chance * 0.03f;
             else

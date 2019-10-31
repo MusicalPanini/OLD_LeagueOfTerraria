@@ -198,27 +198,6 @@ namespace TerraLeague.Items.Weapons
                             SetCooldowns(player, type);
                         }
                     }
-
-
-
-                    //bool pathBlocked = false;
-                    //for (int x = (int)((newX) / 16) - 1; x < (int)((newX) / 16) + 1; x++)
-                    //{
-                    //    for (int y = (int)((newY) / 16) - 1; y <= (int)((newY) / 16) + 1; y++)
-                    //    {
-                    //        if (Main.tile[x, y].collisionType > 0 || Main.tile[x, y].wall == WallID.LihzahrdBrickUnsafe && !NPC.downedPlantBoss)
-                    //        {
-                    //            pathBlocked = true;
-                    //            break;
-                    //        }
-                    //    }
-                    //}
-                    //if (!pathBlocked)
-                    //{
-                    //    player.Teleport(new Vector2((int)((xDis + player.position.X) - 16), (int)(yDis + player.position.Y)), 1, 0);
-                    //    NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, (int)(xDis + player.position.X), (int)(yDis + player.position.Y), 1, 0, 0);
-                        
-                    //}
                 }
             }
             else

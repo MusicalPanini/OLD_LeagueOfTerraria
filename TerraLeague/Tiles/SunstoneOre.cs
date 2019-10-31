@@ -13,19 +13,19 @@ namespace TerraLeague.Tiles
         {
             soundType = 21;
 
-            Main.tileSolid[Type] = true; // Is the tile solid
+            Main.tileSolid[Type] = true;
             Main.tileMerge[TileID.Sandstone][Type] = true;
             Main.tileMerge[TileID.HardenedSand][Type] = true;
 
-            Main.tileLighted[Type] = true; // ???
-            Main.tileBlockLight[Type] = true; // Emits Light
+            Main.tileLighted[Type] = true; 
+            Main.tileBlockLight[Type] = true; 
             
             dustType = 65;
-            drop = ItemType<Sunstone>(); // What item drops after destorying the tile
+            drop = ItemType<Sunstone>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Sunstone");
-            AddMapEntry(new Color(251, 127, 0), name); // Colour of Tile on Map
-            minPick = 45; // Silver Pick
+            AddMapEntry(new Color(251, 127, 0), name);
+            minPick = 45;
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

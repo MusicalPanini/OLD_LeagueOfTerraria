@@ -42,15 +42,12 @@ namespace TerraLeague.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            //if (WorldGen.genRand.Next(20) == 0)
-            //{
-                bool isPlayerNear = WorldGen.PlayerLOS(i, j);
-                bool success = WorldGen.GrowTree(i, j);
+            bool isPlayerNear = WorldGen.PlayerLOS(i, j);
+            bool success = WorldGen.GrowTree(i, j);
             if (success && isPlayerNear)
             {
                 WorldGen.TreeGrowFXCheck(i, j);
             }
-            //}
         }
 
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects effects)

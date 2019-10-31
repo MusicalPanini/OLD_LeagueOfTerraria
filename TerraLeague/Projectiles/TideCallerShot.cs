@@ -35,7 +35,6 @@ namespace TerraLeague.Projectiles
             {
                 projectile.spriteDirection = -1;
             }
-            //projectile.rotation += (float)projectile.direction * 0.5f; //Spins in a good speed
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
 
             for (int i = 0; i < 3; i++)
@@ -86,8 +85,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 10; 
             return true;
         }
     }

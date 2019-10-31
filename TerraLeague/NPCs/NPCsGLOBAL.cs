@@ -70,12 +70,6 @@ namespace TerraLeague.NPCs
             base.SetDefaults(npc);
         }
 
-        //public void CheckStatsForChanges()
-        //{
-        //    if (CausticStacks != CausticStacksOld)
-
-        //}
-
         public override void ResetEffects(NPC npc)
         {
             if (bubbled)
@@ -134,14 +128,6 @@ namespace TerraLeague.NPCs
             npc.defense = npc.defDefense;
             npc.damage = npc.defDamage;
 
-            if (frozen)
-            {
-                //npc.velocity = Microsoft.Xna.Framework.Vector2.Zero;
-                //npc.position.X = npc.oldPosition.X;
-                //npc.position.Y = npc.oldPosition.Y;
-                //npc.direction = npc.oldDirection;
-                //npc.rotation = npc.oldRot[0];
-            }
             if (bubbled)
             {
                 npc.velocity.Y = 0;
@@ -428,11 +414,6 @@ namespace TerraLeague.NPCs
             {
                 drawColor = new Color(199, 160, 14);
             }
-            //if (frozen)
-            //{
-            //    drawColor = new Color(0, 0, 255);
-                
-            //}
             if (deadlyVenom)
             {
                 drawColor = new Color(0, 160, 0);
@@ -598,8 +579,6 @@ namespace TerraLeague.NPCs
             }
             if (OrgDest)
             {
-                //npc.defense -= 5;
-
                 if (Main.rand.Next(0, 3) == 0)
                 {
                     int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 255, new Color(59, 0, 255));
@@ -723,12 +702,9 @@ namespace TerraLeague.NPCs
             }
             if (illuminated)
             {
-                //if (Main.rand.Next(0, 8) == 0)
-                {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 228, 0f, 0f, 0, default(Color), 1);
-                    dust.noGravity = true;
-                    dust.velocity *= 1.3f;
-                }
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 228, 0f, 0f, 0, default(Color), 1);
+                dust.noGravity = true;
+                dust.velocity *= 1.3f;
             }
 
 
@@ -796,7 +772,6 @@ namespace TerraLeague.NPCs
                             npc.position.Y - Main.screenPosition.Y + npc.height * 1.25f
                         ),
                         new Rectangle(0, 0, texture.Width, texture.Height),
-                        //Color.White,
                         new Color(255, 0, 255, 255),
                         0,
                         texture.Size() * 0.5f,
@@ -870,7 +845,6 @@ namespace TerraLeague.NPCs
                         0,
                         texture.Size() * 0.5f,
                         0.4f,
-                        //(npc.width / 128f) + 0.5f,
                         SpriteEffects.None,
                         0f
                     );
@@ -896,7 +870,6 @@ namespace TerraLeague.NPCs
                         0,
                         texture.Size() * 0.5f,
                         0.4f,
-                        //(npc.width / 128f) + 0.5f,
                         SpriteEffects.None,
                         0f
                     );

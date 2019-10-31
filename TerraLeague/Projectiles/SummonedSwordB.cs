@@ -59,15 +59,10 @@ namespace TerraLeague.Projectiles
                 if (projectile.timeLeft < 1170)
                     projectile.localAI[0] += (1200 - projectile.timeLeft) / 25f;
 
-                //int offset = 175;
                 Vector2 offset = new Vector2(200 + projectile.localAI[0], 0);
-
-                //float xPos = (float)((175 * Math.Sin(angle))-(offset*Math.Sin((175/25d) * angle)));
-                //float yPos = (float)((175 * Math.Cos(angle))-(offset*Math.Cos((175/25d) * angle)));
 
                 projectile.ai[0] -= .06f;
                 projectile.Center = lastCenter + offset.RotatedBy(projectile.ai[0]);
-                //projectile.Center = targetNPC.Center + new Vector2(xPos, yPos);
 
                 if (projectile.localAI[0] > 700)
                 {
@@ -84,15 +79,6 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 1f, 0.5f, 0.05f);
         }
 
-        private void AdjustMagnitude(ref Vector2 vector)
-        {
-            float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-            if (magnitude > 6f)
-            {
-                vector *= 6f / magnitude;
-            }
-        }
-
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             crit = false;
@@ -102,16 +88,10 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 80, 0f, 0f, 100, default(Color), 0.7f);
-
-            //}
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            //Redraw the projectile with the color not influenced by light
             Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
             for (int k = 0; k < projectile.oldPos.Length; k++)
             {

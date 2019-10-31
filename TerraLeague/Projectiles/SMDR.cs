@@ -115,74 +115,6 @@ namespace TerraLeague.Projectiles
                 gore.velocity.X -= 1.5f;
                 gore.velocity.Y += 1.5f;
             }
-
-            //// Play explosion sound
-            //// Smoke Dust spawn
-            //for (int i = 0; i < 50; i++)
-            //{
-            //    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
-            //    Main.dust[dustIndex].velocity *= 1.4f;
-            //}
-            //// Fire Dust spawn
-            //for (int i = 0; i < 120; i++)
-            //{
-            //    int dustIndex = Dust.NewDust(projectile.Center, 1, 1, 6, 0f, 0f, 100, default(Color), 3f);
-            //    Main.dust[dustIndex].noGravity = true;
-            //    Main.dust[dustIndex].velocity *= 30f;
-            //    Main.dust[dustIndex].velocity.X *= 1.5f;
-
-            //    dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
-            //    Main.dust[dustIndex].velocity *= 3f;
-            //}
-            //// Large Smoke Gore spawn
-            //for (int g = 0; g < 4; g++)
-            //{
-            //    int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 3f);
-            //    Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.2f*g;
-            //    Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.2f * g;
-            //    goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 3f);
-            //    Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.2f * g;
-            //    Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.2f * g;
-            //    goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 3f);
-            //    Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.2f * g;
-            //    Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.2f * g;
-            //    goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 3f);
-            //    Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.2f * g;
-            //    Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.2f * g;
-            //}
-            //// reset size to normal width and height.
-            //projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            //projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            //projectile.width = 10;
-            //projectile.height = 10;
-            //projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            //projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-
-            //// TODO, tmodloader helper method
-            //{
-            //    int explosionRadius = 10;
-            //    int minTileX = (int)(projectile.position.X / 16f - (float)explosionRadius);
-            //    int maxTileX = (int)(projectile.position.X / 16f + (float)explosionRadius);
-            //    int minTileY = (int)(projectile.position.Y / 16f - (float)explosionRadius);
-            //    int maxTileY = (int)(projectile.position.Y / 16f + (float)explosionRadius);
-            //    if (minTileX < 0)
-            //    {
-            //        minTileX = 0;
-            //    }
-            //    if (maxTileX > Main.maxTilesX)
-            //    {
-            //        maxTileX = Main.maxTilesX;
-            //    }
-            //    if (minTileY < 0)
-            //    {
-            //        minTileY = 0;
-            //    }
-            //    if (maxTileY > Main.maxTilesY)
-            //    {
-            //        maxTileY = Main.maxTilesY;
-            //    }
-
-            //}
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
@@ -210,9 +142,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.tileCollide = false;
             projectile.velocity = Vector2.Zero;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 350;

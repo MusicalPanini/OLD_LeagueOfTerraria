@@ -104,13 +104,13 @@ namespace TerraLeague.Projectiles
             }
         }
 
-        public void AnimateProjectile() // Call this every frame, for example in the AI method.
+        public void AnimateProjectile() 
         {
             projectile.frameCounter++;
-            if (projectile.frameCounter >= 3) // This will change the sprite every 8 frames (0.13 seconds). Feel free to experiment.
+            if (projectile.frameCounter >= 3)
             {
                 projectile.frame++;
-                projectile.frame %= 5; // Will reset to the first frame if you've gone through them all.
+                projectile.frame %= 5;
                 projectile.frameCounter = 0;
             }
         }

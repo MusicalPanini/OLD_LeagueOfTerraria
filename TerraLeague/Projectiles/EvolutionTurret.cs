@@ -16,9 +16,8 @@ namespace TerraLeague.Projectiles
         {
             Main.projFrames[projectile.type] = 6;
             Main.projPet[projectile.type] = true;
-            //Main.projPet[projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true; //This is necessary for right-click targeting
+            ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
 
         public override void SetDefaults()
@@ -38,7 +37,6 @@ namespace TerraLeague.Projectiles
             shootCool = 75;
             shootCountdown = 40;
             shootSound = new Terraria.Audio.LegacySoundStyle(2, 12, Terraria.Audio.SoundType.Sound).WithPitchVariance(1);
-            //projectile.aiStyle = 53;
         }
 
         public override void CheckActive()
@@ -55,7 +53,6 @@ namespace TerraLeague.Projectiles
             {
                 projectile.timeLeft = 2;
             }
-            //if (isNearPlayer)
             base.Behavior();
         }
 

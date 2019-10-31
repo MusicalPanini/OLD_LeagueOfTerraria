@@ -835,16 +835,6 @@ namespace TerraLeague
 
         public override void Initialize()
         {
-            //if (Main.LocalPlayer.whoAmI == player.whoAmI)
-            //{
-            //    if (player.name == "TestDude")
-            //        ;
-            //    for (int i = 0; i < sumSpells.Length; i++)
-            //    {
-            //        sumSpells[i] = i == 1 ? (SummonerSpell)GetInstance<BarrierRune>() : GetInstance<GhostRune>();
-            //    }
-            //}
-
             base.Initialize();
         }
 
@@ -868,17 +858,12 @@ namespace TerraLeague
                         else
                             sumSpells[i] = (SummonerSpell)GetInstance<GhostRune>();
                     }
-
-                    //if (sumSpells[i] == null)
-                    //    sumSpells[i] = i == 1 ? (SummonerSpell)GetInstance<BarrierRune>() : GetInstance<GhostRune>();
                 }
             }
         }
 
         public override TagCompound Save()
         {
-            //if (player.name == "TestDude")
-            //    ;
             if (player.whoAmI == Main.LocalPlayer.whoAmI && player.active)
             {
                 return new TagCompound
@@ -904,17 +889,9 @@ namespace TerraLeague
         {
             if (Main.LocalPlayer.whoAmI == player.whoAmI)
             {
-                //if (player.name == "TestDude")
-                //    ;
                 manaChargeStacks = tag.GetInt("manaChargeStacks");
                 initSum1 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellOne"));
                 initSum2 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellTwo"));
-
-                //for (int i = 0; i < sumSpells.Length; i++)
-                //{
-                //    if (sumSpells[i] == null)
-                //        sumSpells[i] = i == 1 ? (SummonerSpell)GetInstance<BarrierRune>() : GetInstance<GhostRune>();
-                //}
             }
         }
 
@@ -952,9 +929,6 @@ namespace TerraLeague
                 clone.NormalShield = NormalShield;
                 clone.AscensionStacks = AscensionStacks;
             }
-            // Here we would make a backup clone of values that are only correct on the local players Player instance.
-            // Some examples would be RPG stats from a GUI, Hotkey states, and Extra Item Slots
-            // clone.someLocalVariable = someLocalVariable;
         }
 
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
@@ -1159,7 +1133,6 @@ namespace TerraLeague
                 if (taggedIsNPC)
                 {
                     player.position = umbralTaggedNPC.position;
-                    //player.fullRotation = umbralTaggedNPC.rotation;
                     player.position.X = umbralTaggedNPC.position.X + (umbralTaggedNPC.width * 0.5f) - (player.width * 0.5f);
                     player.position.Y = umbralTaggedNPC.position.Y - umbralTaggedNPC.height * 0.5f;
 
@@ -1190,8 +1163,6 @@ namespace TerraLeague
                     {
                         if (!Main.npc[i].townNPC)
                             Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<RequiemProj>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
-                        //player.ApplyDamageToNPC(TaggedNPC[i], (int)(deathTomeDamage + (deathTomeDamage * (player.magicDamage - 1) * 3)), 0, 0, true);
-                        //Projectile.NewProjectile(TaggedNPC[i].Center, Vector2.Zero, ProjectileType("RequiemCollision"), (int)(20 * player.magicDamage * 5), 0, player.whoAmI);
                     }
                 }
             }
@@ -1218,11 +1189,6 @@ namespace TerraLeague
         
         public override void PostUpdate()
         {
-            //for (int i = 0; i < sumSpells.Length; i++)
-            //{
-            //    sumCooldowns[i] = 0;
-            //}
-
             // Handles the modded regen
             LinearManaRegen();
 
@@ -2807,12 +2773,7 @@ namespace TerraLeague
             }
             else
             {
-                //if (player.statLife - GetRealHeathWithoutShield() == 0)
-                //{
-                //    player.statLife -= GetTotalShield();
-                //}
                 player.statLifeMax2 += GetTotalShield();
-                //player.statLife += GetTotalShield();
                 PureHealthLastStep = GetRealHeathWithoutShield();
             }
 

@@ -47,15 +47,6 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (modPlayer.summonedBlade)
                 {
-                        int totalSwords = player.maxMinions * 2;
-                    //modPlayer.meleeFlatDamage += (int)(damage * ((player.minionDamage + modPlayer.customMinionDamage)-1));
-                    //for (int i = 0; i < totalSwords; i++)
-                    //{
-                    //    float rotation = (float)(2 * Math.PI) * (i / (float)totalSwords);
-
-                    //    Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<SummonedSwordA>(), 10, 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords));
-                    //}
-
                     Efx(player, target);
                     if (Main.netMode == 1)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
@@ -115,7 +106,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     {
                         dust.color = new Color(255, 0, 255, 150);
                     }
-                    else //Sheen and Iceborne
+                    else // Sheen and Iceborne
                     {
                         dust.color = new Color(0, 150, 255, 150);
                     }
@@ -140,7 +131,6 @@ namespace TerraLeague.Items.CustomItems.Passives
                     Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + User.Center;
 
                     Dust dustR = Dust.NewDustPerfect(pos, 113, Vector2.Zero, 0, default(Color), 1);
-                    //dustR.velocity *= 0;
                     dustR.noGravity = true;
                 }
             }

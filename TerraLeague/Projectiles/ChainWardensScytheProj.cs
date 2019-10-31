@@ -17,7 +17,6 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            //projectile.aiStyle = 15;
             projectile.friendly = true;
             projectile.alpha = 0;
             projectile.width = 50;
@@ -28,17 +27,12 @@ namespace TerraLeague.Projectiles
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            // So set the correct path here to load the chain texture. 'YourModName' is of course the name of your mod.
-            // Then into the Projectiles folder and take the texture that is called 'CustomFlailBall_Chain'.
             Texture2D texture = mod.GetTexture("Projectiles/ChainWardensScytheChain");
             Vector2 position;
             if (projectile.spriteDirection == 1)
                 position = new Vector2(projectile.position.X + 8, projectile.position.Y + 7).RotatedBy(projectile.rotation, projectile.Center);
             else
                 position = new Vector2(projectile.position.X + projectile.width - 8, projectile.position.Y + 7).RotatedBy(projectile.rotation, projectile.Center);
-
-                //position.X += 4;
-            //position;
 
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
             Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
@@ -105,14 +99,11 @@ namespace TerraLeague.Projectiles
 
                 if (projectile.velocity.X < 0f)
                 {
-                    //projectile.spriteDirection = -1;
-                    projectile.rotation = projectile.velocity.ToRotation() + (float)(Math.PI * (projectile.spriteDirection == 1 ? 5 : 5) / 4f)/*1.57f*/;
+                    projectile.rotation = projectile.velocity.ToRotation() + (float)(Math.PI * (projectile.spriteDirection == 1 ? 5 : 5) / 4f);
                 }
                 else
                 {
-                    projectile.rotation = projectile.velocity.ToRotation() - (float)(Math.PI * (projectile.spriteDirection == 1 ? 1 : 7) / 4f)/*1.57f*/;
-                    //projectile.spriteDirection = 1;
-
+                    projectile.rotation = projectile.velocity.ToRotation() - (float)(Math.PI * (projectile.spriteDirection == 1 ? 1 : 7) / 4f);
                 }
             }
             else
@@ -184,12 +175,10 @@ namespace TerraLeague.Projectiles
 
                 if (projectile.velocity.X < 0f)
                 {
-                    //projectile.spriteDirection = 1;
                     projectile.rotation = projectile.AngleTo(player.Center) - (float)(Math.PI * (projectile.spriteDirection == 1 ? 5 : 7) / 4f)/*1.57f*/;
                 }
                 else
                 {
-                    //projectile.spriteDirection = -1;
                     projectile.rotation = projectile.AngleTo(player.Center) - (float)(Math.PI * (projectile.spriteDirection == 1 ? 5 : 7)/ 4f)/*1.57f*/;
                 }
             }
@@ -213,24 +202,6 @@ namespace TerraLeague.Projectiles
             width = height = 16;
 
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
-            //Texture2D texture = GetTexture(GlowTexture);
-            //spriteBatch.Draw
-            //(
-
-            //    texture,
-            //    projectile.Center-Main.screenPosition,
-            //    new Rectangle(0, 0, texture.Width, texture.Height),
-            //    Color.White,
-            //    projectile.rotation,
-            //    texture.Size() * 0.5f,
-            //    projectile.scale,
-            //    projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-            //    0f
-            //);
         }
     }
 }

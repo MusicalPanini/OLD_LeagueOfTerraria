@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 1f * lightIntencity, 0.5f * lightIntencity, 0.9f * lightIntencity);
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * lightIntencity)), new Color(255,50,255));
 
-            projectile.rotation += projectile.velocity.X * 0.05f;//(int)(Math.Tan(projectile.velocity.X / -projectile.velocity.Y) * 180 / Math.PI);
+            projectile.rotation += projectile.velocity.X * 0.05f;
 
             projectile.velocity.Y += 0.4f;
             if(projectile.velocity.X > 8)

@@ -77,12 +77,6 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            //Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 211);
-            //dust.alpha = 0;
-            //dust.noLight = false;
-            //dust.noGravity = true;
-            //dust.scale = 1.4f;
-
             base.AI();
         }
 
@@ -101,8 +95,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 10; 
             return true;
         }
     }

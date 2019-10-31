@@ -19,17 +19,17 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 32;           //The damage of your weapon
-            item.width = 46;            //Weapon's texture's width
-            item.height = 44;           //Weapon's texture's height
-            item.melee = true;          //Is your weapon a melee weapon?
-            item.useTime = 52;          //The time span of using the weapon. Remember in terraria, 60 frames is a second.
+            item.damage = 32;        
+            item.width = 46;          
+            item.height = 44;         
+            item.melee = true;        
+            item.useTime = 52;        
             item.useAnimation = 26;
-            item.useStyle = 1;          //The use style of weapon, 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns
-            item.knockBack = 6;         //The force of knockback of the weapon. Maximum is 20
-            item.value = 5400;           //The value of the weapon
-            item.rare = 3;              //The rarity of the weapon, from -1 to 13
-            item.UseSound = SoundID.Item1;      //The sound when the weapon is using
+            item.useStyle = 1;          
+            item.knockBack = 6;    
+            item.value = 5400;
+            item.rare = 3; 
+            item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = ProjectileType<VoidSpike>();
             item.shootSpeed = 18;

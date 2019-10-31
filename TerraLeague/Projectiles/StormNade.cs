@@ -37,7 +37,7 @@ namespace TerraLeague.Projectiles
 
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0,0,0, new Color(0,255, 255));
 
-            projectile.rotation += projectile.velocity.X * 0.05f;//(int)(Math.Tan(projectile.velocity.X / -projectile.velocity.Y) * 180 / Math.PI);
+            projectile.rotation += projectile.velocity.X * 0.05f;
 
             projectile.velocity.Y += 0.4f;
             if(projectile.velocity.X > 8)
@@ -71,17 +71,13 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            //Projectile.NewProjectile(projectile.Center, new Vector2(0, 0), ProjectileType("ExplosionCollision"), (int)(projectile.damage), 10, Main.player[projectile.owner].whoAmI);
-            // Play explosion sound
             Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
             Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
-            // Smoke Dust spawn
             for (int i = 0; i < 50; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
                 Main.dust[dustIndex].velocity *= 1.4f;
             }
-            // Fire Dust spawn
             for (int i = 0; i < 80; i++)
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 1f);
@@ -92,7 +88,6 @@ namespace TerraLeague.Projectiles
                 dust2.velocity *= 3f;
                 dust2.color = new Color(0, 220, 220);
             }
-            // reset size to normal width and height.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 10;
@@ -107,9 +102,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.velocity = Vector2.Zero;
             projectile.tileCollide = false;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 115;

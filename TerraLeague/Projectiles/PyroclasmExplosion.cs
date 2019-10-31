@@ -68,14 +68,12 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
-            // Smoke Dust spawn
             for (int i = 0; i < 20; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dustIndex].velocity *= 0.5f;
 
             }
-            // Fire Dust spawn
             for (int i = 0; i < 100; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
@@ -102,9 +100,7 @@ namespace TerraLeague.Projectiles
 
             projectile.tileCollide = false;
             projectile.velocity = Vector2.Zero;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = size;

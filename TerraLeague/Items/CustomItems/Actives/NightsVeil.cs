@@ -49,7 +49,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         override public void Efx(Player user)
         {
-            //TerraLeague.DustRing(261, user, new Color(255, 255, 0, 0));
             Main.PlaySound(new LegacySoundStyle(2, 29), user.Center);
         }
     }

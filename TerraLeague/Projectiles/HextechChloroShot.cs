@@ -81,7 +81,6 @@ namespace TerraLeague.Projectiles
         public void Split(int num = -1)
         {
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.position);
-            // Smoke Dust spawn
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);

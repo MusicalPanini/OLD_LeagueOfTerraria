@@ -76,8 +76,6 @@ namespace TerraLeague.Projectiles
                     AdjustMagnitude(ref move);
                     projectile.velocity = (10 * projectile.velocity + move) / 12f;
                     AdjustMagnitude(ref projectile.velocity);
-
-                    //Lighting.AddLight(projectile.Left, 0.00f, 0.80f, 0.30f);
                 }
             }
             else
@@ -97,8 +95,6 @@ namespace TerraLeague.Projectiles
                 AdjustMagnitude(ref move);
                 projectile.velocity = (10 * projectile.velocity + move) / 15f;
                 AdjustMagnitude(ref projectile.velocity);
-
-                //Lighting.AddLight(projectile.Left, 0.00f, 0.80f, 0.30f);
 
                 if (projectile.Hitbox.Intersects(player.Hitbox))
                 {
@@ -125,7 +121,6 @@ namespace TerraLeague.Projectiles
             for (int i = 0; i < 10; i++)
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 263, projectile.velocity.X, projectile.velocity.Y, 0, new Color(255, 0, 0), 2);
-                //dust.velocity.Y = -Math.Abs(dust.velocity.Y) - 3;
                 dust.noGravity = true;
             }
 

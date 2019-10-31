@@ -21,7 +21,7 @@ namespace TerraLeague.Items.PetrifiedWood
             item.height = 32;
             item.useTime = 29;
             item.useAnimation = 29;
-            item.hammer = 25;      //How much hammer power the weapon has
+            item.hammer = 25;
             item.useStyle = 1;
             item.knockBack = 5.5f;
             item.value = 100;

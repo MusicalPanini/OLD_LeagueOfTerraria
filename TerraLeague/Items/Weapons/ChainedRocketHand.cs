@@ -125,13 +125,13 @@ namespace TerraLeague.Items.Weapons
             item.rare = 4;
             item.autoReuse = true;
             item.noMelee = true;
-            item.useStyle = 5; // Set the correct useStyle.
-            item.useAnimation = 40; // Determines how long the animation lasts. 
-            item.useTime = 40; // Determines how fast you can use this weapon (a lower value results in a faster use time).
+            item.useStyle = 5;
+            item.useAnimation = 40;
+            item.useTime = 40;
             item.knockBack = 6F;
             item.damage = 30;
             item.scale = 1;
-            item.noUseGraphic = true; // Do not use the item graphic when using the item (we just want the ball to spawn).
+            item.noUseGraphic = true;
             item.UseSound = SoundID.Item10;
             item.shootSpeed = 8f;
             item.melee = true;

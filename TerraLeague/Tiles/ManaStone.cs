@@ -13,20 +13,20 @@ namespace TerraLeague.Tiles
         float bLast = 0.3f;
         public override void SetDefaults()
         {
-            Main.tileSolid[Type] = true; // Is the tile solid
-            Main.tileMergeDirt[Type] = true; // Will tile merge with dirt?
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true; 
             Main.tileMerge[Type][TileID.Mud] = true;
             Main.tileMerge[TileID.Mud][Type] = true;
 
-            Main.tileLighted[Type] = true; // ???
-            Main.tileBlockLight[Type] = true; // Emits Light
+            Main.tileLighted[Type] = true; 
+            Main.tileBlockLight[Type] = true; 
             
             dustType = 48;
-            drop = ItemType<Items.Placeable.ManaStone>(); // What item drops after destorying the tile
+            drop = ItemType<Items.Placeable.ManaStone>();
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Mana Infused Earth");
-            AddMapEntry(new Color(0, 78, 181), name); // Colour of Tile on Map
-            minPick = 65; // What power pick minimum is needed to mine this block.
+            AddMapEntry(new Color(0, 78, 181), name);
+            minPick = 65; 
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

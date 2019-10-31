@@ -17,7 +17,6 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            //projectile.aiStyle = 15;
             projectile.friendly = true;
             projectile.alpha = 255;
             projectile.width = 22;
@@ -29,8 +28,6 @@ namespace TerraLeague.Projectiles
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            // So set the correct path here to load the chain texture. 'YourModName' is of course the name of your mod.
-            // Then into the Projectiles folder and take the texture that is called 'CustomFlailBall_Chain'.
             Texture2D texture = mod.GetTexture("Projectiles/TrueIceFlailChain");
 
             Vector2 position = projectile.Bottom.RotatedBy(projectile.rotation, projectile.Center);

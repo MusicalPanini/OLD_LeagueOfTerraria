@@ -197,7 +197,7 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.useTime = 34;
             item.useAnimation = 34;
-            item.noMelee = true; //so the item's animation doesn't do damage
+            item.noMelee = true;
             item.knockBack = 3;
             item.value = 55000;
             item.rare = 5;

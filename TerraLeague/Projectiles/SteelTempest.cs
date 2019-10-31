@@ -28,7 +28,7 @@ namespace TerraLeague.Projectiles
             projectile.timeLeft = 20;
         }
 
-        public float movementFactor // Change this value to alter how fast the spear moves
+        public float movementFactor
         {
             get
             {
@@ -46,11 +46,11 @@ namespace TerraLeague.Projectiles
 
             if (!enemyHit)
             {
-                if (!player.GetModPlayer<PLAYERGLOBAL>().gathering2 && !player.GetModPlayer<PLAYERGLOBAL>().gathering3 /*&& !player.HasBuff(BuffType("Cooldown"))*/)
+                if (!player.GetModPlayer<PLAYERGLOBAL>().gathering2 && !player.GetModPlayer<PLAYERGLOBAL>().gathering3)
                 {
                     player.AddBuff(BuffType<LastBreath2>(), 360);
                 }
-                else /*if (!player.HasBuff(BuffType("Cooldown")))*/
+                else
                 {
                     player.AddBuff(BuffType<LastBreath3>(), 360);
                     player.ClearBuff(BuffType<LastBreath2>());
@@ -81,7 +81,6 @@ namespace TerraLeague.Projectiles
 
             Player player = Main.player[projectile.owner];
 
-            //Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
             player.itemTime = projectile.timeLeft;
             projectile.position.X = player.MountedCenter.X - (float)(projectile.width / 2);
             projectile.position.Y = player.MountedCenter.Y - (float)(projectile.height / 2);
@@ -89,31 +88,25 @@ namespace TerraLeague.Projectiles
 
             if (projectile.velocity.X < 0)
                 projectile.spriteDirection = -1;
-            // As long as the player isn't frozen, the spear can move
             if (!player.frozen)
             {
-                if (movementFactor == 0f) // When initially thrown out, the ai0 will be 0f
+                if (movementFactor == 0f) 
                 {
-                    movementFactor = 5f; // Make sure the spear moves forward when initially thrown out
-                    projectile.netUpdate = true; // Make sure to netUpdate this spear
+                    movementFactor = 5f; 
+                    projectile.netUpdate = true;
                 }
-                if (player.itemTime < 20 / 2) // Somewhere along the item animation, make sure the spear moves back
+                if (player.itemTime < 20 / 2) 
                 {
                     movementFactor -= 3f;
                 }
-                else // Otherwise, increase the movement factor
+                else 
                 {
                     movementFactor += 3f;
                 }
             }
-            // Change the spear position based off of the velocity and the movementFactor
             projectile.position += projectile.velocity * movementFactor;
 
-            // Apply proper rotation, with an offset of 135 degrees due to the sprite's rotation, notice the usage of MathHelper, use this class!
-            // MathHelper.ToRadians(xx degrees here)
-
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
-            
         }
     }
 }

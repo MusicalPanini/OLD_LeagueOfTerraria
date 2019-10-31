@@ -31,7 +31,6 @@ namespace TerraLeague.UI
             MainPanel.Height.Set(52, 0f);
             MainPanel.Left.Set(Main.screenWidth / 2 - MainPanel.Width.Pixels / 2, 0f);
             MainPanel.Top.Set(Main.screenHeight - (MainPanel.Height.Pixels + 95), 0f);
-            //MainPanel.BackgroundColor = new Color(10, 100, 50);
             base.Append(MainPanel);
 
             hp = new ResourceBar(ResourceBarMode.HP, 20, 480);
@@ -74,9 +73,6 @@ namespace TerraLeague.UI
             int width = (int)Math.Ceiling(dimensions.Width);
             int height = (int)Math.Ceiling(dimensions.Height);
             spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
-
-            //Left.Set(500, 0f);
-            //Top.Set(500f, 0f);
         }
     }
 
@@ -137,30 +133,29 @@ namespace TerraLeague.UI
 
         public override void OnInitialize()
         {
-            Height.Set(height, 0f); //Set Height of element
-            Width.Set(width, 0f);   //Set Width of element
+            Height.Set(height, 0f);
+            Width.Set(width, 0f);
 
-            UIBar barBackground = new UIBar(); //Create gray background
+            UIBar barBackground = new UIBar();
             barBackground.Left.Set(0f, 0f);
             barBackground.Top.Set(0f, 0f);
             barBackground.backgroundColor = Color.White;
             barBackground.Width.Set(width, 0f);
             barBackground.Height.Set(height, 0f);
 
-            currentBar = new UIInnerBar(); //Create current value panel 
+            currentBar = new UIInnerBar();
             currentBar.SetPadding(0);
             currentBar.Left.Set(8f, 0f);
             currentBar.Top.Set(2, 0f);
             currentBar.Width.Set(width, 0f);
             currentBar.Height.Set(height - 4, 0f);
 
-            //assign color to panel depending on stat
             switch (stat)
             {
                 case ResourceBarMode.HP:
-                    currentBar.backgroundColor = new Color(164, 55, 65); //red
+                    currentBar.backgroundColor = new Color(164, 55, 65); 
 
-                    shieldBar = new UIInnerBar(); //Create current value panel 
+                    shieldBar = new UIInnerBar(); 
                     shieldBar.SetPadding(0);
                     shieldBar.Left.Set(8f, 0f);
                     shieldBar.Top.Set(2f, 0f);
@@ -168,7 +163,7 @@ namespace TerraLeague.UI
                     shieldBar.Height.Set(height - 4, 0f);
                     shieldBar.backgroundColor = new Color(230, 230, 230);
 
-                    magicShieldBar = new UIInnerBar(); //Create current value panel 
+                    magicShieldBar = new UIInnerBar();
                     magicShieldBar.SetPadding(0);
                     magicShieldBar.Left.Set(8f, 0f);
                     magicShieldBar.Top.Set(2f, 0f);
@@ -176,7 +171,7 @@ namespace TerraLeague.UI
                     magicShieldBar.Height.Set(height -4, 0f);
                     magicShieldBar.backgroundColor = new Color(172, 122, 219);
 
-                    physShieldBar = new UIInnerBar(); //Create current value panel 
+                    physShieldBar = new UIInnerBar();
                     physShieldBar.SetPadding(0);
                     physShieldBar.Left.Set(8f, 0f);
                     physShieldBar.Top.Set(2f, 0f);
@@ -190,13 +185,13 @@ namespace TerraLeague.UI
                     break;
 
                 case ResourceBarMode.MANA:
-                    currentBar.backgroundColor = new Color(46, 67, 114); //blue
+                    currentBar.backgroundColor = new Color(46, 67, 114); 
                     break;
                 default:
                     break;
             }
 
-            text = new UIText("0|0"); //text to show current hp or mana
+            text = new UIText("0|0"); 
             text.Width.Set(width, 0f);
             text.Height.Set(height, 0f);
             text.Top.Set((height / 2 - text.MinHeight.Pixels / 2), 0f);
@@ -227,8 +222,6 @@ namespace TerraLeague.UI
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             regen.Top.Set((Height.Pixels / 2 - text.MinHeight.Pixels / 2 + 3), 0f);
             regen.Left.Set(Width.Pixels / 2 - 26, 0);
-            float quotient = 1f;
-            //Calculate quotient
             switch (stat)
             {
                 case ResourceBarMode.HP:
@@ -269,14 +262,14 @@ namespace TerraLeague.UI
             }
 
             
-            Recalculate(); // recalculate the position and size
+            Recalculate(); 
 
             base.Draw(spriteBatch);
         }
 
         public override void Update(GameTime gameTime)
         {
-            Player player = Main.LocalPlayer; //Get Player
+            Player player = Main.LocalPlayer; 
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
 
             if (modPlayer.GetTotalShield() > 0 && modPlayer.PureHealthLastStep > modPlayer.GetRealHeathWithoutShield())
@@ -462,8 +455,8 @@ namespace TerraLeague.UI
 
         public override void OnInitialize()
         {
-            Height.Set(24, 0f); //Set Height of element
-            Width.Set(16, 0f);   //Set Width of element
+            Height.Set(24, 0f);
+            Width.Set(16, 0f);  
 
             Left.Set((24 * buffNumber) + (Main.screenWidth/2) - 250, 0);
             Top.Set(Main.screenHeight - 171, 0);
@@ -510,8 +503,6 @@ namespace TerraLeague.UI
             if (IsMouseHovering)
             {
                 string color = "0099cc";
-                //if (Main.debuff[Main.LocalPlayer.buffType[buffNumber]])
-                //    color = "ff4d4d";
 
                 string buffDescription = "[c/"+ color + ":" + Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber]) + "]" +
                     "\n" + Lang.GetBuffDescription(Main.LocalPlayer.buffType[buffNumber]);
@@ -542,14 +533,10 @@ namespace TerraLeague.UI
 
                     if (name1 != "")
                         buffDescription += "\n" + name1;
-
-                    //text = "[c/0099cc:" + Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber]) + "]" +
-                    //        "\nNear by banners are causing your damage and defence to increase against certain npcs!";
                 }
                 else if (Main.LocalPlayer.buffType[buffNumber] == Terraria.ID.BuffID.ManaSickness)
                 {
                     buffDescription += (int)(Main.LocalPlayer.manaSickReduction * 100) + "%";
-                    //buffDescription += (Main.LocalPlayer.buffTime[buffNumber]/60 * 5 + 5) + "%";
                 }
 
                 buffText.SetText(buffDescription);

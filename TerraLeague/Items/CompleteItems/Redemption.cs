@@ -39,13 +39,9 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //player.statDefense -= 4;
-            //player.GetModPlayer<PLAYERGLOBAL>().armor -= 4;
-            //player.GetModPlayer<PLAYERGLOBAL>().resist -= 4;
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
             player.statLifeMax2 += 20;
-            //player.manaRegen = (int)(player.manaRegen * 1.5);
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
             player.lifeRegen += 2;
         }

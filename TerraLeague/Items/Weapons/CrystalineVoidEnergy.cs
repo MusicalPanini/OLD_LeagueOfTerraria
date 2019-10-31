@@ -167,17 +167,15 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 35;
             item.shootSpeed = 6f;
             item.useStyle = 5;
-            item.noMelee = true; //so the item's animation doesn't do damage
+            item.noMelee = true;
             item.knockBack = 1;
             item.value = 5400;
             item.rare = 3;
             item.UseSound =  new LegacySoundStyle(2, 75);
             item.autoReuse = true;
-            item.shoot = ProjectileType<VoidEnergy>(); //idk why but all the guns in the vanilla source have this
+            item.shoot = ProjectileType<VoidEnergy>();
         }
 
-        // How can I make the shots appear out of the muzzle exactly?
-        // Also, when I do this, how do I prevent shooting through tiles?
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             position.Y = position.Y + 4;

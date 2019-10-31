@@ -128,7 +128,7 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 4;
             item.reuseDelay = 14;
             item.useStyle = 5;
-            item.noMelee = true; //so the item's animation doesn't do damage
+            item.noMelee = true;
             item.knockBack = 0;
             item.value = 60000;
             item.rare = 5;
@@ -146,8 +146,6 @@ namespace TerraLeague.Items.Weapons
             return true;
         }
 
-        // How can I make the shots appear out of the muzzle exactly?
-        // Also, when I do this, how do I prevent shooting through tiles?
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX, speedY + 6)) * 25f;
@@ -184,8 +182,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool ConsumeAmmo(Player player)
         {
-            // Because of how the game works, player.itemAnimation will be 11, 7, and finally 3. (UseAmination - 1, then - useTime until less than 0.) 
-            // We can get the Clockwork Assault Riffle Effect by not consuming ammo when itemAnimation is lower than the first shot.
             int num = (int)(item.useAnimation * UseTimeMultiplier(player)) - item.useAnimation;
 
                 return !(player.itemAnimation < (player.itemAnimationMax) - 2);

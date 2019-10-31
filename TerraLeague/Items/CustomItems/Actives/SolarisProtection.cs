@@ -79,7 +79,6 @@ namespace TerraLeague.Items.CustomItems.Actives
                 Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + user.Center;
 
                 Dust dustR = Dust.NewDustPerfect(pos, 267, Vector2.Zero, 0, new Color(255, 106, 0, 0), 2);
-                //dustR.velocity *= 0;
                 dustR.noGravity = true;
             }
         }

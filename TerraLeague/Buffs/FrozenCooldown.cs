@@ -20,11 +20,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            //if (!npc.boss)
-            {
-                npc.buffImmune[BuffType<Frozen>()] = true;
-            }
-
+            npc.buffImmune[BuffType<Frozen>()] = true;
             if (npc.buffTime[buffIndex] == 1)
             {
                 npc.buffImmune[BuffType<Frozen>()] = false;

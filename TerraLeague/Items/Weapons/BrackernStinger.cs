@@ -144,7 +144,7 @@ namespace TerraLeague.Items.Weapons
 
 
             Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0,
-                Main.rand.Next(-100, 100) * 0.001f * player.gravDir); //whip swinging
+                Main.rand.Next(-100, 100) * 0.001f * player.gravDir);
             return false;
         }
 

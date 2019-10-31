@@ -12,19 +12,19 @@ namespace TerraLeague.Tiles
         float bLast = 0.3f;
         public override void SetDefaults()
         {
-            Main.tileSolid[Type] = true; // Is the tile solid
-            Main.tileMergeDirt[Type] = true; // Will tile merge with dirt?
-            Main.tileLighted[Type] = true; // ???
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true; 
+            Main.tileLighted[Type] = true; 
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
 
             soundType = 21;
             dustType = 172;
-            drop = ItemType<TargonGraniteBlock>(); // What item drops after destorying the tile
+            drop = ItemType<TargonGraniteBlock>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Targon Granite");
-            AddMapEntry(new Color(0, 200, 255), name); // Colour of Tile on Map
-            minPick = 100; // What power pick minimum is needed to mine this block.
+            AddMapEntry(new Color(0, 200, 255), name); 
+            minPick = 100; 
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

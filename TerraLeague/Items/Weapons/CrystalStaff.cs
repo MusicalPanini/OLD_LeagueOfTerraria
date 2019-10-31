@@ -137,18 +137,10 @@ namespace TerraLeague.Items.Weapons
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
 
-
             if (type == AbilityType.Q)
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    //modPlayer.abilityAnimation = item.useAnimation;
-                    //modPlayer.abilityAnimationMax = item.useAnimation;
-                    //modPlayer.abilityAnimationType = item.useStyle;
-                    //modPlayer.abilityItem = item;
-                    //modPlayer.abilityRotation = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld);
-                    //player.ChangeDir(player.Center.X < Main.MouseWorld.X ? 1 : -1);
-
                     Vector2 position = player.Center;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 18f);
                     int projType = ProjectileID.DiamondBolt;
@@ -164,9 +156,6 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    //modPlayer.abilityAnimationType = 6;
-
-
                     Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y - (Main.screenHeight / 2));
                     Vector2 velocity = new Vector2(0, 25);
                     int projType = ProjectileType<DarkMatter>();

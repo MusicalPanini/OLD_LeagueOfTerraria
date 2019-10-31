@@ -55,7 +55,6 @@ namespace TerraLeague.Projectiles
                 Main.dust[dustIndex].color = new Color(0, 255, 0);
                 Main.dust[dustIndex].noGravity = false;
             }
-            //Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 16);
             if (projectile.timeLeft < 15)
             {
                 projectile.alpha += 5;
@@ -63,15 +62,15 @@ namespace TerraLeague.Projectiles
             AnimateProjectile();
         }
 
-        public void AnimateProjectile() // Call this every frame, for example in the AI method.
+        public void AnimateProjectile()
         {
             projectile.friendly = false;
             projectile.frameCounter++;
             framecount2++;
-            if (projectile.frameCounter >= 5) // This will change the sprite every 8 frames (0.13 seconds). Feel free to experiment.
+            if (projectile.frameCounter >= 5)
             {
                 projectile.frame++;
-                projectile.frame %= 4; // Will reset to the first frame if you've gone through them all.
+                projectile.frame %= 4; 
                 projectile.frameCounter = 0;
             }
             if (framecount2 >= 20)

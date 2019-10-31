@@ -12,7 +12,7 @@ namespace TerraLeague.Backgrounds
     {
         public override bool ChooseBgStyle()
         {
-            return !Main.gameMenu && Main.player[Main.myPlayer].GetModPlayer<PLAYERGLOBAL>().zoneSurfaceMarble;   //ZoneCustomBiome is the bool that u add in MyPlayer so make sure they are the same
+            return !Main.gameMenu && Main.player[Main.myPlayer].GetModPlayer<PLAYERGLOBAL>().zoneSurfaceMarble;
         }
 
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
@@ -40,19 +40,19 @@ namespace TerraLeague.Backgrounds
 
         public override int ChooseFarTexture()
         {
-            return mod.GetBackgroundSlot("Backgrounds/MB_Back");    //this is the surface biome far bg
+            return mod.GetBackgroundSlot("Backgrounds/MB_Back");
         }
 
 
         public override int ChooseMiddleTexture()
         {
-            return mod.GetBackgroundSlot("Backgrounds/MB_Mid");      //this is the surface biome middle gackground
+            return mod.GetBackgroundSlot("Backgrounds/MB_Mid");
         }
 
 
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
-            return mod.GetBackgroundSlot("Backgrounds/MB_Front");      //this is the surface biome close gackground
+            return mod.GetBackgroundSlot("Backgrounds/MB_Front");
         }
     }
 }

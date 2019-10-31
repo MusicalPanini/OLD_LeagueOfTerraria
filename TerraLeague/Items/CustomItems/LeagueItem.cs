@@ -10,12 +10,12 @@ namespace TerraLeague.Items.CustomItems
 {
     abstract public class LeagueItem : ModItem
     {
-        //public int armor = 0;
-        //public int resist = 0;
-        //public double meleeAtkSpd = 0;
-        //public double ammoConsumeChance = 0;
-        //public double cdr = 0;
-        //public double cdr = 0;
+        // public int armor = 0;
+        // public int resist = 0;
+        // public double meleeAtkSpd = 0;
+        // public double ammoConsumeChance = 0;
+        // public double cdr = 0;
+        // public double cdr = 0;
 
 
         public override void UpdateAccessory(Player player, bool hideVisual)

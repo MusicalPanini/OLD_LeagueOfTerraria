@@ -77,20 +77,16 @@ namespace TerraLeague.Projectiles
                 {
                     NPC npc = Main.npc[(int)projectile.ai[0]];
 
-                    //Get the shoot trajectory from the projectile and target
                     float shootToX = npc.Center.X - projectile.Center.X;
                     float shootToY = npc.Center.Y - projectile.Center.Y;
                     float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-                    //Divide the factor, 3f, which is the desired velocity
                     if (distance != 0)
                         distance = 2f / distance;
 
-                    //Multiply the distance by a multiplier if you wish the projectile to have go faster
                     shootToX *= distance * 3;
                     shootToY *= distance * 3;
 
-                    //Set the velocities to the shoot values
                     projectile.velocity.X = shootToX;
                     projectile.velocity.Y = shootToY;
                 }
@@ -149,15 +145,12 @@ namespace TerraLeague.Projectiles
             for (int i = 0; i < 200; i++)
             {
                 NPC target = Main.npc[i];
-                //If the npc is hostile
                 if (!target.townNPC && !HaveHit.Contains(target.whoAmI) && !target.dontTakeDamage)
                 {
-                    //Get the shoot trajectory from the projectile and target
                     float shootToX = target.Center.X - projectile.Center.X;
                     float shootToY = target.Center.Y - projectile.Center.Y;
                     float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-                    //If the distance between the live targeted npc and the projectile is less than 480 pixels
                     if (distance < 480f && !target.friendly && target.active && distance < cDistance)
                     {
                         closest = target;

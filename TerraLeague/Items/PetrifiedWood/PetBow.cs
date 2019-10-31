@@ -35,8 +35,6 @@ namespace TerraLeague.Items.PetrifiedWood
 
         public override bool CanUseItem(Player player)
         {
-            //Main.tile[(int)player.position.X / 16, (int)(player.position.Y / 16) + 5].type = (ushort)TileType("MarbleGrass");
-            //Main.NewText(Main.tile[(int)player.position.X / 16, (int)(player.position.Y / 16) + 5] + " " + (ushort)TileType("Limestone"));
             item.shoot = player.inventory.Where(x => x.ammo == AmmoID.Arrow).First().shoot;
             return base.CanUseItem(player);
         }

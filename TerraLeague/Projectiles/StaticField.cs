@@ -50,8 +50,6 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
-            // Play explosion sound
-            // Smoke Dust spawn
             for (int i = 0; i < 100; i++)
             {
                 Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 175, projectile.Center.Y - 175), 350, 350, 261, 0, 0, 50, new Color(0, 255, 255), 1.5f);
@@ -60,12 +58,10 @@ namespace TerraLeague.Projectiles
                 dust.noLight = true;
                 dust.fadeIn = 2;
             }
-            // Fire Dust spawn
             for (int i = 0; i < 100; i++)
             {
                 Dust dust = Dust.NewDustDirect(new Vector2(projectile.Center.X - 175, projectile.Center.Y - 175), 350, 350, 261, 0, 0, 50, new Color(0, 255, 255), 1);
                 dust.velocity *= 10f;
-                //dust.noGravity = true;
             }
 
             for (int j = 0; j < 4; j++)
@@ -75,7 +71,6 @@ namespace TerraLeague.Projectiles
                     Vector2 pos = new Vector2(350, 0).RotatedBy(MathHelper.ToRadians((20 * i) + (j * 6))) + projectile.Center;
 
                     Dust dustR = Dust.NewDustPerfect(pos, 261, Vector2.Zero, 0, new Color(0, 255, 255), 1);
-                    //dustR.velocity *= 0;
                     dustR.noGravity = true;
                     dustR.fadeIn = 1.5f;
                 }
@@ -95,9 +90,7 @@ namespace TerraLeague.Projectiles
 
             projectile.tileCollide = false;
             projectile.velocity = Vector2.Zero;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = size;

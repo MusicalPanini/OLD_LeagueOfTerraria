@@ -43,7 +43,6 @@ namespace TerraLeague.Items.CompleteItems
             player.magicDamage += 0.07f;
             player.moveSpeed += 0.05f;
             player.statLifeMax2 += 20;
-            //player.manaRegen = (int)(player.manaRegen * 1.6);
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
         }

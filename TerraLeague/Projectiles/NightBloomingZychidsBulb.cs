@@ -81,7 +81,7 @@ namespace TerraLeague.Projectiles
         }
 
         
-        public void AnimateProjectile() // Call this every frame, for example in the AI method.
+        public void AnimateProjectile()
         {
             projectile.frameCounter++;
             if (projectile.frameCounter >= 20)

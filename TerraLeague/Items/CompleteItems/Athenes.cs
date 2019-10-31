@@ -30,7 +30,6 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
-            //player.manaRegen = (int)(player.manaRegen * 1.3);
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.3;
             player.magicDamage += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;

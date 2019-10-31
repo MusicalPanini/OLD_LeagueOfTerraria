@@ -45,7 +45,6 @@ namespace TerraLeague.Items.CompleteItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<Orb>(), 1);
             recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            //recipe.AddIngredient(ItemType<VoidFragment>(), 50);
             recipe.AddRecipeGroup("TerraLeague:EvilPartGroup", 10);
             recipe.AddIngredient(ItemID.SoulofLight, 6);
             recipe.AddIngredient(ItemID.SoulofNight, 6);

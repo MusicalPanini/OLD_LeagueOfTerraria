@@ -97,7 +97,6 @@ namespace TerraLeague.Projectiles.Minions
                     float checkX = checkTarget.position.X + (float)checkTarget.width * 0.5f - projectile.Center.X;
                     float checkY = checkTarget.position.Y + (float)checkTarget.height * 0.5f - projectile.Center.Y;
                     float distance = (float)System.Math.Sqrt((double)(checkX * checkX + checkY * checkY));
-                    //Vector2.Distance(checkTarget.Center, player)
 
                     if (distance < shortestDistance && !checkTarget.friendly && checkTarget.lifeMax > 5 && !checkTarget.immortal && checkTarget.active && Collision.CanHit(projectile.position, projectile.width, projectile.height / 2, checkTarget.position, checkTarget.width, checkTarget.height))
                     {
@@ -115,7 +114,6 @@ namespace TerraLeague.Projectiles.Minions
 
             if (target != null)
             {
-                //if (true)
                 if (shootCountdown == 0 && Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
                 {
                     Vector2 velocity;
@@ -132,8 +130,6 @@ namespace TerraLeague.Projectiles.Minions
                     {
                         velocity.Y = (float)Math.Sqrt(Math.Pow(velocity.Y, 2));
                     }
-
-                    //Vector2 position = new Vector2((projectile.width / 2) -)
 
                     Projectile.NewProjectileDirect(projectile.Center, velocity, shoot, (int)(projectile.damage), projectile.knockBack, projectile.owner);
                     Main.PlaySound(shootSound, projectile.position);

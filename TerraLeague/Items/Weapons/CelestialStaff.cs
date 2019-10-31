@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.useTime = 35;
             item.useAnimation = 35;
-            item.noMelee = true; //so the item's animation doesn't do damage
+            item.noMelee = true; 
             item.knockBack = 0;
             item.value = 4000;
             item.rare = 4;
@@ -225,10 +225,6 @@ namespace TerraLeague.Items.Weapons
             TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt2 != null)
             {
-                // We want to grab the last word of the tooltip, which is the translated word for 'damage' (depending on what langauge the player is using)
-                // So we split the string by whitespace, and grab the last word from the returned arrays to get the damage word, and the first to get the damage shown in the tooltip
-
-                // Change the tooltip text
                 tt2.text = System.Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep) + " magic healing";
             }
 

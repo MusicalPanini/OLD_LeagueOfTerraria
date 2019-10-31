@@ -32,7 +32,7 @@ namespace TerraLeague.Items
 
         public override void GrabRange(Player player, ref int grabRange)
         {
-            //grabRange *= 3;
+            
         }
 
         public override bool GrabStyle(Player player)

@@ -11,18 +11,18 @@ namespace TerraLeague.Tiles
         public override void SetDefaults()
         {
             Main.tileSpelunker[Type] = true;
-            Main.tileSolid[Type] = true; // Is the tile solid
-            Main.tileMergeDirt[Type] = true; // Will tile merge with dirt?
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true; 
             Main.tileSpelunker[Type] = true;
             Main.tileValue[Type] = 420;
-            Main.tileLighted[Type] = true; // ???
+            Main.tileLighted[Type] = true;
             soundType = 21;
             dustType = 96;
-            drop = ItemType<Ferrospike>(); // What item drops after destorying the tile
+            drop = ItemType<Ferrospike>();
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Ferrospike");
-            AddMapEntry(new Color(25, 25, 50), name); // Colour of Tile on Map
-            minPick = 65; // What power pick minimum is needed to mine this block.
+            AddMapEntry(new Color(25, 25, 50), name);
+            minPick = 65; 
         }
 
         public override bool CanExplode(int i, int j)

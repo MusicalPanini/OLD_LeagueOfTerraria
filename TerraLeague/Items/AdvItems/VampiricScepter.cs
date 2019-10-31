@@ -15,7 +15,6 @@ namespace TerraLeague.Items.AdvItems
                 "\n4% melee and ranged life steal" +
                 "\n10% decreased maximum life" +
                 "\n10% increased damage taken");
-                //"\n10% decreased defence");
         }
 
         public override void SetDefaults()

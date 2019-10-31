@@ -37,9 +37,6 @@ namespace TerraLeague
 
     internal class ModNetHandler
     {
-        // When a lot of handlers are added, it might be wise to automate
-        // creation of them
-
         public const byte Player = 1;
         public const byte NPC = 2;
         public const byte Projectile = 3;
@@ -115,9 +112,6 @@ namespace TerraLeague
                 case (Buff):
                     ReceiveBuff(reader, fromWho);
                     break;
-                //case (ShieldBreak):
-                //    ReceiveShieldBreak(reader, fromWho);
-                //    break;
                 case (Shield):
                     ReceiveShield(reader, fromWho);
                     break;
@@ -244,47 +238,6 @@ namespace TerraLeague
                 Main.player[BuffTarget].AddBuff(BuffId, BuffDuration);
             }
         }
-
-        // Shield Break
-        //public void SendShieldBreak(int toWho, int fromWho, int user, byte shield)
-        //{
-        //    if (Main.netMode != NetmodeID.SinglePlayer)
-        //    {
-        //        ModPacket packet = GetPacket(ShieldBreak, fromWho);
-        //        packet.Write(user);
-        //        packet.Write(shield);
-        //        packet.Send(toWho, fromWho);
-        //        TerraLeague.Log("[DEBUG] - Sending ShieldBreak", Color.LightSlateGray);
-        //    }
-        //}
-        //private void ReceiveShieldBreak(BinaryReader reader, int fromWho)
-        //{
-        //    int user = reader.ReadInt32();
-        //    byte shield = reader.ReadByte();
-        //    bool iceborn = reader.ReadBoolean();
-        //    TerraLeague.Log("[DEBUG] - Received ShieldBreak", new Color(80, 80, 80));
-        //    if (Main.netMode == NetmodeID.Server)
-        //    {
-        //        SendShieldBreak(-1, fromWho, user, shield);
-        //    }
-        //    else
-        //    {
-        //        Player player = Main.player[user];
-
-        //        Color color = Color.White;
-
-        //        if (shield == 0)
-        //            color = new Color(255, 106, 0, 0);
-        //        else if (shield == 1)
-        //            color = new Color(255, 106, 0, 0);
-        //        else if (shield == 2)
-        //            Items.CustomItems.Passives.MagicVeil.ShieldBreak(player);
-        //        else if (shield == 4)
-        //            color = new Color(148, 114, 145, 0);
-        //        else
-        //            color = new Color(255, 0, 0, 0);
-        //    }
-        //}
 
         // Shield Information
         public void SendShield(int toWho, int fromWho, int shieldAmount, int type, int shieldDuration, int shieldTarget, Color shieldColor)
@@ -419,13 +372,10 @@ namespace TerraLeague
             packet.Write(target);
             packet.Write(crit);
             packet.Send(toWho, fromWho);
-            //TerraLeague.Log("[DEBUG] - Sending Battle Text", Color.White);
         }
 
         public void ReceiveBattleText(BinaryReader reader, int fromWho)
         {
-            //TerraLeague.Log("[DEBUG] - Received Battle Text", Color.White);
-
             int text = reader.ReadInt32();
             int target = reader.ReadInt32();
             bool crit = reader.ReadBoolean();
@@ -493,13 +443,11 @@ namespace TerraLeague
             packet.Write(buffType);
             packet.Write(target);
             packet.Send(toWho, fromWho);
-            //TerraLeague.Log("[DEBUG] - Sending Battle Text", Color.White);
+            TerraLeague.Log("[DEBUG] - Sending Remove Buff ID " + buffType + " from NPC " + target, Color.White);
         }
 
         public void ReceiveRemoveBuff(BinaryReader reader, int fromWho)
         {
-            //TerraLeague.Log("[DEBUG] - Received Battle Text", Color.White);
-
             int buffType = reader.ReadInt32();
             int target = reader.ReadInt32();
             NPC npc = Main.npc[target];
@@ -518,7 +466,6 @@ namespace TerraLeague
 
         public void ReceiveSyncStats(BinaryReader reader, int fromWho)
         {
-            //TerraLeague.Log("[DEBUG] - Received Battle Text", Color.White);
             int statType = reader.ReadInt32();
             int target = reader.ReadInt32();
             int num = reader.ReadInt32();
@@ -565,40 +512,6 @@ namespace TerraLeague
         {
             switch (reader.ReadByte())
             {
-                case (Shiv):
-                    ReceiveShivBolt(reader, fromWho);
-                    break;
-            }
-        }
-
-        public void SendShivBolt(int toWho, int fromWho, int proj, int target)
-        {
-            ModPacket packet = GetPacket(Shiv, fromWho);
-            packet.Write(proj);
-            packet.Write(target);
-            packet.Send(toWho, fromWho);
-            //TerraLeague.Log("[DEBUG] - Sending Battle Text", Color.White);
-        }
-
-        public void ReceiveShivBolt(BinaryReader reader, int fromWho)
-        {
-            //TerraLeague.Log("[DEBUG] - Received Battle Text", Color.White);
-            
-            int proj = reader.ReadInt32();
-            int target = reader.ReadInt32();
-
-            if (Main.netMode == NetmodeID.Server)
-            {
-                SendShivBolt(-1, fromWho, proj, target);
-            }
-            else
-            {
-                Projectile projectile = Main.projectile[proj];
-                for (int i = 0; i < 10; i++)
-                {
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 1.5f);
-                }
-                Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
             }
         }
     }
@@ -620,9 +533,6 @@ namespace TerraLeague
         {
             switch (reader.ReadByte())
             {
-                //case (lifeline):
-                //    ReceiveLineline(reader, fromWho);
-                //    break;
                 case (cleave):
                     ReceiveCleave(reader, fromWho);
                     break;
@@ -711,29 +621,6 @@ namespace TerraLeague
                 }
             }
         }
-
-        //// Lifeline
-        //public void SendLineline(int toWho, int fromWho)
-        //{
-        //    if (Main.netMode != NetmodeID.SinglePlayer)
-        //    {
-        //        ModPacket packet = GetPacket(lifeline, fromWho);
-        //        packet.Send(toWho, fromWho);
-        //        TerraLeague.Log("[DEBUG] - Sending Lineline", Color.LightSlateGray);
-        //    }
-        //}
-        //private void ReceiveLineline(BinaryReader reader, int fromWho)
-        //{
-        //    TerraLeague.Log("[DEBUG] - Received Lineline", new Color(80, 80, 80));
-        //    if (Main.netMode == NetmodeID.Server)
-        //    {
-        //        SendLineline(-1, fromWho);
-        //    }
-        //    else
-        //    {
-        //        Lifeline.Efx(fromWho);
-        //    }
-        //}
 
         // Cleave
         public void SendCleave(int toWho, int fromWho, int type)
@@ -1300,11 +1187,6 @@ namespace TerraLeague
                 case (UmbralTrespassNPC):
                     ReceiveUmbralNPC(reader, fromWho);
                     break;
-                case (Requiem):
-                    break;
-                case (Contaminate):
-                    ReceiveContaminate(reader, fromWho);
-                    break;
             }
         }
 
@@ -1403,65 +1285,6 @@ namespace TerraLeague
             else
             {
                 Main.player[Applier].GetModPlayer<PLAYERGLOBAL>().umbralTaggedNPC = Main.npc[Npc];
-            }
-        }
-
-        // Contaminate
-        public void SendContaminate(int toWho, int fromWho)
-        {
-            if (Main.netMode != NetmodeID.SinglePlayer)
-            {
-                ModPacket packet = GetPacket(Contaminate, fromWho);
-                packet.Send(toWho, fromWho);
-                TerraLeague.Log("[DEBUG] - Sending Contaminate", new Color(0, 50, 0));
-            }
-        }
-        private void ReceiveContaminate(BinaryReader reader, int fromWho)
-        {
-            TerraLeague.Log("[DEBUG] - Received Contaminate", new Color(0, 100, 0));
-
-            int Npc = reader.ReadInt32();
-            int Applier = reader.ReadInt32();
-
-            if (Main.netMode == NetmodeID.Server)
-            {
-                SendContaminate(-1, fromWho);
-            }
-            else
-            {
-                for (int i = 0; i < Main.npc.Length; i++)
-                {
-                    TerraLeague.RemoveBuffFromNPC(BuffType<DeadlyVenom>(), i);
-
-                    //Main.npc[i].DelBuff(Main.npc[i].FindBuffIndex(BuffType<DeadlyVenom>()));
-                }
-            }
-        }
-
-        // Requiem Channel
-        public void SendRequiem(int toWho, int fromWho, int user)
-        {
-            if (Main.netMode != NetmodeID.SinglePlayer)
-            {
-                ModPacket packet = GetPacket(Requiem, fromWho);
-                packet.Write(user);
-                packet.Send(toWho, fromWho);
-                TerraLeague.Log("[DEBUG] - Sending Requiem", new Color(50, 100, 50));
-            }
-        }
-        private void ReceiveRequiem(BinaryReader reader, int fromWho)
-        {
-            TerraLeague.Log("[DEBUG] - Received Requiem", new Color(50, 100, 50));
-
-            int User = reader.ReadInt32();
-
-            if (Main.netMode == NetmodeID.Server)
-            {
-                SendRequiem(-1, fromWho, User);
-            }
-            else
-            {
-                Main.player[User].AddBuff(BuffType<RequiemChannel>(), 120);
             }
         }
     }

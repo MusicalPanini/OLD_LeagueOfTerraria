@@ -108,13 +108,6 @@ namespace TerraLeague.Projectiles
                         projectile.netUpdate = true;
                     }
 
-
-                    //if (Vector2.Distance(projectile.position, Main.MouseWorld) < 600)
-                    //{
-                    //    projectile.velocity.X = num115 * Vector2.Distance(projectile.position, npc.Center) / 600;
-                    //    projectile.velocity.Y = num116 * Vector2.Distance(projectile.position, npc.Center) / 600;
-                    //}
-                    //else
                     if (projectile.timeLeft > 270)
                     {
                         projectile.velocity.X = XDist * (1 - ((projectile.timeLeft - 270) / 30f));
@@ -193,15 +186,12 @@ namespace TerraLeague.Projectiles
             for (int i = 0; i < 200; i++)
             {
                 NPC target = Main.npc[i];
-                //If the npc is hostile
                 if (!target.dontTakeDamage && target.active && target.whoAmI != projectile.ai[0])
                 {
-                    //Get the shoot trajectory from the projectile and target
                     float shootToX = target.Center.X - projectile.Center.X;
                     float shootToY = target.Center.Y - projectile.Center.Y;
                     float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-                    //If the distance between the live targeted npc and the projectile is less than 480 pixels
                     if (distance < 600f && !target.friendly && target.active && distance < cDistance && !target.immortal)
                     {
                         closest = target;

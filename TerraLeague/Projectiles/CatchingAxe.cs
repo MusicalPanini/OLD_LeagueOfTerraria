@@ -70,8 +70,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 24; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 24;
             return true;
         }
 

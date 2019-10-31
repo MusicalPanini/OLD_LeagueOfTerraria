@@ -57,14 +57,11 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
-            // Play explosion sound
-            // Smoke Dust spawn
             for (int i = 0; i < 15; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dustIndex].velocity *= 1.4f;
             }
-            // Fire Dust spawn
             for (int i = 0; i < 10; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 1.5f);
@@ -73,45 +70,16 @@ namespace TerraLeague.Projectiles
                 dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 1f);
                 Main.dust[dustIndex].velocity *= 3f;
             }
-            // Large Smoke Gore spawn
             for (int g = 0; g < 3; g++)
             {
                 int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
             }
-            // reset size to normal width and height.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 10;
             projectile.height = 10;
             projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-
-            // TODO, tmodloader helper method
-            {
-                int explosionRadius = 10;
-                int minTileX = (int)(projectile.position.X / 16f - (float)explosionRadius);
-                int maxTileX = (int)(projectile.position.X / 16f + (float)explosionRadius);
-                int minTileY = (int)(projectile.position.Y / 16f - (float)explosionRadius);
-                int maxTileY = (int)(projectile.position.Y / 16f + (float)explosionRadius);
-                if (minTileX < 0)
-                {
-                    minTileX = 0;
-                }
-                if (maxTileX > Main.maxTilesX)
-                {
-                    maxTileX = Main.maxTilesX;
-                }
-                if (minTileY < 0)
-                {
-                    minTileY = 0;
-                }
-                if (maxTileY > Main.maxTilesY)
-                {
-                    maxTileY = Main.maxTilesY;
-                }
-
-            }
-
             base.Kill(timeLeft);
         }
 
@@ -126,9 +94,7 @@ namespace TerraLeague.Projectiles
 
             projectile.tileCollide = false;
             projectile.velocity = Vector2.Zero;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = size;
