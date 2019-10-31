@@ -40,7 +40,6 @@ namespace TerraLeague.Projectiles
                 if (projectile.soundDelay == 0 && projectile.type != 383)
                 {
                     projectile.soundDelay = 20;
-                    //Main.PlaySound(0, projectile.position);
                     Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.position);
                 }
                 projectile.velocity = Vector2.Zero;

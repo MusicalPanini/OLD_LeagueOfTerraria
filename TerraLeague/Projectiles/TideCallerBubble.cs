@@ -41,10 +41,6 @@ namespace TerraLeague.Projectiles
             if (projectile.timeLeft == 600)
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound), projectile.position);
 
-
-            //projectile.rotation += projectile.velocity.X * 0.05f;//(int)(Math.Tan(projectile.velocity.X / -projectile.velocity.Y) * 180 / Math.PI);
-            //projectile.velocity.Y += 0.3f;
-
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 211);
             dust.alpha = 0;
@@ -102,8 +98,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 20; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 20;
             return true;
         }
     }

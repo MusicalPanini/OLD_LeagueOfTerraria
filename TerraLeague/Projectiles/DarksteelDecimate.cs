@@ -13,7 +13,7 @@ namespace TerraLeague.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;    //The length of old position to be recorded
+            ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
             ProjectileID.Sets.TrailingMode[projectile.type] = 1;
             DisplayName.SetDefault("Darksteel Battleaxe");
         }
@@ -86,13 +86,6 @@ namespace TerraLeague.Projectiles
 
             player.direction = projectile.spriteDirection;
             
-
-            //Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 211);
-            //dust.alpha = 0;
-            //dust.noLight = false;
-            //dust.noGravity = true;
-            //dust.scale = 1.4f;
-
             base.AI();
         }
 
@@ -114,17 +107,6 @@ namespace TerraLeague.Projectiles
 
             target.AddBuff(BuffType<Hemorrhage>(), 300);
 
-            //target.AddBuff(BuffType("Hemorrhage"), 300);
-            //if (target.HasBuff(BuffType("HemorrhageStacks")))
-            //{
-            //    int time = target.buffTime[target.FindBuffIndex(BuffType("HemorrhageStacks"))];
-
-            //    target.AddBuff(BuffType("HemorrhageStacks"), time + 100);
-            //}
-            //else
-            //{
-            //    target.AddBuff(BuffType("HemorrhageStacks"), 100);
-            //}
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -134,8 +116,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 10;
             return true;
         }
     }

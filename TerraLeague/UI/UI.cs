@@ -61,16 +61,6 @@ namespace TerraLeague.UI
 
         private void DragEnd(UIMouseEvent evt, UIElement listeningElement)
         {
-            //if (!panelLocked)
-            //{
-            //    Vector2 end = evt.MousePosition;
-            //    dragging = false;
-
-            //    Panel.Left.Set(end.X - offset.X, 0f);
-            //    Panel.Top.Set(end.Y - offset.Y, 0f);
-
-            //    Recalculate();
-            //}
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -78,33 +68,12 @@ namespace TerraLeague.UI
             Vector2 MousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
             if (Panel.ContainsPoint(MousePosition))
             {
-                // Checking ContainsPoint and then setting mouseInterface to true is very common. This causes clicks to not cause the player to use current items. 
                 Main.LocalPlayer.mouseInterface = true;
             }
-            //if (dragging)
-            //{
-            //    Panel.Left.Set(MousePosition.X - offset.X, 0f);
-            //    Panel.Top.Set(MousePosition.Y - offset.Y, 0f);
-            //    Recalculate();
-            //}
         }
 
         public override void MiddleClick(UIMouseEvent evt)
         {
-            //if (Panel.IsMouseHovering)
-            //{
-            //    if (panelLocked)
-            //    {
-            //        panelLocked = false;
-            //        Panel.BackgroundColor = new Color(73, 94, 171);
-            //    }
-            //    else
-            //    {
-            //        Panel.BackgroundColor = new Color(73, 94, 200);
-            //        panelLocked = true;
-            //    }
-            //}
-            //base.DoubleClick(evt);
         }
     }
 
@@ -122,10 +91,10 @@ namespace TerraLeague.UI
 
         public override void OnInitialize()
         {
-            Height.Set(height, 0f); //Set Height of element
-            Width.Set(width, 0f);   //Set Width of element
+            Height.Set(height, 0f);
+            Width.Set(width, 0f);   
 
-            text = new UIText("0|0"); //text to show current hp or mana
+            text = new UIText("0|0"); 
             text.Width.Set(width, 0f);
             text.Height.Set(height, 0f);
             text.SetPadding(10);

@@ -57,7 +57,6 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            //Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
             Vector2 pos = projectile.Center.ToTileCoordinates16().ToWorldCoordinates();
             pos.Y += 12;
             pos.X -= 16;

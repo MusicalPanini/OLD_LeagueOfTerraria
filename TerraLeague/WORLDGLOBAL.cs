@@ -33,16 +33,12 @@ namespace TerraLeague
             int ShinyIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             if (ShinyIndex != -1)
             {
-                // Next, we insert our step directly after the original "Shinies" step. 
-                // ExampleModOres is a method seen below.
                 tasks.Insert(ShinyIndex + 1, new PassLegacy("Ferrospike", GenerateFerrospike));
             }
 
             int MarbleIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Marble"));
             if (MarbleIndex != -1)
             {
-                // Next, we insert our step directly after the original "Shinies" step. 
-                // ExampleModOres is a method seen below.
                 tasks.Insert(MarbleIndex + 1, new PassLegacy("Limestone", GenerateLimestone));
             }
 
@@ -112,56 +108,6 @@ namespace TerraLeague
 
                 break;
             }
-
-
-            #region Old code
-            //while (!biomeCreated)
-            //{
-            //    int X = Main.rand.Next(2) == 0 ? WorldGen.genRand.Next((Main.maxTilesX * 1) / 5, (Main.maxTilesX * 2) / 5) : WorldGen.genRand.Next((Main.maxTilesX * 3) / 5, (Main.maxTilesX * 4) / 5);
-            //    for (int y = 0; y < Main.maxTilesY; y++)
-            //    {
-            //        if (Main.tile[X, y].type == TileID.Grass)
-            //        {
-            //            int TileType = TileID.Marble;     //this is the tile u want to use for the biome , if u want to use a vanilla tile then its int TileType = 56; 56 is obsidian block
-
-
-            //            if (X < Main.maxTilesX / 2)
-            //                WorldGen.TileRunner(X, y - 50, 200, WorldGen.genRand.Next(50, 75), TileType, false, -20f, 0f, true, true);
-            //            else
-            //                WorldGen.TileRunner(X, y - 50, 200, WorldGen.genRand.Next(50, 75), TileType, false, 20f, 0f, true, true);
-
-            //            biomeCreated = true;
-            //            break;
-            //        }
-            //    }
-            //}
-            #endregion
-
-            #region older code
-            //for (int x = 0; x < Main.maxTilesX; x++)
-            //{
-            //    for (int y = (int)WorldGen.worldSurfaceHigh; y < (int)WorldGen.rockLayer; y++)
-            //    {
-            //        if (Main.tile[x, y].type == TileID.Marble)
-            //        {
-            //            bool emptySpace = false;
-            //            for (int xm = x - 1; xm < x + 1; xm++)
-            //            {
-            //                for (int ym = y - 1; ym < y + 1; ym++)
-            //                {
-            //                    if (!Main.tile[xm,ym].active())
-            //                    {
-            //                        emptySpace = true;
-            //                    }
-            //                }
-            //            }
-
-            //            if (emptySpace)
-            //                Main.tile[x, y].type = (ushort)TileType("MarbleGrass");
-            //        }
-            //    }
-            //}
-            #endregion
         }
 
         private void GenerateLimestone(GenerationProgress progress)
@@ -169,10 +115,10 @@ namespace TerraLeague
             progress.Message = "You put the lime in the marble and you shake it all up";
             progress.Value += 0.01f;
             
-            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)   //40E-05 is how many veins ore is going to spawn , change 40 to a lover value if you want less vains ore or higher value for more veins ore
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)  
             {
                 int X = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
-                int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200); //this is the coordinates where the veins ore will spawn, so in Cavern layer
+                int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200);
 
                 bool marbleNearby = false;
 
@@ -188,7 +134,7 @@ namespace TerraLeague
                 }
                 if (marbleNearby)
                 {
-                    WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(10, 20), WorldGen.genRand.Next(15, 45), (ushort)TileType<Limestone>());   //WorldGen.genRand.Next(9, 15), WorldGen.genRand.Next(5, 9) is the vein ore sizes, so 9 to 15 blocks or 5 to 9 blocks, TileType("CustomOreTile") is the custom tile that will spawn
+                    WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(10, 20), WorldGen.genRand.Next(15, 45), (ushort)TileType<Limestone>());
                 }
 
             }
@@ -231,11 +177,10 @@ namespace TerraLeague
             progress.Message = "Adding warmth to the desert";
             progress.Value += 0.01f;
 
-            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)   //40E-05 is how many veins ore is going to spawn , change 40 to a lover value if you want less vains ore or higher value for more veins ore
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)  
             {
                 int x = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
-                int y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200); //this is the coordinates where the veins ore will spawn, so in Cavern layer
-
+                int y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200);
                 Tile tile = Main.tile[x, y];
                 if (tile.type == TileID.Sandstone || tile.type == TileID.HardenedSand)
                     Main.tile[x, y].type = (ushort)TileType<SunstoneOre>();
@@ -296,12 +241,6 @@ namespace TerraLeague
 
         public override void PostWorldGen()
         {
-            // This is simply generating a line of Chlorophyte halfway down the world.
-            //for (int i = 0; i < Main.maxTilesX; i++)
-            //{
-            //	Main.tile[i, Main.maxTilesY / 2].type = TileID.Chlorophyte;
-            //}
-
             // Place some items in Wood Chests
             int[] itemsToPlaceInWoodChests = new int[] { ItemType<LongSword>(), ItemType<Dagger>(), ItemType<AmpTome>(), ItemType<RubyCrystal>(), ItemType<SapphireCrystal>(), ItemType<NullMagic>(), ItemType<ClothArmor>()};
             int itemsToPlaceInWoodChestsChoice = 0;
@@ -406,7 +345,7 @@ namespace TerraLeague
 
         public override void PostUpdate()
         {
-            if (Main.hardMode) //this is where you choose what vanilla npc you want  , for a modded npc add this instead  if (npc.type == mod.NPCType("ModdedNpcName"))
+            if (Main.hardMode) 
             {
                 if (!TargonOreSpawned)
                 {
@@ -415,38 +354,37 @@ namespace TerraLeague
                 }
             }
 
-            if (NPC.downedBoss2) //this is where you choose what vanilla npc you want  , for a modded npc add this instead  if (npc.type == mod.NPCType("ModdedNpcName"))
+            if (NPC.downedBoss2)
             {
                 if (!ManaOreSpawned)
                 {
                     ManaOreSpawned = true;
-                    Main.NewText("The Evil is no longer suppressing the magic in the jungle", 0, 130, 255);  //this is the message that will appear when the npc is killed  , 200, 200, 55 is the text color
-                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 50E-05); k++)   //40E-05 is how many veins ore is going to spawn , change 40 to a lover value if you want less vains ore or higher value for more veins ore
+                    Main.NewText("The Evil is no longer suppressing the magic in the jungle", 0, 130, 255);  
+                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 50E-05); k++)   
                     {
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200); //this is the coordinates where the veins ore will spawn, so in Cavern layer
+                        int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200); 
 
                         if (Main.tile[X, Y].type == TileID.Mud)
                         {
-                            WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(4, 5), WorldGen.genRand.Next(3, 8), (ushort)TileType<ManaStone>());   //WorldGen.genRand.Next(9, 15), WorldGen.genRand.Next(5, 9) is the vein ore sizes, so 9 to 15 blocks or 5 to 9 blocks, TileType("CustomOreTile") is the custom tile that will spawn
+                            WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(4, 5), WorldGen.genRand.Next(3, 8), (ushort)TileType<ManaStone>());  
                         }
-
                     }
                 }
             }
 
-            if (NPC.downedBoss3) //this is where you choose what vanilla npc you want  , for a modded npc add this instead  if (npc.type == mod.NPCType("ModdedNpcName"))
+            if (NPC.downedBoss3) 
             {
                 if (!VoidOreSpawned)
                 {
-                    VoidOreSpawned = true;   //so the message and the ore spawn does not proc(show) when you kill EoC/npc again
+                    VoidOreSpawned = true;  
 
-                    Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);  //this is the message that will appear when the npc is killed  , 200, 200, 55 is the text color
-                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 1E-05); k++)   //40E-05 is how many veins ore is going to spawn , change 40 to a lover value if you want less vains ore or higher value for more veins ore
+                    Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);  
+                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 1E-05); k++)  
                     {
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        int Y = WorldGen.genRand.Next((int)(Main.rockLayer * 1.5), Main.maxTilesY - 200); //this is the coordinates where the veins ore will spawn, so in Cavern layer
-                        WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(13, 18), WorldGen.genRand.Next(6, 8), (ushort)TileType<Tiles.VoidFragment>());   //WorldGen.genRand.Next(9, 15), WorldGen.genRand.Next(5, 9) is the vein ore sizes, so 9 to 15 blocks or 5 to 9 blocks, TileType("CustomOreTile") is the custom tile that will spawn
+                        int Y = WorldGen.genRand.Next((int)(Main.rockLayer * 1.5), Main.maxTilesY - 200);
+                        WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(13, 18), WorldGen.genRand.Next(6, 8), (ushort)TileType<Tiles.VoidFragment>());
                     }
                 }
             }
@@ -713,7 +651,7 @@ namespace TerraLeague
 
             if (Main.netMode == 0)
             {
-                Main.NewText("The Aspects are pleased. A gift has been droped from the heavens", 0, 200, 255);  //this is the message that will appear when the npc is killed  , 200, 200, 55 is the text color
+                Main.NewText("The Aspects are pleased. A gift has been droped from the heavens", 0, 200, 255); 
 
             }
             else if (Main.netMode == 2)

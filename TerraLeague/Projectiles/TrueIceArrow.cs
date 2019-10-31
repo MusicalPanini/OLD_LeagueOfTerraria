@@ -35,7 +35,6 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            //projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
             int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color));
             Main.dust[dustIndex].noGravity = true;
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
@@ -101,8 +100,6 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            //width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
 

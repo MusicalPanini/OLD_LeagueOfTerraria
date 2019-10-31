@@ -107,7 +107,7 @@ namespace TerraLeague.Items.Weapons
             else
                 return base.GetDamageTooltip(player, type);
         }
-        // Finish this
+
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
             if (type == AbilityType.Q || type == AbilityType.E)

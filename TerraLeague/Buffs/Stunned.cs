@@ -26,13 +26,6 @@ namespace TerraLeague.Buffs
             if(!npc.boss)
             {
                 npc.GetGlobalNPC<NPCsGLOBAL>().stunned = true;
-                    
-                    //npc.position.X = npc.oldPosition.X;
-                    //npc.position.Y = npc.oldPosition.Y;
-                    //if (npc.oldVelocity.X < 0)
-                    //    npc.velocity.X = -0.000001f;
-                    //else
-                    //    npc.velocity.X = 0.000001f;
             }
         }
     }

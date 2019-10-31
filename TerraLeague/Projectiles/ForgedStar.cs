@@ -76,8 +76,6 @@ namespace TerraLeague.Projectiles
                 projectile.Center = player.Center + offset.RotatedBy(projectile.ai[1]);
             }
 
-            //Lighting.AddLight(projectile.position, 0.2f, 0.2f, 0f);
-           
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 111, projectile.velocity.X, projectile.velocity.Y, 200, default(Color), 1.5f);
             dust.noGravity = true;
             dust.noLight = true;

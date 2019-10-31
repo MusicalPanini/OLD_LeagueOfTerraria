@@ -48,14 +48,6 @@ namespace TerraLeague.Projectiles
             float num = 1.57079637f;
             Vector2 vector = player.RotatedRelativePoint(player.MountedCenter, true);
 
-            //make visible quickly
-            //projectile.alpha -= 42;
-            //if (projectile.alpha < 0)
-            //{
-            //    projectile.alpha = 0;
-            //}
-            //set local AI to direction
-
             if (projectile.localAI[0] == 0f)
             {
                 projectile.localAI[0] = projectile.velocity.ToRotation();
@@ -103,10 +95,9 @@ namespace TerraLeague.Projectiles
             vector34 -= new Vector2((float)(player.bodyFrame.Width - player.width), (float)(player.bodyFrame.Height - 42)) / 2f;
             projectile.Center = player.RotatedRelativePoint(player.position + vector34, true) - projectile.velocity;
 
-            //collide with tiles
             Vector2 endPoint = projectile.position + projectile.velocity * 2f;
 
-            if (projectile.ai[0] > 1 && !ignoreTiles)//delay and stops close tile collision
+            if (projectile.ai[0] > 1 && !ignoreTiles)
             {
                 Vector2 prevPoint = projectile.oldPosition + projectile.oldVelocity * 2f;
                 if (!Collision.CanHit(endPoint, projectile.width, projectile.height, prevPoint, projectile.width, projectile.height))
@@ -115,7 +106,7 @@ namespace TerraLeague.Projectiles
                     {
                         projectile.restrikeDelay = player.itemAnimationMax - (int)projectile.ai[0] * 2;
                         projectile.ai[0] = Math.Max(1f, projectile.localAI[1] - projectile.ai[0] + 1);
-                        projectile.ai[1] *= -0.9f; // come back in reverse
+                        projectile.ai[1] *= -0.9f; 
                         Main.PlaySound(sndgroup, endPoint, sound);
                         Collision.HitTiles(endPoint, endPoint - prevPoint, 8, 8);
                     }
@@ -123,13 +114,6 @@ namespace TerraLeague.Projectiles
             }
 
             return endPoint;
-
-            // Main.NewText("========================");
-            // Main.NewText("ai0: " + projectile.ai[0]);// ==== 0 - 30
-            // Main.NewText("ai1: " + projectile.ai[1]);// ==== 0
-            // Main.NewText("lai0: " + projectile.localAI[0]);// ==== rotation 0 - 3.14
-            // Main.NewText("lai1: " + projectile.localAI[1]);// ==== swingtime
-            // Main.NewText("anim: " + player.itemAnimation + " / " + player.itemTime);// ==== 2
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -167,7 +151,6 @@ namespace TerraLeague.Projectiles
 
             alpha3 *= projectile.Opacity;
 
-            //define texture parts here
             Rectangle handle = new Rectangle(0, 0, projectileTexture.Width, handleHeight);
             Rectangle chain = new Rectangle(0, handleHeight, projectileTexture.Width, chainHeight);
             Rectangle part = new Rectangle(0, handleHeight + chainHeight, projectileTexture.Width, partHeight);
@@ -215,7 +198,6 @@ namespace TerraLeague.Projectiles
             centre = projectile.Center.Floor();
             centre += normalVel * projectile.scale * chain.Height / 2;
             currentRect = part;
-            //int partCount = 18;
             if (halfSize)
             {
                 partCount /= 2;
@@ -256,8 +238,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 10;
             return true;
         }
     }

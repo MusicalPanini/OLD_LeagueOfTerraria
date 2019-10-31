@@ -38,7 +38,6 @@ namespace TerraLeague.UI
             MainPanel.Height.Set(54, 0f);
             MainPanel.Left.Set(Main.screenWidth / 2 - MainPanel.Width.Pixels / 2, 0f);
             MainPanel.Top.Set(Main.screenHeight - (MainPanel.Height.Pixels + 44), 0f);
-            //MainPanel.BackgroundColor = new Color(10, 100, 50);
 
             int abilityboxsize = 44;
 
@@ -110,7 +109,6 @@ namespace TerraLeague.UI
 
                 aToolTip.abilityTooltip = text;
                 aToolTip.drawText = true;
-                //toolTip.SetText(text);
 
                 aToolTip.Left.Set((MainPanel.Width.Pixels / 2) - 250, 0);
 
@@ -151,7 +149,6 @@ namespace TerraLeague.UI
             Top.Set(top, 0);
             Width.Set(length, 0);
             Height.Set(length, 0);
-            //BackgroundColor = new Color(35, 100, 80);
 
             slotIcon = new UIImage(nullImage);
             slotIcon.Left.Pixels = 5.5f;

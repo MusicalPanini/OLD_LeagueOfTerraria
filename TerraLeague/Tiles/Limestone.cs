@@ -11,8 +11,8 @@ namespace TerraLeague.Tiles
     {
         public override void SetDefaults()
         {
-            Main.tileSolid[Type] = true; // Is the tile solid
-            Main.tileMergeDirt[Type] = true; // Will tile merge with dirt?
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true; 
             Main.tileMerge[Type][TileID.Marble] = true;
             Main.tileMerge[TileID.Marble][Type] = true;
 
@@ -22,14 +22,14 @@ namespace TerraLeague.Tiles
             Main.tileMerge[Type][TileType<PetWoodTile>()] = true;
             Main.tileMerge[TileType<PetWoodTile>()][Type] = true;
 
-            Main.tileLighted[Type] = true; // ???
-            Main.tileBlockLight[Type] = true; // Emits Light
+            Main.tileLighted[Type] = true;
+            Main.tileBlockLight[Type] = true; 
 
             soundType = 21;
             dustType = 85;
-            drop = ItemType<Items.Placeable.Limestone>(); // What item drops after destorying the tile
-            AddMapEntry(new Color(255, 255, 200)); // Colour of Tile on Map
-            minPick = 0; // What power pick minimum is needed to mine this block.
+            drop = ItemType<Items.Placeable.Limestone>(); 
+            AddMapEntry(new Color(255, 255, 200));
+            minPick = 0; 
         }
     }
 }

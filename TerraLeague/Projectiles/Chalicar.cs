@@ -118,7 +118,6 @@ namespace TerraLeague.Projectiles
             {
                 projectile.netUpdate = true;
                 projectile.ai[0] = 1;
-               // projectile.velocity = -projectile.velocity;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
@@ -138,8 +137,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 16; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 16;
             return true;
         }
     }

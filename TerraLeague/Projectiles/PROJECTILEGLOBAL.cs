@@ -44,20 +44,6 @@ namespace TerraLeague.Projectiles
         {
             if (proj.Name == "Crystal Shard"
                 || proj.Name == "Hallow Star"
-                //|| proj.Name == "Baby Spider"
-                //|| proj.Name == "Mini Sharkron"
-                //|| proj.Name == "Pygmy"
-                //|| proj.Name == "UFO Ray"
-                //|| proj.Name == "Mini Retina Laser"
-                //|| proj.Name == "Stardust Cell"
-                //|| proj.Name == "Frost Blast"
-                //|| proj.Name == "Lunar Portal Laser"
-                //|| proj.Name == "Rainbow Explosion"
-                //|| proj.Name == "Lightning Aura"
-                //|| proj.Name == "Ballista"
-                //|| proj.Name == "Explosive Trap"
-                //|| proj.Name == "Flameburst Tower"
-                //|| proj.Name == "Starburst"
                 )
                 return true;
             else

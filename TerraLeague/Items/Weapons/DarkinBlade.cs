@@ -153,8 +153,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool GetIfAbilityExists(AbilityType type)
         {
-            //if (type == AbilityType.Q || type == AbilityType.W)
-            //    return true;
             return base.GetIfAbilityExists(type);
         }
 

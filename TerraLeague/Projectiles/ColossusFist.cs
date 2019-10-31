@@ -135,10 +135,8 @@ namespace TerraLeague.Projectiles
             return false;
         }
 
-        public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            // So set the correct path here to load the chain texture. 'YourModName' is of course the name of your mod.
-            // Then into the Projectiles folder and take the texture that is called 'CustomFlailBall_Chain'.
             Texture2D texture = mod.GetTexture("Projectiles/ColossusChain");
 
             Vector2 position = projectile.Center;

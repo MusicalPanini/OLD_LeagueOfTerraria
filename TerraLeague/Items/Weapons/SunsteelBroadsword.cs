@@ -133,17 +133,17 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 10;           //The damage of your weapon
-            item.width = 32;            //Weapon's texture's width
-            item.height = 32;           //Weapon's texture's height
-            item.melee = true;          //Is your weapon a melee weapon?
-            item.useTime = 20;          //The time span of using the weapon. Remember in terraria, 60 frames is a second.
-            item.useAnimation = 20;         //The time span of the using animation of the weapon, suggest set it the same as useTime.
-            item.useStyle = 1;          //The use style of weapon, 1 for swinging, 2 for drinking, 3 act like shortsword, 4 for use like life crystal, 5 for use staffs or guns
-            item.knockBack = 3;         //The force of knockback of the weapon. Maximum is 20
-            item.value = 1000;           //The value of the weapon
-            item.rare = 1;              //The rarity of the weapon, from -1 to 13
-            item.UseSound = SoundID.Item1;      //The sound when the weapon is using
+            item.damage = 10;
+            item.width = 32;
+            item.height = 32;
+            item.melee = true;
+            item.useTime = 20;
+            item.useAnimation = 20;
+            item.useStyle = 1;
+            item.knockBack = 3;
+            item.value = 1000;
+            item.rare = 1;
+            item.UseSound = SoundID.Item1;
         }
 
         public override bool GetIfAbilityExists(AbilityType type)

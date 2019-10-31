@@ -58,7 +58,6 @@ namespace TerraLeague.Items.CompleteItems
             {
                 int where = TerraLeague.FindAccessorySlotOnPlayer(player, this);
                 byte prefix = player.armor[where + 3].prefix;
-                //player.QuickSpawnItem(ItemType<Seraphs>());
 
                 player.armor[where + 3].SetDefaults(ItemType<Muramana>());
                 player.armor[where + 3].Prefix(prefix);

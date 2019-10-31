@@ -121,7 +121,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
                 return 22;
             else if (type == AbilityType.R)
-                return 0;//120
+                return 120;
             else
                 return base.GetRawCooldown(type);
         }

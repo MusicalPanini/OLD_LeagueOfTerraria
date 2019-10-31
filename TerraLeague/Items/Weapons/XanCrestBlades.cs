@@ -42,19 +42,6 @@ namespace TerraLeague.Items.Weapons
             item.maxStack = 12;
         }
 
-        public override void ModifyTooltips(List<TooltipLine> tooltips)
-        {
-            //TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-            //if (tt != null)
-            //{
-            //    int pos = tooltips.IndexOf(tt);
-
-            //    TooltipLine damage = new TooltipLine(TerraLeague.instance, "passiveDamage", System.Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep * 1.5) + " magic damage");
-            //    tooltips.Insert(pos + 3, damage);
-            //}
-            //base.ModifyTooltips(tooltips);
-        }
-
         public override bool CanUseItem(Player player)
         {
             return player.ownedProjectileCounts[ProjectileType<DancingBlade>()] < 1;

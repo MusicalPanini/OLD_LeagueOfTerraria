@@ -13,18 +13,18 @@ namespace TerraLeague.Tiles
         {
             soundType = 21;
 
-            Main.tileSolid[Type] = true; // Is the tile solid
-            Main.tileMergeDirt[Type] = true; // Will tile merge with dirt?
+            Main.tileSolid[Type] = true; 
+            Main.tileMergeDirt[Type] = true;
 
-            Main.tileLighted[Type] = true; // ???
-            Main.tileBlockLight[Type] = true; // Emits Light
+            Main.tileLighted[Type] = true;
+            Main.tileBlockLight[Type] = true; 
             
             dustType = 65;
-            drop = ItemType<Items.VoidFragment>(); // What item drops after destorying the tile
+            drop = ItemType<Items.VoidFragment>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Void Matter");
-            AddMapEntry(new Color(255, 0, 255), name); // Colour of Tile on Map
-            minPick = 65; // What power pick minimum is needed to mine this block.
+            AddMapEntry(new Color(255, 0, 255), name); 
+            minPick = 65;
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

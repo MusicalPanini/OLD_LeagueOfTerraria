@@ -225,9 +225,7 @@ namespace TerraLeague.Items.Weapons
 
         public override float MeleeSpeedMultiplier(Player player)
         {
-            
             return base.MeleeSpeedMultiplier(player) + (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks * 0.05f);
-            //return 1;
         }
 
         public override void AddRecipes()
@@ -247,27 +245,5 @@ namespace TerraLeague.Items.Weapons
                 return true;
             return base.GetIfAbilityExists(type);
         }
-
-        //public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-        //{
-
-        //    Texture2D texture = mod.GetTexture("Items/Weapons/StarfireSpellbladesAscended");
-        //    spriteBatch.Draw
-        //    (
-        //        texture,
-        //        new Vector2
-        //        (
-        //            Main.item[whoAmI].position.X - Main.screenPosition.X + Main.item[whoAmI].width * 0.5f,
-        //             Main.item[whoAmI].position.Y - Main.screenPosition.Y + Main.item[whoAmI].height - texture.Height * 0.5f
-        //        ),
-        //        new Rectangle(0, 0, texture.Width, texture.Height),
-        //        Color.White,
-        //        rotation,
-        //        texture.Size() * 0.5f,
-        //        scale,
-        //        SpriteEffects.None,
-        //        0f
-        //    );
-        //}
     }
 }

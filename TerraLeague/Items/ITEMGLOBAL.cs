@@ -125,12 +125,9 @@ namespace TerraLeague.Items
                 TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
                 if (tt2 != null)
                 {
-                    // We want to grab the last word of the tooltip, which is the translated word for 'damage' (depending on what langauge the player is using)
-                    // So we split the string by whitespace, and grab the last word from the returned arrays to get the damage word, and the first to get the damage shown in the tooltip
                     string[] splitText = tt2.text.Split(' ');
                     int damageValue = Convert.ToInt32(splitText.First());
                     string damageWord = splitText.Last();
-                    // Change the tooltip text
                     tt2.text = Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().minionDamageLastStep) + " minion damage";
                 }
 
@@ -257,24 +254,6 @@ namespace TerraLeague.Items
 
         public override bool UseItem(Item item, Player player)
         {
-
-            //if (modPlayer.usetime == 0 && modPlayer.ludens && modPlayer.ludensCharge < 100)
-            //{
-            //    if (item.magic)
-            //        player.GetModPlayer<PLAYERGLOBAL>().ludensCharge += 3;
-            //}
-
-            //if (player.GetModPlayer<PLAYERGLOBAL>().usetime == 0)
-            //{
-            //    if (item.melee)
-            //    {
-            //        player.GetModPlayer<PLAYERGLOBAL>().usetime = (int)((item.useAnimation - 1) * player.meleeSpeed);
-            //    }
-            //    else
-            //    {
-            //        player.GetModPlayer<PLAYERGLOBAL>().usetime = (int)(item.useAnimation - 1);
-            //    }
-            //}
             return base.UseItem(item, player);
         }
 
@@ -450,7 +429,6 @@ namespace TerraLeague.Items
         {
             if (extractType == 3347)
             {
-                // 1% chance
                 if (Main.rand.NextFloat() < 0.035259f)
                 {
                     resultStack = 1;

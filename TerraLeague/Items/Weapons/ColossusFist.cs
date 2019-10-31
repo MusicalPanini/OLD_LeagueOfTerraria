@@ -22,13 +22,13 @@ namespace TerraLeague.Items.Weapons
             item.rare = 2;
 
             item.noMelee = true;
-            item.useStyle = 5; // Set the correct useStyle.
-            item.useAnimation = 40; // Determines how long the animation lasts. 
-            item.useTime = 40; // Determines how fast you can use this weapon (a lower value results in a faster use time).
+            item.useStyle = 5;
+            item.useAnimation = 40;
+            item.useTime = 40;
             item.knockBack = 7F;
             item.damage = 20;
             item.scale = 1;
-            item.noUseGraphic = false; // Do not use the item graphic when using the item (we just want the ball to spawn).
+            item.noUseGraphic = false;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(4, 3);
             item.shootSpeed = 8f;
             item.melee = true;

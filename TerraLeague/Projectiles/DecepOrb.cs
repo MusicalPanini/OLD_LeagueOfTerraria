@@ -78,7 +78,6 @@ namespace TerraLeague.Projectiles
 
                 float xDif = player.Center.X - projectile.Center.X;
                 float yDif = player.Center.Y - projectile.Center.Y;
-                //float distance = (float)Math.Sqrt((double)(num44 * num44 + num45 * num45));
                 float distance = projectile.Distance(player.Center);
 
 
@@ -170,18 +169,17 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 10; 
             return true;
         }
 
-        public void AnimateProjectile() // Call this every frame, for example in the AI method.
+        public void AnimateProjectile()
         {
             projectile.frameCounter++;
-            if (projectile.frameCounter >= 5) // This will change the sprite every 8 frames (0.13 seconds). Feel free to experiment.
+            if (projectile.frameCounter >= 5)
             {
                 projectile.frame++;
-                projectile.frame %= 4; // Will reset to the first frame if you've gone through them all.
+                projectile.frame %= 4;
                 projectile.frameCounter = 0;
             }
         }

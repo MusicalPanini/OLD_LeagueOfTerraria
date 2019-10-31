@@ -33,9 +33,6 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            //if(projectile.timeLeft == 301)
-            //    Main.PlaySound(new LegacySoundStyle(2, 73), projectile.Center);
-
             if (!Main.npc[(int)projectile.ai[0]].active)
             {
                 projectile.Kill();

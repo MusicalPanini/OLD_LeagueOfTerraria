@@ -30,7 +30,6 @@ namespace TerraLeague.Items.AdvItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            //player.manaRegen = (int)(player.manaRegen * 1.15);
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.15;
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.05;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.05;

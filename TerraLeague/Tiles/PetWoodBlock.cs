@@ -11,8 +11,8 @@ namespace TerraLeague.Tiles
     {
         public override void SetDefaults()
         {
-            Main.tileSolid[Type] = true; // Is the tile solid
-            Main.tileMergeDirt[Type] = true; // Will tile merge with dirt?
+            Main.tileSolid[Type] = true;
+            Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type][TileID.WoodBlock] = true;
             Main.tileMerge[TileID.WoodBlock][Type] = true;
 
@@ -61,12 +61,12 @@ namespace TerraLeague.Tiles
             Main.tileMerge[Type][TileID.SnowBlock] = true;
             Main.tileMerge[TileID.SnowBlock][Type] = true;
 
-            Main.tileLighted[Type] = true; // ???
+            Main.tileLighted[Type] = true; 
 
             dustType = 51;
-            drop = ItemType<PetWood>(); // What item drops after destorying the tile
-            AddMapEntry(new Color(170, 170, 170)); // Colour of Tile on Map
-            minPick = 0; // What power pick minimum is needed to mine this block.
+            drop = ItemType<PetWood>(); 
+            AddMapEntry(new Color(170, 170, 170)); 
+            minPick = 0; 
         }
     }
 }

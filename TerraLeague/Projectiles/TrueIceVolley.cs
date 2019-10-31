@@ -29,7 +29,6 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            //projectile.rotation = projectile.velocity.ToRotation();
             int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color),0.7f);
             projectile.rotation = projectile.velocity.ToRotation();
             if (projectile.velocity.X < 0)

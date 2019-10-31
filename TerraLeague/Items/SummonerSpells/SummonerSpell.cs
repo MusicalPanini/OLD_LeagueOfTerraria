@@ -24,12 +24,6 @@ namespace TerraLeague.Items.SummonerSpells
             item.notAmmo = true;
             item.ammo = AmmoID.None;
             item.shoot = 0;
-            //item.useStyle = ItemUseStyleID.EatingUsing;
-            //item.useAnimation = 40;
-            //item.useTime = 40;
-            //item.useTurn = true;
-            //item.UseSound = new LegacySoundStyle(2, 29);//SoundID.Item3;
-            //item.consumable = true;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

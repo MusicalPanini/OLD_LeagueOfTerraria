@@ -53,19 +53,6 @@ namespace TerraLeague.Projectiles
 
             target.AddBuff(BuffType<DeadlyVenom>(), 300);
 
-            //target.AddBuff(BuffType("DeadlyVenom"), 300);
-            //if (target.HasBuff(BuffType("DeadlyVenomStacks")))
-            //{
-            //    int time = target.buffTime[target.FindBuffIndex(BuffType("DeadlyVenomStacks"))];
-
-            //    target.AddBuff(BuffType("DeadlyVenomStacks"), time + 100);
-
-            //}
-            //else
-            //{
-            //    target.AddBuff(BuffType("DeadlyVenomStacks"), 100);
-            //}
-
             base.OnHitNPC(target, damage, knockback, false);
         }
 
@@ -87,8 +74,7 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 10;
             return true;
         }
 

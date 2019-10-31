@@ -40,10 +40,6 @@ namespace TerraLeague.Tiles
 
             if (true /*Main.rand.Next(1) == 0*/)
             {
-                //WorldGen.SpreadGrass(i - 1, j, 0, this.Type, false, Main.tile[i, j].color());
-                //WorldGen.SpreadGrass(i + 1, j, 0, this.Type, false, Main.tile[i, j].color());
-                //WorldGen.SpreadGrass(i, j - 1, 0, this.Type, false, Main.tile[i, j].color());
-                //WorldGen.SpreadGrass(i, j + 1, 0, this.Type, false, Main.tile[i, j].color());
                 for (int x = i - 1; x <= i + 1; x++)
                 {
                     for (int y = j - 1; y <= j + 1; y++)

@@ -30,7 +30,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 3500;
             item.rare = 1;
             item.UseSound = new LegacySoundStyle(2,36);
-            item.shoot = 10; //idk why but all the guns in the vanilla source have this
+            item.shoot = 10;
             item.shootSpeed = 6f;
             item.useAmmo = AmmoID.Bullet;
             
@@ -47,10 +47,7 @@ namespace TerraLeague.Items.Weapons
             int numberProjectiles = 4;
             for (int i = 0; i < numberProjectiles; i++)
             {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(12)); // 30 degree spread.
-                                                                                                                // If you want to randomize the speed to stagger the projectiles
-                                                                                                                // float scale = 1f - (Main.rand.NextFloat() * .3f);
-                                                                                                                // perturbedSpeed = perturbedSpeed * scale; 
+                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(12));
                 Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
             }
             return false;

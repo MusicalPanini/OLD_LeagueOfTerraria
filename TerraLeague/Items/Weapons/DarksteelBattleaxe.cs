@@ -153,20 +153,6 @@ namespace TerraLeague.Items.Weapons
             }
 
             target.AddBuff(BuffType<Hemorrhage>(), 300);
-
-            //target.AddBuff(BuffType<Hemorrhage>(), 300);
-            //if (target.HasBuff(BuffType<HemorrhageStacks>()))
-            //{
-            //    int time = target.buffTime[target.FindBuffIndex(BuffType<HemorrhageStacks>())];
-
-            //    target.AddBuff(BuffType<HemorrhageStacks>(), time + 100);
-
-            //}
-            //else
-            //{
-            //    target.AddBuff(BuffType<HemorrhageStacks>(), 100);
-            //}
-
             base.OnHitNPC(player, target, damage, knockBack, crit);
         }
 

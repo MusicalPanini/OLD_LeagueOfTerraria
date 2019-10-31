@@ -60,7 +60,7 @@ namespace TerraLeague.Tiles.PetFurniture
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
+            TileID.Sets.HousingWalls[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Petrified Wood Door");

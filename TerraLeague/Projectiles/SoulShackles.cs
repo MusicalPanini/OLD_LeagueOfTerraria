@@ -93,13 +93,6 @@ namespace TerraLeague.Projectiles
                 }
                 else
                 {
-                    //player.noKnockback = true;
-                    //player.jump = 0;
-                    //player.wingTime = 0;
-                    //player.noItems = true;
-                    //player.silence = true;
-                    //player.GetModPlayer<PLAYERGLOBAL>().finalsparkChannel = true;
-
                     Vector2 npcPos = npc.Center;
                     Vector2 playerPos = player.Center;
 
@@ -172,15 +165,6 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 200, 0,0,0, new Color(0, 192, 255), 2);
-            //    dust.noGravity = true;
-            //}
-            //Main.PlaySound(0, projectile.Center);
-
             base.Kill(timeLeft);
         }
 
@@ -195,8 +179,6 @@ namespace TerraLeague.Projectiles
 
         public override bool PreDraw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch, Color lightColor)
         {
-            // So set the correct path here to load the chain texture. 'YourModName' is of course the name of your mod.
-            // Then into the Projectiles folder and take the texture that is called 'CustomFlailBall_Chain'.
             Texture2D texture = mod.GetTexture("Projectiles/SoulShackleChain");
 
             Vector2 position = projectile.Center;

@@ -28,31 +28,13 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            //if (projectile.velocity.X > 0)
-            //    projectile.rotation += 0.5f;
-            //else
-            //    projectile.rotation -= 0.5f;
-
             if ((int)projectile.ai[0] == 0)
             {
                 if (projectile.timeLeft < 150)
                 {
                     projectile.velocity.Y += 0.4f;
                     projectile.velocity.X *= 0.97f;
-
-
-                    //if (projectile.velocity.Y == 0f && projectile.velocity.X != 0f)
-                    //{
-                    //    projectile.velocity.X *= 0.97f;
-                    //    if ((double)projectile.velocity.X > -0.01 && (double)projectile.velocity.X < 0.01)
-                    //    {
-                    //        projectile.velocity.X = 0f;
-                    //        projectile.netUpdate = true;
-                    //    }
-                    //}
-                    //projectile.velocity.Y += 0.2f;
                 }
-                //projectile.rotation += projectile.velocity.X * 0.1f;
             }
             
             if ((int)projectile.ai[0] == 1)
@@ -102,7 +84,6 @@ namespace TerraLeague.Projectiles
                 {
                     int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
                 }
-                // Fire Dust spawn
                 for (int i = 0; i < 20; i++)
                 {
                     int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1f);
@@ -150,9 +131,7 @@ namespace TerraLeague.Projectiles
             projectile.friendly = true;
             projectile.velocity = Vector2.Zero;
             projectile.tileCollide = false;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 150;

@@ -32,7 +32,6 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.08;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
-            //player.manaRegen = (int)(player.manaRegen * 1.2);
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.2;
             player.magicDamage += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;

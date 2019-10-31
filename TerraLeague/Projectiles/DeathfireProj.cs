@@ -27,7 +27,6 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.magic = true;
             projectile.alpha = 255;
-            //projectile.extraUpdates = 8;
         }
 
 
@@ -135,7 +134,6 @@ namespace TerraLeague.Projectiles
                 Main.dust[dustIndex].velocity *= 1.4f;
                 Main.dust[dustIndex].noGravity = true;
             }
-            // Fire Dust spawn
             for (int i = 0; i < 80; i++)
             {
                 int dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, 110, 0, 0, 0, new Color(0, 255, 201), 2f);
@@ -157,9 +155,7 @@ namespace TerraLeague.Projectiles
             projectile.ai[0] = -2;
             projectile.tileCollide = false;
             projectile.velocity = Vector2.Zero;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 200;

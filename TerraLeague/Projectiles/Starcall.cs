@@ -82,14 +82,11 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            //Projectile.NewProjectile(projectile.Center, new Vector2(0, 0), ProjectileType("ExplosionCollision"), (int)(projectile.damage), 10, Main.player[projectile.owner].whoAmI);
-            // Play explosion sound
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 3), projectile.position);
             Microsoft.Xna.Framework.Audio.SoundEffectInstance efx = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 4), projectile.position);
             if (efx != null)
                 efx.Pitch = -1f;
 
-            // Fire Dust spawn
             for (int i = 0; i < 40; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 263, 0, 0, 0, new Color(237, 137, 164), 2f);
@@ -100,7 +97,6 @@ namespace TerraLeague.Projectiles
                 Main.dust[dustIndex].noGravity = true;
                 Main.dust[dustIndex].velocity *= 4f;
             }
-            // reset size to normal width and height.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 10;
@@ -119,7 +115,6 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
             width = 10;
             height = 10;
             return true;
@@ -130,9 +125,7 @@ namespace TerraLeague.Projectiles
             projectile.velocity = Vector2.Zero;
             projectile.tileCollide = false;
             projectile.friendly = true;
-            // Set to transparent. This projectile technically lives as  transparent for about 3 frames
             projectile.alpha = 255;
-            // change the hitbox size, centered about the original projectile center. This makes the projectile damage enemies during the explosion.
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 115;

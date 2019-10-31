@@ -72,15 +72,8 @@ namespace TerraLeague.UI
             Vector2 MousePosition = new Vector2((float)Main.mouseX, (float)Main.mouseY);
             if (MainPanel.ContainsPoint(MousePosition))
             {
-                // Checking ContainsPoint and then setting mouseInterface to true is very common. This causes clicks to not cause the player to use current items. 
                 Main.LocalPlayer.mouseInterface = true;
             }
-            //if (dragging)
-            //{
-            //    MainPanel.Left.Set(MousePosition.X - offset.X, 0f);
-            //    MainPanel.Top.Set(MousePosition.Y - offset.Y, 0f);
-            //    Recalculate();
-            //}
         }
         
     }
@@ -372,10 +365,8 @@ namespace TerraLeague.UI
                 newBounds.Width = texture.Width;
                 newBounds.Height = texture.Width;
 
-                // Create a new texture of the desired size
                 Texture2D croppedTexture = new Texture2D(Main.graphics.GraphicsDevice, newBounds.Width, newBounds.Height);
 
-                // Copy the data from the cropped region into a buffer, then into the new texture
                 Color[] data = new Color[newBounds.Width * newBounds.Height];
                 texture.GetData(0, newBounds, data, 0, newBounds.Width * newBounds.Height);
                 croppedTexture.SetData(data);

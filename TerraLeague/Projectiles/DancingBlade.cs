@@ -189,25 +189,17 @@ namespace TerraLeague.Projectiles
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
         {
-            // For going through platforms and such, javelins use a tad smaller size
-            width = height = 10; // notice we set the width to the height, the height to 10. so both are 10
+            width = height = 10;
             return true;
         }
 
         public void DeadMode()
         {
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, projectile.width, projectile.height, 16, 0f, 0f, 0, new Color(200, 200, 200), 1f)];
-            //    dust.noGravity = true;
-            //    dust.noLight = true;
-            //}
             projectile.Kill();
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            //Redraw the projectile with the color not influenced by light
             Vector2 drawOrigin = new Vector2(Main.projectileTexture[projectile.type].Width * 0.5f, projectile.height * 0.5f);
             for (int k = 0; k < projectile.oldPos.Length; k++)
             {
