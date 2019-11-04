@@ -222,6 +222,7 @@ namespace TerraLeague.UI
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             regen.Top.Set((Height.Pixels / 2 - text.MinHeight.Pixels / 2 + 3), 0f);
             regen.Left.Set(Width.Pixels / 2 - 26, 0);
+            float quotient = 1;
             switch (stat)
             {
                 case ResourceBarMode.HP:
