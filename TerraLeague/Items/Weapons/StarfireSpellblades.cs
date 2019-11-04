@@ -20,7 +20,7 @@ namespace TerraLeague.Items.Weapons
         {
             return "Gains attack speed and damage each second in combat" +
                 "\nAfter 6 seconds, the sword will ascend and create projectiles" +
-                "\nthe projectiles deal " + item.damage + " + [c/" + TerraLeague.RNGColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG * 0.2) + "] + [c/" + TerraLeague.SUMColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM * 0.40) + "] summon/ranged damage";
+                "\nthe projectiles deal " + item.damage + " + [c/" + TerraLeague.RNGColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG * 0.2) + "] + [c/" + TerraLeague.SUMColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM * 0.40) + "] ranged damage";
         }
 
         public override string GetQuote()
