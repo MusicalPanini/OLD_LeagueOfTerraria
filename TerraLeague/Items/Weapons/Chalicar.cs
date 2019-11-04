@@ -12,7 +12,7 @@ namespace TerraLeague.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chalicar");
+            DisplayName.SetDefault("Chalicar of Setaka");
             Tooltip.SetDefault("");
         }
 
