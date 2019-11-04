@@ -31,6 +31,8 @@ namespace TerraLeague
         internal AbilityUI abilityUI;
         internal HealthbarUI healthbarUI;
         internal bool canLog = false;
+        internal bool debugMode = false;
+        internal bool disableModUI = false;
         internal int SumCurrencyID;
         private UserInterface userInterface1;
         private UserInterface userInterface2;
@@ -351,70 +353,73 @@ namespace TerraLeague
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
-            if (resourseBar < 0)
-                resourseBar = 7;
-            else
+            if (!disableModUI)
             {
-                layers[resourseBar].Active = false;
-                //layers.RemoveAt(resourseBar);
+                int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+                if (resourseBar < 0)
+                    resourseBar = 7;
+                else
+                {
+                    layers[resourseBar].Active = false;
+                    //layers.RemoveAt(resourseBar);
+                }
+                layers.Insert(resourseBar, new LegacyGameInterfaceLayer("TerraLeague: Resource Bar",
+                delegate
+                {
+                    if (HealthbarUI.visible)
+                    {
+                        HealthbarInterface.Update(Main._drawInterfaceGameTime);
+                        healthbarUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                int inventoryLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+                if (inventoryLayer < 0)
+                    inventoryLayer = 4;
+
+                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+                "TerraLeague: Stat Hud",
+                delegate
+                {
+                    if (StatUI.visible < 0)
+                    {
+                        userInterface1.Update(Main._drawInterfaceGameTime);
+                        statUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+                "TerraLeague: Item Hud",
+                delegate
+                {
+                    if (ItemUI.visible)
+                    {
+                        userInterface2.Update(Main._drawInterfaceGameTime);
+                        itemUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+                "TerraLeague: Ability Hud",
+                delegate
+                {
+                    if (AbilityUI.visible)
+                    {
+                        userInterface3.Update(Main._drawInterfaceGameTime);
+                        abilityUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
             }
-            layers.Insert(resourseBar, new LegacyGameInterfaceLayer( "TerraLeague: Resource Bar",
-            delegate 
-            {
-                if (HealthbarUI.visible)
-                {
-                    HealthbarInterface.Update(Main._drawInterfaceGameTime);
-                    healthbarUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            }, 
-            InterfaceScaleType.UI));
-
-            int inventoryLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-            if (inventoryLayer < 0)
-                inventoryLayer = 4;
-
-            layers.Insert(inventoryLayer,new LegacyGameInterfaceLayer(
-            "TerraLeague: Stat Hud",
-            delegate
-            {
-                if (StatUI.visible < 0)
-                {
-                    userInterface1.Update(Main._drawInterfaceGameTime);
-                    statUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            layers.Insert(inventoryLayer,new LegacyGameInterfaceLayer(
-            "TerraLeague: Item Hud",
-            delegate
-            {
-                if (ItemUI.visible)
-                {
-                    userInterface2.Update(Main._drawInterfaceGameTime);
-                    itemUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            layers.Insert(inventoryLayer,new LegacyGameInterfaceLayer(
-            "TerraLeague: Ability Hud",
-            delegate
-            {
-                if (AbilityUI.visible)
-                {
-                    userInterface3.Update(Main._drawInterfaceGameTime);
-                    abilityUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
