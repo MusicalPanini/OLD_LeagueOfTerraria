@@ -56,6 +56,10 @@ namespace TerraLeague
         /// </summary>
         internal bool zoneSurfaceMarble = false;
         /// <summary>
+        /// Is the player in the Black Mist
+        /// </summary>
+        internal bool zoneBlackMist = false;
+        /// <summary>
         /// Has the player hit an enemy with current melee swing
         /// </summary>
         internal bool hasHitMelee = false;
@@ -912,6 +916,13 @@ namespace TerraLeague
             if (zoneSurfaceMarble)
             {
                 nPCSpawnInfo.marble = true;
+            }
+
+            zoneBlackMist = (player.ZoneBeach && !Main.dayTime /*&& Main.moonPhase = 0*/);
+
+            if (zoneBlackMist)
+            {
+                
             }
         }
 
