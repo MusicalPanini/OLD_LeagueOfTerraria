@@ -1189,6 +1189,19 @@ namespace TerraLeague
         
         public override void PostUpdate()
         {
+            if (TerraLeague.instance.debugMode)
+            {
+                for (int i = 0; i < AbilityCooldowns.Length; i++)
+                {
+                    AbilityCooldowns[i] = 0;
+                }
+
+                for (int i = 0; i < sumCooldowns.Length; i++)
+                {
+                    sumCooldowns[i] = 0;
+                }
+            }
+
             // Handles the modded regen
             LinearManaRegen();
 
