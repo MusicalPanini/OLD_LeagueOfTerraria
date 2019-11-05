@@ -15,6 +15,11 @@ using TerraLeague.NPCs;
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Buffs;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
+using TerraLeague.Backgrounds;
+using Terraria.GameContent.Shaders;
+using TerraLeague.Shaders;
 
 namespace TerraLeague
 {
@@ -284,6 +289,9 @@ namespace TerraLeague
                 AddEquipTexture(new Items.Accessories.DarkinBody(), null, EquipType.Body, "DarkinBody", "TerraLeague/Items/Accessories/Darkin_Body", "TerraLeague/Items/Accessories/Darkin_Arms");
                 AddEquipTexture(new Items.Accessories.DarkinLegs(), null, EquipType.Legs, "DarkinLegs", "TerraLeague/Items/Accessories/Darkin_Legs");
 
+                Filters.Scene["TerraLeague:TheBlackMist"] = new Filter(new BlackMistShaderData("FilterSandstormForeground").UseColor(0,2,1).UseSecondaryColor(0,0,0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(3.5f).UseOpacity(0.2f).UseImageScale(new Vector2(8, 8)), EffectPriority.High);
+                Overlays.Scene["TerraLeague:TheBlackMist"] = new SimpleOverlay("Images/Misc/Perlin", new BlackMistShaderData("FilterSandstormBackground").UseColor(0,1,0).UseSecondaryColor(0,0,0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(5).UseOpacity(1f).UseImageScale(new Vector2(4, 4)), EffectPriority.High, RenderLayers.Landscape);
+                SkyManager.Instance["TerraLeague:TheBlackMist"] = new BlackMistSky();
 
                 userInterface1 = new UserInterface();
                 statUI = new StatUI();

@@ -918,11 +918,11 @@ namespace TerraLeague
                 nPCSpawnInfo.marble = true;
             }
 
-            zoneBlackMist = (player.ZoneBeach && !Main.dayTime /*&& Main.moonPhase = 0*/);
+            zoneBlackMist = true;/* (player.ZoneBeach && !Main.dayTime && Main.moonPhase = 0);*/
 
             if (zoneBlackMist)
             {
-                
+                player.blind = true;
             }
         }
 
@@ -1563,7 +1563,14 @@ namespace TerraLeague
                 }
             }
         }
-        
+
+        public override void UpdateBiomeVisuals()
+        {
+            //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
+            player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
+            base.UpdateBiomeVisuals();
+        }
+
         /// <summary>
         /// <para>Runs just before the player dies</para>
         /// Return false to prevent the player from dying
