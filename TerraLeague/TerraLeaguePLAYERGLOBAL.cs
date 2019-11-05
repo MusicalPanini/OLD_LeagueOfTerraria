@@ -2578,7 +2578,7 @@ namespace TerraLeague
             }
 
 
-            if (player.breath != player.breathMax)
+            if (player.breath != player.breathMax && Main.myPlayer == player.whoAmI)
             {
                 Main.spriteBatch.Draw
                     (
