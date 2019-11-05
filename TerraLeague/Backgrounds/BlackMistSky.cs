@@ -50,16 +50,18 @@ namespace TerraLeague.Backgrounds
             {
                 return;
             }
-            float quotient = (float)Main.time / 3600f;
-
-            if (quotient > 1)
+            float quotient;
+            if (Main.time <= 3600)
+                quotient = (float)Main.time / 3600f;
+            else if (Main.time >= 28800)
+                quotient = (float)(32400 - Main.time) / 3600f;
+            else
                 quotient = 1;
 
             float scale = System.Math.Min(1f,  1.5f);
             Color color = new Color(new Vector4(0, 2.5f, 1f, 0.3f) * 1f * Main.bgColor.ToVector4()) * this._opacity * scale * quotient;
 
-
-                spriteBatch.Draw(TerraLeague.instance.GetTexture("Backgrounds/Fog"), new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);
+            spriteBatch.Draw(TerraLeague.instance.GetTexture("Backgrounds/Fog"), new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);
         }
 
         public override float GetCloudAlpha()

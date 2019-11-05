@@ -33,9 +33,12 @@ namespace TerraLeague.Shaders
             base.Update(gameTime);
             Main.bgColor = Color.Green;
 
-            float quotient = (float)Main.time / 3600f;
-
-            if (quotient > 1)
+            float quotient;
+            if (Main.time <= 3600)
+                quotient = (float)Main.time / 3600f;
+            else if (Main.time >= 28800)
+                quotient = (float)(32400 - Main.time) / 3600f;
+            else
                 quotient = 1;
 
 
