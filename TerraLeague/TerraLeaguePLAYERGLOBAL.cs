@@ -56,6 +56,10 @@ namespace TerraLeague
         /// </summary>
         internal bool zoneSurfaceMarble = false;
         /// <summary>
+        /// Is the player in the Black Mist
+        /// </summary>
+        internal bool zoneBlackMist = false;
+        /// <summary>
         /// Has the player hit an enemy with current melee swing
         /// </summary>
         internal bool hasHitMelee = false;
@@ -914,7 +918,16 @@ namespace TerraLeague
             {
                 nPCSpawnInfo.marble = true;
             }
+
+            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 4) || (WORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
+
+            if (zoneBlackMist)
+            {
+                player.blind = true;
+            }
         }
+
+        
 
         #region Multiplayer Stuff
         public override void clientClone(ModPlayer clientClone)
@@ -1239,7 +1252,7 @@ namespace TerraLeague
             }
 
             // Stopwatch enabler
-            if (Main.time == 0 && !stopWatchActive)
+            if (Main.time == 0 && !stopWatchActive && Main.dayTime)
             {
                 stopWatchActive = true;
             }
@@ -1554,7 +1567,14 @@ namespace TerraLeague
                 }
             }
         }
-        
+
+        public override void UpdateBiomeVisuals()
+        {
+            //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
+            player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
+            base.UpdateBiomeVisuals();
+        }
+
         /// <summary>
         /// <para>Runs just before the player dies</para>
         /// Return false to prevent the player from dying

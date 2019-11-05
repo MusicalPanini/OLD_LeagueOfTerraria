@@ -139,4 +139,38 @@ namespace TerraLeague
             }
         }
     }
+
+    public class StartHarrowing : ModCommand
+    {
+        public override CommandType Type
+        {
+            get { return CommandType.Chat; }
+        }
+
+        public override string Command
+        {
+            get { return "startHarrowing"; }
+        }
+
+        public override string Usage
+        {
+            get { return "/startHarrowing"; }
+        }
+
+        public override string Description
+        {
+            get { return "Force starts the Harrowing"; }
+        }
+
+        public override void Action(CommandCaller caller, string input, string[] args)
+        {
+            if (Main.dayTime)
+            {
+                Main.dayTime = false;
+                Main.time = 0;
+            }
+
+            WORLDGLOBAL.BlackMistEvent = true;
+        }
+    }
 }
