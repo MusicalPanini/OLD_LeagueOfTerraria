@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -348,14 +349,32 @@ namespace TerraLeague
             BlackMistEvent = tag.GetBool("BlackMistEvent");
         }
 
+        public override void NetSend(BinaryWriter writer)
+        {
+            var flags = new BitsByte();
+            flags[0] = BlackMistEvent;
+            writer.Write(flags);
+            base.NetSend(writer);
+        }
+
+        public override void NetReceive(BinaryReader reader)
+        {
+            BitsByte flags = reader.ReadByte();
+            BlackMistEvent = flags[0];
+            base.NetReceive(reader);
+        }
+
         public override void PostUpdate()
         {
-            if (!Main.dayTime && Main.time == 1 && !Main.bloodMoon)
+            if (!Main.dayTime && Main.time == 1 && !Main.bloodMoon && Main.netMode != 1)
             {
                 BlackMistEvent = true;
-                Main.NewText("The Harrowing has begun...", new Color(0, 255, 125));
+                if (Main.netMode == 0)
+                    Main.NewText("The Harrowing has begun...", new Color(0, 255, 125));
+                else if (Main.netMode == 2)
+                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Harrowing has begun..."), new Color(50, 255, 130), -1);
             }
-            if (Main.dayTime && BlackMistEvent)
+            if (Main.dayTime && BlackMistEvent && Main.netMode != 1)
             {
                 BlackMistEvent = false;
             }
