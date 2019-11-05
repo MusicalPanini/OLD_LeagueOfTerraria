@@ -918,7 +918,7 @@ namespace TerraLeague
                 nPCSpawnInfo.marble = true;
             }
 
-            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 0) || (WORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
+            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 4) || (WORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
 
             if (zoneBlackMist)
             {

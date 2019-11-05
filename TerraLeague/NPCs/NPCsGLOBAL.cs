@@ -171,7 +171,20 @@ namespace TerraLeague.NPCs
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneSurfaceMarble)
+            PLAYERGLOBAL modPlayer = spawnInfo.player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (modPlayer.zoneBlackMist)
+            {
+                pool.Add(NPCType<TheUndying_1>(), SpawnCondition.OverworldNightMonster.Chance);
+                pool.Add(NPCType<TheUndying_2>(), SpawnCondition.OverworldNightMonster.Chance);
+                pool.Add(NPCType<TheUndying_Archer>(), SpawnCondition.OverworldNightMonster.Chance * 0.5f);
+                pool.Add(NPCType<Scuttlegeist>(), SpawnCondition.OverworldNightMonster.Chance * 0.25f);
+                pool.Add(NPCType<UnleashedSpirit>(), SpawnCondition.OverworldNightMonster.Chance);
+                pool.Add(NPCType<EtherealRemitter>(), SpawnCondition.OverworldNightMonster.Chance * 0.5f);
+                pool.Add(NPCType<SoulBoundSlime>(), SpawnCondition.OverworldNightMonster.Chance * 0.5f);
+                pool.Add(NPCType<BansheeHive>(), SpawnCondition.OverworldNightMonster.Chance * 0.1f);
+            }
+            if (modPlayer.zoneSurfaceMarble)
             {
                 pool.Remove(NPCID.GreenSlime);
                 pool.Remove(NPCID.BlueSlime);
@@ -185,6 +198,7 @@ namespace TerraLeague.NPCs
                     pool.Add(NPCID.Medusa, 0.2f);
 
             }
+            
 
             base.EditSpawnPool(pool, spawnInfo);
         }
@@ -325,9 +339,15 @@ namespace TerraLeague.NPCs
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
-            if (player.GetModPlayer<PLAYERGLOBAL>().Disruption)
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (modPlayer.zoneBlackMist)
             {
-                spawnRate = (int)(spawnRate * 0.5);
+                spawnRate = (int)(spawnRate * 0.25);
+            }
+            if (modPlayer.Disruption)
+            {
+                spawnRate = (int)(spawnRate * 2);
             }
         }
 
