@@ -45,7 +45,7 @@ namespace TerraLeague.Projectiles
             dust.noGravity = true;
             dust.scale = 1.4f;
 
-            if (projectile.timeLeft % 30 == 0)
+            if (projectile.timeLeft % 30 == 0 && Main.myPlayer == projectile.owner)
             {
                 Projectile.NewProjectile(projectile.Center, projectile.velocity, ProjectileType<AxePathMarker>(), 0, 0, projectile.owner);
             }
