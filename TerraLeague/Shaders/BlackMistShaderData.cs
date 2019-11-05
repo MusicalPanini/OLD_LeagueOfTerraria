@@ -32,20 +32,23 @@ namespace TerraLeague.Shaders
             base.UseDirection(vector);
             base.Update(gameTime);
             Main.bgColor = Color.Green;
-            //if (_passName == "FilterSandstormForeground")
-            //{
-            //    base.UseOpacity(0.2f);
-            //    base.UseIntensity(3.5f);
-            //    base.UseColor(0,2,1);
-            //    base.UseSecondaryColor(0,0,0);
-            //}
-            //else
-            //{
-            //    base.UseColor(0,1,0);
-            //    base.UseSecondaryColor(0,0,0);
-            //    base.UseIntensity(5f);
-            //    base.UseOpacity(1f);
-            //}
+
+            float quotient = (float)Main.time / 3600f;
+
+            if (quotient > 1)
+                quotient = 1;
+
+
+            if (_passName == "FilterSandstormForeground")
+            {
+                base.UseOpacity(0.2f * quotient);
+                base.UseIntensity(3.5f * quotient);
+            }
+            else
+            {
+                base.UseIntensity(5f * quotient);
+                base.UseOpacity(1f * quotient);
+            }
         }
 
         public override void Apply()

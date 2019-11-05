@@ -918,13 +918,15 @@ namespace TerraLeague
                 nPCSpawnInfo.marble = true;
             }
 
-            zoneBlackMist = (player.ZoneBeach && !Main.dayTime && Main.moonPhase == 0);
+            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 0) || (WORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
 
             if (zoneBlackMist)
             {
                 player.blind = true;
             }
         }
+
+        
 
         #region Multiplayer Stuff
         public override void clientClone(ModPlayer clientClone)
@@ -1249,7 +1251,7 @@ namespace TerraLeague
             }
 
             // Stopwatch enabler
-            if (Main.time == 0 && !stopWatchActive)
+            if (Main.time == 0 && !stopWatchActive && Main.dayTime)
             {
                 stopWatchActive = true;
             }

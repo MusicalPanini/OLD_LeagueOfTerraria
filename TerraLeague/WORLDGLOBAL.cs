@@ -21,6 +21,8 @@ namespace TerraLeague
 {
     public class WORLDGLOBAL : ModWorld
     {
+        public static bool BlackMistEvent = false;
+
         public static bool TargonOreSpawned = false;
         public static bool ManaOreSpawned = false;
         public static bool VoidOreSpawned = false;
@@ -331,7 +333,8 @@ namespace TerraLeague
             if (NPC.downedBoss3) OreSpawned.Add("VoidOreSpawned");
 
             return new TagCompound {
-                {"OreSpawned", OreSpawned}
+                {"OreSpawned", OreSpawned},
+                {"BlackMistEvent", BlackMistEvent}
             };
         }
 
@@ -341,10 +344,22 @@ namespace TerraLeague
             TargonOreSpawned = OreSpawned.Contains("TargonOreSpawned");
             ManaOreSpawned = OreSpawned.Contains("ManaOreSpawned");
             VoidOreSpawned = OreSpawned.Contains("VoidOreSpawned");
+
+            BlackMistEvent = tag.GetBool("BlackMistEvent");
         }
 
         public override void PostUpdate()
         {
+            if (!Main.dayTime && Main.time == 1 && !Main.bloodMoon)
+            {
+                BlackMistEvent = true;
+                Main.NewText("The Harrowing has begun...", new Color(0, 255, 125));
+            }
+            if (Main.dayTime && BlackMistEvent)
+            {
+                BlackMistEvent = false;
+            }
+
             if (Main.hardMode) 
             {
                 if (!TargonOreSpawned)

@@ -430,6 +430,20 @@ namespace TerraLeague
             }
         }
 
+        public override void UpdateMusic(ref int music, ref MusicPriority priority)
+        {
+            if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active)
+            {
+                return;
+            }
+            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+            {
+                music = MusicID.Eerie;
+                priority = MusicPriority.Event;
+            }
+            base.UpdateMusic(ref music, ref priority);
+        }
+
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
             ModNetHandler.HandlePacket(reader, whoAmI);
