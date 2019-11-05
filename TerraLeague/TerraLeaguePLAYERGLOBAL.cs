@@ -26,7 +26,7 @@ namespace TerraLeague
     {
         internal PlayerPacketHandler PacketHandler = ModNetHandler.playerHandler;
         internal NPCSpawnInfo nPCSpawnInfo = new NPCSpawnInfo();
-
+        
         // Ability Animation
         public int abilityAnimationType = 0;
         public int abilityAnimation = 0;
@@ -370,6 +370,7 @@ namespace TerraLeague
         public int NormalShield = 0;
         public int PureHealthLastStep = 0;
         public string wasHitByProjOrNPCLastStep = "None";
+        public Color currentShieldColor = new Color(255,255,255,0);
 
         /// <summary>
         /// Returns the players current health without the shields
@@ -1529,6 +1530,7 @@ namespace TerraLeague
             maxMinionsLastStep = player.maxMinions;
             maxLifeLastStep = GetRealHeathWithoutShield(true);
 
+            SetShieldColor();
             base.PostUpdate();
         }
 
@@ -2578,7 +2580,7 @@ namespace TerraLeague
             }
 
 
-            if (player.breath != player.breathMax)
+            if (player.breath != player.breathMax && Main.myPlayer == player.whoAmI)
             {
                 Main.spriteBatch.Draw
                     (
@@ -2605,7 +2607,7 @@ namespace TerraLeague
                     );
             }
 
-            if (player.HeldItem.type == ItemType<Whisper>())
+            if (player.HeldItem.type == ItemType<Whisper>() && Main.myPlayer == player.whoAmI)
             {
 
                 Texture2D texture = null;
@@ -2856,6 +2858,37 @@ namespace TerraLeague
         public void AddShield(int amount, int duration, Color color, ShieldType type)
         {
             Shields.Add(new Shield(amount, duration, color, type));
+        }
+
+        public void SetShieldColor()
+        {
+            if (player.whoAmI == Main.myPlayer)
+            {
+                Color oldCol = currentShieldColor;
+
+
+                if (player.HasBuff(BuffType<DivineJudgementBuff>()))
+                {
+                    currentShieldColor = Color.Gold;
+                }
+                else if (GetTotalShield() > 0)
+                {
+                    currentShieldColor = Shields.Last().ShieldColor;
+                }
+                else if (veil)
+                {
+                    currentShieldColor = Color.Purple;
+                }
+                else
+                {
+                    currentShieldColor = new Color(255, 255, 255, 0);
+                }
+
+                if (Main.netMode == 1 && (oldCol.R != currentShieldColor.R || oldCol.G != currentShieldColor.G || oldCol.B != currentShieldColor.B || oldCol.A != currentShieldColor.A))
+                {
+                    PacketHandler.SendNewShield(-1, player.whoAmI, player.whoAmI, currentShieldColor);
+                }
+            }
         }
 
         /// <summary>

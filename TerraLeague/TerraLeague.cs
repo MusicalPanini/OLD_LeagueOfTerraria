@@ -176,38 +176,9 @@ namespace TerraLeague
                     return;
                 }
 
-
-                if (drawPlayer.HasBuff(ModContent.BuffType<DivineJudgementBuff>()))
+                if (modPlayer.currentShieldColor.A != 0)
                 {
-                    Color color = Color.Gold;
-                    color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
-                    color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.position.X - Main.screenPosition.X - 19), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 10), 60, 60);
-
-                    Lighting.AddLight(drawPlayer.Center, color.ToVector3());
-
-                    Texture2D texture = instance.GetTexture("Projectiles/NormalShield");
-                    Rectangle sourRec = new Rectangle(0, 0 + (60 * frame), 60, 60);
-                    DrawData data = new DrawData(texture, destRec, sourRec, color, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
-                }
-                else if (modPlayer.GetTotalShield() > 0)
-                {
-                    Color color = modPlayer.Shields.Last().ShieldColor;
-                    color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
-                    color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.position.X - Main.screenPosition.X - 19), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 10), 60, 60);
-
-                    Lighting.AddLight(drawPlayer.Center, color.ToVector3());
-
-                    Texture2D texture = instance.GetTexture("Projectiles/NormalShield");
-                    Rectangle sourRec = new Rectangle(0, 0 + (60 * frame), 60, 60);
-                    DrawData data = new DrawData(texture, destRec, sourRec, color, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
-                }
-                else if (modPlayer.veil)
-                {
-                    Color color = Color.Purple;
+                    Color color = modPlayer.currentShieldColor;
                     color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
                     color.A = 100;
                     Rectangle destRec = new Rectangle((int)(drawPlayer.position.X - Main.screenPosition.X - 19), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 10), 60, 60);

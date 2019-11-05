@@ -12,6 +12,7 @@ using TerraLeague.Items.SummonerSpells;
 using TerraLeague.Items.CustomItems;
 using TerraLeague.Items.Weapons;
 using static Terraria.ModLoader.ModContent;
+using System.Collections.Generic;
 
 namespace TerraLeague
 {
@@ -88,6 +89,7 @@ namespace TerraLeague
         public const byte Shield = 6;
         public const byte ShieldTotal = 7;
         public const byte Ascension = 8;
+        public const byte NewShield = 9;
 
         public const byte Stoneplate = 50;
         #endregion
@@ -117,6 +119,9 @@ namespace TerraLeague
                     break;
                 case (ShieldTotal):
                     ReceiveShieldTotal(reader, fromWho);
+                    break;
+                case (NewShield):
+                    ReceiveNewShield(reader, fromWho);
                     break;
                 case (Ascension):
                     ReceiveAscension(reader, fromWho);
@@ -305,6 +310,39 @@ namespace TerraLeague
                     Main.player[user].GetModPlayer<PLAYERGLOBAL>().MagicShield = value;
                 else if (shieldType == 2)
                     Main.player[user].GetModPlayer<PLAYERGLOBAL>().PhysicalShield = value;
+            }
+        }
+
+        // New Shield
+        public void SendNewShield(int toWho, int fromWho, int user, Color color)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(NewShield, fromWho);
+                packet.Write(user);
+                packet.Write(color.R);
+                packet.Write(color.G);
+                packet.Write(color.B);
+                packet.Write(color.A);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending New Shield", color);
+            }
+        }
+        private void ReceiveNewShield(BinaryReader reader, int fromWho)
+        {
+            int user = reader.ReadInt32();
+            int R = reader.ReadByte();
+            int G = reader.ReadByte();
+            int B = reader.ReadByte();
+            int A = reader.ReadByte();
+            TerraLeague.Log("[DEBUG] - Received New Shield", new Color(R, G, B, A));
+            if (Main.netMode == NetmodeID.Server)
+            {
+                SendNewShield(-1, fromWho, user, new Color(R,G,B,A));
+            }
+            else
+            {
+                Main.player[user].GetModPlayer<PLAYERGLOBAL>().currentShieldColor = new Color(R, G, B, A);
             }
         }
 
@@ -510,9 +548,7 @@ namespace TerraLeague
 
         public override void HandlePacket(BinaryReader reader, int fromWho)
         {
-            switch (reader.ReadByte())
-            {
-            }
+           
         }
     }
 
@@ -572,7 +608,7 @@ namespace TerraLeague
             }
             else
             {
-                Items.CustomItems.LeagueItem legItem = Main.item[itemID].modItem as Items.CustomItems.LeagueItem;
+                LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
                 {
                     if (secondary)
@@ -611,7 +647,7 @@ namespace TerraLeague
             }
             else
             {
-                LeagueItem legItem = Main.item[itemID].modItem as LeagueItem;
+                LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
                 {
                     if (secondary)
@@ -1217,7 +1253,7 @@ namespace TerraLeague
             }
             else
             {
-                AbilityItem abilityItem = Main.item[CastItem].modItem as AbilityItem;
+                AbilityItem abilityItem = GetModItem(CastItem) as AbilityItem;
 
                 if (abilityItem != null)
                     abilityItem.Efx(Main.player[Caster], AbilityType);

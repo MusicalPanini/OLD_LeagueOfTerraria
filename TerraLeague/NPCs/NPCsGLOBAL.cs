@@ -135,7 +135,10 @@ namespace TerraLeague.NPCs
                 npc.position.Y = npc.oldPosition.Y - 1;
             }
             if (slowed)
+            {
                 npc.damage = (int)(npc.damage * 0.7);
+                npc.position = new Vector2((npc.oldPosition.X + npc.position.X) / 2, (npc.oldPosition.Y + npc.position.Y) / 2);
+            }
             if (cleaved)
                 npc.defense -= (int)(npc.defense * 0.06 * (CleavedStacks + 1));
 
@@ -528,8 +531,6 @@ namespace TerraLeague.NPCs
                     Main.dust[dustIndex].scale *= 1.2f;
                     Main.dust[dustIndex].alpha *= 200;
                 }
-
-                npc.position = new Vector2((npc.oldPosition.X + npc.position.X) / 2, (npc.oldPosition.Y + npc.position.Y) / 2);
             }
             if (umbralTrespass)
             {
