@@ -32,6 +32,24 @@ namespace TerraLeague.NPCs
             base.SetDefaults();
             npc.scale = 1f;
         }
+
+        public override bool PreAI()
+        {
+            return base.PreAI();
+        }
+
+        public override void AI()
+        {
+            base.AI();
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+                return SpawnCondition.OverworldNightMonster.Chance * 0.5f;
+            return 0;
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             
@@ -40,10 +58,6 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            for (int k = 0; k < 60; k++)
-            {
-                Dust.NewDust(npc.position, npc.width, npc.height, 4, hitDirection, -2, 150, new Color(5, 245, 150), 1f);
-            }
 
             base.HitEffect(hitDirection, damage);
         }

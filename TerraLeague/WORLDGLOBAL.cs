@@ -372,7 +372,10 @@ namespace TerraLeague
                 if (Main.netMode == 0)
                     Main.NewText("The Harrowing has begun...", new Color(0, 255, 125));
                 else if (Main.netMode == 2)
+                {
                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Harrowing has begun..."), new Color(50, 255, 130), -1);
+                    NetMessage.SendData(MessageID.WorldData);
+                }
             }
             if (Main.dayTime && BlackMistEvent && Main.netMode != 1)
             {

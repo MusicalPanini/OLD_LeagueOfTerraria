@@ -39,6 +39,20 @@ namespace TerraLeague.NPCs
             return base.PreAI();
         }
 
+        public override void AI()
+        {
+            base.AI();
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+                return SpawnCondition.OverworldNightMonster.Chance * 0.5f;
+            return 0;
+        }
+
+        
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             
