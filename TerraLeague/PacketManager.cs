@@ -572,7 +572,7 @@ namespace TerraLeague
             }
             else
             {
-                Items.CustomItems.LeagueItem legItem = Main.item[itemID].modItem as Items.CustomItems.LeagueItem;
+                LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
                 {
                     if (secondary)
@@ -611,7 +611,7 @@ namespace TerraLeague
             }
             else
             {
-                LeagueItem legItem = Main.item[itemID].modItem as LeagueItem;
+                LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
                 {
                     if (secondary)
@@ -1217,7 +1217,7 @@ namespace TerraLeague
             }
             else
             {
-                AbilityItem abilityItem = Main.item[CastItem].modItem as AbilityItem;
+                AbilityItem abilityItem = GetModItem(CastItem) as AbilityItem;
 
                 if (abilityItem != null)
                     abilityItem.Efx(Main.player[Caster], AbilityType);
