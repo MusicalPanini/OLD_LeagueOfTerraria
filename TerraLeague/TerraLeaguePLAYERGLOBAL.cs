@@ -2605,7 +2605,7 @@ namespace TerraLeague
                     );
             }
 
-            if (player.HeldItem.type == ItemType<Whisper>())
+            if (player.HeldItem.type == ItemType<Whisper>() && Main.myPlayer == player.whoAmI)
             {
 
                 Texture2D texture = null;
