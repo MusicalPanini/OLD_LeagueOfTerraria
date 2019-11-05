@@ -42,15 +42,4 @@ namespace TerraLeague.Items
             Lighting.AddLight(item.Center, Color.DarkSeaGreen.ToVector3() * 0.55f * Main.essScale);
         }
     }
-
-    public class DamnedSoulGlobalNPC : GlobalNPC
-    {
-        public override void NPCLoot(NPC npc)
-        {
-            if (!Main.dayTime && Main.moonPhase == 4 && npc.lifeMax > 5 && !npc.SpawnedFromStatue && Main.rand.Next(0, 4) == 0)
-                Item.NewItem(npc.getRect(), ItemType<DamnedSoul>());
-
-            base.NPCLoot(npc);
-        }
-    }
 }
