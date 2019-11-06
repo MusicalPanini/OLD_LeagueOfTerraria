@@ -11,7 +11,7 @@ namespace TerraLeague.Items
     {
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 3));
+            Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 4));
             ItemID.Sets.ItemNoGravity[item.type] = true;
             DisplayName.SetDefault("Damned Soul");
             base.SetStaticDefaults();
@@ -20,8 +20,8 @@ namespace TerraLeague.Items
         public override void SetDefaults()
         {
             item.maxStack = 999;
-            item.width = 28;
-            item.height = 34;
+            item.width = 16;
+            item.height = 16;
             item.uniqueStack = false;
             item.rare = 2;
             item.value = 1000;
