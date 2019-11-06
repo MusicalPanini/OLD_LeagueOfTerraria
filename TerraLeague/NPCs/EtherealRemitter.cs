@@ -9,6 +9,7 @@ namespace TerraLeague.NPCs
 {
     public class EtherealRemitter : ModNPC
     {
+        int effectRadius = 500;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ethereal Remitter");
@@ -35,12 +36,53 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI()
         {
+            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
             return base.PreAI();
         }
 
         public override void AI()
         {
             base.AI();
+        }
+
+        public override void PostAI()
+        {
+            npc.ai[3]++;
+
+            if (npc.ai[3] > 240)
+            {
+                for (int i = 0; i < Main.npc.Length; i++)
+                {
+                    NPC healTarget = Main.npc[i];
+
+                    if (healTarget.active && !healTarget.immortal && !healTarget.friendly && !healTarget.townNPC)
+                    {
+                        if (npc.Distance(healTarget.Center) < effectRadius && healTarget.active && i != npc.whoAmI)
+                        {
+                            healTarget.life += 40;
+                            if (healTarget.life > healTarget.lifeMax)
+                                healTarget.life = healTarget.lifeMax;
+                            healTarget.HealEffect(40);
+                        }
+                    }
+                }
+
+                TerraLeague.DustRing(261, npc, new Color(0, 255, 0, 0));
+                //Main.PlaySound(new LegacySoundStyle(2, 29), user.Center);
+
+
+                for (int i = 0; i < effectRadius / 5; i++)
+                {
+                    Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + npc.Center;
+
+                    Dust dustR = Dust.NewDustPerfect(pos, 267, Vector2.Zero, 0, new Color(0, 255, 0, 0), 2);
+                    dustR.noGravity = true;
+                }
+
+                npc.ai[3] = 0;
+            }
+
+            base.PostAI();
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
