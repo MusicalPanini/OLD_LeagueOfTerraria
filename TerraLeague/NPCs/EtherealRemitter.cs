@@ -51,18 +51,21 @@ namespace TerraLeague.NPCs
 
             if (npc.ai[3] > 240)
             {
-                for (int i = 0; i < Main.npc.Length; i++)
+                if (Main.netMode != 1)
                 {
-                    NPC healTarget = Main.npc[i];
-
-                    if (healTarget.active && !healTarget.immortal && !healTarget.friendly && !healTarget.townNPC && healTarget.lifeMax > 5)
+                    for (int i = 0; i < Main.npc.Length; i++)
                     {
-                        if (npc.Distance(healTarget.Center) < effectRadius && healTarget.active && i != npc.whoAmI)
+                        NPC healTarget = Main.npc[i];
+
+                        if (healTarget.active && !healTarget.immortal && !healTarget.friendly && !healTarget.townNPC && healTarget.lifeMax > 5)
                         {
-                            healTarget.life += 40;
-                            if (healTarget.life > healTarget.lifeMax)
-                                healTarget.life = healTarget.lifeMax;
-                            healTarget.HealEffect(40);
+                            if (npc.Distance(healTarget.Center) < effectRadius && healTarget.active && i != npc.whoAmI)
+                            {
+                                healTarget.life += 40;
+                                if (healTarget.life > healTarget.lifeMax)
+                                    healTarget.life = healTarget.lifeMax;
+                                healTarget.HealEffect(40);
+                            }
                         }
                     }
                 }
