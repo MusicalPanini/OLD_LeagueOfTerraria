@@ -39,7 +39,7 @@ namespace TerraLeague.Items
         {
             ItemID.Sets.ItemIconPulse[item.type] = false;
 
-            Lighting.AddLight(item.Center, Color.DarkSeaGreen.ToVector3() * 0.55f * Main.essScale);
+            Lighting.AddLight(item.Center, Color.DarkSeaGreen.ToVector3());
         }
     }
 }
