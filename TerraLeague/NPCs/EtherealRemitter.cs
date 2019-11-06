@@ -55,7 +55,7 @@ namespace TerraLeague.NPCs
                 {
                     NPC healTarget = Main.npc[i];
 
-                    if (healTarget.active && !healTarget.immortal && !healTarget.friendly && !healTarget.townNPC)
+                    if (healTarget.active && !healTarget.immortal && !healTarget.friendly && !healTarget.townNPC && healTarget.lifeMax > 5)
                     {
                         if (npc.Distance(healTarget.Center) < effectRadius && healTarget.active && i != npc.whoAmI)
                         {
