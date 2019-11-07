@@ -368,11 +368,27 @@ namespace TerraLeague
         {
             if (!Main.dayTime && Main.time == 1 && !Main.bloodMoon && Main.netMode != 1)
             {
-                BlackMistEvent = true;
-                if (Main.netMode == 0)
-                    Main.NewText("The Harrowing has begun...", new Color(0, 255, 125));
-                else if (Main.netMode == 2)
-                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Harrowing has begun..."), new Color(50, 255, 130), -1);
+                for (int i = 0; i < Main.player.Length; i++)
+                {
+                    if (Main.player[i].active)
+                    {
+                        if (Main.player[i].GetModPlayer<PLAYERGLOBAL>().GetRealHeathWithoutShield(true) >= 200)
+                        {
+                            if (Main.rand.Next(0, Main.moonPhase == 4 ? 4 : 12) == 0)
+                            {
+                                BlackMistEvent = true;
+                                if (Main.netMode == 0)
+                                    Main.NewText("The Harrowing has begun...", new Color(0, 255, 125));
+                                else if (Main.netMode == 2)
+                                {
+                                    NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Harrowing has begun..."), new Color(50, 255, 130), -1);
+                                    NetMessage.SendData(MessageID.WorldData);
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
             }
             if (Main.dayTime && BlackMistEvent && Main.netMode != 1)
             {

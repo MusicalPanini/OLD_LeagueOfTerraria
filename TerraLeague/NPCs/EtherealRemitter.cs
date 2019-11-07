@@ -9,6 +9,7 @@ namespace TerraLeague.NPCs
 {
     public class EtherealRemitter : ModNPC
     {
+        int effectRadius = 500;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ethereal Remitter");
@@ -20,18 +21,81 @@ namespace TerraLeague.NPCs
             npc.noTileCollide = true;
             npc.width = 34;
             npc.height = 50;
-            npc.damage = 12;
-            npc.defense = 9;
-            npc.lifeMax = 55;
+            npc.damage = 10;
+            npc.defense = 8;
+            npc.lifeMax = 60;
             npc.aiStyle = 22;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.value = 100f;
+            npc.npcSlots = 2;
             aiType = NPCID.Wraith;
             animationType = NPCID.Wraith;
-            base.SetDefaults();
             npc.scale = 1f;
+            base.SetDefaults();
         }
+
+        public override bool PreAI()
+        {
+            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+            return base.PreAI();
+        }
+
+        public override void AI()
+        {
+            base.AI();
+        }
+
+        public override void PostAI()
+        {
+            npc.ai[3]++;
+
+            if (npc.ai[3] > 240)
+            {
+                if (Main.netMode != 1)
+                {
+                    for (int i = 0; i < Main.npc.Length; i++)
+                    {
+                        NPC healTarget = Main.npc[i];
+
+                        if (healTarget.active && !healTarget.immortal && !healTarget.friendly && !healTarget.townNPC && healTarget.lifeMax > 5)
+                        {
+                            if (npc.Distance(healTarget.Center) < effectRadius && healTarget.active && i != npc.whoAmI)
+                            {
+                                healTarget.life += 40;
+                                if (healTarget.life > healTarget.lifeMax)
+                                    healTarget.life = healTarget.lifeMax;
+                                healTarget.HealEffect(40);
+                            }
+                        }
+                    }
+                }
+
+                TerraLeague.DustRing(261, npc, new Color(0, 255, 0, 0));
+                //Main.PlaySound(new LegacySoundStyle(2, 29), user.Center);
+
+
+                for (int i = 0; i < effectRadius / 5; i++)
+                {
+                    Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + npc.Center;
+
+                    Dust dustR = Dust.NewDustPerfect(pos, 267, Vector2.Zero, 0, new Color(0, 255, 0, 0), 2);
+                    dustR.noGravity = true;
+                }
+
+                npc.ai[3] = 0;
+            }
+
+            base.PostAI();
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && (spawnInfo.player.ZoneBeach || NPC.downedBoss3))
+                return SpawnCondition.OverworldNightMonster.Chance * 0.25f;
+            return 0;
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             
@@ -40,10 +104,6 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            for (int k = 0; k < 60; k++)
-            {
-                Dust.NewDust(npc.position, npc.width, npc.height, 4, hitDirection, -2, 150, new Color(5, 245, 150), 1f);
-            }
 
             base.HitEffect(hitDirection, damage);
         }

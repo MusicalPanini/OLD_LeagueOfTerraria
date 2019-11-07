@@ -7,29 +7,25 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.NPCs
 {
-    public class TheUndying_Archer : ModNPC
+    public class Ghoul : ModNPC
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Undying");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.SkeletonArcher];
+            DisplayName.SetDefault("Ghoul");
+            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.BloodZombie];
         }
         public override void SetDefaults()
         {
             npc.width = 18;
             npc.height = 40;
             npc.aiStyle = 3;
-            npc.damage = 20;
-            npc.defense = 4;
-            npc.lifeMax = 55;
-            npc.HitSound = SoundID.NPCHit2;
+            npc.damage = 12;
+            npc.defense = 0;
+            npc.lifeMax = 20;
+            npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath2;
-            npc.value = 150f;
-            if (Main.hardMode)
-                aiType = NPCID.SkeletonArcher;
-            else
-                aiType = NPCID.GoblinArcher;
-            animationType = NPCID.SkeletonArcher;
+            aiType = NPCID.BloodZombie;
+            animationType = NPCID.BloodZombie;
             npc.scale = 1f;
             base.SetDefaults();
         }
@@ -46,13 +42,6 @@ namespace TerraLeague.NPCs
             base.AI();
         }
 
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && (spawnInfo.player.ZoneBeach || NPC.downedBoss3))
-                return SpawnCondition.OverworldNightMonster.Chance * 0.5f;
-            return 0;
-        }
-
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             base.OnHitPlayer(target, damage, crit);
@@ -65,7 +54,6 @@ namespace TerraLeague.NPCs
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
             base.NPCLoot();
         }
     }

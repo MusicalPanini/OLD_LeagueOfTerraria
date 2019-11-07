@@ -19,9 +19,9 @@ namespace TerraLeague.NPCs
             npc.width = 44;
             npc.height = 32;
             npc.aiStyle = 1;
-            npc.damage = 12;
-            npc.defense = 9;
-            npc.lifeMax = 55;
+            npc.damage = 18;
+            npc.defense = 6;
+            npc.lifeMax = 50;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath1;
             npc.knockBackResist = 0.05f;
@@ -38,6 +38,20 @@ namespace TerraLeague.NPCs
 
             return base.PreAI();
         }
+
+        public override void AI()
+        {
+            base.AI();
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+                return SpawnCondition.OverworldNightMonster.Chance * 0.5f;
+            return 0;
+        }
+
+        
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

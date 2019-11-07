@@ -21,9 +21,9 @@ namespace TerraLeague.NPCs
             npc.width = 24;
             npc.height = 44;
             npc.aiStyle = 22;
-            npc.damage = 12;
+            npc.damage = 14;
             npc.defense = 9;
-            npc.lifeMax = 55;
+            npc.lifeMax = 45;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.value = 100f;
@@ -32,19 +32,35 @@ namespace TerraLeague.NPCs
             base.SetDefaults();
             npc.scale = 1f;
         }
+
+        public override bool PreAI()
+        {
+            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+
+            return base.PreAI();
+        }
+
+        public override void AI()
+        {
+            base.AI();
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && (spawnInfo.player.ZoneBeach || NPC.downedBoss3))
+                return SpawnCondition.OverworldNightMonster.Chance * 0.1f;
+            return 0;
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            
+            if (Main.rand.Next(0, 4) == 0)
+                target.AddBuff(BuffID.Confused, 5*60);
             base.OnHitPlayer(target, damage, crit);
         }
 
         public override void HitEffect(int hitDirection, double damage)
         {
-            for (int k = 0; k < 60; k++)
-            {
-                Dust.NewDust(npc.position, npc.width, npc.height, 4, hitDirection, -2, 150, new Color(5, 245, 150), 1f);
-            }
-
             base.HitEffect(hitDirection, damage);
         }
 

@@ -19,18 +19,38 @@ namespace TerraLeague.NPCs
             npc.width = 18;
             npc.height = 40;
             npc.aiStyle = 3;
-            npc.damage = 12;
-            npc.defense = 9;
-            npc.lifeMax = 55;
+            npc.damage = 28;
+            npc.defense = 7;
+            npc.lifeMax = 50;
             npc.HitSound = SoundID.NPCHit2;
             npc.DeathSound = SoundID.NPCDeath2;
-            npc.knockBackResist = 0.1f;
+            npc.knockBackResist = 0.05f;
             npc.value = 100f;
             aiType = NPCID.BlueArmoredBonesMace;
             animationType = NPCID.BlueArmoredBonesMace;
             npc.scale = 1f;
             base.SetDefaults();
         }
+
+        public override bool PreAI()
+        {
+            Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+
+            return base.PreAI();
+        }
+
+        public override void AI()
+        {
+            base.AI();
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+                return SpawnCondition.OverworldNightMonster.Chance;
+            return 0;
+        }
+
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             base.OnHitPlayer(target, damage, crit);

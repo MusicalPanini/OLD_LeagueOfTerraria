@@ -176,17 +176,6 @@ namespace TerraLeague.NPCs
         {
             PLAYERGLOBAL modPlayer = spawnInfo.player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modPlayer.zoneBlackMist)
-            {
-                pool.Add(NPCType<TheUndying_1>(), SpawnCondition.OverworldNightMonster.Chance);
-                pool.Add(NPCType<TheUndying_2>(), SpawnCondition.OverworldNightMonster.Chance);
-                pool.Add(NPCType<TheUndying_Archer>(), SpawnCondition.OverworldNightMonster.Chance * 0.5f);
-                pool.Add(NPCType<Scuttlegeist>(), SpawnCondition.OverworldNightMonster.Chance * 0.25f);
-                pool.Add(NPCType<UnleashedSpirit>(), SpawnCondition.OverworldNightMonster.Chance);
-                pool.Add(NPCType<EtherealRemitter>(), SpawnCondition.OverworldNightMonster.Chance * 0.5f);
-                pool.Add(NPCType<SoulBoundSlime>(), SpawnCondition.OverworldNightMonster.Chance * 0.5f);
-                pool.Add(NPCType<BansheeHive>(), SpawnCondition.OverworldNightMonster.Chance * 0.1f);
-            }
             if (modPlayer.zoneSurfaceMarble)
             {
                 pool.Remove(NPCID.GreenSlime);
@@ -346,6 +335,7 @@ namespace TerraLeague.NPCs
 
             if (modPlayer.zoneBlackMist)
             {
+                maxSpawns =(int)(maxSpawns * 1.5);
                 spawnRate = (int)(spawnRate * 0.25);
             }
             if (modPlayer.Disruption)
