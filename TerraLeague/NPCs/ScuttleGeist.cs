@@ -46,7 +46,7 @@ namespace TerraLeague.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && (spawnInfo.player.ZoneBeach || NPC.downedBoss3))
                 return SpawnCondition.OverworldNightMonster.Chance * 0.25f;
             return 0;
         }

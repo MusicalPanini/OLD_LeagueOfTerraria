@@ -47,7 +47,7 @@ namespace TerraLeague.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && (spawnInfo.player.ZoneBeach || NPC.downedBoss3))
                 return SpawnCondition.OverworldNightMonster.Chance * 0.1f;
             return 0;
         }
@@ -55,7 +55,7 @@ namespace TerraLeague.NPCs
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
             if (Main.rand.Next(0, 4) == 0)
-            target.AddBuff(BuffID.Confused, 5*60);
+                target.AddBuff(BuffID.Confused, 5*60);
             base.OnHitPlayer(target, damage, crit);
         }
 

@@ -21,9 +21,9 @@ namespace TerraLeague.NPCs
             npc.noTileCollide = true;
             npc.width = 34;
             npc.height = 50;
-            npc.damage = 12;
-            npc.defense = 9;
-            npc.lifeMax = 55;
+            npc.damage = 10;
+            npc.defense = 8;
+            npc.lifeMax = 60;
             npc.aiStyle = 22;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
@@ -91,7 +91,7 @@ namespace TerraLeague.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && (spawnInfo.player.ZoneBeach || NPC.downedBoss3))
                 return SpawnCondition.OverworldNightMonster.Chance * 0.25f;
             return 0;
         }
