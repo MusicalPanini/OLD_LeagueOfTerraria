@@ -24,7 +24,7 @@ namespace TerraLeague.NPCs
             npc.lifeMax = 50;
             npc.HitSound = SoundID.NPCHit2;
             npc.DeathSound = SoundID.NPCDeath2;
-            npc.knockBackResist = 0.1f;
+            npc.knockBackResist = 0.05f;
             npc.value = 100f;
             aiType = NPCID.BlueArmoredBonesMace;
             animationType = NPCID.BlueArmoredBonesMace;
