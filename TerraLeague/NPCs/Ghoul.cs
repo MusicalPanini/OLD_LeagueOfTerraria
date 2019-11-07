@@ -20,8 +20,8 @@ namespace TerraLeague.NPCs
             npc.height = 40;
             npc.aiStyle = 3;
             npc.damage = 12;
-            npc.defense = 9;
-            npc.lifeMax = 55;
+            npc.defense = 0;
+            npc.lifeMax = 20;
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath2;
             aiType = NPCID.BloodZombie;

@@ -28,10 +28,11 @@ namespace TerraLeague.NPCs
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.value = 100f;
+            npc.npcSlots = 2;
             aiType = NPCID.Wraith;
             animationType = NPCID.Wraith;
-            base.SetDefaults();
             npc.scale = 1f;
+            base.SetDefaults();
         }
 
         public override bool PreAI()

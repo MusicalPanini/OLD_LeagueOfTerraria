@@ -21,9 +21,9 @@ namespace TerraLeague.NPCs
             npc.width = 24;
             npc.height = 44;
             npc.aiStyle = 22;
-            npc.damage = 12;
+            npc.damage = 14;
             npc.defense = 9;
-            npc.lifeMax = 55;
+            npc.lifeMax = 45;
             npc.HitSound = SoundID.NPCHit54;
             npc.DeathSound = SoundID.NPCDeath52;
             npc.value = 100f;
@@ -54,7 +54,8 @@ namespace TerraLeague.NPCs
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            
+            if (Main.rand.Next(0, 4) == 0)
+            target.AddBuff(BuffID.Confused, 5*60);
             base.OnHitPlayer(target, damage, crit);
         }
 
