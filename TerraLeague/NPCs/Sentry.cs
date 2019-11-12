@@ -69,7 +69,7 @@ namespace TerraLeague.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.position.ToTileCoordinates16().X < Main.mapMaxX / 3 || spawnInfo.player.position.ToTileCoordinates16().X > (Main.mapMaxX * 2) / 3)
+            if (spawnInfo.player.position.ToTileCoordinates().X < Main.mapMaxX / 3 || spawnInfo.player.position.ToTileCoordinates().X > (Main.mapMaxX * 2) / 3)
                 return SpawnCondition.OverworldDaySlime.Chance * 0.03f;
             else
                 return 0;
