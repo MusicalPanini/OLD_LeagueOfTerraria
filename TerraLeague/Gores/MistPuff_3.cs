@@ -14,6 +14,8 @@ namespace TerraLeague.Gores
         public override void OnSpawn(Gore gore)
         {
             gore.sticky = false;
+            updateType = 99;
+            gore.alpha = 100;
             base.OnSpawn(gore);
         }
 
