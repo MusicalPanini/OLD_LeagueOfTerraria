@@ -29,23 +29,8 @@ namespace TerraLeague.Items.SummonerSpells
             base.SetDefaults();
         }
 
-        public override void GrabRange(Player player, ref int grabRange)
-        {
-            grabRange *= 1;
-        }
-
-        public override bool GrabStyle(Player player)
-        {
-            Vector2 vectorItemToPlayer = player.Center - item.Center;
-            Vector2 movement = vectorItemToPlayer.SafeNormalize(default(Vector2));
-            item.velocity = item.velocity + movement;
-            return true;
-        }
-
         public override void PostUpdate()
         {
-            ItemID.Sets.ItemIconPulse[item.type] = true;
-
             Lighting.AddLight(item.Center, Color.WhiteSmoke.ToVector3() * 0.55f * Main.essScale);
         }
     }

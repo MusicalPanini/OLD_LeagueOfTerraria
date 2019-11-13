@@ -27,14 +27,6 @@ namespace TerraLeague.Items
             item.value = 1000;
         }
 
-        public override bool GrabStyle(Player player)
-        {
-            Vector2 vectorItemToPlayer = player.Center - item.Center;
-            Vector2 movement = vectorItemToPlayer.SafeNormalize(default(Vector2));
-            item.velocity = item.velocity + movement;
-            return true;
-        }
-
         public override void PostUpdate()
         {
             ItemID.Sets.ItemIconPulse[item.type] = false;
