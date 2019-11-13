@@ -59,7 +59,8 @@ namespace TerraLeague.NPCs
 
         public override void NPCLoot()
         {
-            
+            int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.Gel, Main.rand.Next(1, 4));
+            Main.item[item].color = new Color(255, 255, 255);
             base.NPCLoot();
         }
     }

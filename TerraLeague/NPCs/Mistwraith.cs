@@ -22,7 +22,7 @@ namespace TerraLeague.NPCs
             npc.aiStyle = 10;
             npc.damage = 50;
             npc.defense = 20;
-            npc.lifeMax = 500;
+            npc.lifeMax = 1000;
             npc.noTileCollide = true;
             npc.noGravity = true;
             npc.HitSound = SoundID.NPCHit54;
@@ -47,21 +47,19 @@ namespace TerraLeague.NPCs
         public override bool PreAI()
         {
             Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
-
-            return base.PreAI();
-        }
-
-        public override bool CheckDead()
-        {
-            if (base.CheckDead())
+            for (int i = 0; i < 4; i++)
             {
-                for (int i = 0; i < 3; i++)
-                {
-                    NPC.NewNPC((int)npc.position.X + (i * 22), (int)npc.Center.Y, NPCType<Mistling>());
-                }
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 100, new Color(67, 248, 175), Main.rand.Next(1,5));
+                dust.alpha = 200;
+                dust.noGravity = true;
+                dust.velocity *= 0.1f;
+                dust.velocity += npc.velocity * 0.1f;
+                dust.position.X -= npc.velocity.X / 3f * (float)i;
+                dust.position.Y -= npc.velocity.Y / 3f * (float)i;
             }
 
-            return base.CheckDead();
+
+            return base.PreAI();
         }
 
         public override void AI()
@@ -80,7 +78,6 @@ namespace TerraLeague.NPCs
         {
             if (npc.life > 0)
             {
-
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
@@ -100,15 +97,30 @@ namespace TerraLeague.NPCs
                     dust.velocity *= 2f;
                     Main.dust[num620].noGravity = true;
                 }
-                int num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+                int num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale * 1.5f);
                 Gore gore = Main.gore[num621];
                 gore.velocity *= 0.3f;
+                num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_2"), npc.scale * 1.5f);
+                gore = Main.gore[num621];
+                gore.velocity *= 0.3f;
+                num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_3"), npc.scale * 1.5f);
+                gore = Main.gore[num621];
+                gore.velocity *= 0.3f;
+                num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+                gore = Main.gore[num621];
+                gore.velocity *= 1.2f;
                 num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_2"), npc.scale);
                 gore = Main.gore[num621];
-                gore.velocity *= 0.3f;
+                gore.velocity *= 1.2f;
                 num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_3"), npc.scale);
                 gore = Main.gore[num621];
-                gore.velocity *= 0.3f;
+                gore.velocity *= 1.2f;
+
+                for (int i = 0; i < 6; i++)
+                {
+                    int mistling = NPC.NewNPC((int)npc.position.X + (i * 22), (int)npc.Center.Y, NPCType<Mistling>());
+                    Main.npc[mistling].velocity = new Vector2(0,-6).RotatedBy((MathHelper.Pi * (-2.5 + i))/6f);
+                }
             }
 
             base.HitEffect(hitDirection, damage);
