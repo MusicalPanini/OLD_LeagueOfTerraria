@@ -24,7 +24,6 @@ namespace TerraLeague.Items
             item.height = 16;
             item.uniqueStack = false;
             item.rare = 2;
-            item.value = 1000;
         }
 
         public override void PostUpdate()
