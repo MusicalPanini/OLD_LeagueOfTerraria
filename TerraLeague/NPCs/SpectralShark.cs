@@ -241,6 +241,16 @@ namespace TerraLeague.NPCs
 
         public override void NPCLoot()
         {
+            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
+
+            if (Main.rand.Next(0,100) > 1)
+            {
+                int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.SharkFin);
+                Main.item[item].color = new Color(100, 200, 150);
+            }
+            else
+                Item.NewItem(npc.position, npc.width, npc.height, ItemID.DivingHelmet, 1);
+
             base.NPCLoot();
         }
     }

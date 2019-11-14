@@ -30,6 +30,7 @@ namespace TerraLeague.NPCs
             animationType = NPCID.CursedSkull;
             npc.value = 500;
             npc.knockBackResist = 0.3f;
+            npc.npcSlots = 3;
             npc.scale = 1f;
             npc.buffImmune[20] = true;
             npc.buffImmune[24] = true;
