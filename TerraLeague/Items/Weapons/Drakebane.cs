@@ -68,8 +68,10 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
         {
             if (type == AbilityType.E)
+            {
                 if (dam == DamageType.MAG)
                     return 80;
+            }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
 
@@ -135,8 +137,8 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 30;
             item.useStyle = 5;
             item.knockBack = 2;
-            item.value = 10000;
-            item.rare = 2;
+            item.value = 6000;
+            item.rare = 3;
             item.UseSound = new LegacySoundStyle(2, 101);
             item.shootSpeed = 1f;
             item.shoot = ProjectileType<DrakebaneProj>();
@@ -163,7 +165,7 @@ namespace TerraLeague.Items.Weapons
         public override bool GetIfAbilityExists(AbilityType type)
         {
             if (type == AbilityType.E)
-                return false;
+                return true;
             return base.GetIfAbilityExists(type);
         }
 
@@ -171,7 +173,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
-
+                Main.PlaySound(SoundID.Item20, player.Center);
             }
 
             base.Efx(player, type);

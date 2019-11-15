@@ -23,14 +23,27 @@ namespace TerraLeague.Projectiles
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.magic = true;
-            projectile.tileCollide = true;
+            projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.scale = 1;
             projectile.alpha = 0;
+            projectile.extraUpdates = 1;
         }
 
         public override void AI()
         {
+            if (projectile.friendly && projectile.velocity.Length() < 0.1f && projectile.tileCollide)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Collision.HitTiles(projectile.Bottom, projectile.oldVelocity, projectile.width, 1);
+                }
+                Main.PlaySound(Terraria.ID.SoundID.Item10, projectile.position);
+                projectile.extraUpdates = 0;
+                projectile.timeLeft = 60 * 6;
+                projectile.friendly = false;
+            }
+
             Lighting.AddLight(projectile.Center, 0.75f, 0.75f, 0.75f);
 
             if (projectile.ai[1] == 0f && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
@@ -43,11 +56,18 @@ namespace TerraLeague.Projectiles
                 projectile.tileCollide = true;
             }
 
-            for (int i = 0; i < 2; i++)
+            if (projectile.friendly)
             {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 229, 0, 3, 0, new Color(0, 0, 255), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 1);
+                dust.velocity /= 3;
+            }
+            else
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(0,-2) + projectile.BottomLeft, projectile.width, 3, 133);
                 dust.noGravity = true;
-                dust.noLight = true;
+                dust.velocity.X *= 2;
+                dust.velocity.Y = 0;
+                dust.scale = 0.8f;
             }
 
             for (int i = 0; i < Main.player.Length; i++)
@@ -65,7 +85,6 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.friendly = false;
             projectile.frameCounter++;
             if (projectile.frameCounter >= 5)
             {
@@ -77,7 +96,6 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            projectile.friendly = false;
             return false;
         }
     }

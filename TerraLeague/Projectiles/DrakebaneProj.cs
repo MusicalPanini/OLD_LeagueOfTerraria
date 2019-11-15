@@ -208,7 +208,8 @@ namespace TerraLeague.Projectiles
                 float num201 = 0f;
                 float num202 = num200 / (float)partCount;
                 num201 += num202 * 0.25f;
-                centre += normalVel * num202 * 0.25f;
+                //centre += normalVel * num202 * 0.25f;
+                centre += normalVel * projectile.scale * handle.Height / 2;
                 for (int i = 0; i < partCount; i++)
                 {
                     float num204 = num202;
