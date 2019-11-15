@@ -39,7 +39,7 @@ namespace TerraLeague.Projectiles
             }
             float speedIncrease = (float)player.HeldItem.useAnimation / projectile.localAI[1];
 
-            AI_075(projectile, 8, (int)projectile.localAI[1], true, 2, 39);
+            AI_075(projectile, 12, (int)projectile.localAI[1], true, 2, 39);
         }
 
         private static Vector2 AI_075(Projectile projectile, float swingLength, int swingTime, bool ignoreTiles, int sndgroup, int sound)
@@ -138,10 +138,10 @@ namespace TerraLeague.Projectiles
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
         {
-            int handleHeight = 42;
-            int chainHeight = 18;
-            int partHeight = 18;
-            int tipHeight = 48;
+            int handleHeight = 76;
+            int chainHeight = 14;
+            int partHeight = 14;
+            int tipHeight = 54;
             int partCount = 8;
 
 
