@@ -60,9 +60,17 @@ namespace TerraLeague.Items.Weapons
         public override int GetBaseManaCost(AbilityType type)
         {
             if (type == AbilityType.E)
-                return 12;
+                return 40;
             else
                 return base.GetBaseManaCost(type);
+        }
+
+        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
+        {
+            if (type == AbilityType.E)
+                if (dam == DamageType.MAG)
+                    return 80;
+            return base.GetAbilityScalingAmount(player, type, dam);
         }
 
         public override string GetDamageTooltip(Player player, AbilityType type)
@@ -80,7 +88,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
-            if (type == AbilityType.W)
+            if (type == AbilityType.E)
                 return true;
             else
                 return false;
@@ -88,22 +96,26 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetRawCooldown(AbilityType type)
         {
-            if (type == AbilityType.W)
-                return 0;
+            if (type == AbilityType.E)
+                return 12;
             else
                 return base.GetRawCooldown(type);
         }
 
         public override void DoEffect(Player player, AbilityType type)
         {
-            if (type == AbilityType.W)
+            if (type == AbilityType.E)
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+                    Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y - (Main.screenHeight / 2));
+                    Vector2 velocity = new Vector2(0, 25);
+                    int projType = ProjectileType<DemacianStandard>();
+                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
+                    int knockback = 2;
 
-                    player.AddBuff(BuffID.Swiftness, 360);
-                    modPlayer.AddShield(GetAbilityBaseDamage(player, type), 360, new Color(181,77,177), ShieldType.Basic);
+                    DoEfx(player, type);
+                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
             }
@@ -134,7 +146,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            item.damage = 26;
             if (player.ownedProjectileCounts[ProjectileType<DrakebaneProj>()] < 1)
                 return base.CanUseItem(player);
             return false;
@@ -143,9 +154,7 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.AntlionMandible, 6);
-            recipe.AddIngredient(ItemID.Amethyst, 1);
-            recipe.AddIngredient(ItemType<Sunstone>(), 10);
+            recipe.AddIngredient(ItemType<SilversteelBar>(), 12);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
@@ -160,6 +169,11 @@ namespace TerraLeague.Items.Weapons
 
         public override void Efx(Player player, AbilityType type)
         {
+            if (type == AbilityType.E)
+            {
+
+            }
+
             base.Efx(player, type);
         }
     }
