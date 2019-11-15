@@ -1,13 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TerraLeague.Buffs;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Projectiles
 {
@@ -61,7 +56,7 @@ namespace TerraLeague.Projectiles
 
                 if (projectile.Distance(target.Center) < 500 && target.active)
                 {
-                    target.AddBuff(BuffID.Swiftness, 2);
+                    target.AddBuff(BuffType<ForDemacia>(), 2);
                 }
             }
 
