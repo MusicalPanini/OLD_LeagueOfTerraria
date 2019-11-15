@@ -510,6 +510,7 @@ namespace TerraLeague
         public bool toxicShot = false;
         public bool trueInvis = false;
         public bool invincible = false;
+        public bool forDemacia = false;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -710,6 +711,7 @@ namespace TerraLeague
             trueInvis = false;
             umbralTrespassing = false;
             invincible = false;
+            forDemacia = false;
 
             pirateSet = false;
             cannonSet = false;
