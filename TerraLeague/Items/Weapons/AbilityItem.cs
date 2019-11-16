@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using TerraLeague.Buffs;
 using Terraria;
@@ -529,6 +530,17 @@ namespace TerraLeague.Items.Weapons
             }
 
             return line;
+        }
+
+        protected virtual void SetAnimation(Player player, int useTime, int animationTime, float rotation)
+        {
+            int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
+            player.ChangeDir(dir);
+            player.itemAnimationMax = animationTime + 1;
+            player.itemAnimation = animationTime;
+            player.itemTime = useTime;
+            player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(item.type);
+            player.itemRotation = rotation + (dir == -1 ? MathHelper.Pi : 0);
         }
     }
 }
