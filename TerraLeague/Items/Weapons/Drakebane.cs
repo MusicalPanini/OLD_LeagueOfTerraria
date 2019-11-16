@@ -130,8 +130,8 @@ namespace TerraLeague.Items.Weapons
         public override void SetDefaults()
         {
             item.damage = 26;
-            item.width = 32;
-            item.height = 32;
+            item.width = 64;
+            item.height = 64;
             item.melee = true;
             item.useTime = 30;
             item.useAnimation = 30;
