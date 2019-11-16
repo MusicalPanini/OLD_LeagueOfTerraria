@@ -536,6 +536,7 @@ namespace TerraLeague.Items.Weapons
         {
             int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
             player.ChangeDir(dir);
+            player.itemLocation = Vector2.Zero;
             player.itemAnimationMax = animationTime + 1;
             player.itemAnimation = animationTime;
             player.itemTime = useTime;
