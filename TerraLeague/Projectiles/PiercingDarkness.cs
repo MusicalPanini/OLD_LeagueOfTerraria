@@ -32,19 +32,38 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
             if ((int)projectile.ai[1] == 1)
             {
-                Lighting.AddLight(projectile.Center, Color.White.ToVector3());
+                Dust dust;
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
                     int dustBoxWidth = projectile.width - 12;
                     int dustBoxHeight = projectile.height - 12;
-                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Smoke, 0f, 0f, 100, default(Color), 2);
+                    dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, DustID.Smoke, 0f, 0f, 100, default(Color), 2);
                     dust.noGravity = true;
                     dust.velocity *= 0.1f;
                     dust.velocity += projectile.velocity * 0.1f;
                     dust.position.X -= projectile.velocity.X / 3f * (float)i;
                     dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
                 }
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 pos = new Vector2(projectile.Center.X + (-4 + (i * 4)), projectile.Center.Y);
+                    dust = Dust.NewDustPerfect(pos, 188);
+                    dust.velocity /= 10;
+                    dust.scale = 0.75f;
+                    dust.alpha = 100;
+                }
+
+                for (int i = 0; i < 200; i++)
+                {
+                    Player healTarget = Main.player[i];
+                    if (projectile.Hitbox.Intersects(healTarget.Hitbox) && i != projectile.owner)
+                    {
+                        HitPlayer(healTarget);
+                    }
+                }
+
             }
             else
             {
@@ -57,9 +76,10 @@ namespace TerraLeague.Projectiles
                 {
                     int num18 = DustID.Smoke;
                     float num19 = 0.8f;
-                    if (k % 2 == 1)
+                    if (k == 1)
                     {
-                        num19 = 0.6f;
+                        num18 = 66;
+                        num19 = 1f;
                     }
                     
                     Vector2 vector11 = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
@@ -82,6 +102,8 @@ namespace TerraLeague.Projectiles
                     Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 72, Terraria.Audio.SoundType.Sound), projectile.Center);
                     if (sound != null)
                         sound.Pitch = -1f;
+
+                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)projectile.ai[0];
                 }
             }
 
@@ -91,6 +113,18 @@ namespace TerraLeague.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             base.OnHitNPC(target, damage, knockback, crit);
+        }
+
+        public void HitPlayer(Player player)
+        {
+            Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 29), player.Center);
+
+            projectile.netUpdate = true;
+            if (projectile.owner == Main.LocalPlayer.whoAmI)
+            {
+                if (player.whoAmI != projectile.owner)
+                    player.GetModPlayer<PLAYERGLOBAL>().SendHealPacket((int)projectile.ai[0], player.whoAmI, -1, projectile.owner);
+            }
         }
 
         public override void Kill(int timeLeft)

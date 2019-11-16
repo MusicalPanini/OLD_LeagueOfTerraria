@@ -102,7 +102,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetRawCooldown(AbilityType type)
         {
             if (type == AbilityType.Q)
-                return 10;
+                return 12;
             else
                 return base.GetRawCooldown(type);
         }
@@ -122,7 +122,7 @@ namespace TerraLeague.Items.Weapons
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
                     int projType = ProjectileType<PiercingDarkness>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
-                    int healing = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.RNG) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.MAG);
+                    int healing = GetAbilityBaseDamage(player, AbilityType.W) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.RNG) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.MAG);
                     int knockback = 0;
 
                     Projectile proj = Projectile.NewProjectileDirect(position, Vector2.Zero, projType, damage, knockback, player.whoAmI, healing);
@@ -147,8 +147,8 @@ namespace TerraLeague.Items.Weapons
             item.width = 108;
             item.height = 28;
             item.channel = true;
-            item.useAnimation = 40;
-            item.useTime = 40;
+            item.useAnimation = 60;
+            item.useTime = 60;
             item.shootSpeed = 10f;
             item.noMelee = true;
             item.knockBack = 1;
@@ -169,11 +169,12 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
-            recipe.AddIngredient(ItemID.Blowgun, 1);
-            recipe.AddIngredient(ItemID.VialofVenom, 10);
-            recipe.AddIngredient(ItemID.Mushroom, 1);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ItemType<DamnedSoul>(), 100);
+            recipe.AddIngredient(ItemID.HallowedBar, 16);
+            recipe.AddIngredient(ItemID.Marble, 100);
+            recipe.AddIngredient(ItemID.IllegalGunParts, 1);
+            recipe.AddIngredient(ItemID.SoulofMight, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
@@ -194,7 +195,9 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                //Main.PlaySound(SoundID.Item1, player.Center);
+                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 13), player.Center);
+                if (sound != null)
+                    sound.Pitch = 1f;
             }
         }
     }
