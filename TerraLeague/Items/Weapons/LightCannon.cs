@@ -128,13 +128,7 @@ namespace TerraLeague.Items.Weapons
                     Projectile proj = Projectile.NewProjectileDirect(position, Vector2.Zero, projType, damage, knockback, player.whoAmI, healing);
                     proj.rotation = velocity.ToRotation();
 
-                    int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
-                    player.ChangeDir(dir);
-                    player.itemAnimationMax = 21;
-                    player.itemAnimation = 20;
-                    player.itemTime = 20;
-                    player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(item.type);
-                    player.itemRotation = velocity.ToRotation() + (dir == -1 ? MathHelper.Pi : 0);
+                    SetAnimation(player, 20, 20, velocity.ToRotation());
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
