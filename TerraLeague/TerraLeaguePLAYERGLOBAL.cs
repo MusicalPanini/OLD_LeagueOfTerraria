@@ -34,6 +34,7 @@ namespace TerraLeague
         public Item abilityItem = null;
         public Vector2 abilityItemPosition = Vector2.Zero;
         public float abilityRotation = 0;
+        public int oldUsedInventorySlot = -1;
 
         /// <summary>
         /// Is set to 0 everytime you take or deal damage. Counts up by 1 every frame up to 240
@@ -1217,6 +1218,13 @@ namespace TerraLeague
                     sumCooldowns[i] = 0;
                 }
             }
+
+            if (player.itemTime <= 0 && oldUsedInventorySlot != -1)
+            {
+                player.selectedItem = oldUsedInventorySlot;
+                oldUsedInventorySlot = -1;
+            }
+
 
             // Handles the modded regen
             LinearManaRegen();
@@ -3138,6 +3146,12 @@ namespace TerraLeague
                 Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, 80, 0, -2, 0, default(Color), 1.5f);
                 dustIndex.velocity *= 2;
             }
+        }
+
+        public void SetTempUseItem(int itemToUse)
+        {
+            oldUsedInventorySlot = player.selectedItem;
+            player.selectedItem = player.FindItem(itemToUse);
         }
     }
 }
