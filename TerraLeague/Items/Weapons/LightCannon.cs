@@ -128,7 +128,7 @@ namespace TerraLeague.Items.Weapons
                     Projectile proj = Projectile.NewProjectileDirect(position, Vector2.Zero, projType, damage, knockback, player.whoAmI, healing);
                     proj.rotation = velocity.ToRotation();
 
-                    SetAnimation(player, 20, 20, velocity.ToRotation());
+                    SetAnimation(player, 30, 30, velocity.ToRotation());
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

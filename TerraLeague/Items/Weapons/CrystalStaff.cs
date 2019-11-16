@@ -117,10 +117,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
-            if (type == AbilityType.Q || type == AbilityType.W)
-                return true;
-            else
-                return false;
+            return false;
         }
 
         public override int GetRawCooldown(AbilityType type)
@@ -148,6 +145,7 @@ namespace TerraLeague.Items.Weapons
                     int knockback = 0;
 
                     DoEfx(player, type);
+                    SetAnimation(player, item.useTime, item.useAnimation, velocity.ToRotation());
                     Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
@@ -163,6 +161,7 @@ namespace TerraLeague.Items.Weapons
                     int knockback = 10;
 
                     DoEfx(player, type);
+                    SetAnimation(player, item.useTime, item.useAnimation, TerraLeague.CalcVelocityToPoint(player.Center, position, 1).ToRotation());
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
