@@ -137,6 +137,7 @@ namespace TerraLeague.Items.Weapons
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
+                    SetAnimation(player, item.useTime, item.useAnimation, velocity.ToRotation());
                     DoEfx(player, type);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
@@ -153,6 +154,7 @@ namespace TerraLeague.Items.Weapons
                     int healing = GetAbilityBaseDamage(player, AbilityType.E) + GetAbilityScalingDamage(player, AbilityType.E, DamageType.MAG);
                     int knockback = 1;
 
+                    SetAnimation(player, item.useTime, item.useAnimation, velocity.ToRotation());
                     DoEfx(player, type);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, damage, healing);
                     SetCooldowns(player, type);

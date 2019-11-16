@@ -121,10 +121,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
-            if (type == AbilityType.W)
-                return true;
-            else
-                return base.CanBeCastWhileUsingItem(type);
+            return base.CanBeCastWhileUsingItem(type);
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -147,6 +144,7 @@ namespace TerraLeague.Items.Weapons
                     else
                         proj.ranged = true;
 
+                    SetAnimation(player, 20, 20, velocity.ToRotation());
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

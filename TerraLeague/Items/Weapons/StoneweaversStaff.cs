@@ -155,6 +155,7 @@ namespace TerraLeague.Items.Weapons
                     {
                         Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, i);
                     }
+                    SetAnimation(player, item.useTime, item.useAnimation, velocity.ToRotation());
                     SetCooldowns(player, type);
                 }
             }

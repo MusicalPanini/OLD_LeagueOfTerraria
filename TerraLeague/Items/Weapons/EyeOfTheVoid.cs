@@ -142,6 +142,7 @@ namespace TerraLeague.Items.Weapons
 
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
 
+                    SetAnimation(player, 20, 20, velocity.ToRotation());
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
