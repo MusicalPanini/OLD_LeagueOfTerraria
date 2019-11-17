@@ -12,7 +12,6 @@ namespace TerraLeague.Items
         public override void SetStaticDefaults()
         {
             Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(8, 4));
-            ItemID.Sets.ItemNoGravity[item.type] = true;
             DisplayName.SetDefault("Damned Soul");
             base.SetStaticDefaults();
         }
@@ -37,8 +36,6 @@ namespace TerraLeague.Items
 
         public override void PostUpdate()
         {
-            ItemID.Sets.ItemIconPulse[item.type] = false;
-
             Lighting.AddLight(item.Center, Color.DarkSeaGreen.ToVector3());
         }
     }
