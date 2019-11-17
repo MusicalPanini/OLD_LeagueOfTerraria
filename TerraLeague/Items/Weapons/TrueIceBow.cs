@@ -18,9 +18,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "Fires slowing arrows" +
-                "\nCan only and always will crit 'Slowed' targets." +
-                "\nInstead of crits dealing 2x damage, the damage will be increased by crit chance";
+            return "Fires a flurry of slowing arrows after every shot that deal 30% of the original arrow's damage";
         }
 
         public override string GetQuote()
@@ -119,7 +117,7 @@ namespace TerraLeague.Items.Weapons
                         startingAngle -= 7.5f;
                     }
 
-                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
+                    SetAnimation(player, 20, 20, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
@@ -136,8 +134,9 @@ namespace TerraLeague.Items.Weapons
             item.ranged = true;
             item.width = 24;
             item.height = 54;
-            item.useAnimation = 35;
-            item.useTime = 35;
+            item.useAnimation = 25;
+            item.useTime = 5;
+            item.reuseDelay = 20;
             item.shootSpeed = 10f;
             item.useStyle = 5;
             item.noMelee = true;
@@ -150,10 +149,39 @@ namespace TerraLeague.Items.Weapons
             item.useAmmo = AmmoID.Arrow;
         }
 
+        public override bool CanUseItem(Player player)
+        {
+            item.damage = 24;
+
+            return base.CanUseItem(player);
+        }
+
+
+
+        public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref int damage, ref float knockback)
+        {
+            base.PickAmmo(weapon, player, ref type, ref speed, ref damage, ref knockback);
+        }
+
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (type == ProjectileID.WoodenArrowFriendly)
-                type = ProjectileType<TrueIceArrow>();
+            if (player.itemAnimation < 24)
+            {
+                type = ProjectileType<TrueIceFlurry>();
+                damage = (int)(damage * 0.3);
+                knockBack = 0;
+                //int numberProjectiles = 5;
+                //    int distance = 24;
+                //    for (int i = 0; i < numberProjectiles; i++)
+                //    {
+                //        Vector2 relPosition = new Vector2(0 - (distance * 2) + (i * distance), 0).RotatedBy(TerraLeague.CalcAngle(player.Center, Main.MouseWorld) + MathHelper.PiOver2);
+                //        Vector2 position = new Vector2(player.Center.X + relPosition.X, player.Center.Y + relPosition.Y);
+                //        Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15f);
+
+                //        Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                //    }
+            }
+
             return true;
         }
 
@@ -178,6 +206,13 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
                 Main.PlaySound(new LegacySoundStyle(2, 5), player.Center);
+        }
+
+        public override bool ConsumeAmmo(Player player)
+        {
+            int num = (int)(item.useAnimation * UseTimeMultiplier(player)) - item.useAnimation;
+
+            return !(player.itemAnimation < (player.itemAnimationMax) - 2);
         }
     }
 }
