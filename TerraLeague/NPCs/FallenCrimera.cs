@@ -1,36 +1,46 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Items;
 using Terraria;
-using TerraLeague.Gores;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.NPCs
 {
-    public class TheUndying_2 : ModNPC
+    public class FallenCrimera : ModNPC
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Undying");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.BlueArmoredBonesMace];
+            DisplayName.SetDefault("Fallen Crimera");
+            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Crimera];
         }
         public override void SetDefaults()
         {
             npc.width = 18;
             npc.height = 40;
-            npc.aiStyle = 3;
-            npc.damage = 28;
-            npc.defense = 7;
+            npc.aiStyle = 5;
+            npc.damage = 24;
+            npc.defense = 8;
             npc.lifeMax = 50;
-            npc.HitSound = SoundID.NPCHit2;
+            npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath2;
-            npc.knockBackResist = 0.8f;
-            npc.value = 100f;
-            aiType = NPCID.BlueArmoredBonesMace;
-            animationType = NPCID.BlueArmoredBonesMace;
+            npc.knockBackResist = 0.5f;
+            npc.noGravity = true;
+            npc.noTileCollide = true;
+            aiType = NPCID.Crimera;
+            animationType = NPCID.Crimera;
             npc.scale = 1f;
+            npc.value = 100;
             base.SetDefaults();
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && spawnInfo.player.ZoneCrimson)
+                return SpawnCondition.Crimson.Chance;
+            else if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && NPC.downedBoss3 && Main.ActiveWorldFileData.HasCrimson)
+                return SpawnCondition.OverworldNightMonster.Chance * 0.25f;
+            return 0;
         }
 
         public override bool PreAI()
@@ -43,13 +53,6 @@ namespace TerraLeague.NPCs
         public override void AI()
         {
             base.AI();
-        }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
-                return SpawnCondition.OverworldNightMonster.Chance;
-            return 0;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
@@ -65,7 +68,7 @@ namespace TerraLeague.NPCs
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    int num618 = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+                    int num618 = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(100, 100, 100), 1.5f);
                     Dust dust = Main.dust[num618];
                     dust.velocity *= 2f;
                     Main.dust[num618].noGravity = true;
@@ -81,10 +84,6 @@ namespace TerraLeague.NPCs
                     dust.velocity *= 2f;
                     Main.dust[dustInt].noGravity = true;
                 }
-                Gore.NewGore(npc.Center, npc.velocity / 2, mod.GetGoreSlot("Gores/TheUndying_2_1"), 1f);
-                Gore.NewGore(npc.Top, npc.velocity / 2, mod.GetGoreSlot("Gores/TheUndying_2_2"), 1f);
-                Gore.NewGore(npc.Bottom, npc.velocity / 2, mod.GetGoreSlot("Gores/TheUndying_2_3"), 1f);
-
                 int num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
                 Gore gore = Main.gore[num621];
                 gore.velocity *= 0.3f;
@@ -101,6 +100,12 @@ namespace TerraLeague.NPCs
         public override void NPCLoot()
         {
             Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
+
+            if (Main.rand.Next(0, 3) == 0)
+            {
+                int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.Vertebrae);
+                Main.item[item].color = new Color(100, 200, 150);
+            }
             base.NPCLoot();
         }
     }

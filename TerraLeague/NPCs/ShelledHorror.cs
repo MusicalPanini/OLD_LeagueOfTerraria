@@ -1,36 +1,37 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Items;
 using Terraria;
-using TerraLeague.Gores;
 using Terraria.ID;
+using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.NPCs
 {
-    public class TheUndying_2 : ModNPC
+    public class ShelledHorror : ModNPC
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Undying");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.BlueArmoredBonesMace];
+            DisplayName.SetDefault("Shelled Horror");
+            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.GiantTortoise];
         }
         public override void SetDefaults()
         {
-            npc.width = 18;
-            npc.height = 40;
-            npc.aiStyle = 3;
-            npc.damage = 28;
-            npc.defense = 7;
-            npc.lifeMax = 50;
-            npc.HitSound = SoundID.NPCHit2;
-            npc.DeathSound = SoundID.NPCDeath2;
-            npc.knockBackResist = 0.8f;
-            npc.value = 100f;
-            aiType = NPCID.BlueArmoredBonesMace;
-            animationType = NPCID.BlueArmoredBonesMace;
-            npc.scale = 1f;
+            npc.width = 46;
+            npc.height = 32;
+            npc.aiStyle = 39;
+            npc.damage = 100;
+            npc.defense = 40;
+            npc.lifeMax = 1000;
+            npc.knockBackResist = 0.15f;
+            npc.HitSound = SoundID.NPCHit24;
+            npc.DeathSound = SoundID.NPCDeath52;
+            npc.value = 1000f;
+            aiType = NPCID.GiantTortoise;
+            animationType = NPCID.GiantTortoise;
             base.SetDefaults();
+            npc.npcSlots = 3;
+            npc.scale = 1f;
         }
 
         public override bool PreAI()
@@ -47,13 +48,17 @@ namespace TerraLeague.NPCs
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
-                return SpawnCondition.OverworldNightMonster.Chance;
+            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && spawnInfo.player.ZoneJungle && Main.hardMode)
+                return SpawnCondition.SurfaceJungle.Chance * 0.5f;
+            else if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && Main.hardMode)
+                return SpawnCondition.OverworldNightMonster.Chance * 0.1f;
             return 0;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
+            if (Main.rand.Next(0, 4) == 0)
+                target.AddBuff(BuffID.BrokenArmor, 5*60);
             base.OnHitPlayer(target, damage, crit);
         }
 
@@ -61,11 +66,10 @@ namespace TerraLeague.NPCs
         {
             if (npc.life > 0)
             {
-
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    int num618 = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
+                    int num618 = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 50, default(Color), 1.5f);
                     Dust dust = Main.dust[num618];
                     dust.velocity *= 2f;
                     Main.dust[num618].noGravity = true;
@@ -76,15 +80,15 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    int dustInt = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
-                    Dust dust = Main.dust[dustInt];
+                    int num620;
+                    if (i > 10)
+                        num620 = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 50, default(Color), 1.5f);
+                    else
+                        num620 = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
+                    Dust dust = Main.dust[num620];
                     dust.velocity *= 2f;
-                    Main.dust[dustInt].noGravity = true;
+                    Main.dust[num620].noGravity = true;
                 }
-                Gore.NewGore(npc.Center, npc.velocity / 2, mod.GetGoreSlot("Gores/TheUndying_2_1"), 1f);
-                Gore.NewGore(npc.Top, npc.velocity / 2, mod.GetGoreSlot("Gores/TheUndying_2_2"), 1f);
-                Gore.NewGore(npc.Bottom, npc.velocity / 2, mod.GetGoreSlot("Gores/TheUndying_2_3"), 1f);
-
                 int num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
                 Gore gore = Main.gore[num621];
                 gore.velocity *= 0.3f;
@@ -100,7 +104,15 @@ namespace TerraLeague.NPCs
 
         public override void NPCLoot()
         {
-            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
+            Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), Main.rand.Next(1,3));
+
+            if (Main.rand.NextFloat(0, 1) <= 0.0588f)
+            {
+                int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.TurtleShell, 1);
+                Main.item[item].color = new Color(100, 200, 150);
+            }
+                
+
             base.NPCLoot();
         }
     }

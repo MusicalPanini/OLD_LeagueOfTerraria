@@ -24,15 +24,7 @@ namespace TerraLeague.Items
             item.height = 32;
             item.uniqueStack = false;
             item.rare = 3;
-            item.value = 1000;
-        }
-
-        public override bool GrabStyle(Player player)
-        {
-            Vector2 vectorItemToPlayer = player.Center - item.Center;
-            Vector2 movement = vectorItemToPlayer.SafeNormalize(default(Vector2));
-            item.velocity = item.velocity + movement;
-            return true;
+            item.value = 100;
         }
 
         public override void PostUpdate()
