@@ -233,9 +233,8 @@ namespace TerraLeague.Items.Weapons
             recipe.AddIngredient(ItemID.SpellTome, 1);
             recipe.AddIngredient(ItemID.SoulofNight, 20);
             recipe.AddIngredient(ItemID.Chain, 10);
-            recipe.AddIngredient(ItemID.SolarTablet, 10);
+            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
             recipe.AddIngredient(ItemType<CelestialBar>(), 20);
-            
             recipe.AddTile(TileID.Bookcases);
             recipe.SetResult(this);
             recipe.AddRecipe();

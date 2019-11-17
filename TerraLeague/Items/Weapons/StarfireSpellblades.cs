@@ -232,8 +232,10 @@ namespace TerraLeague.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.BrokenHeroSword, 2);
+            recipe.AddIngredient(ItemID.SoulofLight, 20);
+            recipe.AddIngredient(ItemID.FallenStar, 10);
+            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
             recipe.AddIngredient(ItemType<CelestialBar>(), 20);
-            recipe.AddIngredient(ItemID.FallenStar, 20);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
