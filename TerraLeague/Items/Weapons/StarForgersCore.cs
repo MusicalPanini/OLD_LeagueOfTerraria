@@ -162,7 +162,7 @@ namespace TerraLeague.Items.Weapons
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             player.AddBuff(BuffType<CenterOfTheUniverse>(), 3);
-            position = player.Center;
+            position = player.MountedCenter;
             Projectile.NewProjectileDirect(position, Vector2.Zero, type, damage, knockBack, player.whoAmI, player.ownedProjectileCounts[type] + 1);
 
             return false;

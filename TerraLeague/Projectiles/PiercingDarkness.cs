@@ -67,10 +67,10 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                int dir = player.Center.X > projectile.Center.X ? -1 : 1;
+                int dir = player.MountedCenter.X > projectile.Center.X ? -1 : 1;
                 player.ChangeDir(dir);
 
-                projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80, 0).RotatedBy(projectile.rotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
+                projectile.Center = player.MountedCenter + new Vector2(-16, -14) + new Vector2(80, 0).RotatedBy(projectile.rotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
 
                 for (int k = 0; k < 2 + 1; k++)
                 {

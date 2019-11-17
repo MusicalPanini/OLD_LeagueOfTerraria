@@ -48,9 +48,9 @@ namespace TerraLeague.Projectiles
             {
                 int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
                 player.ChangeDir(dir);
-                player.itemRotation = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld);
+                player.itemRotation = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
 
-                projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80 * dir, 0).RotatedBy(player.itemRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
+                projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80 * dir, 0).RotatedBy(player.itemRotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
 
                 for (int k = 0; k < 2 + 1; k++)
                 {

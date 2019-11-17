@@ -183,7 +183,7 @@ namespace TerraLeague.Items.Weapons
                         {
                             if (player.Distance(target.Center) <= range)
                             {
-                                Vector2 position = player.Center;
+                                Vector2 position = player.MountedCenter;
                                 Vector2 velocity = Vector2.Zero;
                                 int projType = ProjectileType<SoulShackles>();
                                 int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);

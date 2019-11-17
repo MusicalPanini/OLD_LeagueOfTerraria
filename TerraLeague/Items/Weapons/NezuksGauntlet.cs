@@ -136,7 +136,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
                     int projType = ProjectileType<EssenceFlux>();
                     int damage = (int)(1);

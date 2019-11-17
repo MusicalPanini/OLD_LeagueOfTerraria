@@ -129,7 +129,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
                     int projType = ProjectileType<BouncingBomb>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
@@ -145,7 +145,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetBaseManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 10);
                     int projType = ProjectileType<Minefield>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
