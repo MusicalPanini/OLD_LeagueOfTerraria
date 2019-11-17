@@ -1222,6 +1222,7 @@ namespace TerraLeague
             if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
             {
                 player.selectedItem = oldUsedInventorySlot;
+                player.itemLocation = Vector2.Zero;
                 oldUsedInventorySlot = -1;
             }
 
