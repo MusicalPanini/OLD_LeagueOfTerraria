@@ -1456,19 +1456,19 @@ namespace TerraLeague
                     }
                 }
 
-                if (TerraLeague.QAbility.JustPressed && Abilities[0] != null)
+                if (TerraLeague.QAbility.Current && Abilities[0] != null)
                     if (Abilities[0].CanCurrentlyBeCast(player, AbilityType.Q))
                         UseAbility(AbilityType.Q);
 
-                if (TerraLeague.WAbility.JustPressed && Abilities[1] != null)
+                if (TerraLeague.WAbility.Current && Abilities[1] != null)
                     if (Abilities[1].CanCurrentlyBeCast(player, AbilityType.W))
                         UseAbility(AbilityType.W);
 
-                if (TerraLeague.EAbility.JustPressed && Abilities[2] != null)
+                if (TerraLeague.EAbility.Current && Abilities[2] != null)
                     if (Abilities[2].CanCurrentlyBeCast(player, AbilityType.E))
                         UseAbility(AbilityType.E);
 
-                if (TerraLeague.RAbility.JustPressed && Abilities[3] != null)
+                if (TerraLeague.RAbility.Current && Abilities[3] != null)
                     if (Abilities[3].CanCurrentlyBeCast(player, AbilityType.R))
                         UseAbility(AbilityType.R);
 
