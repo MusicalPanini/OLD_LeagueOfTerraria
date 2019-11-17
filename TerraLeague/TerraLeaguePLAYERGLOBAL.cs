@@ -1219,7 +1219,7 @@ namespace TerraLeague
                 }
             }
 
-            if (player.itemTime <= 0 && oldUsedInventorySlot != -1)
+            if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
             {
                 player.selectedItem = oldUsedInventorySlot;
                 oldUsedInventorySlot = -1;

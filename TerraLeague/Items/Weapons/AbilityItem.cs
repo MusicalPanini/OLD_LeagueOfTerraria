@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TerraLeague.Buffs;
@@ -532,16 +533,26 @@ namespace TerraLeague.Items.Weapons
             return line;
         }
 
-        protected virtual void SetAnimation(Player player, int useTime, int animationTime, float rotation)
+        protected virtual void SetAnimation(Player player, int useTime, int animationTime, Vector2 target)
         {
-            int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
-            player.ChangeDir(dir);
+            player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(item.type);
+
+            float xDist = player.MountedCenter.X - target.X;
+            float yDist = player.MountedCenter.Y - target.Y;
+
+            int facing = -1;
+            if (target.X < player.MountedCenter.X)
+                facing = 1;
+
+            player.itemRotation = (float)Math.Atan2((double)(yDist * (float)facing), (double)(xDist * (float)facing));
+
+            player.ChangeDir(-facing);
             player.itemLocation = Vector2.Zero;
             player.itemAnimationMax = animationTime + 1;
             player.itemAnimation = animationTime;
             player.itemTime = useTime;
-            player.GetModPlayer<PLAYERGLOBAL>().SetTempUseItem(item.type);
-            player.itemRotation = rotation + (dir == -1 ? MathHelper.Pi : 0);
+            
+        
         }
     }
 }

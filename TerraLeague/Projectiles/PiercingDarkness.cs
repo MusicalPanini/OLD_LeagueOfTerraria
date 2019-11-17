@@ -67,7 +67,7 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
+                int dir = player.Center.X > projectile.Center.X ? -1 : 1;
                 player.ChangeDir(dir);
 
                 projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80, 0).RotatedBy(projectile.rotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
@@ -149,8 +149,6 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            
-            Main.PlaySound(SoundID.Item1, projectile.position);
             return true;
         }
     }

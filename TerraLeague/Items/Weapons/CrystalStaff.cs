@@ -145,7 +145,7 @@ namespace TerraLeague.Items.Weapons
                     int knockback = 0;
 
                     DoEfx(player, type);
-                    SetAnimation(player, item.useTime, item.useAnimation, velocity.ToRotation());
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
@@ -161,7 +161,7 @@ namespace TerraLeague.Items.Weapons
                     int knockback = 10;
 
                     DoEfx(player, type);
-                    SetAnimation(player, item.useTime, item.useAnimation, TerraLeague.CalcVelocityToPoint(player.Center, position, 1).ToRotation());
+                    SetAnimation(player, item.useTime, item.useAnimation, position);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }

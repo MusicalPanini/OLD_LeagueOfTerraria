@@ -129,7 +129,7 @@ namespace TerraLeague.Items.Weapons
                         Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
                         startingAngle -= 30f;
                     }
-                    SetAnimation(player, item.useTime, item.useAnimation, velocity.ToRotation());
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

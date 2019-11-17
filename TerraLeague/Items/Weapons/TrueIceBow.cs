@@ -119,7 +119,7 @@ namespace TerraLeague.Items.Weapons
                         startingAngle -= 7.5f;
                     }
 
-                    SetAnimation(player, item.useTime, item.useAnimation, velocity.ToRotation());
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

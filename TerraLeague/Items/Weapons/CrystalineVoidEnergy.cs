@@ -144,7 +144,7 @@ namespace TerraLeague.Items.Weapons
                     else
                         proj.ranged = true;
 
-                    SetAnimation(player, 20, 20, velocity.ToRotation());
+                    SetAnimation(player, 20, 20, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

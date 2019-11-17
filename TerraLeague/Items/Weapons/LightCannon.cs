@@ -128,7 +128,7 @@ namespace TerraLeague.Items.Weapons
                     Projectile proj = Projectile.NewProjectileDirect(position, Vector2.Zero, projType, damage, knockback, player.whoAmI, healing);
                     proj.rotation = velocity.ToRotation();
 
-                    SetAnimation(player, 30, 30, velocity.ToRotation());
+                    SetAnimation(player, 30, 30, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
@@ -151,7 +151,7 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 60;
             item.shootSpeed = 10f;
             item.noMelee = true;
-            item.knockBack = 1;
+            item.knockBack = 7;
             item.value = 6000;
             item.rare = 4;
             item.shoot = ProjectileType<LightCannonProj>();
@@ -174,6 +174,8 @@ namespace TerraLeague.Items.Weapons
             recipe.AddIngredient(ItemID.Marble, 100);
             recipe.AddIngredient(ItemID.IllegalGunParts, 1);
             recipe.AddIngredient(ItemID.SoulofMight, 10);
+            recipe.AddIngredient(ItemID.SoulofLight, 5);
+            recipe.AddIngredient(ItemID.SoulofNight, 5);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
