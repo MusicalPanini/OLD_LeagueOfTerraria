@@ -72,7 +72,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new SoulTaint(2, 15, 50);
+            return new SoulTaint(2, 20, 50);
         }
 
         public override string GetStatText()
