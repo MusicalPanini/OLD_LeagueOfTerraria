@@ -120,8 +120,6 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            
-            Main.PlaySound(SoundID.Item1, projectile.position);
             return true;
         }
     }
