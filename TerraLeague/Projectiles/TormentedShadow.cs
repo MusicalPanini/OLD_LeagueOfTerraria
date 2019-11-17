@@ -62,5 +62,12 @@ namespace TerraLeague.Projectiles
                 projectile.alpha += 5;
             }
         }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            damage += (int)(damage * (target.life / (float)target.lifeMax));
+
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
     }
 }

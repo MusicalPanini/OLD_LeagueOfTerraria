@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "";
+            return "Deals increased damage the lower the enemies life";
         }
 
         public override string GetQuote()
@@ -205,7 +205,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 26;
+            item.damage = 24;
             item.noMelee = true;
             item.magic = true;
             item.useTime = 80;
