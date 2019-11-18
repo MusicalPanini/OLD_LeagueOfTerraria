@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "";
+            return "Deals increased damage the lower the enemies life";
         }
 
         public override string GetQuote()
@@ -62,7 +62,7 @@ namespace TerraLeague.Items.Weapons
             else if (type == AbilityType.R)
             {
                 return "Unleash celestial chains upon near by enemies." +
-                    "\nAfter 3 seconds, if the chain is not broken, stun them for 4 seconds dealing damage again." +
+                    "\nAfter 3 seconds, if the chain is not broken, the enemy will be restuck and stunned for 4 seconds." +
                     "\nThe chain will break if the target moves too far away";
             }
             else
@@ -76,7 +76,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
                 return (int)(1.5 * item.damage);
             else if (type == AbilityType.R)
-                return (int)(2 * item.damage);
+                return (int)(4 * item.damage);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -121,7 +121,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
                 return 22;
             else if (type == AbilityType.R)
-                return 120;
+                return 70;
             else
                 return base.GetRawCooldown(type);
         }
@@ -183,7 +183,7 @@ namespace TerraLeague.Items.Weapons
                         {
                             if (player.Distance(target.Center) <= range)
                             {
-                                Vector2 position = player.Center;
+                                Vector2 position = player.MountedCenter;
                                 Vector2 velocity = Vector2.Zero;
                                 int projType = ProjectileType<SoulShackles>();
                                 int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
@@ -205,41 +205,36 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 50;
+            item.damage = 24;
             item.noMelee = true;
             item.magic = true;
-            item.useTime = 4;
-            item.useAnimation = 12;
-            item.shootSpeed = 14;
-            item.mana = 8;
+            item.useTime = 80;
+            item.useAnimation = 80;
+            item.mana = 40;
             item.rare = 5;
             item.value = 300000;
             item.width = 28;
             item.height = 32;
-            item.knockBack = 1;
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 34);
+            item.knockBack = 0;
+            item.UseSound = SoundID.Item20;
             item.useStyle = 5;
-            item.shoot = ProjectileID.AmethystBolt;
-            item.autoReuse = true;
+            item.shoot = ProjectileType<TormentedShadow>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.useTime = 5;
-            item.useAnimation = 10;
-            item.shootSpeed = 14;
-            item.mana = 6;
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 34);
-
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+            Projectile.NewProjectileDirect(Main.MouseWorld, Vector2.Zero, type, damage, knockBack, player.whoAmI);
+            return false;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SpellTome, 1);
-            recipe.AddIngredient(ItemID.LivingFireBlock, 50);
-            recipe.AddIngredient(ItemID.SoulofFright, 10);
+            recipe.AddIngredient(ItemID.SoulofNight, 20);
+            recipe.AddIngredient(ItemID.Chain, 10);
+            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
+            recipe.AddIngredient(ItemType<CelestialBar>(), 20);
             recipe.AddTile(TileID.Bookcases);
             recipe.SetResult(this);
             recipe.AddRecipe();

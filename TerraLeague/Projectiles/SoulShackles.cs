@@ -94,7 +94,7 @@ namespace TerraLeague.Projectiles
                 else
                 {
                     Vector2 npcPos = npc.Center;
-                    Vector2 playerPos = player.Center;
+                    Vector2 playerPos = player.MountedCenter;
 
                     float projectileX = ((npcPos.X - playerPos.X) * (-(projectile.timeLeft - 210) / 30f)) + playerPos.X;
                     float projectileY = ((npcPos.Y - playerPos.Y) * (-(projectile.timeLeft - 210) / 30f)) + playerPos.Y;

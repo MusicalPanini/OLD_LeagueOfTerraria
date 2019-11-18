@@ -34,6 +34,7 @@ namespace TerraLeague
         public Item abilityItem = null;
         public Vector2 abilityItemPosition = Vector2.Zero;
         public float abilityRotation = 0;
+        public int oldUsedInventorySlot = -1;
 
         /// <summary>
         /// Is set to 0 everytime you take or deal damage. Counts up by 1 every frame up to 240
@@ -510,6 +511,7 @@ namespace TerraLeague
         public bool toxicShot = false;
         public bool trueInvis = false;
         public bool invincible = false;
+        public bool forDemacia = false;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -710,6 +712,7 @@ namespace TerraLeague
             trueInvis = false;
             umbralTrespassing = false;
             invincible = false;
+            forDemacia = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1216,6 +1219,14 @@ namespace TerraLeague
                 }
             }
 
+            if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
+            {
+                player.selectedItem = oldUsedInventorySlot;
+                player.itemLocation = Vector2.Zero;
+                oldUsedInventorySlot = -1;
+            }
+
+
             // Handles the modded regen
             LinearManaRegen();
 
@@ -1446,19 +1457,19 @@ namespace TerraLeague
                     }
                 }
 
-                if (TerraLeague.QAbility.JustPressed && Abilities[0] != null)
+                if (TerraLeague.QAbility.Current && Abilities[0] != null)
                     if (Abilities[0].CanCurrentlyBeCast(player, AbilityType.Q))
                         UseAbility(AbilityType.Q);
 
-                if (TerraLeague.WAbility.JustPressed && Abilities[1] != null)
+                if (TerraLeague.WAbility.Current && Abilities[1] != null)
                     if (Abilities[1].CanCurrentlyBeCast(player, AbilityType.W))
                         UseAbility(AbilityType.W);
 
-                if (TerraLeague.EAbility.JustPressed && Abilities[2] != null)
+                if (TerraLeague.EAbility.Current && Abilities[2] != null)
                     if (Abilities[2].CanCurrentlyBeCast(player, AbilityType.E))
                         UseAbility(AbilityType.E);
 
-                if (TerraLeague.RAbility.JustPressed && Abilities[3] != null)
+                if (TerraLeague.RAbility.Current && Abilities[3] != null)
                     if (Abilities[3].CanCurrentlyBeCast(player, AbilityType.R))
                         UseAbility(AbilityType.R);
 
@@ -3136,6 +3147,12 @@ namespace TerraLeague
                 Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, 80, 0, -2, 0, default(Color), 1.5f);
                 dustIndex.velocity *= 2;
             }
+        }
+
+        public void SetTempUseItem(int itemToUse)
+        {
+            oldUsedInventorySlot = player.selectedItem;
+            player.selectedItem = player.FindItem(itemToUse);
         }
     }
 }

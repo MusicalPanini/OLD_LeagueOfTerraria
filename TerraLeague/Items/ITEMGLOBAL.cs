@@ -209,6 +209,8 @@ namespace TerraLeague.Items
 
             float num = 1;
 
+            if (modPlayer.forDemacia)
+                num *= 1.1f;
             if (modPlayer.deadlyPlumage && item.ranged)
                 num *= 1.25f;
             if (modPlayer.windPower && item.ranged)

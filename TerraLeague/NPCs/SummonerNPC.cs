@@ -86,8 +86,8 @@ namespace TerraLeague.NPCs
             if (Main.rand.Next(3) == 0)
             {
                 if (!NPC.downedBoss1)
-                    return "I'm currently working on some new Runes, but some evil force is preventing them from forming." +
-                        "\n\nMy research suggests that some kind of 'Watching Presence' is causing this." +
+                    return "I'm currently working on some new Runes, but some evil force at work preventing them from forming." +
+                        "\n\nMy research suggests that some kind of 'Watching Presence' is the cause of this." +
                         "\n\nIf you could slay this 'Presence', I can complete the new Runes!";
                 else if (!NPC.downedBoss2)
                     if (WorldGen.crimson)
@@ -129,7 +129,7 @@ namespace TerraLeague.NPCs
                 }
                 
             }
-            switch (Main.rand.Next(6))
+            switch (Main.rand.Next(7))
             {
                 case 0:
                     return "Salutations, " + Main.LocalPlayer.name + ". How goes your travels?";
@@ -143,6 +143,10 @@ namespace TerraLeague.NPCs
                     return "Do not worry, Summoner Spells are so powerful even the most magically inept person can use them!";
                 case 5:
                     return "Did you know enemies afflicted with 'Slowed' also have their damage reduced by 30%!";
+                case 6:
+                    return "Take care near the beaches of this world during New Moons." +
+                        "\nAn evil and twisted Black Mist rolls ashore, bringing with it a damning undead evil." +
+                        "\nIt's even rumored to sometimes travel further inland...";
                 default:
                     return "Open mid pls";
             }
@@ -167,7 +171,7 @@ namespace TerraLeague.NPCs
                 {
                     case 0:
                         text = "Summoner Spells are a special kind of magic that requires no mana to cast." +
-                            "\nYou can change your Summoner Spells by using the Runes I create. Just bring the necessary Raw Magic that sometimes drops from enemies.";
+                            "\nYou can change your Summoner Spells by using the Runes I create. Just bring the necessary Vials of True Magic for their creation.";
                         break;
                     case 1:
                         text = "Armor decreases contact damage." +
@@ -176,8 +180,8 @@ namespace TerraLeague.NPCs
                         break;
                     case 2:
                         text = "Lifesteal can be very powerful, but it has its drawbacks. In most cases it will reduces your max life and increase the damage you take." +
-                            "\nUpon taking damage, you will gain 'Grevious Wounds'. This debuff will reduce your lifesteal greatly." +
-                            "\nProjectiles that pierce or home in on enemies also have their lifesteal reduced.";
+                            "\nUpon taking damage, you will be afflicted with 'Grevious Wounds'. This debuff will reduce your lifesteal greatly." +
+                            "\nProjectiles that pierce or chase down their target also have their lifesteal reduced.";
                         break;
                     case 3:
                         text = "On Hit Damage is an additional proc of damage that follows a different rule set." +

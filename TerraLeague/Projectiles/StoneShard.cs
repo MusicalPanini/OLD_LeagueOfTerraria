@@ -58,7 +58,7 @@ namespace TerraLeague.Projectiles
 
                 projectile.velocity = Vector2.Zero;
 
-                projectile.Center = new Vector2(Main.player[projectile.owner].Center.X + stonePos[(int)projectile.ai[0]].X, Main.player[projectile.owner].Center.Y + stonePos[(int)projectile.ai[0]].Y + (16 * (projectile.alpha / 255f)));
+                projectile.Center = new Vector2(Main.player[projectile.owner].MountedCenter.X + stonePos[(int)projectile.ai[0]].X, Main.player[projectile.owner].MountedCenter.Y + stonePos[(int)projectile.ai[0]].Y + (16 * (projectile.alpha / 255f)));
 
                 if (projectile.timeLeft == 970 - ((int)projectile.ai[0] * 20))
                 {

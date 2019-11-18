@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using TerraLeague.Items;
 using TerraLeague.Items.AdvItems;
 using TerraLeague.Items.BasicItems;
+using TerraLeague.Items.SummonerSpells;
+using TerraLeague.Projectiles;
 using TerraLeague.Tiles;
 using Terraria;
 using Terraria.GameContent.Generation;
@@ -27,6 +29,7 @@ namespace TerraLeague
         public static bool TargonOreSpawned = false;
         public static bool ManaOreSpawned = false;
         public static bool VoidOreSpawned = false;
+        public static bool CelestialMeteorCanSpawn = false;
         public static int marbleBlocks = 0;
         public int startingFrames = 0;
 
@@ -324,6 +327,27 @@ namespace TerraLeague
                     }
                 }
             }
+
+            // Place Vials of Raw Magic in random chests
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            {
+                Chest chest = Main.chest[chestIndex];
+                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers)
+                {
+                    if (Main.rand.Next(3) == 0)
+                    {
+                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                        {
+                            if (chest.item[inventoryIndex].type == 0)
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<VialofTrueMagic>());
+                                chest.item[inventoryIndex].stack = Main.rand.Next(1, 6);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override TagCompound Save()
@@ -332,6 +356,7 @@ namespace TerraLeague
             if (NPC.downedBoss1) OreSpawned.Add("TargonOreSpawned");
             if (NPC.downedBoss2) OreSpawned.Add("ManaOreSpawned");
             if (NPC.downedBoss3) OreSpawned.Add("VoidOreSpawned");
+            if (NPC.downedGolemBoss) OreSpawned.Add("CelestialMeteorCanSpawn");
 
             return new TagCompound {
                 {"OreSpawned", OreSpawned},
@@ -345,6 +370,7 @@ namespace TerraLeague
             TargonOreSpawned = OreSpawned.Contains("TargonOreSpawned");
             ManaOreSpawned = OreSpawned.Contains("ManaOreSpawned");
             VoidOreSpawned = OreSpawned.Contains("VoidOreSpawned");
+            CelestialMeteorCanSpawn = OreSpawned.Contains("CelestialMeteorCanSpawn");
 
             BlackMistEvent = tag.GetBool("BlackMistEvent");
         }
@@ -409,7 +435,16 @@ namespace TerraLeague
                 if (!ManaOreSpawned)
                 {
                     ManaOreSpawned = true;
-                    Main.NewText("The Evil is no longer suppressing the magic in the jungle", 0, 130, 255);  
+                    
+                    if (Main.netMode == 0)
+                        Main.NewText("The Evil is no longer suppressing the magic in the jungle", 0, 130, 255);
+                    else if (Main.netMode == 2)
+                    {
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Evil is no longer suppressing the magic in the jungle"), new Color(0, 130, 255), -1);
+                        NetMessage.SendData(MessageID.WorldData);
+                    }
+
+
                     for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 50E-05); k++)   
                     {
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
@@ -429,7 +464,14 @@ namespace TerraLeague
                 {
                     VoidOreSpawned = true;  
 
-                    Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);  
+                    if (Main.netMode == 0)
+                        Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);
+                    else if (Main.netMode == 2)
+                    {
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Void has morphed some of this worlds matter"), new Color(255, 0, 255), -1);
+                        NetMessage.SendData(MessageID.WorldData);
+                    }
+
                     for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 1E-05); k++)  
                     {
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
@@ -438,6 +480,46 @@ namespace TerraLeague
                     }
                 }
             }
+
+            if (NPC.downedGolemBoss)
+            {
+                if (!CelestialMeteorCanSpawn)
+                {
+                    CelestialMeteorCanSpawn = true;
+
+                    if (Main.netMode == 0)
+                        Main.NewText("While the Moon denys the Sun, the Aspects will rain gifts of power", 0, 0, 255);
+                    else if (Main.netMode == 2)
+                    {
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("While the Moon denys the Sun, the Aspects will rain gifts of power"), new Color(0, 0, 255), -1);
+                        NetMessage.SendData(MessageID.WorldData);
+                    }
+                }
+            }
+
+            if (Main.eclipse && Main.worldRate != 0 && CelestialMeteorCanSpawn)
+            {
+                if (Main.dayTime)
+                {
+                    float num139 = (float)(Main.maxTilesX / 4200f);
+                    if ((float)Main.rand.Next(/*8000*/12000) < 10f * num139)
+                    {
+                        int num140 = Main.rand.Next(Main.maxTilesX - 50) + 100;
+                        num140 *= 16;
+                        int num141 = Main.rand.Next((int)((double)Main.maxTilesY * 0.05));
+                        num141 *= 16;
+                        Vector2 vector = new Vector2((float)num140, (float)num141);
+                        float num142 = (float)Main.rand.Next(-100, 101);
+                        float num143 = (float)(Main.rand.Next(200) + 100);
+                        float num144 = (float)Math.Sqrt((double)(num142 * num142 + num143 * num143));
+                        num144 = 12f / num144;
+                        num142 *= num144;
+                        num143 *= num144;
+                        Projectile.NewProjectile(vector.X, vector.Y, num142, num143, ProjectileType<CelestialMeteorite>(), 10000, 10f, Main.myPlayer, 0f, 0f);
+                    }
+                }
+            }
+
             base.PostUpdate();
         }
 

@@ -79,7 +79,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 261, 0, 0, 0, new Color(255, 255, 0, 150));
                     dust.noGravity = true;
                 }
-                player.AddBuff(BuffType<Buffs.EnergizedStrike>(), 2);
+                player.AddBuff(BuffType<Buffs.EnergizedStrike>(), 1);
             }
 
             base.PostPlayerUpdate(player, modItem);
@@ -124,6 +124,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                 }
 
+                modPlayer.energized = false;
                 modPlayer.FindAndSetPassiveStat(this, 0);
             }
 
@@ -208,6 +209,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
             }
 
+            modPlayer.energized = false;
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
         }
 

@@ -115,7 +115,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15 * 0.6f);
                     int projType = ProjectileType<GreenCard>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.MAG);
@@ -129,6 +129,7 @@ namespace TerraLeague.Items.Weapons
                         Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
                         startingAngle -= 30f;
                     }
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

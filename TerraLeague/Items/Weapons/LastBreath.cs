@@ -135,7 +135,7 @@ namespace TerraLeague.Items.Weapons
                     if (CheckIfNotOnCooldown(player, type) && player.GetModPlayer<PLAYERGLOBAL>().gathering3)
                     {
                         DoEfx(player, type);
-                        Vector2 position = player.Center;
+                        Vector2 position = player.MountedCenter;
                         Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
                         int projType = ProjectileType<LastBreathNado>();
                         int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
@@ -153,7 +153,7 @@ namespace TerraLeague.Items.Weapons
                     if (CheckIfNotOnCooldown(player, type))
                     {
                         DoEfx(player, type);
-                        Vector2 position = player.Center;
+                        Vector2 position = player.MountedCenter;
                         Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 3f);
                         int projType = ProjectileType<SteelTempest>();
                         int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);

@@ -60,13 +60,13 @@ namespace TerraLeague.Projectiles
                 if (projectile.ai[0] == 1)
                 {
                     projectile.rotation += (2 * MathHelper.Pi) / 15;
-                    projectile.Center = Main.player[projectile.owner].Center + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
+                    projectile.Center = Main.player[projectile.owner].MountedCenter + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
                 }
                 else
                 {
                     projectile.spriteDirection = -1;
                     projectile.rotation -= (2 * MathHelper.Pi) / 15;
-                    projectile.Center = Main.player[projectile.owner].Center - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
+                    projectile.Center = Main.player[projectile.owner].MountedCenter - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
                 }
             }
             else
@@ -74,13 +74,13 @@ namespace TerraLeague.Projectiles
                 if (projectile.ai[0] == 1)
                 {
                     projectile.rotation -= (2 * MathHelper.Pi) / 90;
-                    projectile.Center = Main.player[projectile.owner].Center + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
+                    projectile.Center = Main.player[projectile.owner].MountedCenter + new Vector2(33f, 40.5f).RotatedBy(projectile.rotation);
                 }
                 else
                 {
                     projectile.spriteDirection = -1;
                     projectile.rotation += (2 * MathHelper.Pi) / 90;
-                    projectile.Center = Main.player[projectile.owner].Center - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
+                    projectile.Center = Main.player[projectile.owner].MountedCenter - new Vector2(33f, -40.5f).RotatedBy(projectile.rotation);
                 }
             }
 

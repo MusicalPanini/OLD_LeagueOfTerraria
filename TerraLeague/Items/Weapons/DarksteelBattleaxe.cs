@@ -106,7 +106,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = Vector2.Zero;
                     int projType = ProjectileType<DarksteelDecimate>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
