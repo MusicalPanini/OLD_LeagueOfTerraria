@@ -11,7 +11,7 @@ namespace TerraLeague.Items.BasicItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dagger");
-            Tooltip.SetDefault("5% increased melee speed\n5% chance to not consume ammo");
+            Tooltip.SetDefault("5% increased melee and ranged attack speed");
         }
 
         public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace TerraLeague.Items.BasicItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.05;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.05;
         }
 
         public override void AddRecipes()

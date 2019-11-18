@@ -11,8 +11,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zeal");
-            Tooltip.SetDefault("10% increased melee speed" +
-                "\n5% chance to not consume ammo" +
+            Tooltip.SetDefault("10% increased melee and ranged attack speed" +
                 "\n4% increased critical strike chance" +
                 "\n5% increased movement speed");
         }
@@ -32,7 +31,7 @@ namespace TerraLeague.Items.AdvItems
             player.magicCrit += 4;
             player.thrownCrit += 4;
             player.meleeSpeed += 0.10f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.05;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.1;
             player.moveSpeed += 0.05f;
         }
 

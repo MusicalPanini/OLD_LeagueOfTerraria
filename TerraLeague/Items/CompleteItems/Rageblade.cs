@@ -17,8 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("6% increased melee damage" +
                 "\n6% increased ranged damage" +
                 "\n6% increased minion damage" +
-                "\n12% increased melee speed" +
-                "\n6% chance to not consume ammo");
+                "\n12% increased melee and ranged attack speed");
         }
 
         public override void SetDefaults()
@@ -35,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
             player.rangedDamage += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
             player.meleeSpeed += 0.12f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.06;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.12;
 
             base.UpdateAccessory(player, hideVisual);
         }

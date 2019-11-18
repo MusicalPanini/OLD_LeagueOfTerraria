@@ -12,8 +12,7 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Beserker's Greaves");
             Tooltip.SetDefault("[c/92F892:Tier 2: Fast Sprint]" +
-                "\n10% increased melee speed" +
-                "\n10% chance to not consume ammo");
+                "\n10% increased melee and ranged attack speed");
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
@@ -55,7 +54,7 @@ namespace TerraLeague.Items.Boots
             player.GetModPlayer<PLAYERGLOBAL>().T2Boots = true;
 
             player.meleeSpeed += 0.1f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance *= 1.1;
         }
 
         public override void AddRecipes()
