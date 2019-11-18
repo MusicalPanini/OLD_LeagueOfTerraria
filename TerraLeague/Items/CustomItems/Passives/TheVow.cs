@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: THE VOW -] [c/99e6ff:Grant near by allies 'Iron Skin']";
+            return "[c/0099cc:Passive: THE VOW -] [c/99e6ff:Periodically Grant near by allies 'Iron Skin']";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -38,18 +38,20 @@ namespace TerraLeague.Items.CustomItems.Passives
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-                for (int i = 0; i < Main.player.Length; i++)
+                if (Main.time % 180 == 0)
                 {
-                    Player DefTarget = Main.player[i];
-
-                    float damtoX = DefTarget.position.X + (float)DefTarget.width * 0.5f - player.Center.X;
-                    float damtoY = DefTarget.position.Y + (float)DefTarget.height * 0.5f - player.Center.Y;
-                    float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
-
-                    if (distance < effectRadius && i != player.whoAmI && DefTarget.active)
+                    for (int i = 0; i < Main.player.Length; i++)
                     {
-                        modPlayer.SendBuffPacket(BuffID.Ironskin, 180, i, -1, player.whoAmI);
+                        Player DefTarget = Main.player[i];
+
+                        float damtoX = DefTarget.position.X + (float)DefTarget.width * 0.5f - player.Center.X;
+                        float damtoY = DefTarget.position.Y + (float)DefTarget.height * 0.5f - player.Center.Y;
+                        float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
+
+                        if (distance < effectRadius && i != player.whoAmI && DefTarget.active)
+                        {
+                            modPlayer.SendBuffPacket(BuffID.Ironskin, 180, i, -1, player.whoAmI);
+                        }
                     }
                 }
             }
