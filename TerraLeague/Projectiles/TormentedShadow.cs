@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            damage += (int)(damage * (target.life / (float)target.lifeMax));
+            damage += (int)(damage * (1 - (target.life / (float)target.lifeMax)));
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
