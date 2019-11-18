@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TerraLeague.Items;
 using TerraLeague.Items.AdvItems;
 using TerraLeague.Items.BasicItems;
+using TerraLeague.Items.SummonerSpells;
 using TerraLeague.Projectiles;
 using TerraLeague.Tiles;
 using Terraria;
@@ -320,6 +321,27 @@ namespace TerraLeague
                             {
                                 chest.item[inventoryIndex].SetDefaults(ItemType<BrassBar>());
                                 chest.item[inventoryIndex].stack = Main.rand.Next(6, 11);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Place Vials of Raw Magic in random chests
+            for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
+            {
+                Chest chest = Main.chest[chestIndex];
+                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers)
+                {
+                    if (Main.rand.Next(3) == 0)
+                    {
+                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                        {
+                            if (chest.item[inventoryIndex].type == 0)
+                            {
+                                chest.item[inventoryIndex].SetDefaults(ItemType<VialofTrueMagic>());
+                                chest.item[inventoryIndex].stack = Main.rand.Next(1, 6);
                                 break;
                             }
                         }
