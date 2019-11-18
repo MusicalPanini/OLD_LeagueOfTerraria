@@ -105,6 +105,7 @@ namespace TerraLeague.UI
         Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
         public UIImage sumImage;
         public UIText sumCD;
+        UIText itemKey;
         UIText toolTip;
         int slotNum;
 
@@ -129,6 +130,11 @@ namespace TerraLeague.UI
             sumCD.Top.Pixels = 2;
             Append(sumCD);
 
+            itemKey = new UIText(slotNum.ToString(), 0.75f);
+            itemKey.Left.Pixels = -7;
+            itemKey.Top.Pixels = -8;
+            Append(itemKey);
+
             toolTip = new UIText("",1);
             toolTip.Width.Set(500, 0f);
             Append(toolTip);
@@ -138,6 +144,20 @@ namespace TerraLeague.UI
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             SummonerSpell spell = modPlayer.sumSpells[slotNum - 1];
+
+            string itemSlotText = "N/A";
+            switch (slotNum)
+            {
+                case 1:
+                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Sum1);
+                    break;
+                case 2:
+                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Sum2);
+                    break;
+                default:
+                    break;
+            }
+            itemKey.SetText(itemSlotText);
 
             if (modPlayer.sumSpells[slotNum - 1] != null)
             {
