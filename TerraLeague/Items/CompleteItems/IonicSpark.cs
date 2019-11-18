@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ionic Spark");
-            Tooltip.SetDefault("20% chance to not consume ammo" +
+            Tooltip.SetDefault("12% increased ranged attack speed" +
                 "\nIncreases maximum life by 20");
         }
 
@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.20;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.12;
             base.UpdateAccessory(player, hideVisual);
         }
 

@@ -165,7 +165,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (player.itemAnimation < 24)
+            if (player.itemAnimation != player.itemAnimationMax - 1)
             {
                 type = ProjectileType<TrueIceFlurry>();
                 damage = (int)(damage * 0.3);

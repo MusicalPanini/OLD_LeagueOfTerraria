@@ -5,17 +5,17 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class GuinsoosRage : Passive
     {
-        int meleeSpeedAmmoConsume;
+        int meleeRangedAttackSpeed;
 
         public GuinsoosRage(int meleeAttacksSpeedAmmoConsumeChance)
         {
-            meleeSpeedAmmoConsume = meleeAttacksSpeedAmmoConsumeChance;
+            meleeRangedAttackSpeed = meleeAttacksSpeedAmmoConsumeChance;
         }
 
         public override string Tooltip(Player player, ModItem modItem)
         {
             return "[c/0099cc:Passive: GUINSOO'S RAGE -] [c/99e6ff:Every second in combat will grant a stack up to 6]" +
-                "\n[c/99e6ff:Gain " + meleeSpeedAmmoConsume + "% melee attack speed and chance to not consume ammo]" +
+                "\n[c/99e6ff:Gain " + meleeRangedAttackSpeed + "% melee and ranged attack speed]" +
                 "\n[c/99e6ff:At max stacks, melee and ranged On Hit damage will be doubled]";
         }
 
@@ -23,8 +23,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.meleeSpeed += (float)(meleeSpeedAmmoConsume * 0.01 * modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)]);
-            modPlayer.ConsumeAmmoChance += meleeSpeedAmmoConsume * 0.01 * modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)];
+            player.meleeSpeed += (float)(meleeRangedAttackSpeed * 0.01 * modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)]);
+            modPlayer.rangedAttackSpeed *= 1 + meleeRangedAttackSpeed * 0.01 * modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)];
 
             if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 6)
             {

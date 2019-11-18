@@ -15,8 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Zephyr");
             Tooltip.SetDefault("5% increased melee and ranged damage" +
-                "\n20% increased melee speed" +
-                "\n10% chance to not consume ammo" +
+                "\n10% increased melee and ranged attack speed" +
                 "\n10% increased movement speed" +
                 "\nAbility cooldown reduced by 10%" +
                 "\nImmunity to Slow and Chilled");
@@ -35,8 +34,8 @@ namespace TerraLeague.Items.CompleteItems
             player.meleeDamage += 0.05f;
             player.rangedDamage += 0.05f;
             player.moveSpeed += 0.1f;
-            player.meleeSpeed += 0.2f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.1;
+            player.meleeSpeed += 0.1f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.1;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
 
             player.buffImmune[BuffID.Slow] = true;
