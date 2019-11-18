@@ -665,8 +665,8 @@ namespace TerraLeague.UI
             }
             else if (ammoStats.IsMouseHovering)
             {
-                text = "[c/808080:Ammo Consume Chance]" +
-                    "\nThe percent chance to consume ammo";
+                text = "[c/808080:Ranged Attack Speed]" +
+                    "\nThe percent increase in ranged weapons attack speed";
             }
             else if (healStats.IsMouseHovering)
             {
@@ -697,7 +697,7 @@ namespace TerraLeague.UI
 
             if (extra)
             {
-                ammoStats.SetText("AMMO: " + (modPlayer.ConsumeAmmoChance * 100).ToString() + "%");
+                ammoStats.SetText("ATS: " + ((int)(modPlayer.rangedAttackSpeed * 100)).ToString() + "%");
                 healStats.SetText("HEAL: " + (modPlayer.healPower * 100).ToString() + "%");
                 CDRStats.SetText("CDR: " + ((1 - modPlayer.Cdr) * 100).ToString() + "%");
             }
