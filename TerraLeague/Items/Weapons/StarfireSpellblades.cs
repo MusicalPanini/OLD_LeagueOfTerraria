@@ -19,8 +19,8 @@ namespace TerraLeague.Items.Weapons
         public override string GetWeaponTooltip()
         {
             return "Gains attack speed and damage each second in combat" +
-                "\nAfter 6 seconds, the sword will ascend and create projectiles" +
-                "\nthe projectiles deal " + item.damage + " + [c/" + TerraLeague.RNGColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG * 0.2) + "] + [c/" + TerraLeague.SUMColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM * 0.40) + "] ranged damage";
+                "\nAfter 6 seconds, the sword will ascend and fire waves of starfire" +
+                "\nThe wave deals " + item.damage + " + [c/" + TerraLeague.MELColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL * 0.2) + "] + [c/" + TerraLeague.SUMColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM * 0.40) + "] ranged damage";
         }
 
         public override string GetQuote()
@@ -155,19 +155,35 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             
             item.shoot = ProjectileID.AmberBolt;
-            item.shootSpeed = 12;
-
+            item.shootSpeed = 8;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            item.shootSpeed = 8;
             if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks >= 6)
             {
-                damage = item.damage + (int)(player.GetModPlayer<PLAYERGLOBAL>().RNG * 0.2) + (int)(player.GetModPlayer<PLAYERGLOBAL>().SUM * 0.40);
-                Projectile proj = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
-                proj.penetrate = 3;
-                proj.ranged = true;
-                proj.magic = false;
+                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 13f);
+                int projType = ProjectileType<TrueIceVolley>();
+                damage = item.damage + (int)(player.GetModPlayer<PLAYERGLOBAL>().MEL * 0.2) + (int)(player.GetModPlayer<PLAYERGLOBAL>().SUM * 0.40);
+                int numberProjectiles = 15;
+                float startingAngle = 24;
+                for (int i = 0; i < numberProjectiles; i++)
+                {
+                    Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(startingAngle));
+                    startingAngle -= 4f;
+                    Projectile proj = Projectile.NewProjectileDirect(position, perturbedSpeed, type, damage, knockBack, player.whoAmI);
+                    proj.penetrate = 3;
+                    proj.ranged = true;
+                    proj.magic = false;
+                    proj.timeLeft = 60;
+                    proj.tileCollide = false;
+                    proj.extraUpdates = 1;
+                }
+
+
+                
+                
             }
 
             return false;
