@@ -142,7 +142,7 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 6000;
-            item.rare = 4;
+            item.rare = 3;
             item.scale = 0.75f;
             item.shoot = ProjectileType<LightPistolProj>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
