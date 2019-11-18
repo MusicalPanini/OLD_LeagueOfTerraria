@@ -207,13 +207,11 @@ namespace TerraLeague.Items
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            float num = 1;
+            float num = base.UseTimeMultiplier(item, player);
 
             if (modPlayer.forDemacia)
                 num *= 1.1f;
-            if (modPlayer.deadlyPlumage && item.ranged)
-                num *= 1.25f;
-            if (modPlayer.windPower && item.ranged)
+            if (modPlayer.windPower)
                 num *= 1.1f;
 
             if (item.ranged)
