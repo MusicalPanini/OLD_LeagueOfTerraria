@@ -171,7 +171,7 @@ namespace TerraLeague.NPCs
                 {
                     case 0:
                         text = "Summoner Spells are a special kind of magic that requires no mana to cast." +
-                            "\nYou can change your Summoner Spells by using the Runes I create. Just bring the necessary Vials of Raw Magic for their creation.";
+                            "\nYou can change your Summoner Spells by using the Runes I create. Just bring the necessary Vials of True Magic for their creation.";
                         break;
                     case 1:
                         text = "Armor decreases contact damage." +
