@@ -216,6 +216,11 @@ namespace TerraLeague.Items
             if (modPlayer.windPower && item.ranged)
                 num *= 1.1f;
 
+            if (item.ranged)
+            {
+                num *= 0.8f * (float)modPlayer.rangedAttackSpeed;
+            }
+
             return num;
         }
 

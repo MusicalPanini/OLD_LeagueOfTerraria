@@ -176,6 +176,8 @@ namespace TerraLeague
             set { consumeAmmo = value; }
         }
 
+        public double rangedAttackSpeed = 1;
+
         private double cdr = 1;
         /// <summary>
         /// Cooldown multiplier. Can't be less than 0.6
@@ -634,6 +636,7 @@ namespace TerraLeague
             #region Custom Stats
             TrueMinionDamage = 0;
             consumeAmmo = 0;
+            rangedAttackSpeed = 1;
             Cdr = 1;
             healPower = 1;
             armor = 0;
