@@ -70,7 +70,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return (int)(item.damage * 2);
+                return (int)(item.damage * 3);
             }
             else
                 return base.GetAbilityBaseDamage(player, type);
@@ -114,7 +114,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetRawCooldown(AbilityType type)
         {
             if (type == AbilityType.W)
-                return 0;
+                return 18;
             else
                 return base.GetRawCooldown(type);
         }
