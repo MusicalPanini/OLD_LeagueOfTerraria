@@ -52,7 +52,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Nightstalker(3, 20);
+            return new Nightstalker(3, 50);
         }
 
         public override string GetStatText()
