@@ -151,8 +151,8 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
-            recipe.AddIngredient(ItemID.Sunfury, 1);
+            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
+            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 16);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
