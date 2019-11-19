@@ -57,11 +57,6 @@ namespace TerraLeague.Items.CompleteItems
 
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString() + "%";
-            else
                 return "";
         }
     }
