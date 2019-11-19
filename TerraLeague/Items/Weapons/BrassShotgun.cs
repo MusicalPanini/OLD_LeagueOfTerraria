@@ -18,7 +18,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 8;
+            item.damage = 9;
             item.ranged = true;
             item.width = 44;
             item.height = 24;
@@ -28,7 +28,7 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.knockBack = 6;
             item.value = 3500;
-            item.rare = 1;
+            item.rare = 2;
             item.UseSound = new LegacySoundStyle(2,36);
             item.shoot = 10;
             item.shootSpeed = 6f;
