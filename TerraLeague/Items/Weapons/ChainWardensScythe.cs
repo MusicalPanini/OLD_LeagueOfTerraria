@@ -123,8 +123,8 @@ namespace TerraLeague.Items.Weapons
         {
             item.width = 50;
             item.height = 46;
-            item.value = 6000;
-            item.rare = 4;
+            item.value = 54000;
+            item.rare = 3;
 
             item.noMelee = true;
             item.useStyle = 5;
