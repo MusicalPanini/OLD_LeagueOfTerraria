@@ -512,6 +512,7 @@ namespace TerraLeague
         public bool trueInvis = false;
         public bool invincible = false;
         public bool forDemacia = false;
+        public bool deathFromBelowRefresh = false;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -713,6 +714,7 @@ namespace TerraLeague
             umbralTrespassing = false;
             invincible = false;
             forDemacia = false;
+            deathFromBelowRefresh = false;
 
             pirateSet = false;
             cannonSet = false;
