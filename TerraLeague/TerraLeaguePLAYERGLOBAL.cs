@@ -67,6 +67,10 @@ namespace TerraLeague
 
 
         #region Custom Stats
+        public int BonusMEL = 0;
+        public int BonusRNG = 0;
+        public int BonusMAG = 0;
+        public int BonusSUM = 0;
         /// <summary>
         /// Melee stat for abilities, passives, and actives (MEL)
         /// </summary>
@@ -74,7 +78,7 @@ namespace TerraLeague
         {
             get
             {
-                int x = (int)((meleeDamageLastStep*100) - 100);
+                int x = (int)((meleeDamageLastStep*100) - 100) ;
                 int baseDamage;
                 if (NPC.downedGolemBoss)
                     baseDamage = 70;
@@ -90,7 +94,7 @@ namespace TerraLeague
                     baseDamage = 10;
 
 
-                int stat = (int)(x * 1.5) + baseDamage;
+                int stat = (int)(x * 1.5) + baseDamage + BonusMEL;
 
                 if (stat < 0)
                     return 0;
@@ -108,7 +112,7 @@ namespace TerraLeague
                 int x = (int)((rangedDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * ((Math.Sqrt(3/2f)/10f)), 2);
-                int stat = (int)x * 2;
+                int stat = (int)(x * 2) + BonusRNG;
 
                 if (stat < 0)
                     return 0;
@@ -126,7 +130,7 @@ namespace TerraLeague
                 int x = (int)((magicDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * (1f/(5f*Math.Sqrt(2))), 2);
-                int stat = (int)(x * 2.5);
+                int stat = (int)(x * 2.5) + BonusMAG;
 
                 if (stat < 0)
                     return 0;
@@ -144,7 +148,7 @@ namespace TerraLeague
                 int x = (int)((minionDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * ((Math.Sqrt(3/2f)/10f)), 2);
-                int stat = (int)(x * 1.75);
+                int stat = (int)(x * 1.75) + BonusSUM;
 
                 if (stat < 0)
                     return 0;
@@ -652,6 +656,11 @@ namespace TerraLeague
             lifeStealMinion = 0;
             damageTakenModifier = 1;
             healthModifier = 1;
+
+            BonusMEL = 0;
+            BonusRNG = 0;
+            BonusMAG = 0;
+            BonusSUM = 0;
 
             // Flat Bonus Damage
             meleeFlatDamage = 0;

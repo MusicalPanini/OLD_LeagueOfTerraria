@@ -24,12 +24,21 @@ namespace TerraLeague.Items
         public byte Armor;
         public byte Resist;
         public byte HealPower;
+        public byte MEL;
+        public byte RNG;
+        public byte MAG;
+        public byte SUM;
 
         public ITEMGLOBAL()
         {
             Transedent = false;
             Armor = 0;
             Resist = 0;
+            HealPower = 0;
+            MEL = 0;
+            RNG = 0;
+            MAG = 0;
+            SUM = 0;
         }
 
         public override bool NewPreReforge(Item item)
@@ -38,6 +47,10 @@ namespace TerraLeague.Items
             Armor = 0;
             Resist = 0;
             HealPower = 0;
+            MEL = 0;
+            RNG = 0;
+            MAG = 0;
+            SUM = 0;
 
             return base.NewPreReforge(item);
         }
@@ -199,6 +212,38 @@ namespace TerraLeague.Items
                     };
                     tooltips.Add(line);
                 }
+                if (MEL > 0)
+                {
+                    TooltipLine line = new TooltipLine(mod, "PrefixMEL", "+" + (10 * MEL) + " MEL")
+                    {
+                        isModifier = true
+                    };
+                    tooltips.Add(line);
+                }
+                if (RNG > 0)
+                {
+                    TooltipLine line = new TooltipLine(mod, "PrefixRNG", "+" + (10 * RNG) + " RNG")
+                    {
+                        isModifier = true
+                    };
+                    tooltips.Add(line);
+                }
+                if (MAG > 0)
+                {
+                    TooltipLine line = new TooltipLine(mod, "PrefixMAG", "+" + (10 * MAG) + " MAG")
+                    {
+                        isModifier = true
+                    };
+                    tooltips.Add(line);
+                }
+                if (SUM > 0)
+                {
+                    TooltipLine line = new TooltipLine(mod, "PrefixSUM", "+" + (10 * SUM) + " SUM")
+                    {
+                        isModifier = true
+                    };
+                    tooltips.Add(line);
+                }
             }
             base.ModifyTooltips(item, tooltips);
         }
@@ -290,6 +335,22 @@ namespace TerraLeague.Items
             {
                 player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.03 * HealPower;
             }
+            else if (MEL > 0)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().BonusMEL += 10 * MEL;
+            }
+            else if (RNG > 0)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().BonusRNG += 10 * RNG;
+            }
+            else if (MAG > 0)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().BonusMAG += 10 * MAG;
+            }
+            else if (SUM > 0)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().BonusSUM += 10 * SUM;
+            }
 
             // Pirate set
             if (item.type == ItemID.PirateHat)
@@ -379,6 +440,34 @@ namespace TerraLeague.Items
                 else if (HealPower == 3)
                     reforgePrice = (int)(reforgePrice * 1.44);
             }
+            else if (MEL > 0)
+            {
+                if (MEL == 1)
+                    reforgePrice = (int)(reforgePrice * 1.3225);
+                else if (MEL == 2)
+                    reforgePrice = (int)(reforgePrice * 1.44);
+            }
+            else if (RNG > 0)
+            {
+                if (RNG == 1)
+                    reforgePrice = (int)(reforgePrice * 1.3225);
+                else if (RNG == 2)
+                    reforgePrice = (int)(reforgePrice * 1.44);
+            }
+            else if (MAG > 0)
+            {
+                if (MAG == 1)
+                    reforgePrice = (int)(reforgePrice * 1.3225);
+                else if (MAG == 2)
+                    reforgePrice = (int)(reforgePrice * 1.44);
+            }
+            else if (SUM > 0)
+            {
+                if (SUM == 1)
+                    reforgePrice = (int)(reforgePrice * 1.3225);
+                else if (SUM == 2)
+                    reforgePrice = (int)(reforgePrice * 1.44);
+            }
 
             return base.ReforgePrice(item, ref reforgePrice, ref canApplyDiscount);
         }
@@ -443,6 +532,13 @@ namespace TerraLeague.Items
         {
             ITEMGLOBAL myClone = (ITEMGLOBAL)base.Clone(item, itemClone);
             myClone.Transedent = Transedent;
+            myClone.Armor = Armor;
+            myClone.Resist = Resist;
+            myClone.HealPower = HealPower;
+            myClone.MEL = MEL;
+            myClone.RNG = RNG;
+            myClone.MAG = MAG;
+            myClone.SUM = SUM;
             return myClone;
         }
 
@@ -452,6 +548,10 @@ namespace TerraLeague.Items
             writer.Write(Armor);
             writer.Write(Resist);
             writer.Write(HealPower);
+            writer.Write(MEL);
+            writer.Write(RNG);
+            writer.Write(MAG);
+            writer.Write(SUM);
         }
 
         public override void NetReceive(Item item, BinaryReader reader)
@@ -460,6 +560,10 @@ namespace TerraLeague.Items
             Armor = reader.ReadByte();
             Resist = reader.ReadByte();
             HealPower = reader.ReadByte();
+            MEL = reader.ReadByte();
+            RNG = reader.ReadByte();
+            MAG = reader.ReadByte();
+            SUM = reader.ReadByte();
         }
     }
 }
