@@ -125,7 +125,7 @@ namespace TerraLeague.Items.Weapons
         {
             item.damage = 9;
             item.ranged = true;
-            item.width = 44;
+            item.width = 50;
             item.height = 24;
             item.useAnimation = 60;
             item.useTime = 60;
