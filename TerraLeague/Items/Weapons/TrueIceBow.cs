@@ -57,7 +57,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                return (int)System.Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().arrowDamageLastStep * 0.75);
+                return (int)System.Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().arrowDamageLastStep * 1.25);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.W)
             {
                 if (dam == DamageType.RNG)
-                    return 30;
+                    return 40;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -151,8 +151,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            item.damage = 24;
-
             return base.CanUseItem(player);
         }
 
