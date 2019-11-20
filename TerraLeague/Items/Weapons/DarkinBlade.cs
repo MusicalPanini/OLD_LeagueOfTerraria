@@ -28,33 +28,25 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetAbilityName(AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return "Decisive Strike";
-            else if (type == AbilityType.W)
-                return "Courage";
+            if (type == AbilityType.R)
+                return "World Ender";
             else
                 return base.GetAbilityName(type);
         }
 
         public override string GetIconTexturePath(AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return "AbilityImages/DecisiveStrike";
-            else if (type == AbilityType.W)
-                return "AbilityImages/Courage";
+            if (type == AbilityType.R)
+                return "AbilityImages/Template";
             else
                 return base.GetIconTexturePath(type);
         }
 
         public override string GetAbilityTooltip(AbilityType type)
         {
-            if (type == AbilityType.Q)
+            if (type == AbilityType.R)
             {
-                return "You gain 15% movement speed and your next melee attack will deal 1.5x damage and apply 'Slowed'";
-            }
-            else if(type == AbilityType.W)
-            {
-                return "Gain 6 armor and resist";
+                return "Gain 10% melee life steal and flight for 10 seconds";
             }
             else
             {
@@ -64,9 +56,7 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return (int)0;
-            else if (type == AbilityType.W)
+            if (type == AbilityType.R)
                 return (int)0;
             else
                 return base.GetAbilityBaseDamage(player, type);
@@ -74,19 +64,15 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetBaseManaCost(AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return 0;
-            else if (type == AbilityType.W)
-                return 0;
+            if (type == AbilityType.R)
+                return 50;
             else
                 return base.GetBaseManaCost(type);
         }
 
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return "";
-            else if (type == AbilityType.W)
+            if (type == AbilityType.R)
                 return "";
             else
                 return base.GetDamageTooltip(player, type);
@@ -94,7 +80,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
-            if (type == AbilityType.W || type == AbilityType.Q)
+            if (type == AbilityType.R)
                 return true;
             else
                 return false;
@@ -102,29 +88,19 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetRawCooldown(AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return 9;
-            else if (type == AbilityType.W)
-                return 10;
+            if (type == AbilityType.R)
+                return 40;
             else
                 return base.GetRawCooldown(type);
         }
 
         public override void DoEffect(Player player, AbilityType type)
         {
-            if (type == AbilityType.Q)
+            if (type == AbilityType.R)
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    player.AddBuff(BuffType<DecisiveStrike>(), 300);
-                    SetCooldowns(player, type);
-                }
-            }
-            else if (type == AbilityType.W)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetBaseManaCost(type), true))
-                {
-                    player.AddBuff(BuffType<Courage>(), 300);
+                    player.AddBuff(BuffType<DarkinBuff>(), 600);
                     SetCooldowns(player, type);
                 }
             }
@@ -153,6 +129,8 @@ namespace TerraLeague.Items.Weapons
 
         public override bool GetIfAbilityExists(AbilityType type)
         {
+            if (type == AbilityType.R)
+                return true;
             return base.GetIfAbilityExists(type);
         }
 
