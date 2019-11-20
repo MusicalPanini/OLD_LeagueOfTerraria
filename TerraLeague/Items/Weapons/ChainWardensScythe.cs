@@ -45,8 +45,8 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return "Throw a lanturn at the target location an shield the ally closest to it." +
-                    "Ally may also grab the lanturn and be brought to your location.";
+                return "Throw a lantern at the target location and shield all near by players." +
+                    "Ally may also grab the lantern and be brought to your location.";
             }
             else
             {
@@ -83,7 +83,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " shielding";
+                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MEL) + " shielding";
             else
                 return base.GetDamageTooltip(player, type);
         }
@@ -102,12 +102,21 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15f);
-                    int projType = ProjectileType<GlacialPrisonBola>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
+                    Vector2 position = Main.MouseWorld;
+                    
+                    if (player.Distance(position) > 700)
+                    {
+                        Vector2 temp = (Main.MouseWorld - player.MountedCenter);
+                        temp.Normalize();
+                        position = (temp * 700) + player.MountedCenter;
+                    }
+
+                    Vector2 velocity = Vector2.Zero;
+                    int projType = ProjectileType<Lantern>();
+                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
                     int knockback = 0;
 
+                    SetAnimation(player, 10, 10, position);
                     DoEfx(player, type);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
@@ -135,16 +144,13 @@ namespace TerraLeague.Items.Weapons
             item.scale = 1;
             item.noUseGraphic = true;
             item.UseSound = SoundID.Item1;
-            item.shootSpeed = 13F;
+            item.shootSpeed = 17F;
             item.melee = true;
             item.shoot = ProjectileType<ChainWardensScytheProj>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.shoot = ProjectileType<ChainWardensScytheProj>();
-            item.shootSpeed = 20F;
-
             return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
@@ -161,7 +167,7 @@ namespace TerraLeague.Items.Weapons
         public override bool GetIfAbilityExists(AbilityType type)
         {
             if (type == AbilityType.W)
-                return false;
+                return true;
             return base.GetIfAbilityExists(type);
         }
 
