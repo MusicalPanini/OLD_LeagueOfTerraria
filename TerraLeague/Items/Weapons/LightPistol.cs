@@ -36,7 +36,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetIconTexturePath(AbilityType type)
         {
             if (type == AbilityType.Q)
-                return "AbilityImages/Template";
+                return "AbilityImages/PiercingLight";
             else
                 return base.GetIconTexturePath(type);
         }
@@ -45,7 +45,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                return "Fire a delayed laser";
+                return "Fire a laser of light after a delay";
             }
             else
             {
