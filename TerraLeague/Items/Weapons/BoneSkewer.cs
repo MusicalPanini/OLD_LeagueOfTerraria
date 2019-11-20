@@ -137,7 +137,7 @@ namespace TerraLeague.Items.Weapons
                     Vector2 position = Main.MouseWorld;
                     Vector2 velocity = Vector2.Zero;
                     int projType = ProjectileType<DeathFromBelow>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
+                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
 
                     int knockback = 0;
 
