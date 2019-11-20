@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Buffs;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -7,14 +8,108 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class VoidReaverScythe : ModItem
+    public class VoidReaverScythe : AbilityItem
     {
         public override bool OnlyShootOnSwing => true;
 
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Voidreaver Scythe");
+            Tooltip.SetDefault("");
+        }
 
+        public override string GetWeaponTooltip()
+        {
+            return "";
+        }
+
+        public override string GetQuote()
+        {
+            return "Fear the Void";
+        }
+
+        public override string GetAbilityName(AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return "Evolved Wings";
+            else
+                return base.GetAbilityName(type);
+        }
+
+        public override string GetIconTexturePath(AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return "AbilityImages/EvolvedWings";
+            else
+                return base.GetIconTexturePath(type);
+        }
+
+        public override string GetAbilityTooltip(AbilityType type)
+        {
+            if (type == AbilityType.E)
+            {
+                return "Gain wings and 50% increased melee damage for 4 seconds";
+            }
+            else
+            {
+                return base.GetAbilityTooltip(type);
+            }
+        }
+
+        public override int GetAbilityBaseDamage(Player player, AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return (int)0;
+            else
+                return base.GetAbilityBaseDamage(player, type);
+        }
+
+        public override int GetBaseManaCost(AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return 50;
+            else
+                return base.GetBaseManaCost(type);
+        }
+
+        public override string GetDamageTooltip(Player player, AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return "";
+            else
+                return base.GetDamageTooltip(player, type);
+        }
+
+        public override bool CanBeCastWhileUsingItem(AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return true;
+            else
+                return false;
+        }
+
+        public override int GetRawCooldown(AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return 22;
+            else
+                return base.GetRawCooldown(type);
+        }
+
+        public override void DoEffect(Player player, AbilityType type)
+        {
+            if (type == AbilityType.E)
+            {
+                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
+                {
+                    player.AddBuff(BuffType<EvolvedWings>(), 240);
+                    SetCooldowns(player, type);
+                }
+            }
+            else
+            {
+                base.DoEffect(player, type);
+            }
         }
 
         public override void SetDefaults()
@@ -33,6 +128,7 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shoot = ProjectileType<VoidSpike>();
             item.shootSpeed = 18;
+            item.useTurn = true;
             item.scale = 1.3f;
         }
 
@@ -43,8 +139,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            player.ChangeDir(player.position.X > Main.MouseWorld.X ? -1 : 1);
-
             return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
@@ -55,6 +149,21 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
+        }
+
+        public override bool GetIfAbilityExists(AbilityType type)
+        {
+            if (type == AbilityType.E)
+                return true;
+            return base.GetIfAbilityExists(type);
+        }
+
+        public override void Efx(Player player, AbilityType type)
+        {
+            if (type == AbilityType.E)
+            {
+
+            }
         }
     }
 }
