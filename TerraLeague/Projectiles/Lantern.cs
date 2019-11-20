@@ -77,7 +77,7 @@ namespace TerraLeague.Projectiles
                 {
                     if (projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != projectile.owner)
                     {
-                        Main.player[i].position = player.position;
+                        Main.player[i].Teleport(player.position);
                         projectile.Kill();
                     }
                 }
@@ -98,18 +98,11 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(SoundID.Item10, projectile.position);
             return true;
         }
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, new Color(255, 192, 0), 0.5f);
-
-            }
-
             base.Kill(timeLeft);
         }
 
