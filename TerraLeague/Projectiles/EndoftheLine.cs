@@ -110,6 +110,7 @@ namespace TerraLeague.Projectiles
                 projectile.width = 10;
                 projectile.height = 10;
                 projectile.velocity = Vector2.Zero;
+                projectile.extraUpdates = 1; ;
                 Prime(200);
             }
 

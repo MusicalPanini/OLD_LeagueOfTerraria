@@ -1,5 +1,6 @@
 ﻿using TerraLeague.Buffs;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -101,6 +102,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<DarkinBuff>(), 600);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -143,6 +145,18 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
+        }
+
+        public override void Efx(Player player, AbilityType type)
+        {
+            if (type == AbilityType.R)
+            {
+                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(4, 51).WithPitchVariance(0.8f), player.Center);
+                if (sound != null)
+                    sound.Pitch = -1f;
+            }
+
+            base.Efx(player, type);
         }
     }
 }
