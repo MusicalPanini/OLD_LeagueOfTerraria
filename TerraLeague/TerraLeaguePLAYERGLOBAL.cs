@@ -1969,7 +1969,7 @@ namespace TerraLeague
                 {
                     Cleave.Efx(player.whoAmI, 2);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2);
-                    int dam = (int)(player.meleeDamage * 30);
+                    int dam = (int)(MEL * 50/100f);
 
                     damage += dam;
 
@@ -1998,7 +1998,7 @@ namespace TerraLeague
                 {
                     Cleave.Efx(player.whoAmI, 1);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1);
-                    int dam = (int)((player.meleeDamage * 30) + (player.statLifeMax2 * 0.05));
+                    int dam = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
 
                     damage += dam;
 
@@ -2035,7 +2035,7 @@ namespace TerraLeague
 
                         if (distance < 150 && DamTarget != target && !DamTarget.townNPC)
                         {
-                            player.ApplyDamageToNPC(DamTarget, (int)(player.meleeDamage * 10), 0, 0, crit);
+                            player.ApplyDamageToNPC(DamTarget, (int)(MEL * 30 / 100f), 0, 0, crit);
                         }
                     }
                     cleaveCooldown = 60;
