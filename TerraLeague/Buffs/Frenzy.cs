@@ -10,7 +10,7 @@ namespace TerraLeague.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Frenzy");
-            Description.SetDefault("melee and ranged attack speed increased by 10%!" +
+            Description.SetDefault("melee and ranged attack speed increased by 20%!" +
                 "\nMelee and ranged attacks deal 20 On Hit damage");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
@@ -20,10 +20,10 @@ namespace TerraLeague.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.1;
-            player.meleeSpeed += 0.1f;
-            player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedOnHit += 20;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.2;
+            player.meleeSpeed += 0.2f;
+            player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit += 30;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedOnHit += 30;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

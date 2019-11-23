@@ -31,7 +31,7 @@ namespace TerraLeague.Items.AdvItems
             player.magicCrit += 4;
             player.thrownCrit += 4;
             player.meleeSpeed += 0.10f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.1;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.1;
             player.moveSpeed += 0.05f;
         }
 

@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
             player.rangedDamage += 0.05f;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.04;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.04;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.12f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12f;
             player.meleeSpeed += 0.12f;
             player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.12;
             player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.12;

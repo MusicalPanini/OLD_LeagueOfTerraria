@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.12;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12;
             base.UpdateAccessory(player, hideVisual);
         }
 

@@ -27,7 +27,7 @@ namespace TerraLeague.Items.BasicItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.05;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.05;
         }
 
         public override void AddRecipes()

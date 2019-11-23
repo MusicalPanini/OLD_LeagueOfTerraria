@@ -731,7 +731,7 @@ namespace TerraLeague.UI
 
             if (extra)
             {
-                ammoStats.SetText("ATS: " + ((int)(modPlayer.rangedAttackSpeed * 100)).ToString() + "%");
+                ammoStats.SetText("ATS: " + (Math.Round(modPlayer.rangedAttackSpeed * 100)).ToString() + "%");
                 healStats.SetText("HEAL: " + (modPlayer.healPower * 100).ToString() + "%");
                 CDRStats.SetText("CDR: " + ((1 - modPlayer.Cdr) * 100).ToString() + "%");
                 manaStats.SetText("MANA: " + ((int)((1 - modPlayer.player.manaCost) * 100)).ToString() + "%");

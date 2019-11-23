@@ -54,7 +54,7 @@ namespace TerraLeague.Items.Boots
             player.GetModPlayer<PLAYERGLOBAL>().T3Boots = true;
             player.rocketBoots = 2;
             player.meleeSpeed += 0.12f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.12;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12;
 
         }
 

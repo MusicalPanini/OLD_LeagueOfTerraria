@@ -56,7 +56,7 @@ namespace TerraLeague.Items.Boots
             player.moveSpeed += 0.08f;
             player.meleeSpeed += 0.18f;
             player.iceSkate = true;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.18;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.18;
         }
 
         public override void AddRecipes()
