@@ -62,6 +62,8 @@ namespace TerraLeague
         public static PlayerLayer AbilityItem;
         private static Dictionary<string, string> Keys;
 
+        public static bool StopHealthandManaText = true;
+
         public TerraLeague()
         {
             instance = this;
@@ -210,18 +212,18 @@ namespace TerraLeague
                     return;
                 }
 
-                if (drawPlayer.breath != drawPlayer.breathMax)
-                {
-                    Texture2D texture = instance.GetTexture("UI/BreathBar");
-                    Rectangle sourRec = new Rectangle(0, 0, 116, 20);
-                    DrawData data = new DrawData(texture, destRec, sourRec, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
+                //if (drawPlayer.breath != drawPlayer.breathMax)
+                //{
+                //    Texture2D texture = instance.GetTexture("UI/BreathBar");
+                //    Rectangle sourRec = new Rectangle(0, 0, 116, 20);
+                //    DrawData data = new DrawData(texture, destRec, sourRec, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
+                //    Main.playerDrawData.Add(data);
 
-                    Texture2D texture2 = instance.GetTexture("UI/Blank");
-                    Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
-                    DrawData data2 = new DrawData(texture2, destRec2, sourRec2, Color.DarkCyan, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data2);
-                }
+                //    Texture2D texture2 = instance.GetTexture("UI/Blank");
+                //    Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
+                //    DrawData data2 = new DrawData(texture2, destRec2, sourRec2, Color.DarkCyan, 0, Vector2.Zero, SpriteEffects.None, 1);
+                //    Main.playerDrawData.Add(data2);
+                //}
             });
 
             AbilityItem = new PlayerLayer("TerraLeague", "AbilityItem", PlayerLayer.HeldItem, delegate (PlayerDrawInfo drawInfo)
@@ -284,6 +286,8 @@ namespace TerraLeague
                 HealthbarUI.visible = true;
                 HealthbarInterface.SetState(healthbarUI);
             }
+
+            Main.instance.GUIBarsDraw();
             base.Load();
         }
 
@@ -316,7 +320,7 @@ namespace TerraLeague
             RNGColor = null;
             MAGColor = null;
             SUMColor = null;
-
+            StopHealthandManaText = false;
             base.Unload();
         }
 
@@ -828,6 +832,46 @@ namespace TerraLeague
 
             return keyConvertedString;
 
+        }
+
+
+        public static void HealthAndManaHitBoxes()
+        {
+            if (!StopHealthandManaText)
+            {
+                return;
+            }
+
+            bool isHealthOver200 = (Main.LocalPlayer.statLifeMax2 > 200);
+            int heartWidthTotal = isHealthOver200 ? 260 : (26 * Main.player[Main.myPlayer].statLifeMax2 / 20);
+
+            int healthBarX = 500 + (Main.screenWidth - 800);
+            int healthBarY = 32;
+            int healthBarWidth = 500 + heartWidthTotal + (Main.screenWidth - 800);
+            int healthBarHeight = isHealthOver200 ? Main.heartTexture.Height + 32 : 32;
+
+            Rectangle healthBar = new Rectangle(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+
+
+            int manaBarX = 762 + (Main.screenWidth - 800);
+            int manaBarY = 30;
+            int manaBarHeight = 28 * Main.LocalPlayer.statManaMax2 / 20;
+            int manaBarWidth = Main.manaTexture.Width + 2;
+
+            Rectangle manaBar = new Rectangle(manaBarX, manaBarY, manaBarWidth, manaBarHeight);
+
+            StopHealthManaMouseOver(healthBar, manaBar);
+        }
+
+        public static void StopHealthManaMouseOver(Rectangle HealthHitBox, Rectangle ManaHitBox)
+        {
+            Main.mouseText = HealthHitBox.Contains(Main.mouseX, Main.mouseY) ||
+                ManaHitBox.Contains(Main.mouseX, Main.mouseY) ? true : false;
+        }
+
+        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        {
+            HealthAndManaHitBoxes();
         }
     }
 }
