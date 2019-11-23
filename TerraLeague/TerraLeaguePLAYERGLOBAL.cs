@@ -2568,14 +2568,10 @@ namespace TerraLeague
             //layers.Where(x => x.Name == "HeldItem").First().layer.Method.
 
             TerraLeague.ShieldEffect.visible = true;
-            TerraLeague.AbilityItem.visible = true;
-            //TerraLeague.BreathBar.visible = true;
 
             int itemIndex = layers.FindIndex(x => x.Name == "HeldItem");
 
-            layers.Add(TerraLeague.AbilityItem);
             layers.Add(TerraLeague.ShieldEffect);
-            layers.Insert(itemIndex, TerraLeague.AbilityItem);
 
             if (trueInvis)
             {
