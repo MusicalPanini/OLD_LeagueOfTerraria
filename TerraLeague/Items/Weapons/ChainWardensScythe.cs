@@ -174,7 +174,7 @@ namespace TerraLeague.Items.Weapons
         public override void Efx(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                Main.PlaySound(SoundID.Item1, player.Center);
+                Main.PlaySound(SoundID.Item8, player.Center);
         }
     }
 }

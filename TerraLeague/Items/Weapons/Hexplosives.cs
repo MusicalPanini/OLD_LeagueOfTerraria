@@ -206,7 +206,7 @@ namespace TerraLeague.Items.Weapons
             recipe.AddIngredient(ItemType<HextechCore>(), 2);
             recipe.AddIngredient(ItemID.Bomb, 20);
             recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 6);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

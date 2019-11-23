@@ -126,7 +126,6 @@ namespace TerraLeague.Items.Weapons
             item.height = 10;
             item.value = 2400;
             item.rare = 2;
-
             item.noMelee = true;
             item.useStyle = 5;
             item.useAnimation = 40;
@@ -135,10 +134,11 @@ namespace TerraLeague.Items.Weapons
             item.damage = 20;
             item.scale = 1;
             item.noUseGraphic = false;
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(4, 3);
+            item.UseSound = new LegacySoundStyle(4, 3);
             item.shootSpeed = 8f;
             item.melee = true;
             item.autoReuse = true;
+            item.noUseGraphic = true;
             item.shoot = ProjectileType<ColossusFistP>();
         }
 

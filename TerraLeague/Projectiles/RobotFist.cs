@@ -174,7 +174,6 @@ namespace TerraLeague.Projectiles
             Texture2D robotBase = mod.GetTexture("Projectiles/RobotBase");
             origin = new Vector2((float)robotBase.Width * 0.5f, (float)robotBase.Height * 0.5f);
             Color color3 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-            color3 = projectile.GetAlpha(color3);
             spriteBatch.Draw(robotBase, mountedCenter - Main.screenPosition, sourceRectangle, color3, rotation, new Vector2((float)robotBase.Width * 0.5f, robotBase.Height), 1f, SpriteEffects.None, 0f);
 
             return true;

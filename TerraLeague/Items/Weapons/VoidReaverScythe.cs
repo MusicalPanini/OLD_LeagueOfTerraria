@@ -10,7 +10,7 @@ namespace TerraLeague.Items.Weapons
 {
     public class VoidReaverScythe : AbilityItem
     {
-        public override bool OnlyShootOnSwing => true;
+        public override bool OnlyShootOnSwing => false;
 
         public override void SetStaticDefaults()
         {
@@ -103,6 +103,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<EvolvedWings>(), 240);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -114,7 +115,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 32;        
+            item.damage = 32;
             item.width = 46;          
             item.height = 44;         
             item.melee = true;        
@@ -128,18 +129,26 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shoot = ProjectileType<VoidSpike>();
             item.shootSpeed = 18;
-            item.useTurn = true;
             item.scale = 1.3f;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
         {
+            item.useTurn = false;
 
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+            Vector2 velocity = new Vector2(speedX, speedY);
+
+            Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position, velocity.RotatedBy(0.3f), type, damage, knockBack, player.whoAmI);
+            Projectile.NewProjectile(position, velocity.RotatedBy(-0.3f), type, damage, knockBack, player.whoAmI);
+
+
+
+            return false;
         }
 
         public override void AddRecipes()
@@ -162,7 +171,13 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
+                Main.PlaySound(SoundID.NPCDeath1, player.MountedCenter);
 
+                for (int i = 0; i < 10; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 97, -3 * player.direction, -2);
+                    dust.scale = 2;
+                }
             }
         }
     }

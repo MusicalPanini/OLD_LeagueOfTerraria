@@ -31,7 +31,7 @@ namespace TerraLeague.Projectiles
         {
             Player player = Main.player[projectile.owner];
 
-            Lighting.AddLight(projectile.Center, Color.SeaGreen.ToVector3() * 1.5f);
+            Lighting.AddLight(projectile.Center, Color.SeaGreen.ToVector3() * 2f);
 
             if ((int)projectile.ai[1] == 0)
             {
