@@ -131,7 +131,7 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.mana = 14;
             item.rare = 4;
-            item.value = 6000;
+            item.value = 72000;
             item.width = 28;
             item.height = 32;
             item.useTime = 45;

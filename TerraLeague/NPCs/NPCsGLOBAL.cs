@@ -335,8 +335,12 @@ namespace TerraLeague.NPCs
 
             if (modPlayer.zoneBlackMist)
             {
-                maxSpawns =(int)(maxSpawns * 1.5);
-                spawnRate = (int)(spawnRate * 0.25);
+                maxSpawns =(int)(maxSpawns * 2);
+                if (spawnRate > 300)
+                {
+                    spawnRate = 300;
+                }
+                    spawnRate = (int)(spawnRate * 0.35);
             }
             if (modPlayer.Disruption)
             {

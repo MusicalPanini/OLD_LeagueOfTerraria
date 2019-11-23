@@ -16,10 +16,13 @@ namespace TerraLeague.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().projectileDodge = true;
-            player.GetModPlayer<PLAYERGLOBAL>().trueInvis = true;
-            player.invis = true;
-            player.aggro = -750;
+            if (player.itemAnimation <= 0)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().projectileDodge = true;
+                player.GetModPlayer<PLAYERGLOBAL>().trueInvis = true;
+                player.invis = true;
+                player.aggro = -750;
+            }
         }
 
         public override void Update(NPC npc, ref int buffIndex)

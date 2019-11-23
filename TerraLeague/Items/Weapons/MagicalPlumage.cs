@@ -122,7 +122,7 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = 1;
             item.knockBack = 1;
             item.value = 54000;
-            item.rare = 2;
+            item.rare = 3;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 20f;
             item.shoot = 10;

@@ -202,7 +202,7 @@ namespace TerraLeague.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.Book, 1);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 20);
+            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
             recipe.AddIngredient(ItemID.HellstoneBar, 20);
             recipe.AddIngredient(ItemID.Bone, 50);
             recipe.AddTile(TileID.DemonAltar);

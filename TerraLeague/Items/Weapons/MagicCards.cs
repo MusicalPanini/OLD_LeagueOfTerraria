@@ -152,7 +152,7 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 2;
             item.mana = 6;
             item.value = 3500;
-            item.rare = 1;
+            item.rare = 2;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
             item.shoot = ProjectileType<GreenCard>();

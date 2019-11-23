@@ -20,7 +20,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.width = 18;
             projectile.height = 18;
-            projectile.timeLeft = 180;
+            projectile.timeLeft = 185;
             projectile.friendly = true;
             projectile.magic = true;
             projectile.scale = 0.75f;

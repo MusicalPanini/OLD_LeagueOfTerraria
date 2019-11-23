@@ -18,17 +18,19 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+
             string text = "";
 
             if (modItem.item.type == ItemType<RavenousHydra>())
-                text = "deal " + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().meleeDamageLastStep * baseMeleeDamage) + " melee damage to near by enemies]" +
+                text = "[c/99e6ff:deal] [c/" + TerraLeague.MELColor + ":" + (int)(modPlayer.MEL * baseMeleeDamage / 100d) + "] [c/99e6ff:melee damage to near by enemies]" +
                     "\n[c/99e6ff:Heal for 10% of the damage]";
             else if (modItem.item.type == ItemType<TitanicHydra>())
-                text = "deal " + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().meleeDamageLastStep * baseMeleeDamage) + " + 5% of Max Life (" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep * 0.05) + ") melee damage]";
+                text = "[c/99e6ff:deal] [c/" + TerraLeague.MELColor + ":" + (int)(modPlayer.MEL * baseMeleeDamage / 100d) + "] [c/99e6ff:+ 5% of Max Life (" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep * 0.05) + ") melee damage to near by enemies]";
             else
-                text = "deal " + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().meleeDamageLastStep * baseMeleeDamage) + " melee damage]";
+                text = "[c/99e6ff:deal] [c/" + TerraLeague.MELColor + ":" + (int)(modPlayer.MEL * baseMeleeDamage / 100d) + "] [c/99e6ff:melee damage to near by enemies]";
 
-            return "[c/0099cc:Passive: CLEAVE -] [c/99e6ff:Your melee attacks will periodically " + text;
+            return "[c/0099cc:Passive: CLEAVE -] [c/99e6ff:Your melee attacks will periodically] " + text;
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

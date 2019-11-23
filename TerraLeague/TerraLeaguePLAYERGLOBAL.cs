@@ -67,6 +67,10 @@ namespace TerraLeague
 
 
         #region Custom Stats
+        public int BonusMEL = 0;
+        public int BonusRNG = 0;
+        public int BonusMAG = 0;
+        public int BonusSUM = 0;
         /// <summary>
         /// Melee stat for abilities, passives, and actives (MEL)
         /// </summary>
@@ -74,7 +78,7 @@ namespace TerraLeague
         {
             get
             {
-                int x = (int)((meleeDamageLastStep*100) - 100);
+                int x = (int)((meleeDamageLastStep*100) - 100) ;
                 int baseDamage;
                 if (NPC.downedGolemBoss)
                     baseDamage = 70;
@@ -90,7 +94,7 @@ namespace TerraLeague
                     baseDamage = 10;
 
 
-                int stat = (int)(x * 1.5) + baseDamage;
+                int stat = (int)(x * 1.5) + baseDamage + BonusMEL;
 
                 if (stat < 0)
                     return 0;
@@ -108,7 +112,7 @@ namespace TerraLeague
                 int x = (int)((rangedDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * ((Math.Sqrt(3/2f)/10f)), 2);
-                int stat = (int)x * 2;
+                int stat = (int)(x * 2) + BonusRNG;
 
                 if (stat < 0)
                     return 0;
@@ -126,7 +130,7 @@ namespace TerraLeague
                 int x = (int)((magicDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * (1f/(5f*Math.Sqrt(2))), 2);
-                int stat = (int)(x * 2.5);
+                int stat = (int)(x * 2.5) + BonusMAG;
 
                 if (stat < 0)
                     return 0;
@@ -144,7 +148,7 @@ namespace TerraLeague
                 int x = (int)((minionDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * ((Math.Sqrt(3/2f)/10f)), 2);
-                int stat = (int)(x * 1.75);
+                int stat = (int)(x * 1.75) + BonusSUM;
 
                 if (stat < 0)
                     return 0;
@@ -514,6 +518,7 @@ namespace TerraLeague
         public bool trueInvis = false;
         public bool invincible = false;
         public bool forDemacia = false;
+        public bool deathFromBelowRefresh = false;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -655,6 +660,11 @@ namespace TerraLeague
             damageTakenModifier = 1;
             healthModifier = 1;
 
+            BonusMEL = 0;
+            BonusRNG = 0;
+            BonusMAG = 0;
+            BonusSUM = 0;
+
             // Flat Bonus Damage
             meleeFlatDamage = 0;
             rangedFlatDamage = 0;
@@ -716,6 +726,7 @@ namespace TerraLeague
             umbralTrespassing = false;
             invincible = false;
             forDemacia = false;
+            deathFromBelowRefresh = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1961,7 +1972,7 @@ namespace TerraLeague
                 {
                     Cleave.Efx(player.whoAmI, 2);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2);
-                    int dam = (int)(player.meleeDamage * 30);
+                    int dam = (int)(MEL * 50/100f);
 
                     damage += dam;
 
@@ -1990,7 +2001,7 @@ namespace TerraLeague
                 {
                     Cleave.Efx(player.whoAmI, 1);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1);
-                    int dam = (int)((player.meleeDamage * 30) + (player.statLifeMax2 * 0.05));
+                    int dam = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
 
                     damage += dam;
 
@@ -2027,7 +2038,7 @@ namespace TerraLeague
 
                         if (distance < 150 && DamTarget != target && !DamTarget.townNPC)
                         {
-                            player.ApplyDamageToNPC(DamTarget, (int)(player.meleeDamage * 10), 0, 0, crit);
+                            player.ApplyDamageToNPC(DamTarget, (int)(MEL * 30 / 100f), 0, 0, crit);
                         }
                     }
                     cleaveCooldown = 60;

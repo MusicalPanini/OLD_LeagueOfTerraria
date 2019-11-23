@@ -46,7 +46,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return "Drop a smoke bomb that causes you to become obsucured and immune to projectiles";
+                return "Drop a smoke bomb that causes you to become obsucured and immune to projectiles while not using items";
             }
             else
             {

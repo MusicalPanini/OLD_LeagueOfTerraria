@@ -169,7 +169,10 @@ namespace TerraLeague.Projectiles
                     Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
                 }
             }
-
+            Texture2D robotBase = mod.GetTexture("Projectiles/ColossusFistBase");
+            origin = new Vector2((float)robotBase.Width * 0.5f, (float)robotBase.Height * 0.5f);
+            Color color3 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
+            spriteBatch.Draw(robotBase, mountedCenter - Main.screenPosition, sourceRectangle, color3, rotation, new Vector2((float)robotBase.Width * 0.5f, robotBase.Height), 1f, SpriteEffects.None, 0f);
             return true;
         }
     }

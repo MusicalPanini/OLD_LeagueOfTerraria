@@ -47,7 +47,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Cleave(10);
+            return new Cleave(30);
         }
     }
 }

@@ -43,6 +43,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 Efx(player, target);
                 if (Main.netMode == 1)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                modPlayer.nightStalker = false;
             }
 
             base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
@@ -78,7 +79,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     float checkY = checkTarget.position.Y + (float)checkTarget.height * 0.5f - player.Center.Y;
                     float distance = (float)System.Math.Sqrt((double)(checkX * checkX + checkY * checkY));
 
-                    if (distance < proximity * 16 && !checkTarget.friendly && checkTarget.life > 5)
+                    if (distance < proximity * 16 && !checkTarget.friendly && checkTarget.life > 5 && !checkTarget.immortal)
                     {
                         Prox = true;
                         break;
@@ -86,7 +87,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
                 if (!Prox || player.invis)
                 {
-                    AddStat(player, modItem, 100, 100);
+                    AddStat(player, modItem, 100, 2);
                 }
             }
 
@@ -101,7 +102,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     dust.alpha = 40;
                     dust.noGravity = true;
                 }
-                player.AddBuff(BuffType<Buffs.NightStalker>(), 2);
+                player.AddBuff(BuffType<Buffs.NightStalker>(), 1);
             }
             else
                 player.ClearBuff(BuffType<Buffs.NightStalker>());

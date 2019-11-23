@@ -64,7 +64,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Cleave(30);
+            return new Cleave(40);
         }
     }
 }
