@@ -2,59 +2,67 @@
 using TerraLeague.Items;
 using Terraria;
 using Terraria.ID;
-using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.NPCs
 {
-    public class Scuttlegeist : ModNPC
+    public class Mistling : ModNPC
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Scuttlegeist");
-            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.AnomuraFungus];
+            DisplayName.SetDefault("Mistling");
+            Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.DungeonSpirit];
         }
         public override void SetDefaults()
         {
-            npc.width = 44;
-            npc.height = 34;
-            npc.damage = 10;
-            npc.defense = 14;
-            npc.lifeMax = 70;
-            npc.aiStyle = 3;
-            npc.HitSound = SoundID.NPCHit33;
-            npc.DeathSound = SoundID.NPCDeath36;
+            npc.width = 24;
+            npc.height = 24;
+            npc.aiStyle = 2;
+            npc.damage = 35;
+            npc.defense = 10;
+            npc.lifeMax = 300;
+            npc.noTileCollide = true;
+            npc.noGravity = true;
+            npc.HitSound = SoundID.NPCHit54;
+            npc.DeathSound = SoundID.NPCHit52;
+            npc.aiStyle = NPCID.DemonEye;
+            animationType = NPCID.DungeonSpirit;
+            npc.value = 100;
             npc.knockBackResist = 0.2f;
-            npc.value = 100f;
-            aiType = NPCID.AnomuraFungus;
-            animationType = NPCID.AnomuraFungus;
-            base.SetDefaults();
             npc.scale = 1f;
+            npc.buffImmune[20] = true;
+            npc.buffImmune[24] = true;
+            npc.buffImmune[39] = true;
+            base.SetDefaults();
         }
 
         public override bool PreAI()
         {
             Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
 
+            for (int i = 0; i < 3; i++)
+            {
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 100, new Color(67, 248, 175), Main.rand.Next(1, 3));
+                dust.alpha = 200;
+                dust.noGravity = true;
+                dust.velocity *= 0.1f;
+                dust.velocity += npc.velocity * 0.1f;
+                dust.position.X -= npc.velocity.X / 3f * (float)i;
+                dust.position.Y -= npc.velocity.Y / 3f * (float)i;
+            }
+
             return base.PreAI();
         }
 
         public override void AI()
         {
+            npc.rotation = npc.velocity.ToRotation() - MathHelper.PiOver2;
             base.AI();
-        }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && (spawnInfo.player.ZoneBeach || NPC.downedBoss3))
-                return SpawnCondition.OverworldNightMonster.Chance * 0.25f;
-            return 0;
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            
             base.OnHitPlayer(target, damage, crit);
         }
 
@@ -62,7 +70,6 @@ namespace TerraLeague.NPCs
         {
             if (npc.life > 0)
             {
-
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
@@ -82,14 +89,8 @@ namespace TerraLeague.NPCs
                     dust.velocity *= 2f;
                     Main.dust[num620].noGravity = true;
                 }
-                int num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+                int num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
                 Gore gore = Main.gore[num621];
-                gore.velocity *= 0.3f;
-                num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_2"), npc.scale);
-                gore = Main.gore[num621];
-                gore.velocity *= 0.3f;
-                num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_3"), npc.scale);
-                gore = Main.gore[num621];
                 gore.velocity *= 0.3f;
             }
             base.HitEffect(hitDirection, damage);
@@ -98,7 +99,6 @@ namespace TerraLeague.NPCs
         public override void NPCLoot()
         {
             Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
-
             base.NPCLoot();
         }
     }

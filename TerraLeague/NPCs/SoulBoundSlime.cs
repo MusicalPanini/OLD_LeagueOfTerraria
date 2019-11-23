@@ -72,7 +72,8 @@ namespace TerraLeague.NPCs
         public override void NPCLoot()
         {
             Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
-
+            int item = Item.NewItem(npc.position, npc.width, npc.height, ItemID.Gel, Main.rand.Next(1,4));
+            Main.item[item].color = new Color(67,248,175);
             base.NPCLoot();
         }
     }
