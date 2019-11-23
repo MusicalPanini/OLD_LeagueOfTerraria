@@ -191,7 +191,7 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 20;
             item.useAnimation = 20;
             item.useStyle = 1;
-            item.knockBack = 6;
+            item.knockBack = 3;
             item.value = 6000;
             item.rare = 4;
             item.UseSound = SoundID.Item1;
