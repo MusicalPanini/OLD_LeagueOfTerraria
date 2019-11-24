@@ -261,8 +261,7 @@ namespace TerraLeague.Items
 
             if (item.ranged)
             {
-                num *= 0.8f;
-                num += (float)modPlayer.rangedAttackSpeed - 1;
+                num *= 0.8f * (float)modPlayer.rangedAttackSpeed;
             }
 
             return num;

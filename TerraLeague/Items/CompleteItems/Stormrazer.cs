@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Stormrazer");
             Tooltip.SetDefault("6% increased melee and ranged damage" +
-                "\n10% increased melee and ranged attack speed");
+                "\n8% increased melee and ranged attack speed");
         }
 
         public override void SetDefaults()
@@ -32,8 +32,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.meleeDamage += 0.06f;
             player.rangedDamage += 0.06f;
-            player.meleeSpeed += 0.10f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.1;
+            player.meleeSpeed += 0.8f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.8;
             player.moveSpeed += 0.05f;
             base.UpdateAccessory(player, hideVisual);
         }

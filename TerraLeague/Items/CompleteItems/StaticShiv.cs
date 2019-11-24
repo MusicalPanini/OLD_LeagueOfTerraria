@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Statikk Shiv");
-            Tooltip.SetDefault("15% increased melee and ranged attack speed" +
+            Tooltip.SetDefault("12% increased melee and ranged attack speed" +
                 "\n6% increased melee and ranged critical strike chance" +
                 "\n5% increased movement speed");
         }
@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
             player.meleeCrit += 6;
             player.rangedCrit += 6;
             player.meleeSpeed += 0.15f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.15;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12;
             player.moveSpeed += 0.05f;
             base.UpdateAccessory(player, hideVisual);
         }
