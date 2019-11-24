@@ -1877,12 +1877,12 @@ namespace TerraLeague
                 // Modify lifesteal
                 if (LifeCharge > 0 && !target.immortal)
                 {
-                    if (grievousWounds)
-                        LifeCharge /= 6;
                     if (ProjectileID.Sets.Homing[proj.type])
                         LifeCharge /= 3;
                     if (proj.penetrate != 1)
                         LifeCharge /= 3;
+                    if (grievousWounds)
+                        LifeCharge = 0;
                     lifeStealCharge += LifeCharge;
                 }
 
@@ -2057,7 +2057,7 @@ namespace TerraLeague
                 double LifeCharge = lifeStealMelee * (damage - (target.defense * 0.5));
 
                 if (grievousWounds)
-                    LifeCharge /= 6;
+                    LifeCharge = 0;
                 if (LifeCharge > 0)
                     lifeStealCharge += LifeCharge;
             }

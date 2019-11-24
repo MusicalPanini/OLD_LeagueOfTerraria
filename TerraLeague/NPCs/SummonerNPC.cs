@@ -180,7 +180,7 @@ namespace TerraLeague.NPCs
                         break;
                     case 2:
                         text = "Lifesteal can be very powerful, but it has its drawbacks. In most cases it will reduces your max life and increase the damage you take." +
-                            "\nUpon taking damage, you will be afflicted with 'Grevious Wounds'. This debuff will reduce your lifesteal greatly." +
+                            "\nUpon taking damage, you will be afflicted with 'Grevious Wounds'. This debuff will negate your lifesteal." +
                             "\nProjectiles that pierce or chase down their target also have their lifesteal reduced.";
                         break;
                     case 3:
@@ -199,10 +199,6 @@ namespace TerraLeague.NPCs
                     case 6:
                         text = "Cooldown Reduction (CDR) reduces the recharge time of Summoner Spells, Abilities and Active Items" +
                             "\nThis reduction is capped at 40%.";
-                        break;
-                    case 7:
-                        text = "Ammo Consumption Chance (AMMO) increases the chance of not using ammo" +
-                            "\nThis does not stack with individual weapon's chance.";
                         break;
                     default:
                         break;
