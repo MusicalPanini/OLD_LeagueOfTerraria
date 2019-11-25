@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.rangedCrit += 8;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.15;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.15;
             player.moveSpeed += 0.07f;
 
             base.UpdateAccessory(player, hideVisual);

@@ -40,7 +40,14 @@ namespace TerraLeague.Projectiles
 
                 SoundEffectInstance sound = Main.PlaySound(SoundID.Item9, projectile.Center);
                 if (sound != null)
+                {
                     sound.Pitch = -1;
+
+                    if (sound.Volume * 3 > 1)
+                        sound.Volume = 1;
+                    else
+                        sound.Volume *= 3;
+                }
             }
 
             projectile.rotation += projectile.velocity.X * 0.05f;
@@ -59,7 +66,6 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Prime();
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -73,7 +79,16 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(new LegacySoundStyle(2, 89), projectile.position);
-            Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(1f), projectile.position);
+            SoundEffectInstance sound = Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.Center);
+            if (sound != null)
+            {
+                sound.Pitch = -1;
+
+                if (sound.Volume * 10 > 1)
+                    sound.Volume = 1;
+                else
+                    sound.Volume *= 10;
+            }
             for (int i = 0; i < 20; i++)
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);

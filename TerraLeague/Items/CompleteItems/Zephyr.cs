@@ -35,7 +35,7 @@ namespace TerraLeague.Items.CompleteItems
             player.rangedDamage += 0.05f;
             player.moveSpeed += 0.1f;
             player.meleeSpeed += 0.1f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.1;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.1;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
 
             player.buffImmune[BuffID.Slow] = true;

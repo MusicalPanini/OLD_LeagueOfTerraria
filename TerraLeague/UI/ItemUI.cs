@@ -542,6 +542,7 @@ namespace TerraLeague.UI
         UIText CDRStats;
         UIText ammoStats;
         UIText healStats;
+        UIText manaStats;
 
         UIText tooltip;
 
@@ -600,6 +601,12 @@ namespace TerraLeague.UI
             ammoStats.Top.Pixels = 70;
             ammoStats.TextColor = Color.Gray;
 
+            manaStats = new UIText("MANA: 000%", 0.65f);
+            manaStats.Left.Pixels = 80;
+            manaStats.Top.Pixels = 70;
+            manaStats.TextColor = Color.RoyalBlue;
+
+
             tooltip = new UIText("");
             tooltip.Left.Set(Main.screenWidth/2 - 250 - Left.Pixels, 0);
             tooltip.Top.Set(Main.screenHeight - 171 - Top.Pixels, 0);
@@ -613,13 +620,13 @@ namespace TerraLeague.UI
             Append(CDRStats);
             Append(healStats);
             Append(ammoStats);
+            Append(manaStats);
             Append(tooltip);
         }
 
         public override void Update(GameTime gameTime)
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-
             armorStats.Width.Set(30,0);
             resistStats.Width.Set(30,0);
             meleeStats.Width.Set(30,0);
@@ -629,6 +636,8 @@ namespace TerraLeague.UI
             CDRStats.Width.Set(30,0);
             healStats.Width.Set(30,0);
             ammoStats.Width.Set(30,0);
+
+            manaStats.Width.Set(30,0);
 
             if (extraStats)
             {
@@ -693,6 +702,11 @@ namespace TerraLeague.UI
                 text = "[c/008000:Healing Power]" +
                     "\nThe percent increase in all your healing";
             }
+            else if (manaStats.IsMouseHovering)
+            {
+                text = "[c/4169E1:Mana Cost Reduction]" +
+                    "\nThe percent reduction of all mana costs";
+            }
 
 
             int count = text.Split('\n').Length;
@@ -717,15 +731,17 @@ namespace TerraLeague.UI
 
             if (extra)
             {
-                ammoStats.SetText("ATS: " + ((int)(modPlayer.rangedAttackSpeed * 100)).ToString() + "%");
+                ammoStats.SetText("ATS: " + (Math.Round(modPlayer.rangedAttackSpeed * 100)).ToString() + "%");
                 healStats.SetText("HEAL: " + (modPlayer.healPower * 100).ToString() + "%");
                 CDRStats.SetText("CDR: " + ((1 - modPlayer.Cdr) * 100).ToString() + "%");
+                manaStats.SetText("MANA: " + ((int)((1 - modPlayer.player.manaCost) * 100)).ToString() + "%");
             }
             else
             {
                 ammoStats.SetText("");
                 healStats.SetText("");
                 CDRStats.SetText("");
+                manaStats.SetText("");
             }
         }
     }

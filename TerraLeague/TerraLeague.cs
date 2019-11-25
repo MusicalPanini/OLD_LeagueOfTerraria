@@ -58,9 +58,9 @@ namespace TerraLeague
         public static ModHotKey RAbility;
         public static ModHotKey Trinket;
         public static PlayerLayer ShieldEffect;
-        public static PlayerLayer BreathBar;
-        public static PlayerLayer AbilityItem;
         private static Dictionary<string, string> Keys;
+
+        public static bool StopHealthandManaText = true;
 
         public TerraLeague()
         {
@@ -197,58 +197,6 @@ namespace TerraLeague
                 }
             });
 
-            BreathBar = new PlayerLayer("TerraLeague", "BreathBar", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
-            {
-                Player drawPlayer = drawInfo.drawPlayer;
-                PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
-                Color color = Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16);
-                Rectangle destRec = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 58), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 32), 116, 20);
-                Rectangle destRec2 = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 50), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 30), (int)(100 * (drawPlayer.breath/(double)drawPlayer.breathMax)), 16);
-
-                if (drawInfo.shadow != 0f)
-                {
-                    return;
-                }
-
-                if (drawPlayer.breath != drawPlayer.breathMax)
-                {
-                    Texture2D texture = instance.GetTexture("UI/BreathBar");
-                    Rectangle sourRec = new Rectangle(0, 0, 116, 20);
-                    DrawData data = new DrawData(texture, destRec, sourRec, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
-
-                    Texture2D texture2 = instance.GetTexture("UI/Blank");
-                    Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
-                    DrawData data2 = new DrawData(texture2, destRec2, sourRec2, Color.DarkCyan, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data2);
-                }
-            });
-
-            AbilityItem = new PlayerLayer("TerraLeague", "AbilityItem", PlayerLayer.HeldItem, delegate (PlayerDrawInfo drawInfo)
-            {
-                Player drawPlayer = drawInfo.drawPlayer;
-                PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
-                if (modPlayer.abilityItem != null)
-                {
-                    Texture2D texture = Main.itemTexture[modPlayer.abilityItem.type];
-                    Vector2 pos = modPlayer.abilityItemPosition + (drawPlayer.Center - Main.screenPosition);
-                    if (drawPlayer.shadow == 0f && !drawPlayer.frozen && modPlayer.abilityAnimation > 0 && !drawPlayer.dead)
-                    {
-                        Color color = Lighting.GetColor((int)((double)drawPlayer.Center.X + (double)drawPlayer.width * 0.5) / 16, (int)(((double)drawPlayer.Center.Y + (double)drawPlayer.height * 0.5) / 16.0)); ;
-                        if (drawPlayer.gravDir == -1f)
-                        {
-                            DrawData drawData = new DrawData(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height), modPlayer.abilityItem.GetAlpha(color), modPlayer.abilityRotation - (float)Math.PI/ (-4f * drawPlayer.direction), new Vector2((float)texture.Width * 0.5f - (float)texture.Width * 0.5f * (float)drawPlayer.direction, 0f), modPlayer.abilityItem.scale, SpriteEffects.FlipHorizontally, 0);
-                            Main.playerDrawData.Add(drawData);
-                        }
-                        else
-                        {
-                            DrawData drawData = new DrawData(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height), modPlayer.abilityItem.GetAlpha(color), modPlayer.abilityRotation - (float)Math.PI / (-4f * drawPlayer.direction), new Vector2((float)texture.Width * 0.5f - (float)texture.Width * 0.5f * (float)drawPlayer.direction, (float)texture.Height), modPlayer.abilityItem.scale, SpriteEffects.FlipHorizontally, 0);
-                            Main.playerDrawData.Add(drawData);
-                        }
-                    }
-                }
-            });
-
             MELColor = "FFA500";
             RNGColor = "20B2AA";
             MAGColor = "8E70DB";
@@ -284,6 +232,8 @@ namespace TerraLeague
                 HealthbarUI.visible = true;
                 HealthbarInterface.SetState(healthbarUI);
             }
+
+            Main.instance.GUIBarsDraw();
             base.Load();
         }
 
@@ -296,8 +246,6 @@ namespace TerraLeague
             Keys = null;
             instance = null;
             ShieldEffect = null;
-            BreathBar = null;
-            AbilityItem = null;
             ToggleStats = null;
             Item1 = null;
             Item2 = null;
@@ -316,7 +264,7 @@ namespace TerraLeague
             RNGColor = null;
             MAGColor = null;
             SUMColor = null;
-
+            StopHealthandManaText = false;
             base.Unload();
         }
 
@@ -828,6 +776,46 @@ namespace TerraLeague
 
             return keyConvertedString;
 
+        }
+
+
+        public static void HealthAndManaHitBoxes()
+        {
+            if (!StopHealthandManaText)
+            {
+                return;
+            }
+
+            bool isHealthOver200 = (Main.LocalPlayer.statLifeMax2 > 200);
+            int heartWidthTotal = isHealthOver200 ? 260 : (26 * Main.player[Main.myPlayer].statLifeMax2 / 20);
+
+            int healthBarX = 500 + (Main.screenWidth - 800);
+            int healthBarY = 32;
+            int healthBarWidth = 500 + heartWidthTotal + (Main.screenWidth - 800);
+            int healthBarHeight = isHealthOver200 ? Main.heartTexture.Height + 32 : 32;
+
+            Rectangle healthBar = new Rectangle(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+
+
+            int manaBarX = 762 + (Main.screenWidth - 800);
+            int manaBarY = 30;
+            int manaBarHeight = 28 * Main.LocalPlayer.statManaMax2 / 20;
+            int manaBarWidth = Main.manaTexture.Width + 2;
+
+            Rectangle manaBar = new Rectangle(manaBarX, manaBarY, manaBarWidth, manaBarHeight);
+
+            StopHealthManaMouseOver(healthBar, manaBar);
+        }
+
+        public static void StopHealthManaMouseOver(Rectangle HealthHitBox, Rectangle ManaHitBox)
+        {
+            Main.mouseText = HealthHitBox.Contains(Main.mouseX, Main.mouseY) ||
+                ManaHitBox.Contains(Main.mouseX, Main.mouseY) ? true : false;
+        }
+
+        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        {
+            HealthAndManaHitBoxes();
         }
     }
 }

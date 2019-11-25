@@ -64,7 +64,7 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
         {
-            if (type == AbilityType.R)
+            if (type == AbilityType.W)
             {
                 if (dam == DamageType.RNG)
                     return 160;

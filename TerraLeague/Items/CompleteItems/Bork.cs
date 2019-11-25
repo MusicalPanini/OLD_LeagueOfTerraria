@@ -20,7 +20,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Blade of the Ruined King");
             Tooltip.SetDefault("5% increased melee and ranged damage" +
                 "\n12% increased melee and ranged attack speed" +
-                "\n4% melee and ranged life steal" +
+                "\n3% melee and ranged life steal" +
                 "\n12% decreased maximum life" +
                 "\n12% increased damage taken");
         }
@@ -37,9 +37,9 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.meleeDamage += 0.05f;
             player.rangedDamage += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.04;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.04;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.12f;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.03;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.03;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.12f;
             player.meleeSpeed += 0.12f;
             player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.12;
             player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.12;

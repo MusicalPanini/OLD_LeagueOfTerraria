@@ -29,7 +29,7 @@ namespace TerraLeague.Items.AdvItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += 0.12f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.12;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.10;
             base.UpdateAccessory(player, hideVisual);
         }
 

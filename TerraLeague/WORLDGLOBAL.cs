@@ -293,7 +293,7 @@ namespace TerraLeague
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 17 * 36 )
+                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 13 * 36 )
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
@@ -311,18 +311,15 @@ namespace TerraLeague
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 13 * 36)
+                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 17 * 36)
                 {
-                    if (Main.rand.Next(2) == 0)
+                    for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
-                        for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
+                        if (chest.item[inventoryIndex].type == 0)
                         {
-                            if (chest.item[inventoryIndex].type == 0)
-                            {
-                                chest.item[inventoryIndex].SetDefaults(ItemType<BrassBar>());
-                                chest.item[inventoryIndex].stack = Main.rand.Next(6, 11);
-                                break;
-                            }
+                            chest.item[inventoryIndex].SetDefaults(ItemType<BrassBar>());
+                            chest.item[inventoryIndex].stack = Main.rand.Next(4, 9);
+                            break;
                         }
                     }
                 }
@@ -502,7 +499,7 @@ namespace TerraLeague
                 if (Main.dayTime)
                 {
                     float num139 = (float)(Main.maxTilesX / 4200f);
-                    if ((float)Main.rand.Next(/*8000*/12000) < 10f * num139)
+                    if ((float)Main.rand.Next(/*8000*/16000) < 10f * num139)
                     {
                         int num140 = Main.rand.Next(Main.maxTilesX - 50) + 100;
                         num140 *= 16;

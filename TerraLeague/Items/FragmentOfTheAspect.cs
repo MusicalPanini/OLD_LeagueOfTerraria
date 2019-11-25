@@ -12,7 +12,8 @@ namespace TerraLeague.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Fragment of the Aspect");
-            Tooltip.SetDefault("'Gift from the gods'");
+            Tooltip.SetDefault("Disappears after the sunset" +
+                "\n'Gift from the gods'");
             base.SetStaticDefaults();
         }
 
@@ -28,6 +29,16 @@ namespace TerraLeague.Items
         public override void PostUpdate()
         {
             Lighting.AddLight(item.Center, Color.Blue.ToVector3());
+
+            if (!Main.dayTime)
+            {
+                Main.item[item.whoAmI].active = false;
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDustDirect(item.position, item.width, item.height, 59);
+                }
+            }
         }
     }
 }

@@ -255,9 +255,9 @@ namespace TerraLeague.Items
             float num = base.UseTimeMultiplier(item, player);
 
             if (modPlayer.forDemacia)
-                num *= 1.1f;
+                num += 0.1f;
             if (modPlayer.windPower)
-                num *= 1.1f;
+                num += 0.1f;
 
             if (item.ranged)
             {

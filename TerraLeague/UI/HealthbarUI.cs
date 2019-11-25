@@ -43,8 +43,6 @@ namespace TerraLeague.UI
             mana.Top.Set(24f, 0f);
             MainPanel.Append(mana);
 
-            
-
             for (int i = 0; i < 22; i++)
             {
                 UIBuff buffui = new UIBuff(i);
@@ -73,6 +71,23 @@ namespace TerraLeague.UI
             int width = (int)Math.Ceiling(dimensions.Width);
             int height = (int)Math.Ceiling(dimensions.Height);
             spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+
+
+
+            Player drawPlayer = Main.LocalPlayer;
+            Rectangle destRec = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 58), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 32), 116, 20);
+            Rectangle destRec2 = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 50), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 30), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
+
+            if (drawPlayer.breath != drawPlayer.breathMax)
+            {
+                Texture2D texture = TerraLeague.instance.GetTexture("UI/BreathBar");
+                Rectangle sourRec = new Rectangle(0, 0, 116, 20);
+                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
+
+                Texture2D texture2 = TerraLeague.instance.GetTexture("UI/Blank");
+                Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
+                spriteBatch.Draw(texture2, destRec2, sourRec2, Color.DarkCyan);
+            }
         }
     }
 
