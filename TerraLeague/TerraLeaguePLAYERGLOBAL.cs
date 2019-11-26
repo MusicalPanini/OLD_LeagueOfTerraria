@@ -1639,12 +1639,14 @@ namespace TerraLeague
                         }
                     }
                 }
+
+                if (doesKill != -1)
+                {
+                    return doesKill == 0 ? false : true;
+                }
             }
 
-            if (doesKill != -1)
-            {
-                return doesKill == 0 ? false : true;
-            }
+            
 
             
             if (GetRealHeathWithoutShield() <= 0)
