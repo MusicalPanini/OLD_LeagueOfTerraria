@@ -1973,7 +1973,7 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 2);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2, player.whoAmI);
                     int dam = (int)(MEL * 50/100f);
 
                     damage += dam;
@@ -2002,7 +2002,7 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 1);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1, player.whoAmI);
                     int dam = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
 
                     damage += dam;
@@ -2028,7 +2028,7 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 0);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0, player.whoAmI);
 
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
