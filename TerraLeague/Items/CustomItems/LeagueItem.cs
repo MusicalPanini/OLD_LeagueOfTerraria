@@ -20,14 +20,18 @@ namespace TerraLeague.Items.CustomItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[TerraLeague.FindAccessorySlotOnPlayer(player, this) * 2])
-                if (GetPrimaryPassive() != null)
-                    GetPrimaryPassive().UpdateAccessory(player, this);
+            int slot = TerraLeague.FindAccessorySlotOnPlayer(player, this);
 
-            if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(TerraLeague.FindAccessorySlotOnPlayer(player, this) * 2) + 1])
-                if (GetSecondaryPassive() != null)
-                    GetSecondaryPassive().UpdateAccessory(player, this);
+            if (slot > -1)
+            {
+                if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                    if (GetPrimaryPassive() != null)
+                        GetPrimaryPassive().UpdateAccessory(player, this);
 
+                if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
+                    if (GetSecondaryPassive() != null)
+                        GetSecondaryPassive().UpdateAccessory(player, this);
+            }
             base.UpdateAccessory(player, hideVisual);
         }
 
