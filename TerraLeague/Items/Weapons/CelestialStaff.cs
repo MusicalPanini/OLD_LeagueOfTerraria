@@ -167,9 +167,9 @@ namespace TerraLeague.Items.Weapons
                                 PLAYERGLOBAL modPlayerTarget = Main.player[i].GetModPlayer<PLAYERGLOBAL>();
 
                                 if (modPlayerTarget.GetRealHeathWithoutShield(false) < modPlayerTarget.GetRealHeathWithoutShield(true) * 0.4)
-                                    modPlayerTarget.SendHealPacket((int)((GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG)) * 1.5), i, -1, player.whoAmI);
+                                    modPlayer.SendHealPacket((int)((GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG)) * 1.5), i, -1, player.whoAmI);
                                 else
-                                    modPlayerTarget.SendHealPacket(GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG), i, -1, player.whoAmI);
+                                    modPlayer.SendHealPacket(GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG), i, -1, player.whoAmI);
                             }
                         }
                         else if (Main.player[i].active)
