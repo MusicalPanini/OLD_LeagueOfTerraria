@@ -2622,34 +2622,6 @@ namespace TerraLeague
                 );
             }
 
-
-            if (player.breath != player.breathMax && Main.myPlayer == player.whoAmI)
-            {
-                Main.spriteBatch.Draw
-                    (
-                        mod.GetTexture("UI/BreathBar"),
-                        new Rectangle((int)(player.Center.X - Main.screenPosition.X - 58), (int)(player.position.Y - Main.screenPosition.Y - 32), 116, 20),
-                        new Rectangle(0, 0, 116, 20),
-                        Color.White,
-                        0,
-                        Vector2.Zero,
-                        SpriteEffects.None,
-                        0f
-                    );
-
-                Main.spriteBatch.Draw
-                    (
-                        mod.GetTexture("UI/Blank"),
-                        new Rectangle((int)(player.Center.X - Main.screenPosition.X - 50), (int)(player.position.Y - Main.screenPosition.Y - 30), (int)(100 * (player.breath / (double)player.breathMax)), 16),
-                        new Rectangle(0, 0, 16, 16),
-                        Color.DarkCyan,
-                        0,
-                        Vector2.Zero,
-                        SpriteEffects.None,
-                        0f
-                    );
-            }
-
             if (player.HeldItem.type == ItemType<Whisper>() && Main.myPlayer == player.whoAmI)
             {
 
