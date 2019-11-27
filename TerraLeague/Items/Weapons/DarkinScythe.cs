@@ -53,7 +53,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
             {
                 return "Become invulnerable and infest a marked enemy for 4 seconds" +
-                "\nRecast to leave the enemy early";
+                "\nAfter 1 second, you can recast to leave the enemy early";
             }
             else if (type == AbilityType.Q)
             {
@@ -116,7 +116,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CurrentlyHasSpecialCast(Player player, AbilityType type)
         {
-            if (type == AbilityType.R && player.HasBuff(BuffType<UmbralTrespassing>()))
+            if (type == AbilityType.R && player.HasBuff(BuffType<UmbralTrespassing>()) && player.GetModPlayer<PLAYERGLOBAL>().AbilityCooldowns[3] <= GetCooldown(type) * 60 - 60)
                 return true;
             else
                 return false;
