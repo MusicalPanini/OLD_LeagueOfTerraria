@@ -123,7 +123,7 @@ namespace TerraLeague.Projectiles
             if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 if (player.whoAmI != projectile.owner)
-                    player.GetModPlayer<PLAYERGLOBAL>().SendHealPacket((int)projectile.ai[0], player.whoAmI, -1, projectile.owner);
+                    Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket((int)projectile.ai[0], player.whoAmI, -1, projectile.owner);
             }
         }
 
