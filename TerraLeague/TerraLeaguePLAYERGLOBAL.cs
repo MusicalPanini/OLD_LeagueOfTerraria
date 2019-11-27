@@ -1224,7 +1224,8 @@ namespace TerraLeague
             {
                 for (int i = 0; i < AbilityCooldowns.Length; i++)
                 {
-                    AbilityCooldowns[i] = 0;
+                    if (AbilityCooldowns[i] > 60)
+                        AbilityCooldowns[i] = 60;
                 }
 
                 for (int i = 0; i < sumCooldowns.Length; i++)
