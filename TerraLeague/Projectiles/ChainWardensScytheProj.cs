@@ -71,6 +71,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
+            Lighting.AddLight(projectile.Center, Color.SeaGreen.ToVector3());
             Player player = Main.player[projectile.owner];
             player.itemAnimation = 5;
             player.itemTime = 5;
