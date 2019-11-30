@@ -441,31 +441,36 @@ namespace TerraLeague.UI
                     }
 
                     legItem = modItem as LeagueItem;
-                    
+
+
                     if (legItem != null)
                     {
-                        if (legItem.GetActive() != null)
+                        int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, legItem);
+                        if (slot != -1)
                         {
-                            activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                            for (int i = 0; i < activeTip.Length; i++)
+                            if (legItem.GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
                             {
-                                extraLines.Add(activeTip[i]);
+                                activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < activeTip.Length; i++)
+                                {
+                                    extraLines.Add(activeTip[i]);
+                                }
                             }
-                        }
-                        if (legItem.GetPrimaryPassive() != null)
-                        {
-                            primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                            for (int i = 0; i < primPassiveTip.Length; i++)
+                            if (legItem.GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
                             {
-                                extraLines.Add(primPassiveTip[i]);
+                                primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < primPassiveTip.Length; i++)
+                                {
+                                    extraLines.Add(primPassiveTip[i]);
+                                }
                             }
-                        }
-                        if (legItem.GetSecondaryPassive() != null)
-                        {
-                            secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                            for (int i = 0; i < secPassiveTip.Length; i++)
+                            if (legItem.GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
                             {
-                                extraLines.Add(secPassiveTip[i]);
+                                secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < secPassiveTip.Length; i++)
+                                {
+                                    extraLines.Add(secPassiveTip[i]);
+                                }
                             }
                         }
                     }
