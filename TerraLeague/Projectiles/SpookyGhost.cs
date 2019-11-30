@@ -15,6 +15,7 @@ namespace TerraLeague.Projectiles
         {
             DisplayName.SetDefault("Spooky Ghost");
             ProjectileID.Sets.Homing[projectile.type] = true;
+            Main.projFrames[projectile.type] = 3;
         }
 
         public override void SetDefaults()
@@ -128,6 +129,17 @@ namespace TerraLeague.Projectiles
         {
             width = height = 10; 
             return true;
+        }
+
+        public void AnimateProjectile()
+        {
+            projectile.frameCounter++;
+            if (projectile.frameCounter >= 5)
+            {
+                projectile.frame++;
+                projectile.frame %= 3;
+                projectile.frameCounter = 0;
+            }
         }
 
     }
