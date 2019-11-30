@@ -46,8 +46,8 @@ namespace TerraLeague.Projectiles
                 projectile.Kill();
                 return;
             }
-            player.itemAnimation = 5;
-            player.itemTime = 5;
+            player.itemAnimation = 2;
+            player.itemTime = 2;
             if (projectile.alpha == 0)
             {
                 if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))
