@@ -1854,7 +1854,7 @@ namespace TerraLeague
                     }
 
                     if (shotsfired != 0)
-                        windsFuryCooldown = 10;
+                        windsFuryCooldown = (int)(15 / rangedAttackSpeed);
 
                 }
 
