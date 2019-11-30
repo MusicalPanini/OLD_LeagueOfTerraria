@@ -152,7 +152,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Projectile proj = Main.projectile.Where(x => x.type == ProjectileType<LucentSingularity>() && x.owner == player.whoAmI).FirstOrDefault();
                     if (proj.width != 8)
-                        proj.timeLeft = 2;
+                        proj.timeLeft = 1;
                 }
                 else if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {

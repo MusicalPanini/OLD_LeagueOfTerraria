@@ -110,7 +110,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CurrentlyHasSpecialCast(Player player, AbilityType type)
         {
-            if (type == AbilityType.Q && Main.LocalPlayer.ownedProjectileCounts[ProjectileType<Plasma>()] > 0)
+            if (type == AbilityType.Q && Main.LocalPlayer.ownedProjectileCounts[ProjectileType<Plasma>()] > 0 && player.GetModPlayer<PLAYERGLOBAL>().AbilityCooldowns[0] <= GetCooldown(type) * 60 - 10)
                 return true;
             else
                 return false;
