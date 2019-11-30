@@ -2234,8 +2234,7 @@ namespace TerraLeague
                 damage -= (int)(resist * 0.5);
 
 
-            if (proj.owner < Main.npc.Length)
-                OnHitByEnemy(Main.npc[proj.owner], ref damage, crit);
+                OnHitByEnemy(Main.npc[0], ref damage, crit);
             base.ModifyHitByProjectile(proj, ref damage, ref crit);
         }
 
