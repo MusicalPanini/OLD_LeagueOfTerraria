@@ -32,7 +32,7 @@ namespace TerraLeague.Items
 
             if (!Main.dayTime)
             {
-                Main.item[item.whoAmI].active = false;
+                item.SetDefaults();
 
                 for (int i = 0; i < 20; i++)
                 {
