@@ -74,6 +74,9 @@ namespace TerraLeague
                 case SummonerSpells:
                     summonerSpellHandler.HandlePacket(r, fromWho);
                     break;
+                case Abilities:
+                    abilitiesHandler.HandlePacket(r, fromWho);
+                    break;
             }
         }
     }
@@ -232,7 +235,7 @@ namespace TerraLeague
             int BuffId = reader.ReadInt32();
             int BuffDuration = reader.ReadInt32();
             int BuffTarget = reader.ReadInt32();
-            TerraLeague.Log("[DEBUG] - Received Buff", new Color(255, 240, 245));
+            TerraLeague.Log("[DEBUG] - Received Buff (ID: " + BuffId + " | Duration: " + BuffDuration + ")", new Color(255, 240, 245));
 
             if (Main.netMode == NetmodeID.Server)
             {
@@ -659,11 +662,12 @@ namespace TerraLeague
         }
 
         // Cleave
-        public void SendCleave(int toWho, int fromWho, int type)
+        public void SendCleave(int toWho, int fromWho, int type, int user)
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
                 ModPacket packet = GetPacket(cleave, fromWho);
+                packet.Write(user);
                 packet.Write(type);
                 packet.Send(toWho, fromWho);
                 TerraLeague.Log("[DEBUG] - Sending Cleave", Color.LightSlateGray);
@@ -673,15 +677,16 @@ namespace TerraLeague
         {
             TerraLeague.Log("[DEBUG] - Received Cleave", new Color(80, 80, 80));
 
+            int user = reader.ReadInt32();
             int type = reader.ReadInt32();
 
             if (Main.netMode == NetmodeID.Server)
             {
-                SendCleave(-1, fromWho, type);
+                SendCleave(-1, fromWho, type, user);
             }
             else
             {
-                Cleave.Efx(fromWho, type);
+                Cleave.Efx(user, type);
             }
         }
     }
@@ -731,7 +736,7 @@ namespace TerraLeague
             }
             else
             {
-                Items.CustomItems.LeagueItem legItem = Main.item[itemID].modItem as Items.CustomItems.LeagueItem;
+                LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
                     legItem.GetActive().Efx(Main.player[user]);
             }
@@ -1231,18 +1236,17 @@ namespace TerraLeague
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
-                ModPacket packet = GetPacket(Wish, fromWho);
+                ModPacket packet = GetPacket(Efx, fromWho);
                 packet.Write(castItem);
                 packet.Write(caster);
                 packet.Write((byte)abilityType);
                 packet.Send(toWho, fromWho);
-                TerraLeague.Log("[DEBUG] - Sending Efx", new Color(50, 200, 0));
+                TerraLeague.Log("[DEBUG] - Sending Efx (ItemID: " + castItem + " | Ability Type: "+ abilityType + ")", new Color(50, 200, 0));
             }
         }
         private void ReceiveEfx(BinaryReader reader, int fromWho)
         {
-            TerraLeague.Log("[DEBUG] - Received Efx", new Color(200, 200, 0));
-
+            
             int CastItem = reader.ReadInt32();
             int Caster = reader.ReadInt32();
             AbilityType AbilityType = (AbilityType)reader.ReadByte();
@@ -1253,6 +1257,8 @@ namespace TerraLeague
             }
             else
             {
+                TerraLeague.Log("[DEBUG] - Received Efx (Caster: " + Caster + " | ItemID: " + CastItem + " | Ability Type: " + AbilityType + ")", new Color(200, 200, 0));
+
                 AbilityItem abilityItem = GetModItem(CastItem) as AbilityItem;
 
                 if (abilityItem != null)

@@ -30,7 +30,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Left, 0.09f, 0.40f, 0.60f);
+            Lighting.AddLight(projectile.Left, Color.LightGreen.ToVector3());
 
 
             if (projectile.alpha > 0)

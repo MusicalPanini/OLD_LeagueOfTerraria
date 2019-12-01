@@ -71,12 +71,13 @@ namespace TerraLeague.UI
             int width = (int)Math.Ceiling(dimensions.Width);
             int height = (int)Math.Ceiling(dimensions.Height);
             spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
-
+            base.Width.Pixels = Main.screenWidth;
+            base.Height.Pixels = Main.screenHeight;
 
 
             Player drawPlayer = Main.LocalPlayer;
-            Rectangle destRec = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 58), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 32), 116, 20);
-            Rectangle destRec2 = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 50), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 30), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
+            Rectangle destRec = new Rectangle((int)((base.Width.Pixels/2) - 58), (int)((base.Height.Pixels/2) - 48), 116, 20);
+            Rectangle destRec2 = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
 
             if (drawPlayer.breath != drawPlayer.breathMax)
             {

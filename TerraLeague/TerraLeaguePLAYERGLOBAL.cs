@@ -1224,7 +1224,8 @@ namespace TerraLeague
             {
                 for (int i = 0; i < AbilityCooldowns.Length; i++)
                 {
-                    AbilityCooldowns[i] = 0;
+                    if (AbilityCooldowns[i] > 60)
+                        AbilityCooldowns[i] = 60;
                 }
 
                 for (int i = 0; i < sumCooldowns.Length; i++)
@@ -1853,7 +1854,7 @@ namespace TerraLeague
                     }
 
                     if (shotsfired != 0)
-                        windsFuryCooldown = 10;
+                        windsFuryCooldown = (int)(15 / rangedAttackSpeed);
 
                 }
 
@@ -1973,7 +1974,7 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 2);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2, player.whoAmI);
                     int dam = (int)(MEL * 50/100f);
 
                     damage += dam;
@@ -2002,7 +2003,7 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 1);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1, player.whoAmI);
                     int dam = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
 
                     damage += dam;
@@ -2028,7 +2029,7 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 0);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0, player.whoAmI);
 
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
@@ -2233,8 +2234,7 @@ namespace TerraLeague
                 damage -= (int)(resist * 0.5);
 
 
-            if (proj.owner < Main.npc.Length)
-                OnHitByEnemy(Main.npc[proj.owner], ref damage, crit);
+                OnHitByEnemy(Main.npc[0], ref damage, crit);
             base.ModifyHitByProjectile(proj, ref damage, ref crit);
         }
 
@@ -2620,34 +2620,6 @@ namespace TerraLeague
                     player.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
                     0f
                 );
-            }
-
-
-            if (player.breath != player.breathMax && Main.myPlayer == player.whoAmI)
-            {
-                Main.spriteBatch.Draw
-                    (
-                        mod.GetTexture("UI/BreathBar"),
-                        new Rectangle((int)(player.Center.X - Main.screenPosition.X - 58), (int)(player.position.Y - Main.screenPosition.Y - 32), 116, 20),
-                        new Rectangle(0, 0, 116, 20),
-                        Color.White,
-                        0,
-                        Vector2.Zero,
-                        SpriteEffects.None,
-                        0f
-                    );
-
-                Main.spriteBatch.Draw
-                    (
-                        mod.GetTexture("UI/Blank"),
-                        new Rectangle((int)(player.Center.X - Main.screenPosition.X - 50), (int)(player.position.Y - Main.screenPosition.Y - 30), (int)(100 * (player.breath / (double)player.breathMax)), 16),
-                        new Rectangle(0, 0, 16, 16),
-                        Color.DarkCyan,
-                        0,
-                        Vector2.Zero,
-                        SpriteEffects.None,
-                        0f
-                    );
             }
 
             if (player.HeldItem.type == ItemType<Whisper>() && Main.myPlayer == player.whoAmI)

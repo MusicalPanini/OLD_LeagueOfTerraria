@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             if (modItem.GetStatOnPlayer(player) <= 0)
             {
                 int target = TerraLeague.PlayerMouseIsHovering(30);
-                if (target != -1)
+                if (target != -1 && target != player.whoAmI)
                 {
                     DoAction(target, player, modItem);
                 }

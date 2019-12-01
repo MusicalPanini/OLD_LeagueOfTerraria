@@ -20,14 +20,18 @@ namespace TerraLeague.Items.CustomItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[TerraLeague.FindAccessorySlotOnPlayer(player, this) * 2])
-                if (GetPrimaryPassive() != null)
-                    GetPrimaryPassive().UpdateAccessory(player, this);
+            int slot = TerraLeague.FindAccessorySlotOnPlayer(player, this);
 
-            if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(TerraLeague.FindAccessorySlotOnPlayer(player, this) * 2) + 1])
-                if (GetSecondaryPassive() != null)
-                    GetSecondaryPassive().UpdateAccessory(player, this);
+            if (slot > -1)
+            {
+                if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                    if (GetPrimaryPassive() != null)
+                        GetPrimaryPassive().UpdateAccessory(player, this);
 
+                if (player.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
+                    if (GetSecondaryPassive() != null)
+                        GetSecondaryPassive().UpdateAccessory(player, this);
+            }
             base.UpdateAccessory(player, hideVisual);
         }
 
@@ -48,12 +52,27 @@ namespace TerraLeague.Items.CustomItems
 
                 string text = "\n";
 
-                if (GetActive() != null)
-                    text += "\n" + GetActive().Tooltip(Main.LocalPlayer, this);
-                if (GetPrimaryPassive() != null)
-                    text += "\n" + GetPrimaryPassive().Tooltip(Main.LocalPlayer, this);
-                if (GetSecondaryPassive() != null)
-                    text += "\n" + GetSecondaryPassive().Tooltip(Main.LocalPlayer, this);
+                int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
+                if (slot != -1)
+                {
+                    if (GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
+                        text += "\n" + GetActive().Tooltip(Main.LocalPlayer, this);
+                    if (GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                        text += "\n" + GetPrimaryPassive().Tooltip(Main.LocalPlayer, this);
+                    if (GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
+                        text += "\n" + GetSecondaryPassive().Tooltip(Main.LocalPlayer, this);
+                }
+                else
+                {
+                    if (GetActive() != null)
+                        text += "\n" + GetActive().Tooltip(Main.LocalPlayer, this);
+                    if (GetPrimaryPassive() != null)
+                        text += "\n" + GetPrimaryPassive().Tooltip(Main.LocalPlayer, this);
+                    if (GetSecondaryPassive() != null)
+                        text += "\n" + GetSecondaryPassive().Tooltip(Main.LocalPlayer, this);
+                }
+
+                
 
                 string[] lines = text.Split('\n');
 
