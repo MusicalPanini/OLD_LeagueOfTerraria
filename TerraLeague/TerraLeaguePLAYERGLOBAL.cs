@@ -26,7 +26,7 @@ namespace TerraLeague
     {
         internal PlayerPacketHandler PacketHandler = ModNetHandler.playerHandler;
         internal NPCSpawnInfo nPCSpawnInfo = new NPCSpawnInfo();
-
+        
         // Ability Animation
         public int abilityAnimationType = 0;
         public int abilityAnimation = 0;
@@ -34,6 +34,7 @@ namespace TerraLeague
         public Item abilityItem = null;
         public Vector2 abilityItemPosition = Vector2.Zero;
         public float abilityRotation = 0;
+        public int oldUsedInventorySlot = -1;
 
         /// <summary>
         /// Is set to 0 everytime you take or deal damage. Counts up by 1 every frame up to 240
@@ -56,12 +57,20 @@ namespace TerraLeague
         /// </summary>
         internal bool zoneSurfaceMarble = false;
         /// <summary>
+        /// Is the player in the Black Mist
+        /// </summary>
+        internal bool zoneBlackMist = false;
+        /// <summary>
         /// Has the player hit an enemy with current melee swing
         /// </summary>
         internal bool hasHitMelee = false;
 
 
         #region Custom Stats
+        public int BonusMEL = 0;
+        public int BonusRNG = 0;
+        public int BonusMAG = 0;
+        public int BonusSUM = 0;
         /// <summary>
         /// Melee stat for abilities, passives, and actives (MEL)
         /// </summary>
@@ -69,7 +78,7 @@ namespace TerraLeague
         {
             get
             {
-                int x = (int)((meleeDamageLastStep*100) - 100);
+                int x = (int)((meleeDamageLastStep*100) - 100) ;
                 int baseDamage;
                 if (NPC.downedGolemBoss)
                     baseDamage = 70;
@@ -85,7 +94,7 @@ namespace TerraLeague
                     baseDamage = 10;
 
 
-                int stat = (int)(x * 1.5) + baseDamage;
+                int stat = (int)(x * 1.5) + baseDamage + BonusMEL;
 
                 if (stat < 0)
                     return 0;
@@ -103,7 +112,7 @@ namespace TerraLeague
                 int x = (int)((rangedDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * ((Math.Sqrt(3/2f)/10f)), 2);
-                int stat = (int)x * 2;
+                int stat = (int)(x * 2) + BonusRNG;
 
                 if (stat < 0)
                     return 0;
@@ -121,7 +130,7 @@ namespace TerraLeague
                 int x = (int)((magicDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * (1f/(5f*Math.Sqrt(2))), 2);
-                int stat = (int)(x * 2.5);
+                int stat = (int)(x * 2.5) + BonusMAG;
 
                 if (stat < 0)
                     return 0;
@@ -139,7 +148,7 @@ namespace TerraLeague
                 int x = (int)((minionDamageLastStep * 100) - 100);
 
                 //int stat = (int)Math.Pow(x * ((Math.Sqrt(3/2f)/10f)), 2);
-                int stat = (int)(x * 1.75);
+                int stat = (int)(x * 1.75) + BonusSUM;
 
                 if (stat < 0)
                     return 0;
@@ -170,6 +179,8 @@ namespace TerraLeague
             }
             set { consumeAmmo = value; }
         }
+
+        public double rangedAttackSpeed = 1;
 
         private double cdr = 1;
         /// <summary>
@@ -370,6 +381,7 @@ namespace TerraLeague
         public int NormalShield = 0;
         public int PureHealthLastStep = 0;
         public string wasHitByProjOrNPCLastStep = "None";
+        public Color currentShieldColor = new Color(255,255,255,0);
 
         /// <summary>
         /// Returns the players current health without the shields
@@ -505,6 +517,8 @@ namespace TerraLeague
         public bool toxicShot = false;
         public bool trueInvis = false;
         public bool invincible = false;
+        public bool forDemacia = false;
+        public bool deathFromBelowRefresh = false;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -627,6 +641,7 @@ namespace TerraLeague
             #region Custom Stats
             TrueMinionDamage = 0;
             consumeAmmo = 0;
+            rangedAttackSpeed = 1;
             Cdr = 1;
             healPower = 1;
             armor = 0;
@@ -644,6 +659,11 @@ namespace TerraLeague
             lifeStealMinion = 0;
             damageTakenModifier = 1;
             healthModifier = 1;
+
+            BonusMEL = 0;
+            BonusRNG = 0;
+            BonusMAG = 0;
+            BonusSUM = 0;
 
             // Flat Bonus Damage
             meleeFlatDamage = 0;
@@ -705,6 +725,8 @@ namespace TerraLeague
             trueInvis = false;
             umbralTrespassing = false;
             invincible = false;
+            forDemacia = false;
+            deathFromBelowRefresh = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -913,7 +935,16 @@ namespace TerraLeague
             {
                 nPCSpawnInfo.marble = true;
             }
+
+            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 4) || (WORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
+
+            if (zoneBlackMist)
+            {
+                player.blind = true;
+            }
         }
+
+        
 
         #region Multiplayer Stuff
         public override void clientClone(ModPlayer clientClone)
@@ -1189,6 +1220,28 @@ namespace TerraLeague
         
         public override void PostUpdate()
         {
+            if (TerraLeague.instance.debugMode)
+            {
+                for (int i = 0; i < AbilityCooldowns.Length; i++)
+                {
+                    if (AbilityCooldowns[i] > 60)
+                        AbilityCooldowns[i] = 60;
+                }
+
+                for (int i = 0; i < sumCooldowns.Length; i++)
+                {
+                    sumCooldowns[i] = 0;
+                }
+            }
+
+            if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
+            {
+                player.selectedItem = oldUsedInventorySlot;
+                player.itemLocation = Vector2.Zero;
+                oldUsedInventorySlot = -1;
+            }
+
+
             // Handles the modded regen
             LinearManaRegen();
 
@@ -1225,7 +1278,7 @@ namespace TerraLeague
             }
 
             // Stopwatch enabler
-            if (Main.time == 0 && !stopWatchActive)
+            if (Main.time == 0 && !stopWatchActive && Main.dayTime)
             {
                 stopWatchActive = true;
             }
@@ -1419,19 +1472,19 @@ namespace TerraLeague
                     }
                 }
 
-                if (TerraLeague.QAbility.JustPressed && Abilities[0] != null)
+                if (TerraLeague.QAbility.Current && Abilities[0] != null)
                     if (Abilities[0].CanCurrentlyBeCast(player, AbilityType.Q))
                         UseAbility(AbilityType.Q);
 
-                if (TerraLeague.WAbility.JustPressed && Abilities[1] != null)
+                if (TerraLeague.WAbility.Current && Abilities[1] != null)
                     if (Abilities[1].CanCurrentlyBeCast(player, AbilityType.W))
                         UseAbility(AbilityType.W);
 
-                if (TerraLeague.EAbility.JustPressed && Abilities[2] != null)
+                if (TerraLeague.EAbility.Current && Abilities[2] != null)
                     if (Abilities[2].CanCurrentlyBeCast(player, AbilityType.E))
                         UseAbility(AbilityType.E);
 
-                if (TerraLeague.RAbility.JustPressed && Abilities[3] != null)
+                if (TerraLeague.RAbility.Current && Abilities[3] != null)
                     if (Abilities[3].CanCurrentlyBeCast(player, AbilityType.R))
                         UseAbility(AbilityType.R);
 
@@ -1516,6 +1569,7 @@ namespace TerraLeague
             maxMinionsLastStep = player.maxMinions;
             maxLifeLastStep = GetRealHeathWithoutShield(true);
 
+            SetShieldColor();
             base.PostUpdate();
         }
 
@@ -1539,7 +1593,14 @@ namespace TerraLeague
                 }
             }
         }
-        
+
+        public override void UpdateBiomeVisuals()
+        {
+            //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
+            player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
+            base.UpdateBiomeVisuals();
+        }
+
         /// <summary>
         /// <para>Runs just before the player dies</para>
         /// Return false to prevent the player from dying
@@ -1579,12 +1640,14 @@ namespace TerraLeague
                         }
                     }
                 }
+
+                if (doesKill != -1)
+                {
+                    return doesKill == 0 ? false : true;
+                }
             }
 
-            if (doesKill != -1)
-            {
-                return doesKill == 0 ? false : true;
-            }
+            
 
             
             if (GetRealHeathWithoutShield() <= 0)
@@ -1791,7 +1854,7 @@ namespace TerraLeague
                     }
 
                     if (shotsfired != 0)
-                        windsFuryCooldown = 10;
+                        windsFuryCooldown = (int)(15 / rangedAttackSpeed);
 
                 }
 
@@ -1817,12 +1880,12 @@ namespace TerraLeague
                 // Modify lifesteal
                 if (LifeCharge > 0 && !target.immortal)
                 {
-                    if (grievousWounds)
-                        LifeCharge /= 6;
                     if (ProjectileID.Sets.Homing[proj.type])
                         LifeCharge /= 3;
                     if (proj.penetrate != 1)
                         LifeCharge /= 3;
+                    if (grievousWounds)
+                        LifeCharge = 0;
                     lifeStealCharge += LifeCharge;
                 }
 
@@ -1911,8 +1974,8 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 2);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2);
-                    int dam = (int)(player.meleeDamage * 30);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2, player.whoAmI);
+                    int dam = (int)(MEL * 50/100f);
 
                     damage += dam;
 
@@ -1940,8 +2003,8 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 1);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1);
-                    int dam = (int)((player.meleeDamage * 30) + (player.statLifeMax2 * 0.05));
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1, player.whoAmI);
+                    int dam = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
 
                     damage += dam;
 
@@ -1966,7 +2029,7 @@ namespace TerraLeague
                 if (cleaveCooldown == 0)
                 {
                     Cleave.Efx(player.whoAmI, 0);
-                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0);
+                    Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0, player.whoAmI);
 
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
@@ -1978,7 +2041,7 @@ namespace TerraLeague
 
                         if (distance < 150 && DamTarget != target && !DamTarget.townNPC)
                         {
-                            player.ApplyDamageToNPC(DamTarget, (int)(player.meleeDamage * 10), 0, 0, crit);
+                            player.ApplyDamageToNPC(DamTarget, (int)(MEL * 30 / 100f), 0, 0, crit);
                         }
                     }
                     cleaveCooldown = 60;
@@ -1997,7 +2060,7 @@ namespace TerraLeague
                 double LifeCharge = lifeStealMelee * (damage - (target.defense * 0.5));
 
                 if (grievousWounds)
-                    LifeCharge /= 6;
+                    LifeCharge = 0;
                 if (LifeCharge > 0)
                     lifeStealCharge += LifeCharge;
             }
@@ -2171,8 +2234,7 @@ namespace TerraLeague
                 damage -= (int)(resist * 0.5);
 
 
-            if (proj.owner < Main.npc.Length)
-                OnHitByEnemy(Main.npc[proj.owner], ref damage, crit);
+                OnHitByEnemy(Main.npc[0], ref damage, crit);
             base.ModifyHitByProjectile(proj, ref damage, ref crit);
         }
 
@@ -2508,14 +2570,10 @@ namespace TerraLeague
             //layers.Where(x => x.Name == "HeldItem").First().layer.Method.
 
             TerraLeague.ShieldEffect.visible = true;
-            TerraLeague.AbilityItem.visible = true;
-            //TerraLeague.BreathBar.visible = true;
 
             int itemIndex = layers.FindIndex(x => x.Name == "HeldItem");
 
-            layers.Add(TerraLeague.AbilityItem);
             layers.Add(TerraLeague.ShieldEffect);
-            layers.Insert(itemIndex, TerraLeague.AbilityItem);
 
             if (trueInvis)
             {
@@ -2564,35 +2622,7 @@ namespace TerraLeague
                 );
             }
 
-
-            if (player.breath != player.breathMax)
-            {
-                Main.spriteBatch.Draw
-                    (
-                        mod.GetTexture("UI/BreathBar"),
-                        new Rectangle((int)(player.Center.X - Main.screenPosition.X - 58), (int)(player.position.Y - Main.screenPosition.Y - 32), 116, 20),
-                        new Rectangle(0, 0, 116, 20),
-                        Color.White,
-                        0,
-                        Vector2.Zero,
-                        SpriteEffects.None,
-                        0f
-                    );
-
-                Main.spriteBatch.Draw
-                    (
-                        mod.GetTexture("UI/Blank"),
-                        new Rectangle((int)(player.Center.X - Main.screenPosition.X - 50), (int)(player.position.Y - Main.screenPosition.Y - 30), (int)(100 * (player.breath / (double)player.breathMax)), 16),
-                        new Rectangle(0, 0, 16, 16),
-                        Color.DarkCyan,
-                        0,
-                        Vector2.Zero,
-                        SpriteEffects.None,
-                        0f
-                    );
-            }
-
-            if (player.HeldItem.type == ItemType<Whisper>())
+            if (player.HeldItem.type == ItemType<Whisper>() && Main.myPlayer == player.whoAmI)
             {
 
                 Texture2D texture = null;
@@ -2845,6 +2875,37 @@ namespace TerraLeague
             Shields.Add(new Shield(amount, duration, color, type));
         }
 
+        public void SetShieldColor()
+        {
+            if (player.whoAmI == Main.myPlayer)
+            {
+                Color oldCol = currentShieldColor;
+
+
+                if (player.HasBuff(BuffType<DivineJudgementBuff>()))
+                {
+                    currentShieldColor = Color.Gold;
+                }
+                else if (GetTotalShield() > 0)
+                {
+                    currentShieldColor = Shields.Last().ShieldColor;
+                }
+                else if (veil)
+                {
+                    currentShieldColor = Color.Purple;
+                }
+                else
+                {
+                    currentShieldColor = new Color(255, 255, 255, 0);
+                }
+
+                if (Main.netMode == 1 && (oldCol.R != currentShieldColor.R || oldCol.G != currentShieldColor.G || oldCol.B != currentShieldColor.B || oldCol.A != currentShieldColor.A))
+                {
+                    PacketHandler.SendNewShield(-1, player.whoAmI, player.whoAmI, currentShieldColor);
+                }
+            }
+        }
+
         /// <summary>
         /// Removes all shields from the player
         /// </summary>
@@ -3070,6 +3131,12 @@ namespace TerraLeague
                 Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, 80, 0, -2, 0, default(Color), 1.5f);
                 dustIndex.velocity *= 2;
             }
+        }
+
+        public void SetTempUseItem(int itemToUse)
+        {
+            oldUsedInventorySlot = player.selectedItem;
+            player.selectedItem = player.FindItem(itemToUse);
         }
     }
 }

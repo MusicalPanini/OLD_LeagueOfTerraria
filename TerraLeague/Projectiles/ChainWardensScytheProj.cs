@@ -34,6 +34,8 @@ namespace TerraLeague.Projectiles
             else
                 position = new Vector2(projectile.position.X + projectile.width - 8, projectile.position.Y + 7).RotatedBy(projectile.rotation, projectile.Center);
 
+            
+
             Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
             Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
             Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
@@ -69,6 +71,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
+            Lighting.AddLight(projectile.Center, Color.SeaGreen.ToVector3());
             Player player = Main.player[projectile.owner];
             player.itemAnimation = 5;
             player.itemTime = 5;

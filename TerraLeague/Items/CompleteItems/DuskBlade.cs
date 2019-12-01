@@ -52,16 +52,11 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Nightstalker(3, 20);
+            return new Nightstalker(3, 50);
         }
 
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString() + "%";
-            else
                 return "";
         }
     }

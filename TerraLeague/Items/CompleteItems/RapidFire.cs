@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rapidfire Cannon");
-            Tooltip.SetDefault("15% chance to not consume ammo" +
+            Tooltip.SetDefault("20% increased ranged attack speed" +
                 "\n10% increased ranged critical strike chance" +
                 "\n10% increased movement speed");
         }
@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.rangedCrit += 10;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.15;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.2;
             player.moveSpeed += 0.10f;
 
             base.UpdateAccessory(player, hideVisual);

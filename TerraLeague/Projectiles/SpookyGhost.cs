@@ -15,6 +15,7 @@ namespace TerraLeague.Projectiles
         {
             DisplayName.SetDefault("Spooky Ghost");
             ProjectileID.Sets.Homing[projectile.type] = true;
+            Main.projFrames[projectile.type] = 3;
         }
 
         public override void SetDefaults()
@@ -71,6 +72,8 @@ namespace TerraLeague.Projectiles
             int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color));
             Main.dust[dustIndex].noGravity = true;
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
+
+            AnimateProjectile();
         }
 
         private void AdjustMagnitude(ref Vector2 vector)
@@ -128,6 +131,17 @@ namespace TerraLeague.Projectiles
         {
             width = height = 10; 
             return true;
+        }
+
+        public void AnimateProjectile()
+        {
+            projectile.frameCounter++;
+            if (projectile.frameCounter >= 5)
+            {
+                projectile.frame++;
+                projectile.frame %= 3;
+                projectile.frameCounter = 0;
+            }
         }
 
     }

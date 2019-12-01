@@ -115,7 +115,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15 * 0.6f);
                     int projType = ProjectileType<GreenCard>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.MAG);
@@ -129,6 +129,7 @@ namespace TerraLeague.Items.Weapons
                         Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
                         startingAngle -= 30f;
                     }
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
@@ -151,7 +152,7 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 2;
             item.mana = 6;
             item.value = 3500;
-            item.rare = 1;
+            item.rare = 2;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
             item.shoot = ProjectileType<GreenCard>();
@@ -195,7 +196,7 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<BrassBar>(), 16);
+            recipe.AddIngredient(ItemType<BrassBar>(), 14);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

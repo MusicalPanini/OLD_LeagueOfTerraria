@@ -46,7 +46,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (proj.melee || proj.ranged)
             {
-                OnHitDamage += (int)(meleeScaling * modPlayer.MAG / 100d) + (int)(rangedScaling * modPlayer.MAG / 100d) + (int)(minionScaling * modPlayer.MAG / 100d);
+                OnHitDamage += (int)(meleeScaling * modPlayer.MEL / 100d) + (int)(rangedScaling * modPlayer.RNG / 100d) + (int)(minionScaling * modPlayer.SUM / 100d);
             }
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);

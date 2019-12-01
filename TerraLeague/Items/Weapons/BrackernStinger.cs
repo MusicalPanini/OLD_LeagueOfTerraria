@@ -68,7 +68,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                return GetAbilityBaseDamage(player, type) + " max life shield";
+                return GetAbilityBaseDamage(player, type) + " shielding";
             else
                 return base.GetDamageTooltip(player, type);
         }
@@ -89,7 +89,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetRawCooldown(AbilityType type)
         {
             if (type == AbilityType.W)
-                return 0;
+                return 12;
             else
                 return base.GetRawCooldown(type);
         }
@@ -104,6 +104,7 @@ namespace TerraLeague.Items.Weapons
 
                     player.AddBuff(BuffID.Swiftness, 360);
                     modPlayer.AddShield(GetAbilityBaseDamage(player, type), 360, new Color(181,77,177), ShieldType.Basic);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -152,6 +153,7 @@ namespace TerraLeague.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.AntlionMandible, 6);
+            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 10);
             recipe.AddIngredient(ItemID.Amethyst, 1);
             recipe.AddIngredient(ItemType<Sunstone>(), 10);
             recipe.AddTile(TileID.Anvils);
@@ -168,6 +170,12 @@ namespace TerraLeague.Items.Weapons
 
         public override void Efx(Player player, AbilityType type)
         {
+            if (type == AbilityType.W)
+            {
+                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 27), player.MountedCenter);
+                if (sound != null)
+                    sound.Pitch = -0.5f;
+            }
             base.Efx(player, type);
         }
     }

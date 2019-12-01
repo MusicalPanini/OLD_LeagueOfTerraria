@@ -15,6 +15,11 @@ namespace TerraLeague.Tiles
             }
         }
 
+        public override int CreateDust()
+        {
+            return 51;
+        }
+
         public override int DropWood()
         {
             return ItemType<PetWood>();

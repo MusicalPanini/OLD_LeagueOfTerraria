@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: WIND POWER -] [c/99e6ff:Ranged rate of fire increased by 15%]";
+            return "[c/0099cc:Passive: WIND POWER -] [c/99e6ff:15% increased attack speed]";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

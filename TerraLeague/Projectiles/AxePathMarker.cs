@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
                 projectile.velocity.Y += 0.3f;
             }
 
-            if (projectile.timeLeft % 8 == 0)
+            if (projectile.timeLeft % 8 == 0 && Main.myPlayer == projectile.owner)
             {
                 Dust dust2 = Dust.NewDustPerfect(projectile.Center, 211, null, 0, new Color(255, 0, 0), 2);
                 dust2.noGravity = true;
@@ -48,11 +48,14 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            for (int i = 0; i < 20; i++)
+            if (Main.myPlayer == projectile.owner)
             {
-                Dust dust = Dust.NewDustPerfect(new Vector2(projectile.position.X + (int)((projectile.width/19.0)*i), projectile.position.Y + projectile.height - 24), 6,null, 0, new Color(255, 125, 0), 4f);
-                dust.velocity *= 0f;
-                dust.noGravity = true;
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(new Vector2(projectile.position.X + (int)((projectile.width / 19.0) * i), projectile.position.Y + projectile.height - 24), 6, null, 0, new Color(255, 125, 0), 4f);
+                    dust.velocity *= 0f;
+                    dust.noGravity = true;
+                }
             }
 
             base.Kill(timeLeft);

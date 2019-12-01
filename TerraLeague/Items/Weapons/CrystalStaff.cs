@@ -117,10 +117,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
-            if (type == AbilityType.Q || type == AbilityType.W)
-                return true;
-            else
-                return false;
+            return false;
         }
 
         public override int GetRawCooldown(AbilityType type)
@@ -141,13 +138,14 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 18f);
                     int projType = ProjectileID.DiamondBolt;
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
                     DoEfx(player, type);
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
@@ -163,6 +161,7 @@ namespace TerraLeague.Items.Weapons
                     int knockback = 10;
 
                     DoEfx(player, type);
+                    SetAnimation(player, item.useTime, item.useAnimation, position);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }

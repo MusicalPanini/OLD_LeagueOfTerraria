@@ -70,7 +70,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return (int)(item.damage * 2);
+                return (int)(item.damage * 3);
             }
             else
                 return base.GetAbilityBaseDamage(player, type);
@@ -114,17 +114,14 @@ namespace TerraLeague.Items.Weapons
         public override int GetRawCooldown(AbilityType type)
         {
             if (type == AbilityType.W)
-                return 0;
+                return 18;
             else
                 return base.GetRawCooldown(type);
         }
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
-            if (type == AbilityType.W)
-                return true;
-            else
-                return base.CanBeCastWhileUsingItem(type);
+            return base.CanBeCastWhileUsingItem(type);
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -133,7 +130,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
                     int projType = ProjectileType<VoidSeeker>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG);
@@ -147,6 +144,7 @@ namespace TerraLeague.Items.Weapons
                     else
                         proj.ranged = true;
 
+                    SetAnimation(player, 20, 20, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

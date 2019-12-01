@@ -12,8 +12,7 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Beserker's Greaves");
             Tooltip.SetDefault("[c/F892F8:Tier 5: Fastest Sprint + Rocket Boots + Ice Skates]" +
-                "\n18% increased melee speed" +
-                       "\n18% chance to not consume ammo" +
+                "\n18% increased melee and ranged attack speed" +
                        "\n8% increased movement speed");
         }
 
@@ -57,19 +56,18 @@ namespace TerraLeague.Items.Boots
             player.moveSpeed += 0.08f;
             player.meleeSpeed += 0.18f;
             player.iceSkate = true;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.18;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.18;
         }
 
         public override void AddRecipes()
         {
-
-                ModRecipe recipe = new ModRecipe(mod);
-                recipe.AddIngredient(ItemID.IceSkates);
-                recipe.AddIngredient(ItemType<BeserkersGreaves4>());
-                recipe.AddIngredient(ItemType<Dagger>());
-                recipe.AddTile(TileID.TinkerersWorkbench);
-                recipe.SetResult(this);
-                recipe.AddRecipe();
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.IceSkates);
+            recipe.AddIngredient(ItemType<BeserkersGreaves4>());
+            recipe.AddIngredient(ItemType<Dagger>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
 }

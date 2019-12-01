@@ -16,8 +16,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 8;
-            projectile.height = 8;
+            projectile.width = 16;
+            projectile.height = 16;
             projectile.alpha = 255;
             projectile.timeLeft = 90;
             projectile.penetrate = 1;

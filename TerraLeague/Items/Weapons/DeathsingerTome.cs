@@ -137,7 +137,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = Vector2.Zero;
                     int projType = ProjectileType<DeathTomeAura>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
@@ -202,7 +202,7 @@ namespace TerraLeague.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.Book, 1);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 20);
+            recipe.AddIngredient(ItemType<DamnedSoul>(), 50);
             recipe.AddIngredient(ItemID.HellstoneBar, 20);
             recipe.AddIngredient(ItemID.Bone, 50);
             recipe.AddTile(TileID.DemonAltar);

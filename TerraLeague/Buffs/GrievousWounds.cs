@@ -20,7 +20,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-
+            player.GetModPlayer<PLAYERGLOBAL>().grievousWounds = true;
             base.Update(player, ref buffIndex);
         }
 

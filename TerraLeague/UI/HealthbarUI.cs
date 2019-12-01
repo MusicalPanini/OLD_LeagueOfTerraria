@@ -43,8 +43,6 @@ namespace TerraLeague.UI
             mana.Top.Set(24f, 0f);
             MainPanel.Append(mana);
 
-            
-
             for (int i = 0; i < 22; i++)
             {
                 UIBuff buffui = new UIBuff(i);
@@ -73,6 +71,24 @@ namespace TerraLeague.UI
             int width = (int)Math.Ceiling(dimensions.Width);
             int height = (int)Math.Ceiling(dimensions.Height);
             spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+            base.Width.Pixels = Main.screenWidth;
+            base.Height.Pixels = Main.screenHeight;
+
+
+            Player drawPlayer = Main.LocalPlayer;
+            Rectangle destRec = new Rectangle((int)((base.Width.Pixels/2) - 58), (int)((base.Height.Pixels/2) - 48), 116, 20);
+            Rectangle destRec2 = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
+
+            if (drawPlayer.breath != drawPlayer.breathMax)
+            {
+                Texture2D texture = TerraLeague.instance.GetTexture("UI/BreathBar");
+                Rectangle sourRec = new Rectangle(0, 0, 116, 20);
+                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
+
+                Texture2D texture2 = TerraLeague.instance.GetTexture("UI/Blank");
+                Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
+                spriteBatch.Draw(texture2, destRec2, sourRec2, Color.DarkCyan);
+            }
         }
     }
 
@@ -222,6 +238,8 @@ namespace TerraLeague.UI
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             regen.Top.Set((Height.Pixels / 2 - text.MinHeight.Pixels / 2 + 3), 0f);
             regen.Left.Set(Width.Pixels / 2 - 26, 0);
+            float quotient = 1;
+
             switch (stat)
             {
                 case ResourceBarMode.HP:

@@ -13,8 +13,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Kircheis Shard");
-            Tooltip.SetDefault("12% increased melee speed" +
-                "\n5% chance to not consume ammo");
+            Tooltip.SetDefault("12% increased melee and ranged attack speed");
         }
 
         public override void SetDefaults()
@@ -30,7 +29,7 @@ namespace TerraLeague.Items.AdvItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += 0.12f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.5;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.10;
             base.UpdateAccessory(player, hideVisual);
         }
 

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hextech Wind Replicator");
-            Tooltip.SetDefault("5% chance to not consume ammo" +
+            Tooltip.SetDefault("15% increased ranged attack speed" +
                 "\n8% increased ranged critical strike chance" +
                 "\n7% increased movement speed");
         }
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
             item.width = 28;
             item.height = 36;
             player.rangedCrit += 8;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.05;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.15;
             player.moveSpeed += 0.07f;
 
             base.UpdateAccessory(player, hideVisual);

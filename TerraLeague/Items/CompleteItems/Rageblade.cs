@@ -17,8 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("6% increased melee damage" +
                 "\n6% increased ranged damage" +
                 "\n6% increased minion damage" +
-                "\n12% increased melee speed" +
-                "\n6% chance to not consume ammo");
+                "\n12% increased melee and ranged attack speed");
         }
 
         public override void SetDefaults()
@@ -34,8 +33,8 @@ namespace TerraLeague.Items.CompleteItems
             player.meleeDamage += 0.06f;
             player.rangedDamage += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
-            player.meleeSpeed += 0.12f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.06;
+            player.meleeSpeed += 0.06f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.06;
 
             base.UpdateAccessory(player, hideVisual);
         }
@@ -55,7 +54,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new GuinsoosRage(4);
+            return new GuinsoosRage(3);
         }
 
         public override Passive GetSecondaryPassive()

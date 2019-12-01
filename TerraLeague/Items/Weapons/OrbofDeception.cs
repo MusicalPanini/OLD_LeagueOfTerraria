@@ -113,7 +113,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = Vector2.Zero;
                     int projType = ProjectileType<FoxFire>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
@@ -145,8 +145,8 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = 3;
             item.knockBack = 1;
             item.mana = 20;
-            item.value = 3400;
-            item.rare = 2;
+            item.value = 54000;
+            item.rare = 3;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
             item.shoot = ProjectileType<DecepOrb>();

@@ -55,7 +55,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetSecondaryPassive()
         {
-            return new GiantStrength(50);
+            return new GiantStrength(25);
         }
 
         public override string GetStatText()

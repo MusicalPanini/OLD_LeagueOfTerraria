@@ -33,7 +33,7 @@ namespace TerraLeague.Items.CompleteItems
             {
 
             }
-            if (modPlayer.awe)
+            else if (modPlayer.awe)
                 return false;
 
             if (slot >= 3 && slot <= 8)

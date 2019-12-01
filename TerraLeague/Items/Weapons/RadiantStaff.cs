@@ -152,16 +152,17 @@ namespace TerraLeague.Items.Weapons
                 {
                     Projectile proj = Main.projectile.Where(x => x.type == ProjectileType<LucentSingularity>() && x.owner == player.whoAmI).FirstOrDefault();
                     if (proj.width != 8)
-                        proj.timeLeft = 2;
+                        proj.timeLeft = 1;
                 }
                 else if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
                     int projType = ProjectileType<LucentSingularity>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, Main.MouseWorld.X, Main.MouseWorld.Y);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
@@ -171,7 +172,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 1);
 
                     int projType = ProjectileType<FinalSpark>();

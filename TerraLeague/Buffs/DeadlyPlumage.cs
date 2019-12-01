@@ -16,6 +16,7 @@ namespace TerraLeague.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetModPlayer<PLAYERGLOBAL>().deadlyPlumage = true;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.25;
             player.moveSpeed += 0.25f;
         }
     }

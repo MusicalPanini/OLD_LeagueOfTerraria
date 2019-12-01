@@ -65,4 +65,112 @@ namespace TerraLeague
             Main.NewText("Tear stacked");
         }
     }
+
+    public class EnableDebugModeCommand : ModCommand
+    {
+        public override CommandType Type
+        {
+            get { return CommandType.Chat; }
+        }
+
+        public override string Command
+        {
+            get { return "debugMode"; }
+        }
+
+        public override string Usage
+        {
+            get { return "/debugMode"; }
+        }
+
+        public override string Description
+        {
+            get { return "Enables a bunch of development tools for testing"; }
+        }
+
+        public override void Action(CommandCaller caller, string input, string[] args)
+        {
+            if (TerraLeague.instance.debugMode)
+            {
+                TerraLeague.instance.debugMode = false;
+                Main.NewText("Debug mode disabled");
+            }
+            else
+            {
+                TerraLeague.instance.debugMode = true;
+                Main.NewText("Debug mode enabled");
+            }
+        }
+    }
+
+    public class DisableModdedUICommand : ModCommand
+    {
+        public override CommandType Type
+        {
+            get { return CommandType.Chat; }
+        }
+
+        public override string Command
+        {
+            get { return "toggleModUI"; }
+        }
+
+        public override string Usage
+        {
+            get { return "/toggleModUI"; }
+        }
+
+        public override string Description
+        {
+            get { return "Toggles between using Vanilla UI or League of Terraria's custom UI "; }
+        }
+
+        public override void Action(CommandCaller caller, string input, string[] args)
+        {
+            if (TerraLeague.instance.disableModUI)
+            {
+                TerraLeague.instance.disableModUI = false;
+                Main.NewText("Mod UI Enabled");
+            }
+            else
+            {
+                TerraLeague.instance.disableModUI = true;
+                Main.NewText("Mod UI Disabled");
+            }
+        }
+    }
+
+    public class StartHarrowing : ModCommand
+    {
+        public override CommandType Type
+        {
+            get { return CommandType.Chat; }
+        }
+
+        public override string Command
+        {
+            get { return "startHarrowing"; }
+        }
+
+        public override string Usage
+        {
+            get { return "/startHarrowing"; }
+        }
+
+        public override string Description
+        {
+            get { return "Force starts the Harrowing"; }
+        }
+
+        public override void Action(CommandCaller caller, string input, string[] args)
+        {
+            if (Main.dayTime)
+            {
+                Main.dayTime = false;
+                Main.time = 0;
+            }
+
+            WORLDGLOBAL.BlackMistEvent = true;
+        }
+    }
 }

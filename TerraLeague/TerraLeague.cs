@@ -15,6 +15,11 @@ using TerraLeague.NPCs;
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Buffs;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
+using TerraLeague.Backgrounds;
+using Terraria.GameContent.Shaders;
+using TerraLeague.Shaders;
 
 namespace TerraLeague
 {
@@ -31,6 +36,8 @@ namespace TerraLeague
         internal AbilityUI abilityUI;
         internal HealthbarUI healthbarUI;
         internal bool canLog = false;
+        internal bool debugMode = false;
+        internal bool disableModUI = false;
         internal int SumCurrencyID;
         private UserInterface userInterface1;
         private UserInterface userInterface2;
@@ -51,9 +58,9 @@ namespace TerraLeague
         public static ModHotKey RAbility;
         public static ModHotKey Trinket;
         public static PlayerLayer ShieldEffect;
-        public static PlayerLayer BreathBar;
-        public static PlayerLayer AbilityItem;
         private static Dictionary<string, string> Keys;
+
+        public static bool StopHealthandManaText = true;
 
         public TerraLeague()
         {
@@ -174,10 +181,9 @@ namespace TerraLeague
                     return;
                 }
 
-
-                if (drawPlayer.HasBuff(ModContent.BuffType<DivineJudgementBuff>()))
+                if (modPlayer.currentShieldColor.A != 0)
                 {
-                    Color color = Color.Gold;
+                    Color color = modPlayer.currentShieldColor;
                     color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
                     color.A = 100;
                     Rectangle destRec = new Rectangle((int)(drawPlayer.position.X - Main.screenPosition.X - 19), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 10), 60, 60);
@@ -188,86 +194,6 @@ namespace TerraLeague
                     Rectangle sourRec = new Rectangle(0, 0 + (60 * frame), 60, 60);
                     DrawData data = new DrawData(texture, destRec, sourRec, color, 0, Vector2.Zero, SpriteEffects.None, 1);
                     Main.playerDrawData.Add(data);
-                }
-                else if (modPlayer.GetTotalShield() > 0)
-                {
-                    Color color = modPlayer.Shields.Last().ShieldColor;
-                    color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
-                    color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.position.X - Main.screenPosition.X - 19), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 10), 60, 60);
-
-                    Lighting.AddLight(drawPlayer.Center, color.ToVector3());
-
-                    Texture2D texture = instance.GetTexture("Projectiles/NormalShield");
-                    Rectangle sourRec = new Rectangle(0, 0 + (60 * frame), 60, 60);
-                    DrawData data = new DrawData(texture, destRec, sourRec, color, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
-                }
-                else if (modPlayer.veil)
-                {
-                    Color color = Color.Purple;
-                    color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
-                    color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.position.X - Main.screenPosition.X - 19), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 10), 60, 60);
-
-                    Lighting.AddLight(drawPlayer.Center, color.ToVector3());
-
-                    Texture2D texture = instance.GetTexture("Projectiles/NormalShield");
-                    Rectangle sourRec = new Rectangle(0, 0 + (60 * frame), 60, 60);
-                    DrawData data = new DrawData(texture, destRec, sourRec, color, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
-                }
-            });
-
-            BreathBar = new PlayerLayer("TerraLeague", "BreathBar", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
-            {
-                Player drawPlayer = drawInfo.drawPlayer;
-                PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
-                Color color = Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16);
-                Rectangle destRec = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 58), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 32), 116, 20);
-                Rectangle destRec2 = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X - 50), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 30), (int)(100 * (drawPlayer.breath/(double)drawPlayer.breathMax)), 16);
-
-                if (drawInfo.shadow != 0f)
-                {
-                    return;
-                }
-
-                if (drawPlayer.breath != drawPlayer.breathMax)
-                {
-                    Texture2D texture = instance.GetTexture("UI/BreathBar");
-                    Rectangle sourRec = new Rectangle(0, 0, 116, 20);
-                    DrawData data = new DrawData(texture, destRec, sourRec, Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data);
-
-                    Texture2D texture2 = instance.GetTexture("UI/Blank");
-                    Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
-                    DrawData data2 = new DrawData(texture2, destRec2, sourRec2, Color.DarkCyan, 0, Vector2.Zero, SpriteEffects.None, 1);
-                    Main.playerDrawData.Add(data2);
-                }
-            });
-
-            AbilityItem = new PlayerLayer("TerraLeague", "AbilityItem", PlayerLayer.HeldItem, delegate (PlayerDrawInfo drawInfo)
-            {
-                Player drawPlayer = drawInfo.drawPlayer;
-                PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
-                if (modPlayer.abilityItem != null)
-                {
-                    Texture2D texture = Main.itemTexture[modPlayer.abilityItem.type];
-                    Vector2 pos = modPlayer.abilityItemPosition + (drawPlayer.Center - Main.screenPosition);
-                    if (drawPlayer.shadow == 0f && !drawPlayer.frozen && modPlayer.abilityAnimation > 0 && !drawPlayer.dead)
-                    {
-                        Color color = Lighting.GetColor((int)((double)drawPlayer.Center.X + (double)drawPlayer.width * 0.5) / 16, (int)(((double)drawPlayer.Center.Y + (double)drawPlayer.height * 0.5) / 16.0)); ;
-                        if (drawPlayer.gravDir == -1f)
-                        {
-                            DrawData drawData = new DrawData(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height), modPlayer.abilityItem.GetAlpha(color), modPlayer.abilityRotation - (float)Math.PI/ (-4f * drawPlayer.direction), new Vector2((float)texture.Width * 0.5f - (float)texture.Width * 0.5f * (float)drawPlayer.direction, 0f), modPlayer.abilityItem.scale, SpriteEffects.FlipHorizontally, 0);
-                            Main.playerDrawData.Add(drawData);
-                        }
-                        else
-                        {
-                            DrawData drawData = new DrawData(texture, pos, new Rectangle(0, 0, texture.Width, texture.Height), modPlayer.abilityItem.GetAlpha(color), modPlayer.abilityRotation - (float)Math.PI / (-4f * drawPlayer.direction), new Vector2((float)texture.Width * 0.5f - (float)texture.Width * 0.5f * (float)drawPlayer.direction, (float)texture.Height), modPlayer.abilityItem.scale, SpriteEffects.FlipHorizontally, 0);
-                            Main.playerDrawData.Add(drawData);
-                        }
-                    }
                 }
             });
 
@@ -282,6 +208,9 @@ namespace TerraLeague
                 AddEquipTexture(new Items.Accessories.DarkinBody(), null, EquipType.Body, "DarkinBody", "TerraLeague/Items/Accessories/Darkin_Body", "TerraLeague/Items/Accessories/Darkin_Arms");
                 AddEquipTexture(new Items.Accessories.DarkinLegs(), null, EquipType.Legs, "DarkinLegs", "TerraLeague/Items/Accessories/Darkin_Legs");
 
+                Filters.Scene["TerraLeague:TheBlackMist"] = new Filter(new BlackMistShaderData("FilterSandstormForeground").UseColor(0,2,1).UseSecondaryColor(0,0,0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(3.5f).UseOpacity(0.2f).UseImageScale(new Vector2(8, 8)), EffectPriority.High);
+                Overlays.Scene["TerraLeague:TheBlackMist"] = new SimpleOverlay("Images/Misc/Perlin", new BlackMistShaderData("FilterSandstormBackground").UseColor(0,1,0).UseSecondaryColor(0,0,0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(5).UseOpacity(1f).UseImageScale(new Vector2(4, 4)), EffectPriority.High, RenderLayers.Landscape);
+                SkyManager.Instance["TerraLeague:TheBlackMist"] = new BlackMistSky();
 
                 userInterface1 = new UserInterface();
                 statUI = new StatUI();
@@ -303,6 +232,8 @@ namespace TerraLeague
                 HealthbarUI.visible = true;
                 HealthbarInterface.SetState(healthbarUI);
             }
+
+            Main.instance.GUIBarsDraw();
             base.Load();
         }
 
@@ -315,8 +246,6 @@ namespace TerraLeague
             Keys = null;
             instance = null;
             ShieldEffect = null;
-            BreathBar = null;
-            AbilityItem = null;
             ToggleStats = null;
             Item1 = null;
             Item2 = null;
@@ -335,7 +264,7 @@ namespace TerraLeague
             RNGColor = null;
             MAGColor = null;
             SUMColor = null;
-
+            StopHealthandManaText = false;
             base.Unload();
         }
 
@@ -351,70 +280,87 @@ namespace TerraLeague
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
-            if (resourseBar < 0)
-                resourseBar = 7;
-            else
+            if (!disableModUI)
             {
-                layers[resourseBar].Active = false;
-                //layers.RemoveAt(resourseBar);
+                int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+                if (resourseBar < 0)
+                    resourseBar = 7;
+                else
+                {
+                    layers[resourseBar].Active = false;
+                    //layers.RemoveAt(resourseBar);
+                }
+                layers.Insert(resourseBar, new LegacyGameInterfaceLayer("TerraLeague: Resource Bar",
+                delegate
+                {
+                    if (HealthbarUI.visible)
+                    {
+                        HealthbarInterface.Update(Main._drawInterfaceGameTime);
+                        healthbarUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                int inventoryLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+                if (inventoryLayer < 0)
+                    inventoryLayer = 4;
+
+                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+                "TerraLeague: Stat Hud",
+                delegate
+                {
+                    if (StatUI.visible < 0)
+                    {
+                        userInterface1.Update(Main._drawInterfaceGameTime);
+                        statUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+                "TerraLeague: Item Hud",
+                delegate
+                {
+                    if (ItemUI.visible)
+                    {
+                        userInterface2.Update(Main._drawInterfaceGameTime);
+                        itemUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+                "TerraLeague: Ability Hud",
+                delegate
+                {
+                    if (AbilityUI.visible)
+                    {
+                        userInterface3.Update(Main._drawInterfaceGameTime);
+                        abilityUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
             }
-            layers.Insert(resourseBar, new LegacyGameInterfaceLayer( "TerraLeague: Resource Bar",
-            delegate 
+        }
+
+        public override void UpdateMusic(ref int music, ref MusicPriority priority)
+        {
+            if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active)
             {
-                if (HealthbarUI.visible)
-                {
-                    HealthbarInterface.Update(Main._drawInterfaceGameTime);
-                    healthbarUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            }, 
-            InterfaceScaleType.UI));
-
-            int inventoryLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-            if (inventoryLayer < 0)
-                inventoryLayer = 4;
-
-            layers.Insert(inventoryLayer,new LegacyGameInterfaceLayer(
-            "TerraLeague: Stat Hud",
-            delegate
+                return;
+            }
+            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
             {
-                if (StatUI.visible < 0)
-                {
-                    userInterface1.Update(Main._drawInterfaceGameTime);
-                    statUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            layers.Insert(inventoryLayer,new LegacyGameInterfaceLayer(
-            "TerraLeague: Item Hud",
-            delegate
-            {
-                if (ItemUI.visible)
-                {
-                    userInterface2.Update(Main._drawInterfaceGameTime);
-                    itemUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            layers.Insert(inventoryLayer,new LegacyGameInterfaceLayer(
-            "TerraLeague: Ability Hud",
-            delegate
-            {
-                if (AbilityUI.visible)
-                {
-                    userInterface3.Update(Main._drawInterfaceGameTime);
-                    abilityUI.Draw(Main.spriteBatch);
-                }
-                return true;
-            },
-            InterfaceScaleType.UI));
-
-            //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
+                music = MusicID.Eerie;
+                priority = MusicPriority.Event;
+            }
+            base.UpdateMusic(ref music, ref priority);
         }
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
@@ -830,6 +776,46 @@ namespace TerraLeague
 
             return keyConvertedString;
 
+        }
+
+
+        public static void HealthAndManaHitBoxes()
+        {
+            if (!StopHealthandManaText)
+            {
+                return;
+            }
+
+            bool isHealthOver200 = (Main.LocalPlayer.statLifeMax2 > 200);
+            int heartWidthTotal = isHealthOver200 ? 260 : (26 * Main.player[Main.myPlayer].statLifeMax2 / 20);
+
+            int healthBarX = 500 + (Main.screenWidth - 800);
+            int healthBarY = 32;
+            int healthBarWidth = 500 + heartWidthTotal + (Main.screenWidth - 800);
+            int healthBarHeight = isHealthOver200 ? Main.heartTexture.Height + 32 : 32;
+
+            Rectangle healthBar = new Rectangle(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+
+
+            int manaBarX = 762 + (Main.screenWidth - 800);
+            int manaBarY = 30;
+            int manaBarHeight = 28 * Main.LocalPlayer.statManaMax2 / 20;
+            int manaBarWidth = Main.manaTexture.Width + 2;
+
+            Rectangle manaBar = new Rectangle(manaBarX, manaBarY, manaBarWidth, manaBarHeight);
+
+            StopHealthManaMouseOver(healthBar, manaBar);
+        }
+
+        public static void StopHealthManaMouseOver(Rectangle HealthHitBox, Rectangle ManaHitBox)
+        {
+            Main.mouseText = HealthHitBox.Contains(Main.mouseX, Main.mouseY) ||
+                ManaHitBox.Contains(Main.mouseX, Main.mouseY) ? true : false;
+        }
+
+        public override void PostDrawInterface(SpriteBatch spriteBatch)
+        {
+            HealthAndManaHitBoxes();
         }
     }
 }

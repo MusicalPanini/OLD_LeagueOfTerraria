@@ -12,8 +12,7 @@ namespace TerraLeague.Items.Boots
         {
             DisplayName.SetDefault("Beserker's Greaves");
             Tooltip.SetDefault("[c/F49090:Tier 4: Faster Sprint + Rocket Boots]" +
-                "\n15% increased melee speed" +
-                       "\n15% chance to not consume ammo" +
+                "\n15% increased melee and ranged attack speed" +
                        "\n8% increased movement speed");
         }
 
@@ -57,7 +56,7 @@ namespace TerraLeague.Items.Boots
             player.rocketBoots = 2;
             player.moveSpeed += 0.08f;
             player.meleeSpeed += 0.15f;
-            player.GetModPlayer<PLAYERGLOBAL>().ConsumeAmmoChance += 0.15;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.15;
 
         }
 

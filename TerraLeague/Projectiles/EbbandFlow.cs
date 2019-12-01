@@ -68,7 +68,7 @@ namespace TerraLeague.Projectiles
                         projectile.localAI[0] = 1f;
                     }
                     Vector2 move = Vector2.Zero;
-                    float distance = 700f;
+                    float distance = 1000;
                     bool target = false;
                     for (int k = 0; k < 200; k++)
                     {
@@ -101,7 +101,7 @@ namespace TerraLeague.Projectiles
                         projectile.localAI[0] = 1f;
                     }
                     Vector2 move = Vector2.Zero;
-                    float distance = 700f;
+                    float distance = 1000;
                     bool target = false;
                     for (int k = 0; k < 200; k++)
                     {
@@ -211,7 +211,7 @@ namespace TerraLeague.Projectiles
             if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 if (player.whoAmI != projectile.owner)
-                    player.GetModPlayer<PLAYERGLOBAL>().SendHealPacket(projectile.damage, player.whoAmI, -1, projectile.owner);
+                    Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(projectile.damage, player.whoAmI, -1, projectile.owner);
                 if (player.whoAmI == Main.myPlayer)
                 {
                     player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += projectile.damage;

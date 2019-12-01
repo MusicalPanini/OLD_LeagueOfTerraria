@@ -64,7 +64,7 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
         {
-            if (type == AbilityType.R)
+            if (type == AbilityType.W)
             {
                 if (dam == DamageType.RNG)
                     return 160;
@@ -102,12 +102,13 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
                     int projType = ProjectileType<Zap>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 0;
 
+                    SetAnimation(player, 20, 20, position + velocity);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
@@ -141,8 +142,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            item.damage = 15;
-
             return true;
         }
 

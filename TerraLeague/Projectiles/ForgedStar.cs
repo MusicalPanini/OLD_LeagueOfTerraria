@@ -68,12 +68,12 @@ namespace TerraLeague.Projectiles
             {
                 float angle = Main.projectile[(int)projectile.ai[1]].ai[1];
                 int numOfProj = Main.player[projectile.owner].ownedProjectileCounts[ProjectileType<ForgedStar>()];
-                projectile.Center = player.Center + offset.RotatedBy(angle + ((MathHelper.TwoPi * ((int)projectile.ai[0] - 1)) /numOfProj));
+                projectile.Center = player.MountedCenter + offset.RotatedBy(angle + ((MathHelper.TwoPi * ((int)projectile.ai[0] - 1)) /numOfProj));
             }
             else
             {
                 projectile.ai[1] += .035f;
-                projectile.Center = player.Center + offset.RotatedBy(projectile.ai[1]);
+                projectile.Center = player.MountedCenter + offset.RotatedBy(projectile.ai[1]);
             }
 
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 111, projectile.velocity.X, projectile.velocity.Y, 200, default(Color), 1.5f);

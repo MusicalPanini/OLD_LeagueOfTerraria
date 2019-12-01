@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-                modPlayer.AddShieldAttachedToBuff((int)(shieldAmount * modPlayer.healPower), duration * 60, new Color(43, 36, 110), ShieldType.Magic);
+                modPlayer.AddShield((int)(shieldAmount * modPlayer.healPower), duration * 60, new Color(43, 36, 110), ShieldType.Magic);
                 modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
 
                 Efx(player);

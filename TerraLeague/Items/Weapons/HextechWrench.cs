@@ -142,7 +142,7 @@ namespace TerraLeague.Items.Weapons
                     for (int i = 0; i < numberProjectiles; i++)
                     {
                         Vector2 relPosition = new Vector2(0 - (distance * 2) + (i * distance), 0).RotatedBy(TerraLeague.CalcAngle(player.Center, Main.MouseWorld) + MathHelper.PiOver2);
-                        Vector2 position = new Vector2(player.Center.X + relPosition.X, player.Center.Y + relPosition.Y);
+                        Vector2 position = new Vector2(player.MountedCenter.X + relPosition.X, player.MountedCenter.Y + relPosition.Y);
                         Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15f);
 
                         Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
@@ -154,7 +154,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
                     int projType = ProjectileType<StormNade>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);

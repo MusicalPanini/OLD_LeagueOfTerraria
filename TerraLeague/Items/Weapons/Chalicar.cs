@@ -12,7 +12,7 @@ namespace TerraLeague.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Chalicar");
+            DisplayName.SetDefault("Chalicar of Setaka");
             Tooltip.SetDefault("");
         }
 
@@ -110,6 +110,7 @@ namespace TerraLeague.Items.Weapons
                     int knockback = 1;
 
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

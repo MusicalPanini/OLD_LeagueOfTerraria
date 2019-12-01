@@ -125,6 +125,193 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI(NPC npc)
         {
+            // Dust Effects
+            if (slowed)
+            {
+                if (Main.rand.Next(0, 8) == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 113, 0f, 0f, 100, default(Color));
+                    Main.dust[dustIndex].velocity *= 0.2f;
+                    Main.dust[dustIndex].scale *= 1.2f;
+                    Main.dust[dustIndex].alpha *= 200;
+                }
+            }
+            if (umbralTrespass)
+            {
+                int num = Main.rand.Next(0, 10);
+                if (num == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
+                    Main.dust[dustIndex].velocity.X *= 0.3f;
+                    Main.dust[dustIndex].color = new Color(255, 0, 0);
+                    Main.dust[dustIndex].noGravity = false;
+                }
+                else if (num == 2)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
+                    Main.dust[dustIndex].velocity.X *= 0.3f;
+
+                    Main.dust[dustIndex].noGravity = false;
+                }
+
+            }
+            if (requiem)
+            {
+                Color color = Main.rand.NextBool() ? new Color(0, 255, 140) : new Color(0, 255, 0);
+                Dust dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 4, npc.position.Y - 320 + npc.height / 3f), 1, 300 + npc.height / 2, 186, 0f, 2f, 197, color, 2f);
+                dust.noGravity = true;
+                dust.velocity.X *= 0.1f;
+                dust.fadeIn = 2.6f;
+            }
+            if (torment)
+            {
+                if (Main.rand.Next(0, 8) == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
+                }
+            }
+            if (abyssalCurse)
+            {
+                if (Main.rand.Next(0, 8) == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, 14, 0f, 0f, 100, default(Color));
+                    Main.dust[dustIndex].color = new Color(255, 0, 255);
+                    Main.dust[dustIndex].alpha = 150;
+                    Main.dust[dustIndex].scale = 0.75f;
+                    Main.dust[dustIndex].velocity.X = 0;
+                    Main.dust[dustIndex].velocity.Y = -0.5f;
+                }
+            }
+            if (OrgDest)
+            {
+                if (Main.rand.Next(0, 3) == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 255, new Color(59, 0, 255));
+                    Main.dust[dustIndex].alpha = 150;
+                    Main.dust[dustIndex].noGravity = true;
+                    Main.dust[dustIndex].noLight = true;
+                }
+            }
+            if (essenFlux)
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, 159, 0f, 0f, 50, default(Color));
+                    Main.dust[dustIndex].noGravity = true;
+                }
+            }
+            if (grievousWounds)
+            {
+                if (Main.rand.Next(0, 8) == 0)
+                {
+                    int dustIndex = Dust.NewDust(npc.position, npc.width, npc.height, 14, 0f, 0f, 100, default(Color), 1f);
+                    Main.dust[dustIndex].color = new Color(255, 0, 0);
+                    Main.dust[dustIndex].velocity.X = 0;
+                    Main.dust[dustIndex].velocity.Y = 0.5f;
+                }
+            }
+            if (ignited)
+            {
+                if (Main.rand.Next(0, 4) == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
+                }
+            }
+            if (sunfire)
+            {
+                if (Main.rand.Next(0, 8) == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
+                }
+            }
+            if (CausticWounds)
+            {
+                if (Main.rand.Next(0, 8) == 0)
+                {
+                    Dust dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 100, new Color(59, 0, 255));
+                    dustIndex.noGravity = true;
+                    dustIndex.velocity *= 0;
+                }
+            }
+            if (ablaze)
+            {
+                if (Main.rand.Next(0, 2) == 0)
+                {
+                    Dust dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 4);
+                    dustIndex.noGravity = true;
+
+                    dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 1);
+                }
+            }
+            if (doomed)
+            {
+                if (Main.rand.Next(0, 2) == 0)
+                {
+                    Dust dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 2);
+                    dustIndex.noGravity = true;
+                    dustIndex.velocity *= 0;
+
+                    dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 1);
+                    dustIndex.noGravity = true;
+                    dustIndex.velocity *= 0;
+                }
+            }
+            if (harbingersInferno)
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 3);
+                dust.noGravity = true;
+
+                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 1);
+            }
+            if (cleaved)
+            {
+                int num = Main.rand.Next(0, 8);
+                if (num == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, 1, 200, new Color(50, 0, 20));
+                    Main.dust[dustIndex].velocity.X *= 0.1f;
+                    Main.dust[dustIndex].velocity.Y -= 3f;
+                    Main.dust[dustIndex].noGravity = false;
+                }
+            }
+            if (deadlyVenom)
+            {
+                int num = Main.rand.Next(0, 16);
+                if (num == 0)
+                {
+                    int dustIndex = Dust.NewDust(npc.position, npc.width, npc.height, 44, 0f, 0f, 200, new Color(0, 192, 255), 1f);
+                    Main.dust[dustIndex].velocity.X *= 0f;
+                    Main.dust[dustIndex].velocity.Y = -System.Math.Abs(Main.dust[dustIndex].velocity.Y);
+                }
+            }
+            if (hemorrhage)
+            {
+                int num = Main.rand.Next(0, 4);
+                if (num == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 5, 0, 0, 0, default(Color), 1.25f);
+                    Main.dust[dustIndex].velocity.X *= 0f;
+                    Main.dust[dustIndex].velocity.Y = System.Math.Abs(Main.dust[dustIndex].velocity.Y);
+                }
+            }
+            if (pox)
+            {
+                int num = Main.rand.Next(0, 4);
+                if (num == 0)
+                {
+                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 167, 0, 0, 0, default(Color), 1.25f);
+                    Main.dust[dustIndex].velocity.X *= 0f;
+                    Main.dust[dustIndex].velocity.Y = System.Math.Abs(Main.dust[dustIndex].velocity.Y);
+                    Main.dust[dustIndex].noGravity = true;
+                }
+            }
+            if (illuminated)
+            {
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 228, 0f, 0f, 0, default(Color), 1);
+                dust.noGravity = true;
+                dust.velocity *= 1.3f;
+            }
+
             npc.defense = npc.defDefense;
             npc.damage = npc.defDamage;
 
@@ -135,7 +322,10 @@ namespace TerraLeague.NPCs
                 npc.position.Y = npc.oldPosition.Y - 1;
             }
             if (slowed)
+            {
                 npc.damage = (int)(npc.damage * 0.7);
+                npc.position = new Vector2((npc.oldPosition.X + npc.position.X) / 2, (npc.oldPosition.Y + npc.position.Y) / 2);
+            }
             if (cleaved)
                 npc.defense -= (int)(npc.defense * 0.06 * (CleavedStacks + 1));
 
@@ -171,7 +361,9 @@ namespace TerraLeague.NPCs
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneSurfaceMarble)
+            PLAYERGLOBAL modPlayer = spawnInfo.player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (modPlayer.zoneSurfaceMarble)
             {
                 pool.Remove(NPCID.GreenSlime);
                 pool.Remove(NPCID.BlueSlime);
@@ -185,6 +377,7 @@ namespace TerraLeague.NPCs
                     pool.Add(NPCID.Medusa, 0.2f);
 
             }
+            
 
             base.EditSpawnPool(pool, spawnInfo);
         }
@@ -325,9 +518,20 @@ namespace TerraLeague.NPCs
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
-            if (player.GetModPlayer<PLAYERGLOBAL>().Disruption)
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (modPlayer.zoneBlackMist)
             {
-                spawnRate = (int)(spawnRate * 0.5);
+                maxSpawns =(int)(maxSpawns * 2);
+                if (spawnRate > 300)
+                {
+                    spawnRate = 300;
+                }
+                    spawnRate = (int)(spawnRate * 0.35);
+            }
+            if (modPlayer.Disruption)
+            {
+                spawnRate = (int)(spawnRate * 2);
             }
         }
 
@@ -518,197 +722,6 @@ namespace TerraLeague.NPCs
 
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
         {
-            // Dust Effects
-            if (slowed)
-            {
-                if (Main.rand.Next(0, 8) == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 113, 0f, 0f, 100, default(Color));
-                    Main.dust[dustIndex].velocity *= 0.2f;
-                    Main.dust[dustIndex].scale *= 1.2f;
-                    Main.dust[dustIndex].alpha *= 200;
-                }
-
-                npc.position = new Vector2((npc.oldPosition.X + npc.position.X) / 2, (npc.oldPosition.Y + npc.position.Y) / 2);
-            }
-            if (umbralTrespass)
-            {
-                int num = Main.rand.Next(0, 10);
-                if (num == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
-                    Main.dust[dustIndex].velocity.X *= 0.3f;
-                    Main.dust[dustIndex].color = new Color(255, 0, 0);
-                    Main.dust[dustIndex].noGravity = false;
-                }
-                else if (num == 2)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, -1, 150);
-                    Main.dust[dustIndex].velocity.X *= 0.3f;
-
-                    Main.dust[dustIndex].noGravity = false;
-                }
-
-            }
-            if (requiem)
-            {
-                Color color = Main.rand.NextBool() ? new Color(0, 255, 140) : new Color(0, 255, 0);
-                Dust dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 4, npc.position.Y - 320 + npc.height / 3f), 1, 300 + npc.height / 2, 186, 0f, 2f, 197, color, 2f);
-                dust.noGravity = true;
-                dust.velocity.X *= 0.1f;
-                dust.fadeIn = 2.6f;
-            }
-            if (torment)
-            {
-                if (Main.rand.Next(0, 8) == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
-                }
-            }
-            if (abyssalCurse)
-            {
-                if (Main.rand.Next(0, 8) == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, 14, 0f, 0f, 100, default(Color));
-                    Main.dust[dustIndex].color = new Color(255, 0, 255);
-                    Main.dust[dustIndex].alpha = 150;
-                    Main.dust[dustIndex].scale = 0.75f;
-                    Main.dust[dustIndex].velocity.X = 0;
-                    Main.dust[dustIndex].velocity.Y = -0.5f;
-                }
-            }
-            if (OrgDest)
-            {
-                if (Main.rand.Next(0, 3) == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 255, new Color(59, 0, 255));
-                    Main.dust[dustIndex].alpha = 150;
-                    Main.dust[dustIndex].noGravity = true;
-                    Main.dust[dustIndex].noLight = true;
-                }
-            }
-            if (essenFlux)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X - 3, npc.position.Y + (npc.height / 2)), npc.width + 6, 4, 159, 0f, 0f, 50, default(Color));
-                    Main.dust[dustIndex].noGravity = true;
-                }
-            }
-            if (grievousWounds)
-            {
-                if (Main.rand.Next(0, 8) == 0)
-                {
-                    int dustIndex = Dust.NewDust(npc.position, npc.width, npc.height, 14, 0f, 0f, 100, default(Color), 1f);
-                    Main.dust[dustIndex].color = new Color(255, 0, 0);
-                    Main.dust[dustIndex].velocity.X = 0;
-                    Main.dust[dustIndex].velocity.Y = 0.5f;
-                }
-            }
-            if (ignited)
-            {
-                if (Main.rand.Next(0, 4) == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
-                }
-            }
-            if (sunfire)
-            {
-                if (Main.rand.Next(0, 8) == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
-                }
-            }
-            if (CausticWounds)
-            {
-                if (Main.rand.Next(0, 8) == 0)
-                {
-                    Dust dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 112, 0f, 0f, 100, new Color(59, 0, 255));
-                    dustIndex.noGravity = true;
-                    dustIndex.velocity *= 0;
-                }
-            }
-            if (ablaze)
-            {
-                if (Main.rand.Next(0, 2) == 0)
-                {
-                    Dust dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 4);
-                    dustIndex.noGravity = true;
-
-                    dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 1);
-                }
-            }
-            if (doomed)
-            {
-                if (Main.rand.Next(0, 2) == 0)
-                {
-                    Dust dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 2);
-                    dustIndex.noGravity = true;
-                    dustIndex.velocity *= 0;
-
-                    dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 110, 0f, 0f, 0, new Color(0, 255, 201), 1);
-                    dustIndex.noGravity = true;
-                    dustIndex.velocity *= 0;
-                }
-            }
-            if (harbingersInferno)
-            {
-                Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 3);
-                dust.noGravity = true;
-
-                dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 1);
-            }
-            if (cleaved)
-            {
-                int num = Main.rand.Next(0, 8);
-                if (num == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 186, 0, 1, 200, new Color(50, 0, 20));
-                    Main.dust[dustIndex].velocity.X *= 0.1f;
-                    Main.dust[dustIndex].velocity.Y -= 3f;
-                    Main.dust[dustIndex].noGravity = false;
-                }
-            }
-            if (deadlyVenom)
-            {
-                int num = Main.rand.Next(0, 16);
-                if (num == 0)
-                {
-                    int dustIndex = Dust.NewDust(npc.position, npc.width, npc.height, 44, 0f, 0f, 200, new Color(0, 192, 255), 1f);
-                    Main.dust[dustIndex].velocity.X *= 0f;
-                    Main.dust[dustIndex].velocity.Y = -System.Math.Abs(Main.dust[dustIndex].velocity.Y);
-                }
-            }
-            if (hemorrhage)
-            {
-                int num = Main.rand.Next(0, 4);
-                if (num == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 5, 0, 0, 0, default(Color), 1.25f);
-                    Main.dust[dustIndex].velocity.X *= 0f;
-                    Main.dust[dustIndex].velocity.Y = System.Math.Abs(Main.dust[dustIndex].velocity.Y);
-                }
-            }
-            if (pox)
-            {
-                int num = Main.rand.Next(0, 4);
-                if (num == 0)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 167, 0, 0, 0, default(Color), 1.25f);
-                    Main.dust[dustIndex].velocity.X *= 0f;
-                    Main.dust[dustIndex].velocity.Y = System.Math.Abs(Main.dust[dustIndex].velocity.Y);
-                    Main.dust[dustIndex].noGravity = true;
-                }
-            }
-            if (illuminated)
-            {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 228, 0f, 0f, 0, default(Color), 1);
-                dust.noGravity = true;
-                dust.velocity *= 1.3f;
-            }
-
-
-
             if (frozen)
             {
                 Texture2D texture = mod.GetTexture("Gores/FrozenEffect");

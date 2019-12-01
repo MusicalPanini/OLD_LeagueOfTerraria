@@ -12,7 +12,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mortal Reminder");
-            Tooltip.SetDefault("9% increased ranged damage");
+            Tooltip.SetDefault("5% increased ranged damage");
         }
 
         public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.09f;
+            player.rangedDamage += 0.05f;
         }
 
         public override void AddRecipes()
@@ -33,8 +33,8 @@ namespace TerraLeague.Items.CompleteItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<Executioners>(), 1);
             recipe.AddIngredient(ItemType<LastWhisper>(), 1);
-            recipe.AddIngredient(ItemID.EyeoftheGolem, 1);
-            recipe.AddIngredient(ItemID.ShroomiteBar, 8);
+            recipe.AddIngredient(ItemID.BlackLens, 1);
+            recipe.AddIngredient(ItemType<DarksteelBar>(), 8);
             recipe.AddIngredient(ItemID.SoulofSight, 5);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

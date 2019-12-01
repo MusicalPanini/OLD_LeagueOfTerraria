@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -18,7 +19,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 10;
             projectile.height = 10;
             projectile.alpha = 0;
-            projectile.timeLeft = 60;
+            projectile.timeLeft = 30;
             projectile.penetrate = 1;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -44,6 +45,12 @@ namespace TerraLeague.Projectiles
             target.AddBuff(BuffType<Slowed>(), 30);
 
             base.OnHitNPC(target, damage, knockback, crit);
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Main.PlaySound(SoundID.Item10, projectile.position);
+            return true;
         }
 
         public override void Kill(int timeLeft)

@@ -106,12 +106,13 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.Center;
+                    Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15f);
                     int projType = ProjectileType<GlacialPrisonBola>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
+                    SetAnimation(player, 20, 20, position + velocity);
                     DoEfx(player, type);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
@@ -127,7 +128,7 @@ namespace TerraLeague.Items.Weapons
         {
             item.width = 32;
             item.height = 32;
-            item.value = 6000;
+            item.value = 72000;
             item.rare = 4;
 
             item.noMelee = true;

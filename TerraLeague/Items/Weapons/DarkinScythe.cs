@@ -52,8 +52,8 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.R)
             {
-                return "Become invulnerable and infest a marked enemy for 4 seconds" +
-                "\nRecast to leave the enemy early";
+                return "Become invulnerable and infest a marked enemy for 4 seconds ripping yourself from them" +
+                "\nAfter 1 second, you can recast to eject from the enemy early";
             }
             else if (type == AbilityType.Q)
             {
@@ -68,7 +68,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.R)
-                return 0;
+                return (int)(item.damage * 4);
             else if (type == AbilityType.Q)
                 return (int)(item.damage * 2);
             else
@@ -82,6 +82,11 @@ namespace TerraLeague.Items.Weapons
             {
                 if (dam == DamageType.MEL)
                     return 65;
+            }
+            else if (type == AbilityType.R)
+            {
+                if (dam == DamageType.MEL)
+                    return 175;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -99,7 +104,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
             if (type == AbilityType.R)
-                return "";
+                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MEL) + " melee damage";
             else if (type == AbilityType.Q)
                 return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MEL) + " melee damage";
             else
@@ -116,7 +121,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CurrentlyHasSpecialCast(Player player, AbilityType type)
         {
-            if (type == AbilityType.R && player.HasBuff(BuffType<UmbralTrespassing>()))
+            if (type == AbilityType.R && player.HasBuff(BuffType<UmbralTrespassing>()) && player.GetModPlayer<PLAYERGLOBAL>().AbilityCooldowns[3] <= GetCooldown(type) * 60 - 60)
                 return true;
             else
                 return false;
@@ -157,8 +162,12 @@ namespace TerraLeague.Items.Weapons
                 }
                 else if (CurrentlyHasSpecialCast(player, type))
                 {
+                    player.ApplyDamageToNPC(player.GetModPlayer<PLAYERGLOBAL>().umbralTaggedNPC, GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL), 0, 0, false);
                     player.ClearBuff(BuffType<UmbralTrespassing>());
+                    player.GetModPlayer<PLAYERGLOBAL>().umbralTrespassing = false;
+                    player.velocity = TerraLeague.CalcVelocityToMouse(player.Center, 14f);
                     player.immuneTime = 60;
+                    DoEfx(player, type);
                 }
             }
             else if (type == AbilityType.Q)
@@ -191,7 +200,7 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 20;
             item.useAnimation = 20;
             item.useStyle = 1;
-            item.knockBack = 6;
+            item.knockBack = 3;
             item.value = 6000;
             item.rare = 4;
             item.UseSound = SoundID.Item1;
@@ -220,6 +229,29 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R || type == AbilityType.Q)
                 return true;
             return base.GetIfAbilityExists(type);
+        }
+
+        public override void Efx(Player player, AbilityType type)
+        {
+            if (type == AbilityType.R)
+            {
+                Main.PlaySound(SoundID.NPCDeath1, player.MountedCenter);
+                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 71).WithPitchVariance(-0.2f), player.Center);
+                if (sound != null)
+                    sound.Pitch = -0.5f;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 186, player.velocity.X/5, player.velocity.Y/ 5, 150);
+                    dust.scale = 1.5f;
+                    dust.color = new Color(255, 0, 0);
+                    dust = Dust.NewDustDirect(player.position, player.width, player.height, 186, player.velocity.X/5, player.velocity.Y/ 5, 150);
+
+                    dust.scale = 1.5f;
+                }
+            }
+
+            base.Efx(player, type);
         }
     }
 }

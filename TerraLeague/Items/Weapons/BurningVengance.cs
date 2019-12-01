@@ -119,7 +119,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.W)
                 return 12;
             else if (type == AbilityType.R)
-                return 0;
+                return 40;
             else
                 return base.GetRawCooldown(type);
         }
@@ -144,6 +144,7 @@ namespace TerraLeague.Items.Weapons
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
+                    SetAnimation(player, 10, 10, position + velocity);
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
@@ -160,6 +161,7 @@ namespace TerraLeague.Items.Weapons
                         int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                         int knockback = 0;
 
+                        SetAnimation(player, 10, 10, position + velocity);
                         Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, TerraLeague.NPCMouseIsHovering(30, true), -1);
                         SetCooldowns(player, type);
                     }

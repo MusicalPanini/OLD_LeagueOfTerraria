@@ -34,7 +34,7 @@ namespace TerraLeague.Projectiles
         {
             Player player = Main.player[projectile.owner];
             projectile.ai[0] += .07f;
-            projectile.Center = player.Center + offset.RotatedBy(projectile.ai[0]);
+            projectile.Center = player.MountedCenter + offset.RotatedBy(projectile.ai[0]);
 
             Lighting.AddLight(projectile.position, 1f, 1f, 1f);
             for (int i = 0; i < 3; i++)

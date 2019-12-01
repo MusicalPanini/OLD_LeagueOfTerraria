@@ -105,6 +105,7 @@ namespace TerraLeague.UI
         Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
         public UIImage sumImage;
         public UIText sumCD;
+        UIText itemKey;
         UIText toolTip;
         int slotNum;
 
@@ -129,6 +130,11 @@ namespace TerraLeague.UI
             sumCD.Top.Pixels = 2;
             Append(sumCD);
 
+            itemKey = new UIText(slotNum.ToString(), 0.75f);
+            itemKey.Left.Pixels = -7;
+            itemKey.Top.Pixels = -8;
+            Append(itemKey);
+
             toolTip = new UIText("",1);
             toolTip.Width.Set(500, 0f);
             Append(toolTip);
@@ -138,6 +144,20 @@ namespace TerraLeague.UI
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             SummonerSpell spell = modPlayer.sumSpells[slotNum - 1];
+
+            string itemSlotText = "N/A";
+            switch (slotNum)
+            {
+                case 1:
+                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Sum1);
+                    break;
+                case 2:
+                    itemSlotText = TerraLeague.ConvertKeyString(TerraLeague.Sum2);
+                    break;
+                default:
+                    break;
+            }
+            itemKey.SetText(itemSlotText);
 
             if (modPlayer.sumSpells[slotNum - 1] != null)
             {
@@ -421,31 +441,36 @@ namespace TerraLeague.UI
                     }
 
                     legItem = modItem as LeagueItem;
-                    
+
+
                     if (legItem != null)
                     {
-                        if (legItem.GetActive() != null)
+                        int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, legItem);
+                        if (slot != -1)
                         {
-                            activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                            for (int i = 0; i < activeTip.Length; i++)
+                            if (legItem.GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
                             {
-                                extraLines.Add(activeTip[i]);
+                                activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < activeTip.Length; i++)
+                                {
+                                    extraLines.Add(activeTip[i]);
+                                }
                             }
-                        }
-                        if (legItem.GetPrimaryPassive() != null)
-                        {
-                            primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                            for (int i = 0; i < primPassiveTip.Length; i++)
+                            if (legItem.GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
                             {
-                                extraLines.Add(primPassiveTip[i]);
+                                primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < primPassiveTip.Length; i++)
+                                {
+                                    extraLines.Add(primPassiveTip[i]);
+                                }
                             }
-                        }
-                        if (legItem.GetSecondaryPassive() != null)
-                        {
-                            secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                            for (int i = 0; i < secPassiveTip.Length; i++)
+                            if (legItem.GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
                             {
-                                extraLines.Add(secPassiveTip[i]);
+                                secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < secPassiveTip.Length; i++)
+                                {
+                                    extraLines.Add(secPassiveTip[i]);
+                                }
                             }
                         }
                     }
@@ -522,6 +547,7 @@ namespace TerraLeague.UI
         UIText CDRStats;
         UIText ammoStats;
         UIText healStats;
+        UIText manaStats;
 
         UIText tooltip;
 
@@ -580,6 +606,12 @@ namespace TerraLeague.UI
             ammoStats.Top.Pixels = 70;
             ammoStats.TextColor = Color.Gray;
 
+            manaStats = new UIText("MANA: 000%", 0.65f);
+            manaStats.Left.Pixels = 80;
+            manaStats.Top.Pixels = 70;
+            manaStats.TextColor = Color.RoyalBlue;
+
+
             tooltip = new UIText("");
             tooltip.Left.Set(Main.screenWidth/2 - 250 - Left.Pixels, 0);
             tooltip.Top.Set(Main.screenHeight - 171 - Top.Pixels, 0);
@@ -593,13 +625,13 @@ namespace TerraLeague.UI
             Append(CDRStats);
             Append(healStats);
             Append(ammoStats);
+            Append(manaStats);
             Append(tooltip);
         }
 
         public override void Update(GameTime gameTime)
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-
             armorStats.Width.Set(30,0);
             resistStats.Width.Set(30,0);
             meleeStats.Width.Set(30,0);
@@ -609,6 +641,8 @@ namespace TerraLeague.UI
             CDRStats.Width.Set(30,0);
             healStats.Width.Set(30,0);
             ammoStats.Width.Set(30,0);
+
+            manaStats.Width.Set(30,0);
 
             if (extraStats)
             {
@@ -665,13 +699,18 @@ namespace TerraLeague.UI
             }
             else if (ammoStats.IsMouseHovering)
             {
-                text = "[c/808080:Ammo Consume Chance]" +
-                    "\nThe percent chance to consume ammo";
+                text = "[c/808080:Ranged Attack Speed]" +
+                    "\nThe percent increase in ranged weapons attack speed";
             }
             else if (healStats.IsMouseHovering)
             {
                 text = "[c/008000:Healing Power]" +
                     "\nThe percent increase in all your healing";
+            }
+            else if (manaStats.IsMouseHovering)
+            {
+                text = "[c/4169E1:Mana Cost Reduction]" +
+                    "\nThe percent reduction of all mana costs";
             }
 
 
@@ -697,15 +736,17 @@ namespace TerraLeague.UI
 
             if (extra)
             {
-                ammoStats.SetText("AMMO: " + (modPlayer.ConsumeAmmoChance * 100).ToString() + "%");
+                ammoStats.SetText("ATS: " + (Math.Round(modPlayer.rangedAttackSpeed * 100)).ToString() + "%");
                 healStats.SetText("HEAL: " + (modPlayer.healPower * 100).ToString() + "%");
                 CDRStats.SetText("CDR: " + ((1 - modPlayer.Cdr) * 100).ToString() + "%");
+                manaStats.SetText("MANA: " + ((int)((1 - modPlayer.player.manaCost) * 100)).ToString() + "%");
             }
             else
             {
                 ammoStats.SetText("");
                 healStats.SetText("");
                 CDRStats.SetText("");
+                manaStats.SetText("");
             }
         }
     }

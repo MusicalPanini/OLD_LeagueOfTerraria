@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 35;
             item.useAnimation = 35;
             item.noMelee = true;
-            item.knockBack = 0;
+            item.knockBack = 2;
             item.value = 10000;
             item.rare = 2;
             item.UseSound = SoundID.Item8;
@@ -143,8 +143,8 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
-                    Vector2 position = player.position;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 1f);
+                    Vector2 position = player.MountedCenter;
+                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(player.Top, 1f);
                     int projType = ProjectileType<StoneShard>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 3;
@@ -155,6 +155,7 @@ namespace TerraLeague.Items.Weapons
                     {
                         Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, i);
                     }
+                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
                     SetCooldowns(player, type);
                 }
             }
@@ -208,8 +209,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.UseSound = SoundID.Item8;
-
             return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 
