@@ -50,12 +50,11 @@ namespace TerraLeague.Projectiles
                     projectile.alpha = 255;
                 }
             }
-
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0, -3, projectile.alpha/2, default(Color), 0.5f);
-
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 31, 0, -3, projectile.alpha/2, default(Color), 0.5f);
             if ((int)projectile.ai[0] > 0 && projectile.timeLeft == 175)
             {
-                Projectile.NewProjectileDirect(projectile.Center + new Vector2(0, -42), Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, projectile.owner, (int)projectile.ai[0] - 1);
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center + new Vector2(0, -42), Vector2.Zero, projectile.type, projectile.damage, projectile.knockBack, projectile.owner, (int)projectile.ai[0] - 1);
+                proj.tileCollide = false;
             }
 
             AnimateProjectile();

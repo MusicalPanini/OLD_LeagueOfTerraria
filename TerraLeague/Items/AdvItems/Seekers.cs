@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TerraLeague.Items.BasicItems;
 using TerraLeague.Items.CustomItems;
+using TerraLeague.Items.CustomItems.Passives;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,8 +14,8 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Seeker's Armguard");
-            Tooltip.SetDefault("4% increased magic and minion damage" +
-                "\nIncreases armor by 3");
+            Tooltip.SetDefault("2% increased magic and minion damage" +
+                "\nIncreases armor by 1");
         }
 
         public override void SetDefaults()
@@ -29,13 +30,13 @@ namespace TerraLeague.Items.AdvItems
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            base.ModifyTooltips(tooltips);
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax2 += 10;
-            player.magicDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
+            player.magicDamage += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.02f;
+            player.GetModPlayer<PLAYERGLOBAL>().armor += 1;
 
             base.UpdateAccessory(player, hideVisual);
         }
@@ -45,7 +46,7 @@ namespace TerraLeague.Items.AdvItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<ClothArmor>(), 2);
             recipe.AddIngredient(ItemType<AmpTome>(), 1);
-            recipe.AddIngredient(ItemID.IceBlock, 50);
+            recipe.AddIngredient(ItemType<TrueIceChunk>(), 2);
             recipe.AddIngredient(ItemID.Obsidian, 20);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
@@ -54,7 +55,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override Passive GetPrimaryPassive()
         {
-            return null;
+            return new Attunement(20, 0.25m, 0.25m);
         }
 
         public override string GetStatText()

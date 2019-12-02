@@ -131,7 +131,7 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 40;
             item.useTime = 40;
             item.knockBack = 7F;
-            item.damage = 20;
+            item.damage = 17;
             item.scale = 1;
             item.noUseGraphic = false;
             item.UseSound = new LegacySoundStyle(4, 3);

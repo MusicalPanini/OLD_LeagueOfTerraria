@@ -338,7 +338,7 @@ namespace TerraLeague
                             if (chest.item[inventoryIndex].type == 0)
                             {
                                 chest.item[inventoryIndex].SetDefaults(ItemType<VialofTrueMagic>());
-                                chest.item[inventoryIndex].stack = Main.rand.Next(1, 6);
+                                chest.item[inventoryIndex].stack = Main.rand.Next(1, 4);
                                 break;
                             }
                         }
@@ -405,7 +405,8 @@ namespace TerraLeague
                                 else if (Main.netMode == 2)
                                 {
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Harrowing has begun..."), new Color(50, 255, 130), -1);
-                                    NetMessage.SendData(MessageID.WorldData);
+                                    //NetMessage.SendData(MessageID.WorldData);
+                                    NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
                                 }
                                 break;
                             }
@@ -416,6 +417,8 @@ namespace TerraLeague
             if (Main.dayTime && BlackMistEvent && Main.netMode != 1)
             {
                 BlackMistEvent = false;
+                //NetMessage.SendData(MessageID.WorldData);
+                NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
             }
 
             if (Main.hardMode) 

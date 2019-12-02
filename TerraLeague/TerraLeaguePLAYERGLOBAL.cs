@@ -959,6 +959,8 @@ namespace TerraLeague
                 clone.PhysicalShield = PhysicalShield;
                 clone.NormalShield = NormalShield;
                 clone.AscensionStacks = AscensionStacks;
+                clone.zoneBlackMist = zoneBlackMist;
+                clone.zoneSurfaceMarble = zoneSurfaceMarble;
             }
         }
 
@@ -996,6 +998,16 @@ namespace TerraLeague
             if (oldClone.AscensionStacks != AscensionStacks)
             {
                 PacketHandler.SendAscension(-1, player.whoAmI, player.whoAmI, AscensionStacks);
+            }
+
+            if (oldClone.zoneSurfaceMarble != zoneSurfaceMarble)
+            {
+                PacketHandler.SendBiome(-1, player.whoAmI, player.whoAmI, 0, zoneSurfaceMarble);
+            }
+
+            if (oldClone.zoneBlackMist != zoneBlackMist)
+            {
+                PacketHandler.SendBiome(-1, player.whoAmI, player.whoAmI, 1, zoneBlackMist);
             }
         }
         #endregion

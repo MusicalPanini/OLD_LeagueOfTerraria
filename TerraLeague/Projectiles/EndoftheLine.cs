@@ -105,7 +105,7 @@ namespace TerraLeague.Projectiles
                 projectile.ai[1] = 1;
                 projectile.tileCollide = false;
                 projectile.timeLeft = 1000;
-                projectile.damage *= 2;
+                //projectile.damage *= 2;
                 projectile.alpha = 255;
                 projectile.width = 10;
                 projectile.height = 10;

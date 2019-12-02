@@ -43,7 +43,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
             {
                 return "Fire an explosive round that detonates on contact with the ground." +
-                    "\nThe explosions will deal double damage and home back to you";
+                    "\nThe explosions will home back to you";
             }
             else
             {
@@ -54,7 +54,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.Q)
-                return (int)(3 * item.damage);
+                return (int)(2 * item.damage);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -123,7 +123,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 9;
+            item.damage = 8;
             item.ranged = true;
             item.width = 50;
             item.height = 24;

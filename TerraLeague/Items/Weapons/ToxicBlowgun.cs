@@ -66,7 +66,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
                 return (int)System.Math.Round(item.damage * 1.5);
             else if (type == AbilityType.E)
-                return (int)(60);
+                return (int)(50);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -187,7 +187,6 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
             recipe.AddIngredient(ItemID.Blowgun, 1);
             recipe.AddIngredient(ItemID.VialofVenom, 10);
             recipe.AddIngredient(ItemID.Mushroom, 1);

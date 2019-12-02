@@ -93,6 +93,7 @@ namespace TerraLeague
         public const byte ShieldTotal = 7;
         public const byte Ascension = 8;
         public const byte NewShield = 9;
+        public const byte Biome = 10;
 
         public const byte Stoneplate = 50;
         #endregion
@@ -128,6 +129,9 @@ namespace TerraLeague
                     break;
                 case (Ascension):
                     ReceiveAscension(reader, fromWho);
+                    break;
+                case (Biome):
+                    ReceiveBiome(reader, fromWho);
                     break;
             }
         }
@@ -375,6 +379,47 @@ namespace TerraLeague
             {
                 Main.player[user].GetModPlayer<PLAYERGLOBAL>().AscensionStacks = value;
             }
+        }
+
+        //Biome Check
+        public void SendBiome(int toWho, int fromWho, int player, int biome, bool isActive)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(Biome, fromWho);
+                packet.Write(player);
+                packet.Write(biome);
+                packet.Write(isActive);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Biome", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveBiome(BinaryReader reader, int fromWho)
+        {
+            int player = reader.ReadInt32();
+            int biome = reader.ReadInt32();
+            bool isActive = reader.ReadBoolean();
+            TerraLeague.Log("[DEBUG] - Received Ascension", new Color(80, 80, 0));
+            if (Main.netMode == NetmodeID.Server)
+            {
+                switch (biome)
+                {
+                    case 0:
+                        Main.player[player].GetModPlayer<PLAYERGLOBAL>().zoneSurfaceMarble = isActive;
+                        break;
+                    case 1:
+                        Main.player[player].GetModPlayer<PLAYERGLOBAL>().zoneBlackMist = isActive;
+                        break;
+                    default:
+                        break;
+                }
+
+                //SendAscension(-1, fromWho, user, value);
+            }
+            //else
+            //{
+            //    Main.player[user].GetModPlayer<PLAYERGLOBAL>().AscensionStacks = value;
+            //}
         }
     }
 
