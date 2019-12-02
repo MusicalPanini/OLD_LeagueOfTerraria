@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.E)
-                return (int)(6 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rangedDamageLastStep);
+                return (int)(7 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rangedDamageLastStep);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -184,7 +184,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 6;
+            item.damage = 5;
             item.ranged = true;
             item.noMelee = true;
             item.width = 58;
