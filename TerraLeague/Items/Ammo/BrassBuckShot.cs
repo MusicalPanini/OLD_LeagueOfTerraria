@@ -17,14 +17,14 @@ namespace TerraLeague.Items.Ammo
         {
             item.shootSpeed = 3f;
             item.shoot = ProjectileType<BrassShot>();
-            item.damage = 5;
+            item.damage = 6;
             item.width = 8;
             item.height = 8;
             item.maxStack = 999;
             item.consumable = true;
             item.ammo = AmmoID.Bullet;
             item.value = 5;
-            item.knockBack = 2f;
+            item.knockBack = 4f;
             item.value = 5;
             item.ranged = true;
             item.rare = 1;
