@@ -20,6 +20,11 @@ namespace TerraLeague.Tiles
             return 51;
         }
 
+        public override int GrowthFXGore()
+        {
+            return mod.GetGoreSlot("Gores/PetLeaf");
+        }
+
         public override int DropWood()
         {
             return ItemType<PetWood>();
