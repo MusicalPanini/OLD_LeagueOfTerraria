@@ -282,6 +282,7 @@ namespace TerraLeague.NPCs
                     int dustIndex = Dust.NewDust(npc.position, npc.width, npc.height, 44, 0f, 0f, 200, new Color(0, 192, 255), 1f);
                     Main.dust[dustIndex].velocity.X *= 0f;
                     Main.dust[dustIndex].velocity.Y = -System.Math.Abs(Main.dust[dustIndex].velocity.Y);
+                    Main.dust[dustIndex].noLight = true;
                 }
             }
             if (hemorrhage)
