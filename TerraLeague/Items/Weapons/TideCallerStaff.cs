@@ -65,11 +65,11 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.Q)
-                return (int)(item.damage * 2);
+                return (int)(item.damage * 1.5);
             else if (type == AbilityType.W)
                 return (int)System.Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep * 1.5);
             else if (type == AbilityType.E)
-                return (int)System.Math.Round(item.damage * 1.5);
+                return (int)(item.damage * 0.75);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -79,7 +79,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
             {
                 if (dam == DamageType.MAG)
-                    return 50;
+                    return 40;
             }
             else if (type == AbilityType.W)
             {
