@@ -193,10 +193,13 @@ namespace TerraLeague.NPCs
                             "\nThe accessory you have equipped first will take priority";
                         break;
                     case 5:
+                        text = "Grievous Wounds when applied to an enemy will take double damage from all damage over time effects";
+                        break;
+                    case 6:
                         text = "Heal Power (HEAL) increases all out-going healing." +
                             "\nIt addtionally will increase the amount potions will heal for.";
                         break;
-                    case 6:
+                    case 7:
                         text = "Cooldown Reduction (CDR) reduces the recharge time of Summoner Spells, Abilities and Active Items" +
                             "\nThis reduction is capped at 40%.";
                         break;
@@ -207,7 +210,7 @@ namespace TerraLeague.NPCs
 
                 Main.npcChatText = text;
                 currentHelp++;
-                if (currentHelp > 6)
+                if (currentHelp > 7)
                     currentHelp = 0;
             }
         }
