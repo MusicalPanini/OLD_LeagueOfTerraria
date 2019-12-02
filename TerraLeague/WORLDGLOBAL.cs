@@ -338,7 +338,7 @@ namespace TerraLeague
                             if (chest.item[inventoryIndex].type == 0)
                             {
                                 chest.item[inventoryIndex].SetDefaults(ItemType<VialofTrueMagic>());
-                                chest.item[inventoryIndex].stack = Main.rand.Next(1, 6);
+                                chest.item[inventoryIndex].stack = Main.rand.Next(1, 4);
                                 break;
                             }
                         }
