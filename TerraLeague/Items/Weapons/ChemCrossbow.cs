@@ -121,6 +121,29 @@ namespace TerraLeague.Items.Weapons
                 return base.GetRawCooldown(type);
         }
 
+        public override bool CanCurrentlyBeCast(Player player, AbilityType type)
+        {
+            if (type == AbilityType.E)
+            {
+                for (int i = 0; i < Main.npc.Length - 1; i++)
+                {
+                    NPC npc = Main.npc[i];
+                    float distance = 700;
+                    if (player.Distance(Main.npc[i].Center) < distance)
+                    {
+                        if (npc.HasBuff(BuffType<DeadlyVenom>()) && npc.active && !npc.immortal)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+
+            return base.CanCurrentlyBeCast(player, type);
+        }
+
         public override void DoEffect(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
@@ -141,23 +164,7 @@ namespace TerraLeague.Items.Weapons
             }
             else if (type == AbilityType.E)
             {
-                bool foundBuff = false;
-
-                for (int i = 0; i < Main.npc.Length - 1; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    float distance = 700;
-                    if (player.Distance(Main.npc[i].Center) < distance)
-                    {
-                        if (npc.HasBuff(BuffType<DeadlyVenom>()) && npc.active && !npc.immortal)
-                        {
-                            foundBuff = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type)) && foundBuff)
+                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type)))
                 {
                     player.CheckMana(GetBaseManaCost(type), true);
                     for (int i = 0; i < Main.npc.Length - 1; i++)
