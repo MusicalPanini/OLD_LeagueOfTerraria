@@ -186,13 +186,13 @@ namespace TerraLeague
                     Color color = modPlayer.currentShieldColor;
                     color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
                     color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.position.X - Main.screenPosition.X - 19), (int)(drawPlayer.position.Y - Main.screenPosition.Y - 10), 60, 60);
+                    Rectangle destRec = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X /*- 19 + 30*/), (int)(drawPlayer.Center.Y - Main.screenPosition.Y - 2 /*- 10 + 30*/), 60, 60);
 
                     Lighting.AddLight(drawPlayer.Center, color.ToVector3());
 
                     Texture2D texture = instance.GetTexture("Projectiles/NormalShield");
                     Rectangle sourRec = new Rectangle(0, 0 + (60 * frame), 60, 60);
-                    DrawData data = new DrawData(texture, destRec, sourRec, color, 0, Vector2.Zero, SpriteEffects.None, 1);
+                    DrawData data = new DrawData(texture, destRec, sourRec, color, 0, new Vector2(30, 30), SpriteEffects.None, 1);
                     Main.playerDrawData.Add(data);
                 }
             });
