@@ -66,7 +66,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
                 return (int)System.Math.Round(item.damage * 1.5);
             else if (type == AbilityType.E)
-                return (int)(60);
+                return (int)(50);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
