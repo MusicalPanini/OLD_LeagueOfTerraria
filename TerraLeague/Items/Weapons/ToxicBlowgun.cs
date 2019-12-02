@@ -187,7 +187,6 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
             recipe.AddIngredient(ItemID.Blowgun, 1);
             recipe.AddIngredient(ItemID.VialofVenom, 10);
             recipe.AddIngredient(ItemID.Mushroom, 1);
