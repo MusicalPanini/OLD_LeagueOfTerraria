@@ -30,6 +30,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            base.ModifyTooltips(tooltips);
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {

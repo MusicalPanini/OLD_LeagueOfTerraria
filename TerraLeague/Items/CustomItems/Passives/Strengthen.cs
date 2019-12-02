@@ -19,7 +19,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             return "[c/0099cc:Passive: STRENGTHEN -] [c/99e6ff:Kills grant stacks up to " + maxStacks + "]" +
-                "Gain " + lifeperStack + " health per stack";
+                "\n[c/99e6ff:Gain " + lifeperStack + " health per stack]";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
