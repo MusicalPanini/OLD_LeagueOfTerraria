@@ -211,10 +211,10 @@ namespace TerraLeague.Projectiles
             if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 if (player.whoAmI != projectile.owner)
-                    Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(projectile.damage, player.whoAmI, -1, projectile.owner);
+                    Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket(healing, player.whoAmI, -1, projectile.owner);
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += projectile.damage;
+                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += healing;
                 }
             }
             for (int i = 0; i < 12; i++)
@@ -237,6 +237,12 @@ namespace TerraLeague.Projectiles
             {
                 int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
             }
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            width = height = 10;
+            return true;
         }
     }
 }
