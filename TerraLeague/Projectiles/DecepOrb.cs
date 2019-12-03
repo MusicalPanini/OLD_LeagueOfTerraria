@@ -38,13 +38,20 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
             AnimateProjectile();
 
-            Lighting.AddLight(projectile.position, 0.75f, 0.75f, 0.75f);
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
-                Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 16, 16, 16, 0f, 0f, 0, new Color(255, 255, 255), 2f)];
+                Vector2 dustBoxPosition = new Vector2(projectile.position.X, projectile.position.Y);
+                int dustBoxWidth = projectile.width;
+                int dustBoxHeight = projectile.height;
+                Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 263, 0f, 0f, 100, new Color(229, 242, 249), 1.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
+                dust.velocity *= 0.1f;
+                dust.velocity += projectile.velocity * 0.1f;
+                dust.position.X -= projectile.velocity.X / 3f * (float)i;
+                dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
             }
+
 
             player.itemTime = 5;
             if (projectile.timeLeft > 210)
@@ -58,8 +65,6 @@ namespace TerraLeague.Projectiles
                     player.ChangeDir(-1);
                 }
             }
-
-
 
             if (projectile.ai[0] == 0f)
             {
@@ -182,6 +187,27 @@ namespace TerraLeague.Projectiles
                 projectile.frame %= 4;
                 projectile.frameCounter = 0;
             }
+        }
+
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture = Main.projectileTexture[projectile.type];
+            spriteBatch.Draw
+            (
+                texture,
+                new Vector2
+                (
+                    projectile.position.X - Main.screenPosition.X + projectile.width * 0.5f,
+                    projectile.position.Y - Main.screenPosition.Y + projectile.height - (texture.Height / 4) * 0.5f
+                ),
+                new Rectangle(0, (texture.Height / 4) * projectile.frame, texture.Width, texture.Height/4),
+                Color.White,
+                projectile.rotation,
+                new Vector2(texture.Width, texture.Width) * 0.5f,
+                projectile.scale,
+                SpriteEffects.None,
+                0f
+            );
         }
     }
 }
