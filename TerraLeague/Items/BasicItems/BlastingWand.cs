@@ -45,6 +45,7 @@ namespace TerraLeague.Items.BasicItems
             WandofSpark.AddIngredient(ItemID.FallenStar, 1);
             WandofSpark.AddIngredient(ItemID.Fireblossom, 1);
             WandofSpark.AddTile(TileID.Anvils);
+            recipe.anyWood = true;
             WandofSpark.SetResult(ItemID.WandofSparking);
             WandofSpark.AddRecipe();
         }
