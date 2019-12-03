@@ -271,7 +271,7 @@ namespace TerraLeague.Items
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modPlayer.cannonTimer <= 0 && modPlayer.cannonSet && Main.rand.Next(0, 1) == 0 && item.ranged)
+            if (modPlayer.cannonTimer <= 0 && modPlayer.cannonSet && Main.rand.Next(0, 1) == 0 && item.ranged && player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 modPlayer.cannonTimer = 90;
                 Projectile.NewProjectileDirect(player.Center, new Vector2(-15, 0).RotatedBy(player.AngleFrom(Main.MouseWorld)), ProjectileID.CannonballFriendly, 50, 7, player.whoAmI);
