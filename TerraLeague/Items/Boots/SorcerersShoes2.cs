@@ -64,7 +64,7 @@ namespace TerraLeague.Items.Boots
             recipe.SetResult(this);
             recipe.AddRecipe();
 
-            new ModRecipe(mod);
+            recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<SorcerersShoes1>());
             recipe.AddIngredient(ItemType<Orb>());
@@ -72,7 +72,7 @@ namespace TerraLeague.Items.Boots
             recipe.SetResult(this);
             recipe.AddRecipe();
 
-            new ModRecipe(mod);
+            recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<SorcerersShoes1>());
             recipe.AddIngredient(ItemType<Orb>());

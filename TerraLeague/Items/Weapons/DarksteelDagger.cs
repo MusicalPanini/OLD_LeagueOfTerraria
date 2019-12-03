@@ -58,7 +58,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.R)
-                return (int)(item.damage * 0.4);
+                return (int)(item.damage * 0.3);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -149,8 +149,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.useTime = 23;
-            item.useAnimation = 23;
             return true;
         }
 

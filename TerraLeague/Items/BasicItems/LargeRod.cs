@@ -38,6 +38,7 @@ namespace TerraLeague.Items.BasicItems
             recipe.AddIngredient(ItemID.Bone, 5);
             recipe.AddIngredient(ItemType<ManaBar>(), 2);
             recipe.AddTile(TileID.WorkBenches);
+            recipe.anyWood = true;
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -35,6 +35,7 @@ namespace TerraLeague.Items.BasicItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddRecipeGroup("TerraLeague:IronGroup", 5);
             recipe.AddIngredient(ItemID.Wood, 5);
+            recipe.anyWood = true;
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

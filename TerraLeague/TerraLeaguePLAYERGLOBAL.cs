@@ -1801,7 +1801,7 @@ namespace TerraLeague
 
                 if (toxicShot && proj.ranged)
                 {
-                    onhitdamage += (int)(60 + new ToxicBlowgun().GetAbilityScalingDamage(player, AbilityType.E, DamageType.SUM));
+                    onhitdamage += (int)(new ToxicBlowgun().GetAbilityBaseDamage(player, AbilityType.E) + new ToxicBlowgun().GetAbilityScalingDamage(player, AbilityType.E, DamageType.SUM));
                     target.AddBuff(BuffID.Venom, 240);
                 }
                 if (proj.melee)

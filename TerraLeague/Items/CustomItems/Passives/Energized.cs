@@ -27,7 +27,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             string charge = superCharge ? "\n[c/007399:Ranged attacks will generate charge and moving will generate even more charge]" : "\n[c/007399:Moving and ranged attacks will generate charge]";
-            return "[c/0099cc:Passive: ENERGIZED -] [c/99e6ff:At max charge your next melee or ranged attack will deal] " + baseDamage + " + [c/" + TerraLeague.RNGColor + ":" + (int)(modPlayer.RNG * rangedScaling / 100d) + "]" + charge;
+            return "[c/0099cc:Passive: ENERGIZED -] [c/99e6ff:At max charge your next melee or ranged attack will deal] " + baseDamage + " + [c/" + TerraLeague.RNGColor + ":" + (int)(modPlayer.RNG * rangedScaling / 100d) + "] [c/99e6ff:damage]" + charge;
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
