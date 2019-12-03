@@ -40,16 +40,16 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<Dagger>(), 2);
-            recipe.AddIngredient(ItemType<Zeal>(), 1);
-            recipe.AddIngredient(ItemID.MoltenFury, 1);
-            recipe.AddRecipeGroup("TerraLeague:Tier1Bar", 10);
-            recipe.AddIngredient(ItemID.SoulofSight, 5);
-            recipe.AddIngredient(ItemID.SoulofLight, 6);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            //ModRecipe recipe = new ModRecipe(mod);
+            //recipe.AddIngredient(ItemType<Dagger>(), 2);
+            //recipe.AddIngredient(ItemType<Zeal>(), 1);
+            //recipe.AddIngredient(ItemID.MoltenFury, 1);
+            //recipe.AddRecipeGroup("TerraLeague:Tier1Bar", 10);
+            //recipe.AddIngredient(ItemID.SoulofSight, 5);
+            //recipe.AddIngredient(ItemID.SoulofLight, 6);
+            //recipe.AddTile(TileID.MythrilAnvil);
+            //recipe.SetResult(this);
+            //recipe.AddRecipe();
         }
 
         public override Passive GetPrimaryPassive()

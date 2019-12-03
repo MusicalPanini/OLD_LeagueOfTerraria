@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.R)
-                return (int)(item.damage * 3);
+                return (int)(item.damage * 1.5);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -133,6 +133,8 @@ namespace TerraLeague.Items.Weapons
                 {
                     if (CurrentlyHasSpecialCast(player, type))
                         player.ClearBuff(BuffType<DeathFromBelowRefresh>());
+                    else
+                        SetCooldowns(player, type);
 
                     Vector2 position = Main.MouseWorld;
                     Vector2 velocity = Vector2.Zero;
@@ -145,7 +147,6 @@ namespace TerraLeague.Items.Weapons
                     Projectile.NewProjectile(position + new Vector2(-95, 90), velocity, projType, damage, knockback, player.whoAmI, -1);
 
                     DoEfx(player, type);
-                    SetCooldowns(player, type);
                 }
             }
             else
