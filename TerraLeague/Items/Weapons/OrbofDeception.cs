@@ -60,7 +60,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                return (int)System.Math.Round(item.damage * 1.5);
+                return (int)System.Math.Round(item.damage * 2.5);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -147,7 +147,7 @@ namespace TerraLeague.Items.Weapons
             item.mana = 20;
             item.value = 54000;
             item.rare = 3;
-            item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
+            item.UseSound = new LegacySoundStyle(2, 8, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
             item.shoot = ProjectileType<DecepOrb>();
             item.noMelee = true;
