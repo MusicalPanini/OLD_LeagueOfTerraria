@@ -28,7 +28,9 @@ namespace TerraLeague.Projectiles
             set { projectile.localAI[0] = value; }
         }
 
-        public bool AtMaxCharge { get { return Charge == 0; } }
+        public bool IsAtMaxCharge => Charge == MaxChargeValue;
+
+        public bool AtMaxCharge { get { return Charge >= MaxChargeValue; } }
 
         public override void SetDefaults()
         {
@@ -98,8 +100,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-
-            if (projectile.soundDelay == 0)
+            if (projectile.soundDelay == 0 && AtMaxCharge)
             {
                 projectile.soundDelay = 25;
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 15), projectile.position);
@@ -134,14 +135,21 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                if (Main.time % 10 < 1 && !player.CheckMana(player.inventory[player.selectedItem].mana, true))
+                if (Main.time % 10 < 1)
                 {
-                    projectile.Kill();
+                    if (!player.CheckMana(player.inventory[player.selectedItem].mana))
+                    {
+                        projectile.Kill();
+                    }
+                    else if (AtMaxCharge)
+                    {
+                        player.CheckMana(player.inventory[player.selectedItem].mana, true);
+                    }
                 }
                 Vector2 offset = projectile.velocity;
                 offset *= MoveDistance - 20;
                 Vector2 pos = player.Center + offset - new Vector2(10, 10);
-                if (Charge < 0)
+                if (Charge < 60)
                 {
                     Charge++;
                 }
@@ -161,7 +169,7 @@ namespace TerraLeague.Projectiles
             #endregion
 
             #region Set laser tail position and dusts
-            if (Charge < 0)
+            if (!AtMaxCharge)
             {
                 return;
             }
