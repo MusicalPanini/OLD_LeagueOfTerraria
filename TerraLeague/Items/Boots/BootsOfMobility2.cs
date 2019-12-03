@@ -73,7 +73,7 @@ namespace TerraLeague.Items.Boots
             recipe.SetResult(this);
             recipe.AddRecipe();
 
-            new ModRecipe(mod);
+            recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<BootsOfMobility1>());
             recipe.AddIngredient(ItemID.SwiftnessPotion, 5);
@@ -81,7 +81,7 @@ namespace TerraLeague.Items.Boots
             recipe.SetResult(this);
             recipe.AddRecipe();
 
-            new ModRecipe(mod);
+            recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<BootsOfMobility1>());
             recipe.AddIngredient(ItemID.SwiftnessPotion, 5);
