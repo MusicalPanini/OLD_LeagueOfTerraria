@@ -55,7 +55,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new SoulReave(5);
+            return new SoulReave(7);
         }
 
         public override string GetStatText()
