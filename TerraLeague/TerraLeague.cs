@@ -181,12 +181,13 @@ namespace TerraLeague
                     return;
                 }
 
-                if (modPlayer.currentShieldColor.A != 0)
+                if (modPlayer.currentShieldColor.A != 0 && drawPlayer.active)
                 {
+                    
                     Color color = modPlayer.currentShieldColor;
                     color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
                     color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X /*- 19 + 30*/), (int)(drawPlayer.Center.Y - Main.screenPosition.Y - 2 /*- 10 + 30*/), 60, 60);
+                    Rectangle destRec = new Rectangle((int)(drawPlayer.RotatedRelativePoint(drawPlayer.Center).X - Main.screenPosition.X /*- 19 + 30*/), (int)(drawPlayer.RotatedRelativePoint(drawPlayer.Center).Y - Main.screenPosition.Y - 2 /*- 10 + 30*/), 60, 60);
 
                     Lighting.AddLight(drawPlayer.Center, color.ToVector3());
 
