@@ -139,6 +139,9 @@ namespace TerraLeague
                 case (Biome):
                     ReceiveBiome(reader, fromWho);
                     break;
+                case (NPCRetarget):
+                    ReceiveRetarget(reader, fromWho);
+                    break;
             }
         }
 
@@ -433,7 +436,7 @@ namespace TerraLeague
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
-                ModPacket packet = GetPacket(Biome, fromWho);
+                ModPacket packet = GetPacket(NPCRetarget, fromWho);
                 packet.Write(player);
                 packet.Send(toWho, fromWho);
                 TerraLeague.Log("[DEBUG] - Sending Retarget", Color.LightSlateGray);
