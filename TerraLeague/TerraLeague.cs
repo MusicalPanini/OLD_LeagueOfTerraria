@@ -358,7 +358,7 @@ namespace TerraLeague
             if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
             {
                 music = MusicID.Eerie;
-                priority = MusicPriority.Event;
+                priority = MusicPriority.Environment;
             }
             base.UpdateMusic(ref music, ref priority);
         }
