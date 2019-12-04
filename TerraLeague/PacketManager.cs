@@ -1396,7 +1396,7 @@ namespace TerraLeague
             switch (reader.ReadByte())
             {
                 case (UpdateBlackMist):
-                    ReceiveBattleText(reader, fromWho);
+                    ReceiveBlackMist(reader, fromWho);
                     break;
             }
         }
@@ -1408,9 +1408,10 @@ namespace TerraLeague
             packet.Send(toWho, fromWho);
         }
 
-        public void ReceiveBattleText(BinaryReader reader, int fromWho)
+        public void ReceiveBlackMist(BinaryReader reader, int fromWho)
         {
             bool active = reader.ReadBoolean();
+            TerraLeague.Log("Recieved Global Black Mist is now set to " + active, Color.SeaGreen);
 
             WORLDGLOBAL.BlackMistEvent = true;
         }
