@@ -422,7 +422,8 @@ namespace TerraLeague
                 BlackMistEvent = false;
                 //NetMessage.SendData(MessageID.WorldData);
                 //NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
-                PacketHandler.SendBlackMist(-1, -1, BlackMistEvent);
+                if (Main.netMode == 2)
+                    PacketHandler.SendBlackMist(-1, -1, BlackMistEvent);
             }
 
             if (Main.hardMode) 
