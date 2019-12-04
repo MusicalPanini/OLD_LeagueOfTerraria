@@ -1413,7 +1413,7 @@ namespace TerraLeague
             bool active = reader.ReadBoolean();
             TerraLeague.Log("Recieved Global Black Mist is now set to " + active, Color.SeaGreen);
 
-            WORLDGLOBAL.BlackMistEvent = true;
+            WORLDGLOBAL.BlackMistEvent = active;
         }
     }
 }
