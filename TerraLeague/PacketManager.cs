@@ -435,8 +435,6 @@ namespace TerraLeague
             {
                 ModPacket packet = GetPacket(Biome, fromWho);
                 packet.Write(player);
-                packet.Write(biome);
-                packet.Write(isActive);
                 packet.Send(toWho, fromWho);
                 TerraLeague.Log("[DEBUG] - Sending Retarget", Color.LightSlateGray);
             }
@@ -447,7 +445,7 @@ namespace TerraLeague
             TerraLeague.Log("[DEBUG] - Received Retarget", new Color(80, 80, 0));
             if (Main.netMode == NetmodeID.Server)
             {
-                TerraLeague.ForceNPCStoRetarget(player);
+                TerraLeague.ForceNPCStoRetarget(Main.player[player]);
             }
         }
     }
