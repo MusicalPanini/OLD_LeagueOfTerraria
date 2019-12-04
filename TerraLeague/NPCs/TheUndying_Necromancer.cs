@@ -57,7 +57,7 @@ namespace TerraLeague.NPCs
                 Main.PlaySound(SoundID.Item8, npc.position);
                 for (int i = 0; i < 50; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 160, 0f, 0f, 100, new Color(5, 245, 150), 1);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 160, 0f, 0f, 100, new Color(5, 245, 150), 3);
                     dust.velocity *= 3f;
                     dust.fadeIn = 3;
                     dust.noGravity = true;
@@ -71,7 +71,7 @@ namespace TerraLeague.NPCs
                 Main.PlaySound(SoundID.Item8, npc.position);
                 for (int i = 0; i < 50; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 160, 0f, 0f, 100, new Color(5, 245, 150), 1);
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 160, 0f, 0f, 100, new Color(5, 245, 150), 3);
                     dust.velocity *= 3f;
                     dust.fadeIn = 3;
                     dust.noGravity = true;
@@ -136,9 +136,8 @@ namespace TerraLeague.NPCs
 
                 if (npc.ai[1] == 25f)
                 {
-
-                   
-                    spawnBoy();
+                    npc.netUpdate = true;
+                        spawnBoy();
 
 
                 }
@@ -193,12 +192,7 @@ namespace TerraLeague.NPCs
                             }
                             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 113), boyPos);
                             boyPos.Y -= 40;
-                            for (int j = 0; j < 50; j++)
-                            {
-                                Dust dust = Dust.NewDustDirect(boyPos, 18, 40, 188);
-                                dust.noGravity = true;
-                                dust.scale = 2;
-                            }
+                            
 
                             return;
                         }
