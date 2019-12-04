@@ -42,7 +42,7 @@ namespace TerraLeague.Items.SummonerSpells
             modPlayer.player.AddBuff(BuffType<Vanished>(), 300);
             Efx(player);
             PacketHandler.SendVanish(-1, player.whoAmI, player.whoAmI);
-
+            TerraLeague.ForceNPCStoRetarget(player);
             SetCooldowns(player, spellSlot);
         }
 

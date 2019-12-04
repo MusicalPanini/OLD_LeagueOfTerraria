@@ -99,6 +99,7 @@ namespace TerraLeague
         public const byte Ascension = 8;
         public const byte NewShield = 9;
         public const byte Biome = 10;
+        public const byte NPCRetarget = 11;
 
         public const byte Stoneplate = 50;
         #endregion
@@ -425,6 +426,29 @@ namespace TerraLeague
             //{
             //    Main.player[user].GetModPlayer<PLAYERGLOBAL>().AscensionStacks = value;
             //}
+        }
+
+        //Biome Check
+        public void SendRetarget(int toWho, int fromWho, int player)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(Biome, fromWho);
+                packet.Write(player);
+                packet.Write(biome);
+                packet.Write(isActive);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Retarget", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveRetarget(BinaryReader reader, int fromWho)
+        {
+            int player = reader.ReadInt32();
+            TerraLeague.Log("[DEBUG] - Received Retarget", new Color(80, 80, 0));
+            if (Main.netMode == NetmodeID.Server)
+            {
+                TerraLeague.ForceNPCStoRetarget(player);
+            }
         }
     }
 

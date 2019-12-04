@@ -818,6 +818,30 @@ namespace TerraLeague
         {
             HealthAndManaHitBoxes();
         }
+
+        public static void ForceNPCStoRetarget(Player player)
+        {
+            if (Main.netMode == 1)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().PacketHandler.SendRetarget(-1, -1, player.whoAmI);
+            }
+            else
+            {
+                for (int i = 0; i < Main.npc.Length; i++)
+                {
+                    NPC npc = Main.npc[i];
+
+                    if (npc.active)
+                    {
+                        if (npc.target == player.whoAmI)
+                        {
+                            npc.TargetClosest();
+                            npc.netUpdate = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
