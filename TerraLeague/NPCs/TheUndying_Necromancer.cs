@@ -229,7 +229,27 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-
+            for (int i = 0; i < 20; i++)
+            {
+                int num620;
+                if (i > 10)
+                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, 54, 0f, 0f, 50, default(Color), 1.5f);
+                else
+                    num620 = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 50, new Color(5, 245, 150), 1.5f);
+                Dust dust = Main.dust[num620];
+                dust.velocity *= 2f;
+                Main.dust[num620].noGravity = true;
+            }
+            int num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y - 10f), new Vector2((float)hitDirection, 0f), 99, npc.scale);
+            Gore gore = Main.gore[num621];
+            gore.velocity *= 0.3f;
+            num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)(npc.height / 2) - 15f), new Vector2((float)hitDirection, 0f), mod.GetGoreSlot("Gores/MistPuff_1"), npc.scale);
+            gore = Main.gore[num621];
+            gore.velocity *= 0.3f;
+            num621 = Gore.NewGore(new Vector2(npc.position.X, npc.position.Y + (float)npc.height - 20f), new Vector2((float)hitDirection, 0f), 99, npc.scale);
+            gore = Main.gore[num621];
+            gore.velocity *= 0.3f;
+            gore.velocity *= 0.3f;
             base.HitEffect(hitDirection, damage);
         }
 
