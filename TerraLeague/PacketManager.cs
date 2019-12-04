@@ -80,7 +80,7 @@ namespace TerraLeague
                     abilitiesHandler.HandlePacket(r, fromWho);
                     break;
                 case World:
-                    abilitiesHandler.HandlePacket(r, fromWho);
+                    worldHandler.HandlePacket(r, fromWho);
                     break;
             }
         }
