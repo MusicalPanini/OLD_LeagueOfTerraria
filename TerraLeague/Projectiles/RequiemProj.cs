@@ -108,7 +108,7 @@ namespace TerraLeague.Projectiles
         public override bool? CanHitNPC(NPC target)
         {
             if ((int)projectile.ai[0] == target.whoAmI)
-                return true;
+                return base.CanHitNPC(target);
             else
                 return false;
         }
