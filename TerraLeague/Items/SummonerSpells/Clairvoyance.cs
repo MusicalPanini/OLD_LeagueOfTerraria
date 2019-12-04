@@ -30,7 +30,7 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Give all players vision of treasure, traps, and NPC's";
+            return "Give all players vision of treasure, traps, and NPC's for 5 seconds";
         }
 
         public override void DoEffect(Player player, int spellSlot)

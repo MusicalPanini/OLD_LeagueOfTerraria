@@ -27,7 +27,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override int GetRawCooldown()
         {
-            return 210;
+            return 120;
         }
 
         public override string GetTooltip()
@@ -42,7 +42,7 @@ namespace TerraLeague.Items.SummonerSpells
             modPlayer.player.AddBuff(BuffType<Vanished>(), 300);
             Efx(player);
             PacketHandler.SendVanish(-1, player.whoAmI, player.whoAmI);
-
+            TerraLeague.ForceNPCStoRetarget(player);
             SetCooldowns(player, spellSlot);
         }
 

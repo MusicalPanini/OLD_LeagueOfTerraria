@@ -256,7 +256,7 @@ namespace TerraLeague.Items.Weapons
     {
         public override void NPCLoot(NPC npc)
         {
-            if (npc.netID == NPCID.Mimic && Main.rand.Next(0, 5) == 0)
+            if (npc.netID == NPCID.Mimic && Main.rand.Next(0, 5) == 0 && !npc.SpawnedFromStatue)
             {
                 Item.NewItem(npc.getRect(), ItemType<NezuksGauntlet>(), 1, false, -2);
             }

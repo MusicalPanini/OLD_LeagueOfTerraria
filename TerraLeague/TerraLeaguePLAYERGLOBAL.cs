@@ -468,7 +468,7 @@ namespace TerraLeague
 
 
         // Summoner Spells
-        public SummonerSpell[] sumSpells = new SummonerSpell[2];
+        public SummonerSpell[] sumSpells = new SummonerSpell[2] { GetInstance<GhostRune>(), GetInstance<BarrierRune>() };
         public int[] sumCooldowns = new int[2];
         SummonerSpell initSum1 = null;
         SummonerSpell initSum2 = null;
@@ -886,22 +886,13 @@ namespace TerraLeague
 
         public override TagCompound Save()
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI && player.active)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 return new TagCompound
                 {
                     {"manaChargeStacks", manaChargeStacks},
                     {"sumSpellOne", sumSpells[0].GetType().Name},
                     {"sumSpellTwo", sumSpells[1].GetType().Name},
-                };
-            }
-            else if (player.whoAmI == Main.LocalPlayer.whoAmI)
-            {
-                return new TagCompound
-                {
-                    {"manaChargeStacks", manaChargeStacks},
-                    {"sumSpellOne", GetInstance<GhostRune>().GetType().Name},
-                    {"sumSpellTwo", GetInstance<BarrierRune>().GetType().Name},
                 };
             }
             return null;
@@ -1204,7 +1195,7 @@ namespace TerraLeague
                     int deathTomeDamage = player.inventory.Where(x => x.type == ItemType<DeathsingerTome>()).First().damage;
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
-                        if (!Main.npc[i].townNPC)
+                        if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != 548)
                             Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<RequiemProj>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
                     }
                 }

@@ -181,12 +181,13 @@ namespace TerraLeague
                     return;
                 }
 
-                if (modPlayer.currentShieldColor.A != 0)
+                if (modPlayer.currentShieldColor.A != 0 && drawPlayer.active)
                 {
+                    
                     Color color = modPlayer.currentShieldColor;
                     color.MultiplyRGB(Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16));
                     color.A = 100;
-                    Rectangle destRec = new Rectangle((int)(drawPlayer.Center.X - Main.screenPosition.X /*- 19 + 30*/), (int)(drawPlayer.Center.Y - Main.screenPosition.Y - 2 /*- 10 + 30*/), 60, 60);
+                    Rectangle destRec = new Rectangle((int)(drawPlayer.RotatedRelativePoint(drawPlayer.Center).X - Main.screenPosition.X /*- 19 + 30*/), (int)(drawPlayer.RotatedRelativePoint(drawPlayer.Center).Y - Main.screenPosition.Y - 2 /*- 10 + 30*/), 60, 60);
 
                     Lighting.AddLight(drawPlayer.Center, color.ToVector3());
 
@@ -358,7 +359,7 @@ namespace TerraLeague
             if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
             {
                 music = MusicID.Eerie;
-                priority = MusicPriority.Event;
+                priority = MusicPriority.Environment;
             }
             base.UpdateMusic(ref music, ref priority);
         }
@@ -816,6 +817,30 @@ namespace TerraLeague
         public override void PostDrawInterface(SpriteBatch spriteBatch)
         {
             HealthAndManaHitBoxes();
+        }
+
+        public static void ForceNPCStoRetarget(Player player)
+        {
+            if (Main.netMode == 1)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().PacketHandler.SendRetarget(-1, -1, player.whoAmI);
+            }
+            else
+            {
+                for (int i = 0; i < Main.npc.Length; i++)
+                {
+                    NPC npc = Main.npc[i];
+
+                    if (npc.active)
+                    {
+                        if (npc.target == player.whoAmI)
+                        {
+                            npc.TargetClosest();
+                            npc.netUpdate = true;
+                        }
+                    }
+                }
+            }
         }
     }
 }
