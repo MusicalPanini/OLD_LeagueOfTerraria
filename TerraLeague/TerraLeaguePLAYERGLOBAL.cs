@@ -847,10 +847,10 @@ namespace TerraLeague
 
             if (player.whoAmI == Main.myPlayer)
             {
-                if (sumSpells[0].item.type == ItemType<ReviveRune>() && TerraLeague.Sum1.JustPressed && sumCooldowns[0] == 0)
+                if (sumSpells[0].Name == "ReviveRune" && TerraLeague.Sum1.JustPressed && sumCooldowns[0] == 0)
                     UseSummonerSpell(1);
 
-                if (sumSpells[1].item.type == ItemType<ReviveRune>() && TerraLeague.Sum2.JustPressed && sumCooldowns[1] == 0)
+                if (sumSpells[1].Name == "ReviveRune" && TerraLeague.Sum2.JustPressed && sumCooldowns[1] == 0)
                     UseSummonerSpell(2);
             }
         }
