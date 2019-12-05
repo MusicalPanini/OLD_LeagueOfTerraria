@@ -5,6 +5,7 @@ using TerraLeague.Gores;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Accessories;
 
 namespace TerraLeague.NPCs
 {
@@ -102,6 +103,11 @@ namespace TerraLeague.NPCs
         public override void NPCLoot()
         {
             Item.NewItem(npc.position, npc.width, npc.height, ItemType<DamnedSoul>(), 1);
+
+            float rnd = Main.rand.NextFloat();
+            if (rnd <= 0.0067f || (Main.expertMode && rnd <= 0.0133f))
+                Item.NewItem(npc.position, npc.width, npc.height, ItemType<Nightbloom>(), 1);
+
             base.NPCLoot();
         }
     }
