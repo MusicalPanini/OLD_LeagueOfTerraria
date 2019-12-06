@@ -872,6 +872,8 @@ namespace TerraLeague
                             sumSpells[i] = initSum1;
                         else
                             sumSpells[i] = (SummonerSpell)GetInstance<BarrierRune>();
+
+                        mod.Logger.Debug("OnEnterWorld: set Sum 1 to" + sumSpells[i].Name);
                     }
                     else if (i == 1)
                     {
@@ -879,6 +881,8 @@ namespace TerraLeague
                             sumSpells[i] = initSum2;
                         else
                             sumSpells[i] = (SummonerSpell)GetInstance<GhostRune>();
+
+                        mod.Logger.Debug("OnEnterWorld: set Sum 2 to" + sumSpells[i].Name);
                     }
                 }
             }
@@ -888,12 +892,16 @@ namespace TerraLeague
         {
             if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
+                mod.Logger.Debug("Completed Save with Sums " + sumSpells[0] + " and " + sumSpells[1]);
+
                 return new TagCompound
                 {
                     {"manaChargeStacks", manaChargeStacks},
                     {"sumSpellOne", sumSpells[0].GetType().Name},
                     {"sumSpellTwo", sumSpells[1].GetType().Name},
                 };
+
+                
             }
             return null;
         }
@@ -905,6 +913,8 @@ namespace TerraLeague
                 manaChargeStacks = tag.GetInt("manaChargeStacks");
                 initSum1 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellOne"));
                 initSum2 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellTwo"));
+
+                mod.Logger.Debug("Completed Load with Sums " + initSum1 + " and " + initSum2);
             }
         }
 
