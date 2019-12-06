@@ -847,10 +847,10 @@ namespace TerraLeague
 
             if (player.whoAmI == Main.myPlayer)
             {
-                if (sumSpells[0].item.type == ItemType<ReviveRune>() && TerraLeague.Sum1.JustPressed && sumCooldowns[0] == 0)
+                if (sumSpells[0].Name == "ReviveRune" && TerraLeague.Sum1.JustPressed && sumCooldowns[0] == 0)
                     UseSummonerSpell(1);
 
-                if (sumSpells[1].item.type == ItemType<ReviveRune>() && TerraLeague.Sum2.JustPressed && sumCooldowns[1] == 0)
+                if (sumSpells[1].Name == "ReviveRune" && TerraLeague.Sum2.JustPressed && sumCooldowns[1] == 0)
                     UseSummonerSpell(2);
             }
         }
@@ -872,6 +872,8 @@ namespace TerraLeague
                             sumSpells[i] = initSum1;
                         else
                             sumSpells[i] = (SummonerSpell)GetInstance<BarrierRune>();
+
+                        mod.Logger.Debug("OnEnterWorld: set Sum 1 to" + sumSpells[i].Name);
                     }
                     else if (i == 1)
                     {
@@ -879,6 +881,8 @@ namespace TerraLeague
                             sumSpells[i] = initSum2;
                         else
                             sumSpells[i] = (SummonerSpell)GetInstance<GhostRune>();
+
+                        mod.Logger.Debug("OnEnterWorld: set Sum 2 to" + sumSpells[i].Name);
                     }
                 }
             }
@@ -888,12 +892,16 @@ namespace TerraLeague
         {
             if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
+                mod.Logger.Debug("Completed Save with Sums " + sumSpells[0] + " and " + sumSpells[1]);
+
                 return new TagCompound
                 {
                     {"manaChargeStacks", manaChargeStacks},
                     {"sumSpellOne", sumSpells[0].GetType().Name},
                     {"sumSpellTwo", sumSpells[1].GetType().Name},
                 };
+
+                
             }
             return null;
         }
@@ -905,6 +913,8 @@ namespace TerraLeague
                 manaChargeStacks = tag.GetInt("manaChargeStacks");
                 initSum1 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellOne"));
                 initSum2 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellTwo"));
+
+                mod.Logger.Debug("Completed Load with Sums " + initSum1 + " and " + initSum2);
             }
         }
 
@@ -1251,14 +1261,17 @@ namespace TerraLeague
             // Handles the Revive Summoner Spells effects
             if (reviving)
             {
+                player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
+
+                player.HealEffect(9999);
+                player.statLife += 9999;
                 player.AddBuff(BuffType<Revived>(), 5 * 60);
 
                 ReviveRune.Efx(player);
                 new ReviveRune().PacketHandler.SendRevive(-1, player.whoAmI, player.whoAmI);
+
+                //player.ChangeSpawn((int)originalSpawn.X, (int)originalSpawn.Y);
                 reviving = false;
-                player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
-                player.HealEffect(9999);
-                player.statLife += 9999;
             }
 
             if (shieldFrame >= 24)

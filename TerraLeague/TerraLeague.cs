@@ -72,6 +72,8 @@ namespace TerraLeague
         /// </summary>
         public override void Load()
         {
+            Logger.InfoFormat("{0} logging", Name);
+
             Keys = new Dictionary<string, string>()
             {
                 {"Escape", "Esc"},

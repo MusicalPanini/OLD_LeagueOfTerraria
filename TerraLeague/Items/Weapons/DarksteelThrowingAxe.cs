@@ -123,12 +123,12 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 20;
+            item.damage = 42;
             item.width = 24;
             item.height = 24;
             item.ranged = true;
-            item.useTime = 28;
-            item.useAnimation = 28;
+            item.useTime = 45;
+            item.useAnimation = 45;
             item.useStyle = 1;
             item.knockBack = 3.5f;
             item.value = 6000;

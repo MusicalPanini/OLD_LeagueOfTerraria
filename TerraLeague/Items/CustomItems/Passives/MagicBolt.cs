@@ -8,19 +8,28 @@ namespace TerraLeague.Items.CustomItems.Passives
     public class MagicBolt : Passive
     {
         int extraDamage;
+        int magicMinionScaling;
         int cooldown;
 
-        public MagicBolt(int Damage, int Cooldown)
+        public MagicBolt(int Damage, int MagicMinionScaling, int Cooldown)
         {
             extraDamage = Damage;
+            magicMinionScaling = MagicMinionScaling;
             cooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/0099cc:Passive: MAGIC BOLT -] [c/99e6ff:Your next magic or minion attack will deal] " + extraDamage + " [c/99e6ff:extra damage]" +
-                "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+
+            string scaleText;
+            if (modPlayer.SUM > modPlayer.MAG)
+                scaleText = "[c / " + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
+            else
+                scaleText = "[c / " + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
+
+            return "[c/0099cc:Passive: MAGIC BOLT -] [c/99e6ff:Your next magic or minion attack will deal] " + extraDamage + " + " + scaleText + " [c/99e6ff:extra damage]" +
+                "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM]";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
