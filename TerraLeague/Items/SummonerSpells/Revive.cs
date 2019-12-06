@@ -46,7 +46,6 @@ namespace TerraLeague.Items.SummonerSpells
 
                 modPlayer.reviving = true;
                 player.respawnTimer = 0;
-
                 SetCooldowns(player, spellSlot);
             }
         }
