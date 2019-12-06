@@ -126,7 +126,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 35;
+            item.damage = 45;
             item.noMelee = true;
             item.magic = true;
             item.mana = 14;
