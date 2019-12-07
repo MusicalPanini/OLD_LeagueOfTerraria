@@ -337,7 +337,7 @@ namespace TerraLeague.NPCs
             if (timer <= 0)
                 timer = 60;
 
-            if (stunned)
+            if (stunned || bubbled)
             {
                 npc.frameCounter = 0;
                 npc.velocity = Vector2.Zero;

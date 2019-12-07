@@ -31,7 +31,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override int GetRawCooldown()
         {
-            return 240;
+            return 300;
         }
         public override string GetTooltip()
         {

@@ -15,7 +15,9 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Hextech Protobelt-01");
             Tooltip.SetDefault("7% increased magic and minion damage" +
                 "\nIncreases maximum life by 20" +
-                "\nAbility cooldown reduced by 10%");
+                "\nAbility cooldown reduced by 10%" +
+                "\nAllows flight and slow fall" +
+                "\nPress UP to rocket faster");
         }
 
         public override void SetDefaults()
@@ -40,6 +42,26 @@ namespace TerraLeague.Items.CompleteItems
             player.magicDamage += 0.07f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.07;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+
+            player.wingTimeMax = 120;
+            player.wings = 4;
+            player.wingsLogic = 4;
+        }
+
+        public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising,
+            ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
+        {
+            ascentWhenFalling = 0.85f;
+            ascentWhenRising = 0.15f;
+            maxCanAscendMultiplier = 1f;
+            maxAscentMultiplier = 3f;
+            constantAscend = 0.135f;
+        }
+
+        public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration)
+        {
+            speed = 9f;
+            acceleration *= 2.5f;
         }
 
         public override void AddRecipes()
