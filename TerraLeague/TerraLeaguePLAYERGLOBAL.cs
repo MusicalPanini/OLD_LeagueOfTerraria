@@ -1410,6 +1410,18 @@ namespace TerraLeague
                 dust.noGravity = true;
                 dust.scale = 1.4f;
             }
+            if (flameHarbinger)
+            {
+                int displacement = Main.rand.Next(30);
+
+                for (int i = 0; i < 12; i++)
+                {
+                    Vector2 pos = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians((30 * i) + displacement)) + player.Center;
+
+                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Fire, Vector2.Zero, 0, default(Color), 2f);
+                    dustR.noGravity = true;
+                }
+            }
 
             // Lifeline cooldown handler
             if (lifeLineCooldown > 0)
