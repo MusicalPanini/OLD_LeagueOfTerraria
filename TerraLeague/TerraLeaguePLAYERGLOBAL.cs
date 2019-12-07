@@ -2463,8 +2463,8 @@ namespace TerraLeague
             if (spiritualRestur)
                 lifeToHeal = (int)(lifeToHeal * 1.3);
 
-            if (player.HasBuff(BuffID.PotionSickness))
-                lifeToHeal /= 2;
+            //if (player.HasBuff(BuffID.PotionSickness))
+            //    lifeToHeal /= 2;
 
             if (GetRealHeathWithoutShield(true) - GetRealHeathWithoutShield(false) < lifeToHeal)
             {
