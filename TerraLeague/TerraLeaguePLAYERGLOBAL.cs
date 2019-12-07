@@ -2684,7 +2684,7 @@ namespace TerraLeague
                     Main.spriteBatch.Draw
                        (
                            texture,
-                           new Rectangle((int)(player.Center.X - Main.screenPosition.X - 32), (int)(player.position.Y - Main.screenPosition.Y - 16), 64, 16),
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath ? 32 : 40) - 21), 64, 16),
                            new Rectangle(0, frame * 16, 64, 16),
                            Color.White,
                            0,
