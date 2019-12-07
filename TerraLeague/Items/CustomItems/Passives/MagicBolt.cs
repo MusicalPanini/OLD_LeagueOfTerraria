@@ -24,9 +24,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = "[c / " + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
+                scaleText = "[c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
             else
-                scaleText = "[c / " + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
+                scaleText = "[c/" + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
 
             return "[c/0099cc:Passive: MAGIC BOLT -] [c/99e6ff:Your next magic or minion attack will deal] " + extraDamage + " + " + scaleText + " [c/99e6ff:extra damage]" +
                 "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM]";
