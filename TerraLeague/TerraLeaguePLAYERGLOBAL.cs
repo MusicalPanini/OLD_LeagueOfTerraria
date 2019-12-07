@@ -1263,8 +1263,8 @@ namespace TerraLeague
             {
                 player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
 
-                player.HealEffect(9999);
-                player.statLife += 9999;
+                player.HealEffect(player.statLifeMax2/2);
+                player.statLife += player.statLifeMax2 / 2;
                 player.AddBuff(BuffType<Revived>(), 5 * 60);
 
                 ReviveRune.Efx(player);

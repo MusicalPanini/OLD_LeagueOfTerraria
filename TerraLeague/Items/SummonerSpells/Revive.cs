@@ -35,7 +35,7 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Instantly revive at full life where you died with a speed and defence boost";
+            return "Instantly revive at half life where you died with a speed and defence boost";
         }
 
         public override void DoEffect(Player player, int spellSlot)
