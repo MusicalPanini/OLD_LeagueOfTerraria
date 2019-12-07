@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
         {
-                if (modItem.item.type == ItemType<Executioners>() && (proj.melee || proj.ranged))
+                if ((proj.melee || proj.ranged))
                     target.AddBuff(BuffType<GrievousWounds>(), debuffDuration * 60);
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
