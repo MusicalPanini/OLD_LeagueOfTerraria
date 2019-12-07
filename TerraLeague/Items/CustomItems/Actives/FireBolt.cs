@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -25,9 +26,9 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = "[c / " + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
+                scaleText = "[c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
             else
-                scaleText = "[c / " + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
+                scaleText = "[c/" + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
 
             return "[c/ff4d4d:Active: FIRE BOLT -] [c/ff8080:Launch yourself towards the curser, while firing 7 bolts in a cone and 1 from behined dealing] " + baseDamage + " + " + scaleText + " [c/ff8080:magic damage]" +
                 "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM]";
@@ -44,7 +45,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 Vector2 position = player.Center;
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 20f);
                 int projType = ProjectileType<ProtobeltShot>();
-                int damage = baseDamage + (int)(magicMinionScaling * (modPlayer.SUM > modPlayer.MAG ? modPlayer.SUM : modPlayer.MAG) / 100d);
+                int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 int knockback = 1;
                 int numberProjectiles = 7;
                 float startingAngle = 27;
