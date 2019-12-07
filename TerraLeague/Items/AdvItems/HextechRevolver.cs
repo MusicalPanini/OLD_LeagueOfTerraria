@@ -54,7 +54,7 @@ namespace TerraLeague.Items.AdvItems
 
             if (slot != -1)
             {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
+                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
                     return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
                 else
                     return "";
@@ -69,7 +69,7 @@ namespace TerraLeague.Items.AdvItems
 
             if (slot != -1)
             {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
+                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
                     return true;
                 else
                     return false;
