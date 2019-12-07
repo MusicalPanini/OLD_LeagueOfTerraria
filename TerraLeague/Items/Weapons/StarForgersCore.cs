@@ -25,7 +25,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetQuote()
         {
-            return "Imma space doge";
+            return "Now we're playing with star fire!";
         }
 
         public override string GetAbilityName(AbilityType type)

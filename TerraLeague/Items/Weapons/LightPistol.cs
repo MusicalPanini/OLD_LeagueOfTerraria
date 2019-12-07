@@ -22,7 +22,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetQuote()
         {
-            return "New Lucian quotes not on wiki >:c";
+            return "Everybody deserves a second shot";
         }
 
         public override string GetAbilityName(AbilityType type)
