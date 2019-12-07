@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -43,7 +44,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] <= 0 && (proj.magic || TerraLeague.IsMinionDamage(proj)))
             {
-                damage += extraDamage;
+                damage += extraDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 Efx(player, target);
                 if (Main.netMode == 1)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
