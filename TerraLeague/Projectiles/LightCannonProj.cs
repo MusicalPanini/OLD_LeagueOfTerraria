@@ -48,7 +48,13 @@ namespace TerraLeague.Projectiles
             {
                 int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
                 player.ChangeDir(dir);
-                player.itemRotation = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
+
+                if (projectile.owner == Main.LocalPlayer.whoAmI)
+                {
+                    projectile.ai[0] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
+                    projectile.netUpdate = true;
+                }
+                player.itemRotation = projectile.ai[0];
 
                 projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80 * dir, 0).RotatedBy(player.itemRotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
 
@@ -68,9 +74,8 @@ namespace TerraLeague.Projectiles
                     Main.dust[num20].scale = num19;
                     Main.dust[num20].customData = player;
                 }
-
-                projectile.ai[0]++;
-                if (projectile.ai[0] > 30)
+                projectile.localAI[0]++;
+                if (projectile.localAI[0] > 30)
                 {
                     projectile.ai[1] = 1;
                     projectile.friendly = true;

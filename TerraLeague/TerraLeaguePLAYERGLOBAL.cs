@@ -2364,7 +2364,8 @@ namespace TerraLeague
         /// <param name="crit"></param>
         public void OnHitByEnemy(NPC npc, ref int damage, bool crit)
         {
-            player.AddBuff(BuffType<GrievousWounds>(), 120); // 2 seconds
+            if (GetTotalShield() <= 0)
+                player.AddBuff(BuffType<GrievousWounds>(), 120); // 2 seconds
             CombatTimer = 0;
         }
 
