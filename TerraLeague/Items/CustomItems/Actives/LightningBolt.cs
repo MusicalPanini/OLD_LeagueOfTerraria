@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
 using TerraLeague.Projectiles;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
@@ -41,7 +42,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 int npc = TerraLeague.NPCMouseIsHovering();
                 if (npc != -1)
                 {
-                    int damage = baseDamage + (int)(magicMinionScaling * (modPlayer.SUM > modPlayer.MAG ? modPlayer.SUM : modPlayer.MAG) / 100d);
+                    int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                     Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<LightningBoltProj>(), damage, 0, player.whoAmI, npc);
                     modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
                 }

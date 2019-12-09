@@ -239,8 +239,10 @@ namespace TerraLeague.NPCs
                 {
                     Dust dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 4);
                     dustIndex.noGravity = true;
+                    dustIndex.color = new Color(255, 0, 0);
 
                     dustIndex = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, default(Color), 1);
+                    dustIndex.color = new Color(255, 0, 0);
                 }
             }
             if (doomed)
@@ -335,7 +337,7 @@ namespace TerraLeague.NPCs
             if (timer <= 0)
                 timer = 60;
 
-            if (stunned)
+            if (stunned || bubbled)
             {
                 npc.frameCounter = 0;
                 npc.velocity = Vector2.Zero;

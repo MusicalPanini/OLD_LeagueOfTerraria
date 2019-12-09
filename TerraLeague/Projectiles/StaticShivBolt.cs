@@ -122,6 +122,7 @@ namespace TerraLeague.Projectiles
         {
             if ((bool)CanHitNPC(target))
             {
+                target.immune[projectile.owner] = 2;
                 projectile.netUpdate = true;
                 projectile.timeLeft = 301;
                 for (int i = 0; i < HaveHit.Length; i++)

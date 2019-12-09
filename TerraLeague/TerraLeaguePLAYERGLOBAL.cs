@@ -1263,8 +1263,8 @@ namespace TerraLeague
             {
                 player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
 
-                player.HealEffect(9999);
-                player.statLife += 9999;
+                player.HealEffect(player.statLifeMax2/2);
+                player.statLife = player.statLifeMax2 / 2;
                 player.AddBuff(BuffType<Revived>(), 5 * 60);
 
                 ReviveRune.Efx(player);
@@ -1409,6 +1409,18 @@ namespace TerraLeague
                 Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 211, 0, 0, 0, new Color(255, 0, 0));
                 dust.noGravity = true;
                 dust.scale = 1.4f;
+            }
+            if (flameHarbinger)
+            {
+                int displacement = Main.rand.Next(30);
+
+                for (int i = 0; i < 12; i++)
+                {
+                    Vector2 pos = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians((30 * i) + displacement)) + player.Center;
+
+                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Fire, Vector2.Zero, 0, default(Color), 2f);
+                    dustR.noGravity = true;
+                }
             }
 
             // Lifeline cooldown handler
@@ -2451,8 +2463,8 @@ namespace TerraLeague
             if (spiritualRestur)
                 lifeToHeal = (int)(lifeToHeal * 1.3);
 
-            if (player.HasBuff(BuffID.PotionSickness))
-                lifeToHeal /= 2;
+            //if (player.HasBuff(BuffID.PotionSickness))
+            //    lifeToHeal /= 2;
 
             if (GetRealHeathWithoutShield(true) - GetRealHeathWithoutShield(false) < lifeToHeal)
             {
@@ -2672,7 +2684,7 @@ namespace TerraLeague
                     Main.spriteBatch.Draw
                        (
                            texture,
-                           new Rectangle((int)(player.Center.X - Main.screenPosition.X - 32), (int)(player.position.Y - Main.screenPosition.Y - 16), 64, 16),
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath ? 32 : 40) - 21), 64, 16),
                            new Rectangle(0, frame * 16, 64, 16),
                            Color.White,
                            0,

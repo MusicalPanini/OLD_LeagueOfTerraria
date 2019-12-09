@@ -10,6 +10,8 @@ namespace TerraLeague.Projectiles
 {
     public class PiercingDarkness : ModProjectile
     {
+        bool[] hasHitPlayer = new bool[200];
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Piercing Darkness");
@@ -103,7 +105,8 @@ namespace TerraLeague.Projectiles
                     if (sound != null)
                         sound.Pitch = -1f;
 
-                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)projectile.ai[0];
+                    if (projectile.whoAmI == Main.LocalPlayer.whoAmI)
+                        player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)projectile.ai[0];
                 }
             }
 
@@ -123,7 +126,13 @@ namespace TerraLeague.Projectiles
             if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 if (player.whoAmI != projectile.owner)
-                    Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket((int)projectile.ai[0], player.whoAmI, -1, projectile.owner);
+                {
+                    if (!hasHitPlayer[player.whoAmI])
+                    {
+                        Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendHealPacket((int)projectile.ai[0], player.whoAmI, -1, projectile.owner);
+                        hasHitPlayer[player.whoAmI] = true;
+                    }
+                }
             }
         }
 
