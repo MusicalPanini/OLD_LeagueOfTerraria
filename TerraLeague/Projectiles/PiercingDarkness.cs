@@ -105,7 +105,7 @@ namespace TerraLeague.Projectiles
                     if (sound != null)
                         sound.Pitch = -1f;
 
-                    if (projectile.whoAmI == Main.LocalPlayer.whoAmI)
+                    if (projectile.owner == Main.LocalPlayer.whoAmI)
                         player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)projectile.ai[0];
                 }
             }
