@@ -29,7 +29,7 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Reduce an enemies damage by 60% at you cursor for 4 seconds";
+            return "Reduce an enemies damage by 60% at you cursor for 10 seconds";
         }
 
         public override void DoEffect(Player player, int spellSlot)

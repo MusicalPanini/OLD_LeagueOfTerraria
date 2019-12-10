@@ -602,7 +602,7 @@ namespace TerraLeague
         /// <returns></returns>
         internal static int FindAccessorySlotOnPlayer(Player player, ModItem accessory)
         {
-            if (accessory.item.accessory)
+            if (accessory.item.accessory && player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 for (int i = 0; i < 6; i++)
                 {

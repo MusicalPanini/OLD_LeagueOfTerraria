@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using TerraLeague.NPCs;
 using System.Linq;
 using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Buffs
 {
@@ -47,7 +48,8 @@ namespace TerraLeague.Buffs
                 BuffID.Rabies,
                 BuffID.MoonLeech,
                 BuffID.Burning,
-                BuffID.Frostburn
+                BuffID.Frostburn,
+                BuffType<GrievousWounds>()
                 };
 
             for (int i = 0; i < buffs.Length; i++)

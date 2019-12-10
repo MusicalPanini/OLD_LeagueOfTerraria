@@ -27,7 +27,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 16;
             projectile.height = 16;
             projectile.timeLeft = 300;
-            projectile.penetrate = 5;
+            projectile.penetrate = 10;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.tileCollide = false;
@@ -75,9 +75,55 @@ namespace TerraLeague.Projectiles
             {
                 projectile.friendly = true;
 
-                NPC npc = Main.npc[(int)projectile.ai[0]];
+                if ((int)projectile.ai[0] >= 0)
+                {
 
-                if (!npc.active && projectile.owner == Main.LocalPlayer.whoAmI)
+                    NPC npc = Main.npc[(int)projectile.ai[0]];
+
+                    if (!npc.active && projectile.owner == Main.LocalPlayer.whoAmI)
+                    {
+                        projectile.ai[0] = FindNewTarget();
+
+                        if (projectile.ai[0] == -1)
+                        {
+                            projectile.Kill();
+                            return;
+                        }
+                    }
+
+                    float MaxSpeed = 18;
+
+                    float XDist = (float)npc.Center.X - projectile.Center.X;
+                    float YDist = (float)npc.Center.Y - projectile.Center.Y;
+
+                    float TrueDist = (float)System.Math.Sqrt((double)(XDist * XDist + YDist * YDist));
+                    if (TrueDist > MaxSpeed)
+                    {
+                        TrueDist = MaxSpeed / TrueDist;
+                        XDist *= TrueDist;
+                        YDist *= TrueDist;
+                        int num118 = (int)(XDist * 1000f);
+                        int num119 = (int)(projectile.velocity.X * 1000f);
+                        int num120 = (int)(YDist * 1000f);
+                        int num121 = (int)(projectile.velocity.Y * 1000f);
+                        if (num118 != num119 || num120 != num121)
+                        {
+                            projectile.netUpdate = true;
+                        }
+
+                        if (projectile.timeLeft > 270)
+                        {
+                            projectile.velocity.X = XDist * (1 - ((projectile.timeLeft - 270) / 30f));
+                            projectile.velocity.Y = YDist * (1 - ((projectile.timeLeft - 270) / 30f));
+                        }
+                        else
+                        {
+                            projectile.velocity.X = XDist;
+                            projectile.velocity.Y = YDist;
+                        }
+                    }
+                }
+                else
                 {
                     projectile.ai[0] = FindNewTarget();
 
@@ -88,39 +134,6 @@ namespace TerraLeague.Projectiles
                     }
                 }
 
-                float MaxSpeed = 18;
-                
-                float XDist = (float)npc.Center.X - projectile.Center.X;
-                float YDist = (float)npc.Center.Y - projectile.Center.Y;
-
-                float TrueDist = (float)System.Math.Sqrt((double)(XDist * XDist + YDist * YDist));
-                if (TrueDist > MaxSpeed)
-                {
-                    TrueDist = MaxSpeed / TrueDist;
-                    XDist *= TrueDist;
-                    YDist *= TrueDist;
-                    int num118 = (int)(XDist * 1000f);
-                    int num119 = (int)(projectile.velocity.X * 1000f);
-                    int num120 = (int)(YDist * 1000f);
-                    int num121 = (int)(projectile.velocity.Y * 1000f);
-                    if (num118 != num119 || num120 != num121)
-                    {
-                        projectile.netUpdate = true;
-                    }
-
-                    if (projectile.timeLeft > 270)
-                    {
-                        projectile.velocity.X = XDist * (1 - ((projectile.timeLeft - 270) / 30f));
-                        projectile.velocity.Y = YDist * (1 - ((projectile.timeLeft - 270) / 30f));
-                    }
-                    else
-                    {
-                        projectile.velocity.X = XDist;
-                        projectile.velocity.Y = YDist;
-                    }
-                }
-
-                
             }
 
             for (int i = 0; i < 2; i++)

@@ -1543,34 +1543,37 @@ namespace TerraLeague
             #endregion
 
             // Runs PostPlayerUpdate() for all equiped LeagueItems
-            for (int i = 3; i < 9; i++)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                for (int i = 3; i < 9; i++)
                 {
-                    if (PassivesAreActive[(i-3) * 2])
+                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
+
+                    if (legItem != null)
                     {
-                        Passive primPassive = legItem.GetPrimaryPassive();
-                        if (primPassive != null)
+                        if (PassivesAreActive[(i - 3) * 2])
                         {
-                            primPassive.PostPlayerUpdate(player, legItem);
+                            Passive primPassive = legItem.GetPrimaryPassive();
+                            if (primPassive != null)
+                            {
+                                primPassive.PostPlayerUpdate(player, legItem);
+                            }
                         }
-                    }
-                    if (PassivesAreActive[((i - 3) * 2) + 1])
-                    {
-                        Passive secPassive = legItem.GetSecondaryPassive();
-                        if (secPassive != null)
+                        if (PassivesAreActive[((i - 3) * 2) + 1])
                         {
-                            secPassive.PostPlayerUpdate(player, legItem);
+                            Passive secPassive = legItem.GetSecondaryPassive();
+                            if (secPassive != null)
+                            {
+                                secPassive.PostPlayerUpdate(player, legItem);
+                            }
                         }
-                    }
-                    if (ActivesAreActive[i - 3])
-                    {
-                        Active active = legItem.GetActive();
-                        if (active != null)
+                        if (ActivesAreActive[i - 3])
                         {
-                            active.PostPlayerUpdate(player, legItem);
+                            Active active = legItem.GetActive();
+                            if (active != null)
+                            {
+                                active.PostPlayerUpdate(player, legItem);
+                            }
                         }
                     }
                 }
@@ -2361,7 +2364,8 @@ namespace TerraLeague
         /// <param name="crit"></param>
         public void OnHitByEnemy(NPC npc, ref int damage, bool crit)
         {
-            player.AddBuff(BuffType<GrievousWounds>(), 120); // 2 seconds
+            if (GetTotalShield() <= 0)
+                player.AddBuff(BuffType<GrievousWounds>(), 120); // 2 seconds
             CombatTimer = 0;
         }
 
@@ -2953,27 +2957,30 @@ namespace TerraLeague
         /// <param name="secondaryPassive">Search the secondary slot of the LeagueItems</param>
         public void FindAndSetPassiveStat(Passive SearchTarget, int setTo, bool secondaryPassive = false)
         {
-            for (int i = 3; i < 9; i++)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                LeagueItem item = player.armor[i].modItem as LeagueItem;
-                Passive passive;
-
-                if (item != null)
+                for (int i = 3; i < 9; i++)
                 {
-                    if (secondaryPassive)
-                        passive = item.GetSecondaryPassive();
-                    else
-                        passive = item.GetPrimaryPassive();
+                    LeagueItem item = player.armor[i].modItem as LeagueItem;
+                    Passive passive;
 
-                    if (passive != null)
+                    if (item != null)
                     {
-                        if (passive.GetType() == SearchTarget.GetType())
+                        if (secondaryPassive)
+                            passive = item.GetSecondaryPassive();
+                        else
+                            passive = item.GetPrimaryPassive();
+
+                        if (passive != null)
                         {
-                            accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, player.armor[i].modItem)] = setTo;
+                            if (passive.GetType() == SearchTarget.GetType())
+                            {
+                                accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, player.armor[i].modItem)] = setTo;
+                            }
                         }
                     }
-                }
 
+                }
             }
         }
 
@@ -3163,8 +3170,11 @@ namespace TerraLeague
 
         public void SetTempUseItem(int itemToUse)
         {
-            oldUsedInventorySlot = player.selectedItem;
-            player.selectedItem = player.FindItem(itemToUse);
+            if (itemToUse != player.HeldItem.type)
+            {
+                oldUsedInventorySlot = player.selectedItem;
+                player.selectedItem = player.FindItem(itemToUse);
+            }
         }
     }
 }
