@@ -32,13 +32,15 @@ namespace TerraLeague.Items.SummonerSpells
         public int GetDamageStat()
         {
             if (NPC.downedGolemBoss)
-                return 700;
+                return 2000;
             else if (NPC.downedPlantBoss)
-                return 500;
+                return 1000;
+            else if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                return 750;
             else if (NPC.downedMechBossAny)
-                return 350;
+                return 500;
             else if (Main.hardMode)
-                return 200;
+                return 300;
             else if (NPC.downedBoss2)
                 return 125;
             else
