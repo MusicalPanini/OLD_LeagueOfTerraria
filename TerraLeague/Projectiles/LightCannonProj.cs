@@ -46,17 +46,17 @@ namespace TerraLeague.Projectiles
             }
             else if (player.channel)
             {
-                int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
-                player.ChangeDir(dir);
+                //int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
+                //player.ChangeDir(dir);
 
-                if (projectile.owner == Main.LocalPlayer.whoAmI)
-                {
-                    projectile.ai[0] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
-                    projectile.netUpdate = true;
-                }
-                player.itemRotation = projectile.ai[0];
+                //if (projectile.owner == Main.LocalPlayer.whoAmI)
+                //{
+                //    projectile.ai[0] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
+                //    projectile.netUpdate = true;
+                //}
+                //player.itemRotation = projectile.ai[0];
 
-                projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80 * dir, 0).RotatedBy(player.itemRotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
+                projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80 * player.direction, 0).RotatedBy(player.itemRotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
 
                 for (int k = 0; k < 2 + 1; k++)
                 {
@@ -81,7 +81,7 @@ namespace TerraLeague.Projectiles
                     projectile.friendly = true;
                     projectile.timeLeft = 80;
                     projectile.extraUpdates = 16;
-                    projectile.velocity = TerraLeague.CalcVelocityToMouse(player.Center, 10);
+                    projectile.velocity = new Vector2(10, 0).RotatedBy(projectile.rotation);
 
                     Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 72, Terraria.Audio.SoundType.Sound), projectile.Center);
                     if (sound != null)
