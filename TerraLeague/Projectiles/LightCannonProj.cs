@@ -46,11 +46,17 @@ namespace TerraLeague.Projectiles
             }
             else if (player.channel)
             {
-                int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
-                player.ChangeDir(dir);
-                player.itemRotation = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
+                //int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
+                //player.ChangeDir(dir);
 
-                projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80 * dir, 0).RotatedBy(player.itemRotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
+                //if (projectile.owner == Main.LocalPlayer.whoAmI)
+                //{
+                //    projectile.ai[0] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
+                //    projectile.netUpdate = true;
+                //}
+                //player.itemRotation = projectile.ai[0];
+
+                projectile.Center = player.Center + new Vector2(-16, -14) + new Vector2(80 * player.direction, 0).RotatedBy(player.itemRotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
 
                 for (int k = 0; k < 2 + 1; k++)
                 {
@@ -60,7 +66,7 @@ namespace TerraLeague.Projectiles
                     {
                         num19 = 0.6f;
                     }
-                    
+
                     Vector2 vector11 = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
                     int num20 = Dust.NewDust(vector11 - Vector2.One * 8f, 16, 16, num18, 0, 0, 0, default(Color), 1f);
                     Main.dust[num20].velocity = Vector2.Normalize(projectile.Center - vector11) * 1.5f * (10f - (float)2 * 2f) / 10f;
@@ -68,15 +74,14 @@ namespace TerraLeague.Projectiles
                     Main.dust[num20].scale = num19;
                     Main.dust[num20].customData = player;
                 }
-
-                projectile.ai[0]++;
-                if (projectile.ai[0] > 30)
+                projectile.localAI[0]++;
+                if (projectile.localAI[0] > 30)
                 {
                     projectile.ai[1] = 1;
                     projectile.friendly = true;
                     projectile.timeLeft = 80;
                     projectile.extraUpdates = 16;
-                    projectile.velocity = TerraLeague.CalcVelocityToMouse(player.Center, 10);
+                    projectile.velocity = new Vector2(10, 0).RotatedBy(projectile.rotation);
 
                     Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 72, Terraria.Audio.SoundType.Sound), projectile.Center);
                     if (sound != null)
