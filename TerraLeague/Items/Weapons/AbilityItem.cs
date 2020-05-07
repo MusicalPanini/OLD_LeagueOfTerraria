@@ -328,7 +328,9 @@ namespace TerraLeague.Items.Weapons
         /// <returns></returns>
         virtual public int GetCooldown(AbilityType type)
         {
-            return (int)(GetRawCooldown(type) * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().cdrLastStep);
+            int cooldown = (int)(GetRawCooldown(type) * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().cdrLastStep);
+
+            return cooldown < 1 ? 1 : cooldown;
         }
 
         /// <summary>
