@@ -3149,6 +3149,9 @@ namespace TerraLeague
         {
             oldUsedInventorySlot = player.selectedItem;
             player.selectedItem = player.FindItem(itemToUse);
+
+            if (oldUsedInventorySlot == 58 && player.selectedItem == -1)
+                player.selectedItem = 58;
         }
     }
 }
