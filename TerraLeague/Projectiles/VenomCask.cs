@@ -29,9 +29,6 @@ namespace TerraLeague.Projectiles
             projectile.aiStyle = 2;
             base.SetDefaults();
         }
-
-        
-
         public override void AI()
         {
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
@@ -72,22 +69,23 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Shatter, projectile.position);
+
+            Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, new Color(0, 255, 0), 1f);
-                Main.dust[dustIndex].velocity *= 1.4f;
-                Main.dust[dustIndex].noLight = true;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, new Color(0, 255, 0), 1f);
+                dust.velocity *= 1.4f;
+                dust.noLight = true;
             }
             for (int i = 0; i < 80; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0, 255, 0), 2f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].noLight = true;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0, 255, 0), 2f);
+                dust.noGravity = true;
+                dust.noLight = true;
 
-                dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0, 255, 0),1f);
-                Main.dust[dustIndex].noLight = true;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0, 255, 0),1f);
+                dust.noLight = true;
             }
-
 
             if (projectile.owner == Main.myPlayer)
             {

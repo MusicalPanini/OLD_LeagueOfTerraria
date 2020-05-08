@@ -34,34 +34,27 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             if(projectile.timeLeft == 90)
-            {
                 Main.PlaySound(SoundID.Item11, projectile.position);
-            }
+
             Lighting.AddLight(projectile.position, 1f, 0.34f, 0.9f);
 
             if (projectile.alpha > 0)
-            {
                 projectile.alpha -= 15;
-            }
+
             if (projectile.alpha < 0)
-            {
                 projectile.alpha = 0;
-            }
 
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
 
             if (projectile.velocity.Y > 16f)
-            {
                 projectile.velocity.Y = 16f;
-            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             if (target.life <= 0)
-            {
                 Main.player[projectile.owner].AddBuff(BuffType<PowPowExcited>(), 300);
-            }
+
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -75,8 +68,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 119, 0f, 0f, 100, default(Color), 0.7f);
-
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 119, 0f, 0f, 100, default(Color), 0.7f);
             }
         }
     }

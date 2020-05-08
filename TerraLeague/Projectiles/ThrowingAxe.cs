@@ -30,20 +30,15 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             if (projectile.velocity.X < 0)
-            {
                 projectile.spriteDirection = -1;
-            }
 
             if (projectile.velocity.X > 0)
                 projectile.rotation += 0.5f;
             else
                 projectile.rotation += -0.5f;
 
-
             if (projectile.timeLeft < 270 && projectile.velocity.Y < 15)
-            {
                 projectile.velocity.Y += 0.8f;
-            }
             base.AI();
         }
 
@@ -56,9 +51,8 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 6; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
-
             base.Kill(timeLeft);
         }
 
@@ -72,7 +66,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
             SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 4, Terraria.Audio.SoundType.Sound), projectile.position);
             if (true)

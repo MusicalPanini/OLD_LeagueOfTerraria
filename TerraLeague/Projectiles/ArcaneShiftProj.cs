@@ -81,9 +81,9 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 2; i++)
             {
-                int num345 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 133, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 0.5f);
-                Main.dust[num345].noGravity = true;
-                Main.dust[num345].velocity *= 0.3f;
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 133, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 0.5f);
+                dust.noGravity = true;
+                dust.velocity *= 0.3f;
             }
 
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
@@ -135,8 +135,8 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                int num345 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 113, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
-                Main.dust[num345].noGravity = true;
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
+                dust.noGravity = true;
             }
         }
 

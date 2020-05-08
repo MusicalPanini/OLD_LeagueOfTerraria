@@ -53,10 +53,9 @@ namespace TerraLeague.Projectiles
                 projectile.velocity.Y = 16;
 
             projectile.rotation += (Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y)) * 0.03f * (float)projectile.direction;
+
             if (projectile.velocity.Length() > 2)
-            {
-                Dust dust = Terraria.Dust.NewDustDirect(projectile.position, 16, 16, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
-            }
+                Dust.NewDustDirect(projectile.position, 16, 16, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
             
             base.AI();
         }
@@ -71,7 +70,6 @@ namespace TerraLeague.Projectiles
                 projectile.friendly = false;
                 projectile.timeLeft = 120;
             }
-
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -82,16 +80,17 @@ namespace TerraLeague.Projectiles
                 Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
                 for (int g = 0; g < 4; g++)
                 {
-                    int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+                    Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
                 }
+
+                Dust dust;
                 for (int i = 0; i < 20; i++)
                 {
-                    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1f);
-                    Main.dust[dustIndex].velocity *= 2f;
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1f);
+                    dust.velocity *= 2f;
 
-                    dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1.5f);
-                    Main.dust[dustIndex].velocity *= 1.5f;
-
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1.5f);
+                    dust.velocity *= 1.5f;
                 }
             }
             else if ((int)projectile.ai[0] == 0)
@@ -100,7 +99,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 12; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 4, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
+                    Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 4, projectile.oldVelocity.X * 0.25f, projectile.oldVelocity.Y * 0.25f, 0, new Color(255, 125, 0));
                 }
             }
             base.Kill(timeLeft);

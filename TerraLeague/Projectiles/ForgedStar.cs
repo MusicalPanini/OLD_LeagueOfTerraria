@@ -88,19 +88,13 @@ namespace TerraLeague.Projectiles
                 dust2.noLight = true;
                 dust2.velocity *= 0.6f;
             }
-
-
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-           
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Main.dust[Dust.NewDust(projectile.position, 16, 16, 92, 0, 0, 50, new Color(255, 180, 0), 1.2f)];
+                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, 92, 0, 0, 50, new Color(255, 180, 0), 1.2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

@@ -35,23 +35,18 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.timeLeft == 600)
                 projectile.rotation = Main.rand.Next(0, 360);
+
             Lighting.AddLight(projectile.position, 1f * lightIntencity, 0.5f * lightIntencity, 0.9f * lightIntencity);
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * lightIntencity)), new Color(255,50,255));
+            Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * lightIntencity)), new Color(255,50,255));
 
             projectile.rotation += projectile.velocity.X * 0.05f;
 
             projectile.velocity.Y += 0.4f;
+
             if(projectile.velocity.X > 8)
-            {
                 projectile.velocity.X = 8;
-
-            }
             else if(projectile.velocity.X < -8)
-            {
                 projectile.velocity.X = -8;
-
-            }
-
 
             base.AI();
         }
@@ -101,8 +96,8 @@ namespace TerraLeague.Projectiles
                 {
                     projectile.velocity.Y = 8;
                 }
-
             }
+
             if (bounces == 0)
             {
                 projectile.Kill();
@@ -111,16 +106,16 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustType<Smoke>(), 0f, 0f, 150, new Color(255, 50, 255));
-                    Main.dust[dustIndex].velocity *= 1f;
+                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustType<Smoke>(), 0f, 0f, 150, new Color(255, 50, 255));
+                    dust.velocity *= 1f;
                 }
             }
         }
 
         public override void Kill(int timeLeft)
         {
-            int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustType<Smoke>(), 0f, 0f, 100, new Color(255, 50, 255));
-            Main.dust[dustIndex].velocity *= 1f;
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, DustType<Smoke>(), 0f, 0f, 100, new Color(255, 50, 255));
+            dust.velocity *= 1f;
             base.Kill(timeLeft);
         }
 

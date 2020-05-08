@@ -56,8 +56,8 @@ namespace TerraLeague.Items.SummonerSpells
             Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
             for (int j = 0; j < 18; j++)
             {
-                int num2 = Dust.NewDust(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(68, 253, 180, 0), Main.rand.Next(2, 3));
-                Main.dust[num2].noGravity = true;
+                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(68, 253, 180, 0), Main.rand.Next(2, 3));
+                dust.noGravity = true;
             }
         }
 

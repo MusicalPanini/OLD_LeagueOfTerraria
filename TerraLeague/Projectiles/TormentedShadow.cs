@@ -58,9 +58,7 @@ namespace TerraLeague.Projectiles
                 Main.dust[dustIndex].noGravity = false;
             }
             if (projectile.timeLeft < 15)
-            {
                 projectile.alpha += 5;
-            }
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

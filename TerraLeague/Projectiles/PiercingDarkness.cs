@@ -72,22 +72,21 @@ namespace TerraLeague.Projectiles
 
                 projectile.Center = player.MountedCenter + new Vector2(-16, -14) + new Vector2(80, 0).RotatedBy(projectile.rotation + player.fullRotation) + Main.OffsetsPlayerOnhand[player.bodyFrame.Y / 56];
 
-                for (int k = 0; k < 2 + 1; k++)
+                for (int k = 0; k < 3; k++)
                 {
-                    int num18 = DustID.Smoke;
-                    float num19 = 0.8f;
+                    int type = DustID.Smoke;
+                    float scale = 0.8f;
                     if (k == 1)
                     {
-                        num18 = 66;
-                        num19 = 1f;
+                        type = 66;
+                        scale = 1f;
                     }
                     
-                    Vector2 vector11 = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
-                    int num20 = Dust.NewDust(vector11 - Vector2.One * 8f, 16, 16, num18, 0, 0, 0, default(Color), 1f);
-                    Main.dust[num20].velocity = Vector2.Normalize(projectile.Center - vector11) * 1.5f * (10f - (float)2 * 2f) / 10f;
-                    Main.dust[num20].noGravity = true;
-                    Main.dust[num20].scale = num19;
-                    Main.dust[num20].customData = player;
+                    Vector2 position = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
+                    Dust dust = Dust.NewDustDirect(position - Vector2.One * 8f, 16, 16, type, 0, 0, 0, default(Color), scale);
+                    dust.velocity = Vector2.Normalize(projectile.Center - position) * 1.5f * (10f - (float)2 * 2f) / 10f;
+                    dust.noGravity = true;
+                    dust.customData = player;
                 }
 
                 projectile.localAI[0]++;

@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0.75f, 0.75f, 0.75f);
             for (int i = 0; i < 1; i++)
             {
-                Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 16, 16, 16, 0f, 0f, 0, new Color(255, 255, 255), 2f)];
+                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, 16, 0f, 0f, 0, new Color(255, 255, 255), 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
@@ -58,8 +58,6 @@ namespace TerraLeague.Projectiles
                     player.ChangeDir(-1);
                 }
             }
-
-
 
             if (projectile.ai[0] == 0f)
             {
@@ -79,7 +77,6 @@ namespace TerraLeague.Projectiles
                 float xDif = player.Center.X - projectile.Center.X;
                 float yDif = player.Center.Y - projectile.Center.Y;
                 float distance = projectile.Distance(player.Center);
-
 
                 if (distance > 3000f)
                 {
@@ -105,6 +102,7 @@ namespace TerraLeague.Projectiles
                         projectile.velocity.X = projectile.velocity.X - acceleration;
                     }
                 }
+
                 if (projectile.velocity.Y < yDif)
                 {
                     projectile.velocity.Y = projectile.velocity.Y + acceleration;
@@ -121,6 +119,7 @@ namespace TerraLeague.Projectiles
                         projectile.velocity.Y = projectile.velocity.Y - acceleration;
                     }
                 }
+
                 if (Main.myPlayer == projectile.owner)
                 {
                     Rectangle rectangle = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
@@ -130,6 +129,7 @@ namespace TerraLeague.Projectiles
                         projectile.Kill();
                     }
                 }
+
                 if (projectile.ai[0] == 0f)
                 {
                     Vector2 velocity = projectile.velocity;
@@ -143,10 +143,9 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 8, 8, 16, 0f, 0f, 0, new Color(255, 255, 255), 1f)];
+                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 16, 0f, 0f, 0, new Color(255, 255, 255), 1f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
@@ -155,16 +154,9 @@ namespace TerraLeague.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (projectile.ai[0] == 1f)
-            {
                 crit = true;
-            }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

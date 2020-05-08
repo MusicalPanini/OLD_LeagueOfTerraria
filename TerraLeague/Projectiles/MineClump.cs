@@ -36,17 +36,16 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-                Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
-                for (int i = 0; i < 20; i++)
-                {
-                    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
-                    Main.dust[dustIndex].velocity *= 0.5f;
-
-                }
+            Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
+            for (int i = 0; i < 20; i++)
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+                dust.velocity *= 0.5f;
+            }
 
             for (int i = 0; i < 7; i++)
             {
-                Projectile proj = Projectile.NewProjectileDirect(new Vector2(projectile.Center.X, projectile.Bottom.Y - 10), new Vector2(6 - (i * 2), -5), ProjectileType<Mine>(), projectile.damage, projectile.knockBack, projectile.owner);
+                Projectile.NewProjectileDirect(new Vector2(projectile.Center.X, projectile.Bottom.Y - 10), new Vector2(6 - (i * 2), -5), ProjectileType<Mine>(), projectile.damage, projectile.knockBack, projectile.owner);
             }
         }
 
@@ -59,14 +58,10 @@ namespace TerraLeague.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (projectile.velocity.X != projectile.oldVelocity.X)
-            {
                 projectile.velocity.X = -projectile.oldVelocity.X * 0.3f;
-            }
             else
-            {
-            Prime();
+                Prime();
 
-            }
             return false;
         }
 

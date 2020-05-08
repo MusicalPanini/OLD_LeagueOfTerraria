@@ -83,13 +83,6 @@ namespace TerraLeague.Projectiles
                 projectile.frameCounter = 0;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            
-
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
-
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             NPCsGLOBAL modNPC = target.GetGlobalNPC<NPCsGLOBAL>();
@@ -131,7 +124,7 @@ namespace TerraLeague.Projectiles
             Color color = projectile.ranged ? new Color(250, 114, 247) : new Color(59, 0, 255);
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 8, 8, 112, 0f, 0f, 255, color, 3.5f)];
+                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, 0f, 0f, 255, color, 3.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
@@ -141,8 +134,7 @@ namespace TerraLeague.Projectiles
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 122), projectile.Center);
                 for (int i = 0; i < 8; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
-
+                    Dust.NewDustDirect(projectile.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
                 }
             }
         }

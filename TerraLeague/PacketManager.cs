@@ -1291,7 +1291,6 @@ namespace TerraLeague
         }
         private void ReceiveEfx(BinaryReader reader, int fromWho)
         {
-            
             int CastItem = reader.ReadInt32();
             int Caster = reader.ReadInt32();
             AbilityType AbilityType = (AbilityType)reader.ReadByte();
@@ -1337,8 +1336,8 @@ namespace TerraLeague
                     {
                         for (int j = 0; j < 18; j++)
                         {
-                            int num = Dust.NewDust(new Vector2(Main.rand.Next((int)Main.player[i].position.X - 8, (int)Main.player[i].position.X + 8), Main.player[i].position.Y + 16), Main.player[i].width, Main.player[i].height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 0, 0), Main.rand.Next(2, 6));
-                            Main.dust[num].noGravity = true;
+                            Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)Main.player[i].position.X - 8, (int)Main.player[i].position.X + 8), Main.player[i].position.Y + 16), Main.player[i].width, Main.player[i].height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 0, 0), Main.rand.Next(2, 6));
+                            dust.noGravity = true;
                         }
                     }
                 }

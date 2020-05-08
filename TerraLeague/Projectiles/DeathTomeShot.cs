@@ -40,21 +40,22 @@ namespace TerraLeague.Projectiles
             projectile.Center = new Vector2(projectile.ai[0], projectile.ai[1]);
 
             int num = Main.rand.Next(0, 3);
+            Dust dust;
             if (num == 0)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
-                Main.dust[dustIndex].velocity.X *= 0.3f;
-                Main.dust[dustIndex].color = new Color(0, 255, 150);
-                Main.dust[dustIndex].alpha = projectile.alpha;
-                Main.dust[dustIndex].noGravity = false;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
+                dust.velocity.X *= 0.3f;
+                dust.color = new Color(0, 255, 150);
+                dust.noGravity = false;
+                dust.alpha = projectile.alpha;
             }
             else if (num == 2)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
-                Main.dust[dustIndex].velocity *= 0.3f;
-                Main.dust[dustIndex].alpha = projectile.alpha;
-                Main.dust[dustIndex].color = new Color(0, 255, 0);
-                Main.dust[dustIndex].noGravity = false;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
+                dust.velocity.X *= 0.3f;
+                dust.color = new Color(0, 255, 0);
+                dust.noGravity = false;
+                dust.alpha = projectile.alpha;
             }
 
             Lighting.AddLight(projectile.Center, 0f, 0.75f, 0.3f);
@@ -73,9 +74,9 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 15; i++)
                 {
-                    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
-                    Main.dust[dustIndex].color = new Color(0, 255, 150);
-                    Main.dust[dustIndex].noGravity = false;
+                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
+                    dust.color = new Color(0, 255, 150);
+                    dust.noGravity = false;
                 }
 
                 int totalHit = 0;

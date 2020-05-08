@@ -190,9 +190,9 @@ namespace TerraLeague.Projectiles
             projectile.netUpdate = true;
             for (int i = 0; i < 12; i++)
             {
-                int num345 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 137, 0,0, 50, new Color(100, 100, 255), 1.2f);
-                Main.dust[num345].noGravity = true;
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 137, 0,0, 50, new Color(100, 100, 255), 1.2f);
+                dust.noGravity = true;
+                Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
             }
 
             projectile.velocity.Y = -8;
@@ -219,9 +219,9 @@ namespace TerraLeague.Projectiles
             }
             for (int i = 0; i < 12; i++)
             {
-                int num345 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 137, 0,0, 50, new Color(0, 255, 100), 1.2f);
-                Main.dust[num345].noGravity = true;
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 137, 0,0, 50, new Color(0, 255, 100), 1.2f);
+                dust.noGravity = true;
+                Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
             }
 
             projectile.velocity.Y = -8;
@@ -235,7 +235,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
             }
         }
 

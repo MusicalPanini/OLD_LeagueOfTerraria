@@ -75,17 +75,18 @@ namespace TerraLeague.Projectiles
             if (efx != null)
                 efx.Pitch = -1;
 
+            Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
-                Main.dust[dustIndex].velocity *= 1.4f;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+                dust.velocity *= 1.4f;
             }
             for (int i = 0; i < 80; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0f, 0f, 100, default(Color), 2f);
-                Main.dust[dustIndex].noGravity = true;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0f, 0f, 100, default(Color), 2f);
+                dust.noGravity = true;
 
-                dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0f, 0f, 100, default(Color), 1f);
+                Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0f, 0f, 100, default(Color), 1f);
             }
 
             if (projectile.owner == Main.myPlayer)

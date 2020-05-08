@@ -150,23 +150,23 @@ namespace TerraLeague.Projectiles
 
             Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
 
+            Dust dust;
             for (int i = 0; i < (size == 200 ? 40f : 20f); i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), size == 200 ? 2f : 1f);
-                Main.dust[dustIndex].velocity *= 0.5f;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), size == 200 ? 2f : 1f);
+                dust.velocity *= 0.5f;
 
             }
             for (int i = 0; i < 50; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), size == 200 ? 4f : 2f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 3f;
-                Main.dust[dustIndex].color = new Color(255, 0, 220);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), size == 200 ? 4f : 2f);
+                dust.noGravity = true;
+                dust.velocity *= 3f;
+                dust.color = new Color(255, 0, 220);
 
-                dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), size == 200 ? 3f : 1.5f);
-                Main.dust[dustIndex].color = new Color(255, 0, 220);
-                Main.dust[dustIndex].noGravity = true;
-
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), size == 200 ? 3f : 1.5f);
+                dust.color = new Color(255, 0, 220);
+                dust.noGravity = true;
             }
 
             projectile.ai[0]++;

@@ -29,7 +29,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color),0.7f);
+            Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color),0.7f);
             projectile.rotation = projectile.velocity.ToRotation();
             if (projectile.velocity.X < 0)
             {
@@ -50,6 +50,7 @@ namespace TerraLeague.Projectiles
             target.AddBuff(BuffType<Slowed>(), 120);
             base.OnHitNPC(target, damage, knockback, false);
         }
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Main.PlaySound(0, projectile.Center);
@@ -60,8 +61,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 80, 0f, 0f, 100, default(Color), 0.7f);
-
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 80, 0f, 0f, 100, default(Color), 0.7f);
             }
         }
     }

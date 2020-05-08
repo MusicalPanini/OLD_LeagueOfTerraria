@@ -45,13 +45,9 @@ namespace TerraLeague.Projectiles
             if ((int)projectile.ai[1] == 0)
             {
                 if (projectile.alpha > 0)
-                {
                     projectile.alpha -= 10;
-                }
                 if (projectile.alpha < 0)
-                {
                     projectile.alpha = 0;
-                }
 
                 if (projectile.timeLeft == 1000)
                     projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
@@ -69,12 +65,11 @@ namespace TerraLeague.Projectiles
                     SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound), projectile.Center);
                     if (sound != null)
                         sound.Pitch = -1;
-
                 }
             }
             else
             {
-                    Dust dust = Terraria.Dust.NewDustDirect(projectile.position, 16, 16, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+                Dust.NewDustDirect(projectile.position, 16, 16, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
             }
         }
 
@@ -84,13 +79,11 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
-                Main.dust[dustIndex].velocity *= 1.5f;
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 0.7f);
+                dust.velocity *= 1.5f;
 
-                dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1f);
-
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 4, 0f, 0f, 100, new Color(255, 125, 0), 1f);
             }
-
             
             base.Kill(timeLeft);
         }
@@ -98,7 +91,6 @@ namespace TerraLeague.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Prime();
-
             return false;
         }
 

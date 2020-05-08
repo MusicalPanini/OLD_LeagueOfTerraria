@@ -55,26 +55,25 @@ namespace TerraLeague.Projectiles
             else
             {
                 Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
+
+                Dust dust;
                 for (int i = 0; i < 20; i++)
                 {
-                    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
-                    Main.dust[dustIndex].velocity *= 0.5f;
-
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+                    dust.velocity *= 0.5f;
                 }
                 for (int i = 0; i < 30; i++)
                 {
-                    int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
-                    Main.dust[dustIndex].noGravity = true;
-                    Main.dust[dustIndex].velocity *= 3f;
-                    Main.dust[dustIndex].color = new Color(255, 0, 220);
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
+                    dust.noGravity = true;
+                    dust.velocity *= 3f;
+                    dust.color = new Color(255, 0, 220);
 
-                    dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
-                    Main.dust[dustIndex].color = new Color(255, 0, 220);
-                    Main.dust[dustIndex].noGravity = true;
-
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+                    dust.color = new Color(255, 0, 220);
+                    dust.noGravity = true;
                 }
             }
-            
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

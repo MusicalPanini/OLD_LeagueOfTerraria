@@ -76,12 +76,12 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             for (int i = 0; i < 30; i++)
             {
-                int dustIndex = Dust.NewDust(user.position, user.width, user.height, 67, 0, 0, 0, default(Color), 2f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 5f;
+                Dust dust = Dust.NewDustDirect(user.position, user.width, user.height, 67, 0, 0, 0, default(Color), 2f);
+                dust.noGravity = true;
+                dust.velocity *= 5f;
 
-                dustIndex = Dust.NewDust(new Vector2(user.position.X, user.position.Y), user.width, user.height, 67, 0f, 0f, 100, default(Color), 1f);
-                Main.dust[dustIndex].velocity *= 3f;
+                dust = Dust.NewDustDirect(new Vector2(user.position.X, user.position.Y), user.width, user.height, 67, 0f, 0f, 100, default(Color), 1f);
+                dust.velocity *= 3f;
             }
         }
     }

@@ -36,22 +36,19 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-        {
-        }
-
         public override void Kill(int timeLeft)
         {
+            Dust dust;
             for (int i = 0; i < 24; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 132, 0f, 0f, 100, default(Color), 1);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 2f;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 132, 0f, 0f, 100, default(Color), 1);
+                dust.noGravity = true;
+                dust.velocity *= 2f;
             }
             for (int i = 0; i < 8; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 132, 0f, 0f, 100, default(Color), 1);
-                Main.dust[dustIndex].velocity *= 1f;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 132, 0f, 0f, 100, default(Color), 1);
+                dust.velocity *= 1f;
             }
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14, Terraria.Audio.SoundType.Sound), projectile.position);
             base.Kill(timeLeft);

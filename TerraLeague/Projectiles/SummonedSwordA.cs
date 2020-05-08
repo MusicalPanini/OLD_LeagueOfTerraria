@@ -13,11 +13,6 @@ namespace TerraLeague.Projectiles
     {
         Vector2 lastCenter = Vector2.Zero;
 
-        const int ai_initialSpawn = 0;
-        const int ai_spin = 1;
-        const int ai_homing = 2;
-        const int ai_fadeout = 3;
-
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 5;
@@ -48,16 +43,12 @@ namespace TerraLeague.Projectiles
 
             if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                Player player = Main.player[projectile.owner];
-
                 if ((int)projectile.ai[1] != -1)
                 {
                     NPC targetNPC = Main.npc[(int)projectile.ai[1]];
                     lastCenter = targetNPC.Center;
                     projectile.ai[1] = -1;
                 }
-
-
 
                 projectile.rotation = projectile.ai[0] + MathHelper.ToRadians(135);
 
@@ -77,10 +68,8 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-
-
-            int dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, 231, 0f, 0f, 100, default(Color), 1);
-            Main.dust[dustIndex].noGravity = true;
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 231, 0f, 0f, 100, default(Color), 1);
+            dust.noGravity = true;
             Lighting.AddLight(projectile.position, 1f, 0.5f, 0.05f);
         }
 
@@ -88,20 +77,13 @@ namespace TerraLeague.Projectiles
         {
             float magnitude = (float)Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
             if (magnitude > 6f)
-            {
                 vector *= 6f / magnitude;
-            }
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            crit = false;
             target.immune[projectile.owner] = 10;
             base.OnHitNPC(target, damage, knockback, false);
-        }
-
-        public override void Kill(int timeLeft)
-        {
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

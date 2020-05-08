@@ -34,21 +34,16 @@ namespace TerraLeague.Projectiles
             if (projectile.timeLeft == 90)
                 Main.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/WhisperShot"), projectile.position);
             Lighting.AddLight(projectile.Left, 1f, 0.5f, 0.01f);
+
             if (projectile.alpha > 0)
-            {
                 projectile.alpha -= 15;
-            }
             if (projectile.alpha < 0)
-            {
                 projectile.alpha = 0;
-            }
 
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
 
             if (projectile.velocity.Y > 16f)
-            {
                 projectile.velocity.Y = 16f;
-            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -61,8 +56,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 232, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, default(Color), 0.7f);
-
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 232, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, default(Color), 0.7f);
             }
         }
 

@@ -42,15 +42,12 @@ namespace TerraLeague.Projectiles
 
             if (projectile.ai[0] != -2)
             {
-
                 projectile.friendly = true;
 
                 NPC npc = Main.npc[(int)projectile.ai[0]];
 
                 if (!npc.active && projectile.owner == Main.LocalPlayer.whoAmI)
-                {
                     projectile.Kill();
-                }
 
                 float MaxSpeed = 18;
 
@@ -71,7 +68,6 @@ namespace TerraLeague.Projectiles
                     {
                         projectile.netUpdate = true;
                     }
-
 
                     if (projectile.timeLeft > 270)
                     {
@@ -128,24 +124,25 @@ namespace TerraLeague.Projectiles
                 sound.Pitch = -0.5f;
             Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(1f), projectile.position);
 
+            Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 110, 0f, 0f, 100, new Color(0, 255, 201), 2f);
-                Main.dust[dustIndex].velocity *= 1.4f;
-                Main.dust[dustIndex].noGravity = true;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 110, 0f, 0f, 100, new Color(0, 255, 201), 2f);
+                dust.velocity *= 1.4f;
+                dust.noGravity = true;
             }
             for (int i = 0; i < 80; i++)
             {
-                int dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, 110, 0, 0, 0, new Color(0, 255, 201), 2f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 5f;
-                Main.dust[dustIndex].color = new Color(255, 0, 220);
-                Main.dust[dustIndex].noGravity = true;
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 110, 0, 0, 0, new Color(0, 255, 201), 2f);
+                dust.noGravity = true;
+                dust.velocity *= 5f;
+                dust.color = new Color(255, 0, 220);
+                dust.noGravity = true;
 
-                dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 110, 0f, 0f, 100, new Color(0, 255, 201), 2f);
-                Main.dust[dustIndex].velocity *= 3f;
-                Main.dust[dustIndex].color = new Color(255, 0, 220);
-                Main.dust[dustIndex].noGravity = true;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 110, 0f, 0f, 100, new Color(0, 255, 201), 2f);
+                dust.velocity *= 3f;
+                dust.color = new Color(255, 0, 220);
+                dust.noGravity = true;
             }
             base.Kill(timeLeft);
         }

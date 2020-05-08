@@ -51,14 +51,12 @@ namespace TerraLeague.NPCs
         {
             if (npc.life > 0)
             {
-
                 int count = 0;
                 while ((double)count < damage / (double)npc.lifeMax * 50.0)
                 {
-                    int num618 = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(100, 100, 100), 1.5f);
-                    Dust dust = Main.dust[num618];
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(100, 100, 100), 1.5f);
                     dust.velocity *= 2f;
-                    Main.dust[num618].noGravity = true;
+                    dust.noGravity = true;
                     count++;
                 }
             }
@@ -66,11 +64,11 @@ namespace TerraLeague.NPCs
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    int dustInt = Dust.NewDust(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
-                    Dust dust = Main.dust[dustInt];
+                    Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 16, 0f, 0f, 0, new Color(5, 245, 150), 1.5f);
                     dust.velocity *= 2f;
-                    Main.dust[dustInt].noGravity = true;
+                    dust.noGravity = true;
                 }
+
                 Gore.NewGore(npc.Center, npc.velocity / 2, mod.GetGoreSlot("Gores/Ghoul_1"), 1f);
                 Gore.NewGore(npc.Top, npc.velocity / 2, mod.GetGoreSlot("Gores/Ghoul_2"), 1f);
                 Gore.NewGore(npc.Center, npc.velocity / 2, mod.GetGoreSlot("Gores/Ghoul_3"), 1f);

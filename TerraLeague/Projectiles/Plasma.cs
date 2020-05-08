@@ -43,14 +43,13 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             if (projectile.velocity.X < 0)
-            {
                 projectile.spriteDirection = -1;
-            }
+
             projectile.rotation += (float)projectile.direction * 0.1f;
             Lighting.AddLight(projectile.position, 0.75f, 0f, 0.75f);
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 16, 16, 112, 0f, 0f, 255, new Color(59, 0, 255), 2f)];
+                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, 112, 0f, 0f, 255, new Color(59, 0, 255), 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
                 dust.velocity *= 0;
@@ -80,7 +79,7 @@ namespace TerraLeague.Projectiles
 
             for (int i = 0; i < 10; i++)
             {
-                Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 8, 8, 112, 0f, 0f, 255, new Color(59, 0, 255), 3.5f)];
+                Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, 0f, 0f, 255, new Color(59, 0, 255), 3.5f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }

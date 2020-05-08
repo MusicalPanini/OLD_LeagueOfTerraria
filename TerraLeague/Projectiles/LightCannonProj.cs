@@ -60,19 +60,17 @@ namespace TerraLeague.Projectiles
 
                 for (int k = 0; k < 2 + 1; k++)
                 {
-                    int num18 = 66;
-                    float num19 = 0.8f;
+                    float scale = 0.8f;
                     if (k % 2 == 1)
                     {
-                        num19 = 0.6f;
+                        scale = 0.6f;
                     }
 
-                    Vector2 vector11 = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
-                    int num20 = Dust.NewDust(vector11 - Vector2.One * 8f, 16, 16, num18, 0, 0, 0, default(Color), 1f);
-                    Main.dust[num20].velocity = Vector2.Normalize(projectile.Center - vector11) * 1.5f * (10f - (float)2 * 2f) / 10f;
-                    Main.dust[num20].noGravity = true;
-                    Main.dust[num20].scale = num19;
-                    Main.dust[num20].customData = player;
+                    Vector2 postion = projectile.Center + ((float)Main.rand.NextDouble() * 6.28318548f).ToRotationVector2() * (12f - (float)(2 * 2));
+                    Dust dust = Dust.NewDustDirect(postion - Vector2.One * 8f, 16, 16, 66, 0, 0, 0, default(Color), scale);
+                    dust.velocity = Vector2.Normalize(projectile.Center - postion) * 1.5f * (10f - (float)2 * 2f) / 10f;
+                    dust.noGravity = true;
+                    dust.customData = player;
                 }
                 projectile.localAI[0]++;
                 if (projectile.localAI[0] > 30)

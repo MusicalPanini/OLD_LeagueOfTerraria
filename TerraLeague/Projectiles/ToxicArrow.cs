@@ -34,9 +34,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0,255,0));
-            Main.dust[dustIndex].noGravity = true;
-            Main.dust[dustIndex].noLight = true;
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, new Color(0,255,0));
+            dust.noGravity = true;
+            dust.noLight = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -58,8 +58,8 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            projectile.Kill();
             Main.PlaySound(0, projectile.Center);
+            projectile.Kill();
             return false;
         }
 

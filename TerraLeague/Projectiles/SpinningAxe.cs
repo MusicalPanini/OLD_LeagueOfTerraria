@@ -34,20 +34,17 @@ namespace TerraLeague.Projectiles
             }
 
             if (projectile.velocity.X < 0)
-            {
                 projectile.spriteDirection = -1;
-            }
-                projectile.rotation += 0.5f * projectile.spriteDirection;
+
+            projectile.rotation += 0.5f * projectile.spriteDirection;
 
             Lighting.AddLight(projectile.position, 0.75f, 0, 0);
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 211, 0, 0, 0, new Color(255, 0, 0), 1.4f);
             dust.noGravity = true;
 
-
             if (projectile.timeLeft < 270 && projectile.velocity.Y < 15)
-            {
                 projectile.velocity.Y += 0.8f;
-            }
+
             base.AI();
         }
 
@@ -63,7 +60,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 6; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
 
             base.Kill(timeLeft);
@@ -79,7 +76,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 12; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
             SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 4, Terraria.Audio.SoundType.Sound), projectile.position);
             if (true)

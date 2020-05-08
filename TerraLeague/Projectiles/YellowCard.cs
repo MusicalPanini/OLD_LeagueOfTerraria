@@ -22,7 +22,6 @@ namespace TerraLeague.Projectiles
             projectile.aiStyle = 2;
             projectile.friendly = true;
             projectile.magic = true;
-
         }
 
         public override void AI()
@@ -36,17 +35,15 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-             target.AddBuff(BuffType<Stunned>(), 120);
-
+            target.AddBuff(BuffType<Stunned>(), 120);
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)
         {
-
             for (int i = 0; i < 12; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 261, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, new Color(255, 255, 0));
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 261, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, new Color(255, 255, 0));
             }
             base.Kill(timeLeft);
         }
@@ -59,7 +56,6 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-
             Main.PlaySound(0, projectile.Center);
             return true;
         }

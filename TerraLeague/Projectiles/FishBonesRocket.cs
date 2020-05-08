@@ -72,37 +72,41 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(1f), projectile.position);
+
+            Dust dust;
             for (int i = 0; i < 50; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
-                Main.dust[dustIndex].velocity *= 1.4f;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
+                dust.velocity *= 1.4f;
             }
             for (int i = 0; i < 80; i++)
             {
-                int dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 2f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 5f;
-                Main.dust[dustIndex].color = new Color(255,0,220);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 2f);
+                dust.noGravity = true;
+                dust.velocity *= 5f;
+                dust.color = new Color(255,0,220);
 
-                dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
-                Main.dust[dustIndex].velocity *= 3f;
-                Main.dust[dustIndex].color = new Color(255, 0, 220);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+                dust.velocity *= 3f;
+                dust.color = new Color(255, 0, 220);
             }
             for (int g = 0; g < 2; g++)
             {
-                int goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-                Main.gore[goreIndex].scale = 1.5f;
-                Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
-                Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-                goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-                Main.gore[goreIndex].scale = 1.5f;
-                Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X - 1.5f;
-                Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y + 1.5f;
-                goreIndex = Gore.NewGore(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
-                Main.gore[goreIndex].scale = 1.5f;
-                Main.gore[goreIndex].velocity.X = Main.gore[goreIndex].velocity.X + 1.5f;
-                Main.gore[goreIndex].velocity.Y = Main.gore[goreIndex].velocity.Y - 1.5f;
+                Gore gore;
+                gore = Gore.NewGoreDirect(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+                gore.scale = 1.5f;
+                gore.velocity.X = gore.velocity.X + 1.5f;
+                gore.velocity.Y = gore.velocity.Y + 1.5f;
+                gore = Gore.NewGoreDirect(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+                gore.scale = 1.5f;
+                gore.velocity.X = gore.velocity.X - 1.5f;
+                gore.velocity.Y = gore.velocity.Y + 1.5f;
+                gore = Gore.NewGoreDirect(new Vector2(projectile.position.X + (float)(projectile.width / 2) - 24f, projectile.position.Y + (float)(projectile.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1f);
+                gore.scale = 1.5f;
+                gore.velocity.X = gore.velocity.X + 1.5f;
+                gore.velocity.Y = gore.velocity.Y - 1.5f;
             }
+
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 10;

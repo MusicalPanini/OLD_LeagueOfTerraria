@@ -33,9 +33,9 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 2; i++)
             {
-                int num345 = Dust.NewDust(projectile.position, projectile.width, projectile.height, 74, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
-                Main.dust[num345].noGravity = true;
-                Main.dust[num345].velocity *= 0.3f;
+                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 74, projectile.velocity.X, projectile.velocity.Y, 50, default(Color), 1.2f);
+                dust.noGravity = true;
+                dust.velocity *= 0.3f;
             }
 
             for (int i = 0; i < Main.player.Length; i++)

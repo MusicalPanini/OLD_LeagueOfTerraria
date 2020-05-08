@@ -43,7 +43,7 @@ namespace TerraLeague.Projectiles
             Lighting.AddLight(projectile.position, 0.75f, 0.75f, 0.75f);
             for (int i = 0; i < 1; i++)
             {
-                Dust dust = Main.dust[Terraria.Dust.NewDust(projectile.position, 16, 16, 16, 0f, 0f, 0, new Color(255, 255, 255), 2f)];
+                Dust dust = Dust.NewDustDirect(projectile.position, 16, 16, 16, 0f, 0f, 0, new Color(255, 255, 255), 2f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
@@ -51,16 +51,10 @@ namespace TerraLeague.Projectiles
             if (projectile.timeLeft > 210)
             {
                 if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))
-                {
                     player.ChangeDir(1);
-                }
                 else
-                {
                     player.ChangeDir(-1);
-                }
             }
-
-
 
             if (projectile.ai[0] == 0f)
             {
@@ -162,23 +156,6 @@ namespace TerraLeague.Projectiles
                     Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().SendShieldPacket(projectile.damage, i, ShieldType.Basic, 240, -1, projectile.owner, Color.LightGoldenrodYellow);
                 }
             }
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            
-        }
-
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            
-
-            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

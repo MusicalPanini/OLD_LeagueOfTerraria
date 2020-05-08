@@ -66,11 +66,9 @@ namespace TerraLeague.Projectiles
             {
                 if (projectile.alpha < 170 && projectile.alpha + 5 >= 170)
                 {
-                    int num3;
-                    for (int num58 = 0; num58 < 3; num58 = num3 + 1)
+                    for (int i = 0; i < 3; i++)
                     {
                         Dust.NewDust(projectile.position, projectile.width, projectile.height, 18, projectile.velocity.X * 0.025f, projectile.velocity.Y * 0.025f, 170, default(Color), 1.2f);
-                        num3 = num58;
                     }
                     Dust.NewDust(projectile.position, projectile.width, projectile.height, 14, 0f, 0f, 170, default(Color), 1.1f);
                 }
@@ -83,20 +81,7 @@ namespace TerraLeague.Projectiles
                     return;
                 }
             }
-
-            
-
             base.AI();
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            base.OnHitNPC(target, damage, knockback, crit);
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            base.Kill(timeLeft);
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

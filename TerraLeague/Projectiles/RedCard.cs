@@ -24,7 +24,6 @@ namespace TerraLeague.Projectiles
             projectile.aiStyle = 2;
             projectile.friendly = true;
             projectile.magic = true;
-
         }
 
         public override void AI()
@@ -44,17 +43,19 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
+            Dust dust;
             for (int i = 0; i < 24; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 5f;
-                Main.dust[dustIndex].color = new Color(255, 0, 220);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
+                dust.noGravity = true;
+                dust.velocity *= 5f;
+                dust.color = new Color(255, 0, 220);
 
-                dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
-                Main.dust[dustIndex].velocity *= 3f;
-                Main.dust[dustIndex].color = new Color(255, 0, 220);
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
+                dust.velocity *= 3f;
+                dust.color = new Color(255, 0, 220);
             }
+
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14, Terraria.Audio.SoundType.Sound), projectile.position);
             base.Kill(timeLeft);
         }

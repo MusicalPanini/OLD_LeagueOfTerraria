@@ -32,15 +32,6 @@ namespace TerraLeague.Projectiles
             aiType = ProjectileID.WoodenArrowFriendly;
         }
 
-        public override void AI()
-        {
-        }
-
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            base.OnHitNPC(target, damage, knockback, false);
-        }
-
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Main.PlaySound(0, projectile.Center);
@@ -51,17 +42,12 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 5; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 255, 255), 0.7f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 255, 255), 0.7f);
             }
             for (int i = 0; i < 5; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 215, 215), 0.7f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 192, projectile.velocity.X / 5, projectile.velocity.Y / 5, 100, new Color(255, 215, 215), 0.7f);
             }
-        }
-
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
-        {
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)

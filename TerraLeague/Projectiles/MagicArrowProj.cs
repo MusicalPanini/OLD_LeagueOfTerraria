@@ -32,9 +32,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 113, 0f, 0f, 200, default(Color), 0.5f);
-            Main.dust[dustIndex].noGravity = true;
-            Main.dust[dustIndex].noLight = true;
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 113, 0f, 0f, 200, default(Color), 0.5f);
+            dust.noGravity = true;
+            dust.noLight = true;
             Lighting.AddLight(projectile.position, 0.2f, 0f, 0.5f);
         }
 

@@ -38,24 +38,17 @@ namespace TerraLeague.Projectiles
                 if (sound != null)
                     sound.Pitch = -0.5f;
             }
-            
 
             Lighting.AddLight(projectile.position, 1f, 0.0f, 0.0f);
             if (projectile.alpha > 0)
-            {
                 projectile.alpha -= 15;
-            }
             if (projectile.alpha < 0)
-            {
                 projectile.alpha = 0;
-            }
 
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
 
             if (projectile.velocity.Y > 16f)
-            {
                 projectile.velocity.Y = 16f;
-            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -68,8 +61,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 225, projectile.velocity.X / 5, projectile.velocity.Y / 5, 0, default(Color), 0.7f);
-
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 225, projectile.velocity.X / 5, projectile.velocity.Y / 5, 0, default(Color), 0.7f);
             }
         }
 

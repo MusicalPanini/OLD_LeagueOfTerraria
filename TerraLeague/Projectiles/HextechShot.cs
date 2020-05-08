@@ -32,7 +32,6 @@ namespace TerraLeague.Projectiles
         {
             Lighting.AddLight(projectile.Left, Color.Blue.ToVector3());
 
-
             if (projectile.alpha > 0)
             {
                 projectile.alpha -= 15;
@@ -83,11 +82,9 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.position);
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
-                Main.dust[dustIndex].velocity *= 0.5f;
-
+                Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 1f);
+                dust.velocity *= 0.5f;
             }
-
 
             if (!split)
             {
@@ -105,7 +102,6 @@ namespace TerraLeague.Projectiles
                         Projectile.NewProjectileDirect(projectile.position, projectile.velocity.RotatedBy(MathHelper.ToRadians(-15 + (15 * i)))/ 12, ProjectileType<HextechShotSplit>(), projectile.damage / 4, 0, projectile.owner, num == -1 ? 255 : num);
                     }
                 }
-                
 
                 split = true;
             }

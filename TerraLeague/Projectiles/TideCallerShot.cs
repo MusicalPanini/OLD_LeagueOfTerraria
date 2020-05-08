@@ -32,9 +32,8 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             if (projectile.velocity.X < 0)
-            {
                 projectile.spriteDirection = -1;
-            }
+
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
 
             for (int i = 0; i < 3; i++)
@@ -59,27 +58,14 @@ namespace TerraLeague.Projectiles
                 dust.velocity += projectile.velocity * 0.5f;
             }
             if (projectile.timeLeft < 30)
-            {
                 projectile.alpha += 9;
-            }
-        }
-
-        public virtual void PlaySound()
-        {
-            Main.PlaySound(SoundID.Item20, projectile.position);
-        }
-
-        public virtual string GetName()
-        {
-            return "Water Pellet";
         }
 
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 17; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
-
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
             }
         }
 

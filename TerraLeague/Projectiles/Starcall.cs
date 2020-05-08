@@ -74,12 +74,6 @@ namespace TerraLeague.Projectiles
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
-        public override bool PreKill(int timeLeft)
-        {
-           
-            return base.PreKill(timeLeft);
-        }
-
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 3), projectile.position);
@@ -87,16 +81,18 @@ namespace TerraLeague.Projectiles
             if (efx != null)
                 efx.Pitch = -1f;
 
+            Dust dust;
             for (int i = 0; i < 40; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 263, 0, 0, 0, new Color(237, 137, 164), 2f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 2f;
+                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 263, 0, 0, 0, new Color(237, 137, 164), 2f);
+                dust.noGravity = true;
+                dust.velocity *= 2f;
 
-                dustIndex = Dust.NewDust(projectile.Center, 1,1, 263, 0, 0, 0, new Color(248, 137, 89), 2f);
-                Main.dust[dustIndex].noGravity = true;
-                Main.dust[dustIndex].velocity *= 4f;
+                dust = Dust.NewDustDirect(projectile.Center, 1,1, 263, 0, 0, 0, new Color(248, 137, 89), 2f);
+                dust.noGravity = true;
+                dust.velocity *= 4f;
             }
+
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
             projectile.width = 10;

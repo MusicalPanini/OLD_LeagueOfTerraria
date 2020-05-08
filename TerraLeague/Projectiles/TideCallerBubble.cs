@@ -29,8 +29,6 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
         }
 
-        
-
         public override void AI()
         {
             if (projectile.velocity.X > 12)
@@ -71,10 +69,8 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            if (Main.netMode != NetmodeID.Server)
-            {
-                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/Sploosh").WithVolume(.7f), projectile.position);
-            }
+            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/Sploosh").WithVolume(.7f), projectile.position);
+
             for (int i = 0; i < 30; i++)
             {
                 Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, 0f, -3f, 0, default(Color), 2f);
@@ -91,9 +87,7 @@ namespace TerraLeague.Projectiles
             if (target.GetGlobalNPC<NPCsGLOBAL>().bubbled)
                 return false;
             else
-            {
                 return base.CanHitNPC(target);
-            }
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)

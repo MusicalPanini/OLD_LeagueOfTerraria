@@ -72,22 +72,15 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-
-
-            int dustIndex = Dust.NewDust(projectile.position, projectile.width, projectile.height, 231, 0f, 0f, 100, default(Color), 1);
-            Main.dust[dustIndex].noGravity = true;
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 231, 0f, 0f, 100, default(Color), 1);
+            dust.noGravity = true;
             Lighting.AddLight(projectile.position, 1f, 0.5f, 0.05f);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            crit = false;
             target.immune[projectile.owner] = 10;
             base.OnHitNPC(target, damage, knockback, false);
-        }
-
-        public override void Kill(int timeLeft)
-        {
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)

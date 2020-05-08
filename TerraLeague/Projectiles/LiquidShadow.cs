@@ -149,7 +149,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 54, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, Color.DarkSeaGreen, 1f);
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 54, projectile.velocity.X / 2, projectile.velocity.Y / 2, 100, Color.DarkSeaGreen, 1f);
             }
 
             base.Kill(timeLeft);

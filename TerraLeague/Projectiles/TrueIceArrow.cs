@@ -35,14 +35,13 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color));
-            Main.dust[dustIndex].noGravity = true;
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color));
+            dust.noGravity = true;
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
         }
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            crit = false;
             Console.WriteLine(projectile.extraUpdates = 1);
             target.AddBuff(BuffType<Slowed>(), 120);
             base.OnHitPlayer(target, damage, crit);
@@ -50,7 +49,6 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            crit = false;
             Console.WriteLine(projectile.extraUpdates = 1);
             target.AddBuff(BuffType<Slowed>(), 120);
 
@@ -59,8 +57,8 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            projectile.Kill();
             Main.PlaySound(0, projectile.Center);
+            projectile.Kill();
             return false;
         }
 
@@ -68,20 +66,7 @@ namespace TerraLeague.Projectiles
         {
             for (int i = 0; i < 10; i++)
             {
-                int dustIndex = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 80, 0f, 0f, 100, default(Color), 0.7f);
-
-            }
-        }
-
-        public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit)
-        {
-            crit = false;
-            if (target.GetModPlayer<PLAYERGLOBAL>().slowed)
-            {
-                crit = true;
-                float multiplier = (Main.player[projectile.owner].rangedCrit + 75) * 0.01333f;
-                float dam = damage * 0.5f * multiplier;
-                damage = (int)dam;
+                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 80, 0f, 0f, 100, default(Color), 0.7f);
             }
         }
 
@@ -95,13 +80,6 @@ namespace TerraLeague.Projectiles
                 float dam = damage * 0.5f * multiplier;
                 damage = (int)dam;
             }
-            
         }
-
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
-        {
-            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
-        }
-
     }
 }
