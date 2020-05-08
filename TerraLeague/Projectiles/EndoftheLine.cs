@@ -14,7 +14,6 @@ namespace TerraLeague.Projectiles
 {
     class EndoftheLine : ModProjectile
     {
-        int bounces = 3;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("End of the Line");

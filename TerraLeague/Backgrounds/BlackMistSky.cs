@@ -8,9 +8,7 @@ namespace TerraLeague.Backgrounds
 {
     public class BlackMistSky : CustomSky
     {
-        private bool isActive;
         private bool _isActive;
-        private float intensity;
         private float _opacity;
         private bool _isLeaving;
 
@@ -20,25 +18,25 @@ namespace TerraLeague.Backgrounds
             if (!Main.gamePaused && Main.hasFocus)
             {
                 System.TimeSpan elapsedGameTime;
-                if (this._isLeaving)
+                if (_isLeaving)
                 {
-                    float opacity = this._opacity;
+                    float opacity = _opacity;
                     elapsedGameTime = gameTime.ElapsedGameTime;
-                    this._opacity = opacity - (float)elapsedGameTime.TotalSeconds;
-                    if (this._opacity < 0f)
+                    _opacity = opacity - (float)elapsedGameTime.TotalSeconds;
+                    if (_opacity < 0f)
                     {
-                        this._isActive = false;
-                        this._opacity = 0f;
+                        _isActive = false;
+                        _opacity = 0f;
                     }
                 }
                 else
                 {
-                    float opacity2 = this._opacity;
+                    float opacity2 = _opacity;
                     elapsedGameTime = gameTime.ElapsedGameTime;
-                    this._opacity = opacity2 + (float)elapsedGameTime.TotalSeconds;
-                    if (this._opacity > 1f)
+                    _opacity = opacity2 + (float)elapsedGameTime.TotalSeconds;
+                    if (_opacity > 1f)
                     {
-                        this._opacity = 1f;
+                        _opacity = 1f;
                     }
                 }
             }
@@ -59,7 +57,7 @@ namespace TerraLeague.Backgrounds
                 quotient = 1;
 
             float scale = System.Math.Min(1f,  1.5f);
-            Color color = new Color(new Vector4(0, 2.5f, 1f, 0.3f) * 1f * Main.bgColor.ToVector4()) * this._opacity * scale * quotient;
+            Color color = new Color(new Vector4(0, 2.5f, 1f, 0.3f) * 1f * Main.bgColor.ToVector4()) * _opacity * scale * quotient;
 
             spriteBatch.Draw(TerraLeague.instance.GetTexture("Backgrounds/Fog"), new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), color);
         }
@@ -71,24 +69,24 @@ namespace TerraLeague.Backgrounds
 
         public override void Activate(Vector2 position, params object[] args)
         {
-            this._isActive = true;
-            this._isLeaving = false;
+            _isActive = true;
+            _isLeaving = false;
         }
 
         public override void Deactivate(params object[] args)
         {
-            this._isLeaving = true;
+            _isLeaving = true;
         }
 
         public override void Reset()
         {
-            this._opacity = 0f;
-            this._isActive = false;
+            _opacity = 0f;
+            _isActive = false;
         }
 
         public override bool IsActive()
         {
-            return this._isActive;
+            return _isActive;
         }
     }
 }

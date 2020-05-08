@@ -9,7 +9,6 @@ namespace TerraLeague.Projectiles
 {
     class DivineJudgement : ModProjectile
     {
-        int framecount2 = 29;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Divine Judgement Shield");

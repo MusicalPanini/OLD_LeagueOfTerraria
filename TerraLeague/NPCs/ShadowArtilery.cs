@@ -114,7 +114,6 @@ namespace TerraLeague.NPCs
                     int num282 = (int)(npc.position.X + (float)(npc.width / 2)) / 16;
                     int num283 = (int)(npc.position.X + (float)npc.width) / 16;
                     int num284 = (int)(npc.position.Y + (float)npc.height) / 16;
-                    bool flag16 = false;
                     if (Main.tile[num281, num284] == null)
                     {
                         Tile[,] tile15 = Main.tile;

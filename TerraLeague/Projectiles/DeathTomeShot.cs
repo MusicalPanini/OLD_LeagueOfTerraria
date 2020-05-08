@@ -74,7 +74,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 15; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
+                    dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 186, 0, -1, 150);
                     dust.color = new Color(0, 255, 150);
                     dust.noGravity = false;
                 }

@@ -11,7 +11,6 @@ namespace TerraLeague.NPCs
 {
     public class TheUndying_Necromancer : ModNPC
     {
-        int effectRadius = 500;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Undying");
