@@ -79,7 +79,7 @@ namespace TerraLeague.Projectiles
         {
             Player player = Main.player[projectile.owner];
 
-            float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0);
+            float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
 
             Projectile.NewProjectileDirect(projectile.Center, new Vector2(6 + (10 * projectile.localAI[0] / 90f), 0).RotatedBy(rot), (int)projectile.ai[0], projectile.damage * (int)(1 + projectile.localAI[0] / 30f), projectile.knockBack, projectile.owner, projectile.localAI[0] / 180f);
 
