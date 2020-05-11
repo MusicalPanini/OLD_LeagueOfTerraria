@@ -63,6 +63,8 @@ namespace TerraLeague.Projectiles
             {
                 offset.X += 5;
             }
+            projectile.width = (int)((4 / 75f) * offset.X) + 8;
+            projectile.height = projectile.width;
 
             if ((int)projectile.ai[0] != 1)
             {
@@ -76,14 +78,14 @@ namespace TerraLeague.Projectiles
                 projectile.Center = player.MountedCenter + offset.RotatedBy(projectile.ai[1]);
             }
 
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 111, projectile.velocity.X, projectile.velocity.Y, 200, default(Color), 1.5f);
+            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 111, projectile.velocity.X, projectile.velocity.Y, 200, default(Color), 1.5f * (offset.X / 300f + 0.5f));
             dust.noGravity = true;
             dust.noLight = true;
             dust.velocity *= 0.1f;
 
             for (int i = 0; i < 2; i++)
             {
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 162, projectile.velocity.X, projectile.velocity.Y, 124, default(Color), 2.5f);
+                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 162, projectile.velocity.X, projectile.velocity.Y, 124, default(Color), 2.5f * (offset.X / 300f + 0.5f));
                 dust2.noGravity = true;
                 dust2.noLight = true;
                 dust2.velocity *= 0.6f;

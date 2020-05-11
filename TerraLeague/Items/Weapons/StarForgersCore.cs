@@ -48,7 +48,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return "Expands the range of your stars and increases all minion damage out put";
+                return "Expands the range and size of your stars and increases all minion damage output";
             }
             else
             {
