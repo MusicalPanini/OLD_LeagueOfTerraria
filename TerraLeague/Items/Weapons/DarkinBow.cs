@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "Charge an arrow";
+            return "Charge an arrow that gains damage and velocity the longer you charge, up to 1.5 seconds";
         }
 
         public override string GetQuote()
@@ -36,7 +36,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetIconTexturePath(AbilityType type)
         {
             if (type == AbilityType.E)
-                return "AbilityImages/PiercingDarkness";
+                return "AbilityImages/RainofArrows";
             else
                 return base.GetIconTexturePath(type);
         }
@@ -45,7 +45,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
-                return "Fire a hail of arrows";
+                return "Fire a rain of arrows that slow enemies for 2 seconds";
             }
             else
             {
@@ -57,7 +57,7 @@ namespace TerraLeague.Items.Weapons
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             if (type == AbilityType.E)
-                return (int)(item.damage * 0.5);
+                return (int)(item.damage * 0.75);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -68,7 +68,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
             {
                 if (dam == DamageType.RNG)
-                    return 50;
+                    return 40;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -119,13 +119,9 @@ namespace TerraLeague.Items.Weapons
                         Vector2 velocity = new Vector2(Main.rand.NextFloat(-3, 0), Main.rand.NextFloat(-6, -5)*1.5f);
                         Vector2 velocity2 = new Vector2(Main.rand.NextFloat(0, 3), Main.rand.NextFloat(-6, -5)*1.5f);
 
-                        Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
-                        proj.extraUpdates = 1;
-                        proj = Projectile.NewProjectileDirect(position, velocity2, projType, damage, knockback, player.whoAmI);
-                        proj.extraUpdates = 1;
+                        Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
+                        Projectile.NewProjectileDirect(position, velocity2, projType, damage, knockback, player.whoAmI);
                     }
-
-                    
 
                     SetAnimation(player, 30, 30, new Vector2(player.MountedCenter.X, player.MountedCenter.Y - 30));
                     DoEfx(player, type);
@@ -140,7 +136,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 38;
+            item.damage = 34;
             item.ranged = true;
             item.useStyle = 5;
             item.width = 24;
@@ -159,7 +155,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.damage = 28;
             if (type == ProjectileID.WoodenArrowFriendly)
                 type = ProjectileType<DarkinArrow>();
 
@@ -171,17 +166,13 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            //ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(ItemType<DamnedSoul>(), 100);
-            //recipe.AddIngredient(ItemID.HallowedBar, 16);
-            //recipe.AddIngredient(ItemID.Marble, 100);
-            //recipe.AddIngredient(ItemID.IllegalGunParts, 1);
-            //recipe.AddIngredient(ItemID.SoulofMight, 10);
-            //recipe.AddIngredient(ItemID.SoulofLight, 5);
-            //recipe.AddIngredient(ItemID.SoulofNight, 5);
-            //recipe.AddTile(TileID.MythrilAnvil);
-            //recipe.SetResult(this);
-            //recipe.AddRecipe();
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.ShadowFlameBow, 1);
+            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 20);
+            recipe.AddIngredient(ItemID.SoulofNight, 10);
+            recipe.AddTile(TileID.DemonAltar);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
 
         public override bool GetIfAbilityExists(AbilityType type)

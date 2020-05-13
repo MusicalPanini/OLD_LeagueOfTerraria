@@ -26,7 +26,7 @@ namespace TerraLeague.Projectiles
             projectile.scale = 1f;
             projectile.timeLeft = 300;
             projectile.ranged = true;
-            projectile.extraUpdates = 0;
+            projectile.extraUpdates = 1;
         }
 
         public override void AI()
@@ -46,6 +46,13 @@ namespace TerraLeague.Projectiles
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Blood, 0, 0, 0, default(Color), 1f);
             dust.noGravity = true;
             dust.velocity *= 0f;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            target.AddBuff(BuffType<Slowed>(), 120);
+
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
