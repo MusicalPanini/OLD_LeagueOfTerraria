@@ -13,6 +13,7 @@ namespace TerraLeague.Buffs
             Description.SetDefault("+7% magic damage and critical strike chance" +
                 "\n+6 defence" +
                 "\n+1 life regeneration" +
+                "\n+4 mana regeneration" +
                 "\n+10% cooldown reduction" +
                 "\n+10% movement speed");
             Main.buffNoSave[Type] = true;
@@ -28,6 +29,7 @@ namespace TerraLeague.Buffs
             player.GetModPlayer<PLAYERGLOBAL>().gathFire = true;
             player.moveSpeed += 0.1f;
             player.lifeRegen += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegen += 4;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

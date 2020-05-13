@@ -35,7 +35,7 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Heal you self and a near by player for 25% of your max life" +
+            return "Heal you self and a near by player for 40% of your max life" +
                 "\nYou both gain 'Swiftness'";
         }
 
@@ -43,7 +43,7 @@ namespace TerraLeague.Items.SummonerSpells
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.lifeToHeal += (int)((player.statLifeMax2 / 4) * modPlayer.healPower);
+            modPlayer.lifeToHeal += (int)((player.statLifeMax2 * 0.4) * modPlayer.healPower);
             player.AddBuff(BuffID.Swiftness, 360);
 
             int target = -1;
@@ -62,9 +62,9 @@ namespace TerraLeague.Items.SummonerSpells
                 }
             }
 
-            if (target != -1 && Main.netMode == 1)
+            if (target != -1 && Main.netMode == 1 && Main.player[target].active)
             {
-                modPlayer.SendHealPacket((int)((Main.player[target].statLifeMax2 / 4) * modPlayer.healPower), target, -1, player.whoAmI);
+                modPlayer.SendHealPacket((int)((Main.player[target].statLifeMax2 * 0.4) * modPlayer.healPower), target, -1, player.whoAmI);
                 modPlayer.SendBuffPacket(BuffID.Swiftness, 360, target, -1, player.whoAmI);
                 PacketHandler.SendHeal(-1, player.whoAmI, player.whoAmI, target);
                 Efx(Main.player[target], false);

@@ -67,7 +67,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffType<Exhausted>(), 240);
+            target.AddBuff(BuffType<Exhausted>(), 600);
 
             base.OnHitNPC(target, damage, knockback, crit);
         }

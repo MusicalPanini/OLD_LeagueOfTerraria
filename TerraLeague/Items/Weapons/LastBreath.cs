@@ -137,12 +137,15 @@ namespace TerraLeague.Items.Weapons
                         DoEfx(player, type);
                         Vector2 position = player.MountedCenter;
                         Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
-                        int projType = ProjectileType<LastBreathNado>();
+                        //int projType = ProjectileType<LastBreathNado>();
+                        int projType = 704;
                         int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
                         int knockback = 12;
                         player.ClearBuff(BuffType<LastBreath3>());
 
-                        Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
+                        Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
+                        proj.magic = false;
+                        proj.melee = true;
                         Projectile.NewProjectile(position, velocity/4, ProjectileType<SteelTempest>(), damage, knockback, player.whoAmI, 0, 1);
 
                         SetCooldowns(player, type);

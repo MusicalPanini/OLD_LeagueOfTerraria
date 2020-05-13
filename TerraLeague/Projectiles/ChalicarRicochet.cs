@@ -76,19 +76,25 @@ namespace TerraLeague.Projectiles
                 if ((int)projectile.ai[0] != -1)
                 {
                     NPC npc = Main.npc[(int)projectile.ai[0]];
+                    if (!npc.active)
+                    {
+                        projectile.ai[0] = FindNewTarget();
+                    }
+                    else
+                    {
+                        float shootToX = npc.Center.X - projectile.Center.X;
+                        float shootToY = npc.Center.Y - projectile.Center.Y;
+                        float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-                    float shootToX = npc.Center.X - projectile.Center.X;
-                    float shootToY = npc.Center.Y - projectile.Center.Y;
-                    float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+                        if (distance != 0)
+                            distance = 2f / distance;
 
-                    if (distance != 0)
-                        distance = 2f / distance;
+                        shootToX *= distance * 3;
+                        shootToY *= distance * 3;
 
-                    shootToX *= distance * 3;
-                    shootToY *= distance * 3;
-
-                    projectile.velocity.X = shootToX;
-                    projectile.velocity.Y = shootToY;
+                        projectile.velocity.X = shootToX;
+                        projectile.velocity.Y = shootToY;
+                    }
                 }
                 else if (projectile.owner == Main.LocalPlayer.whoAmI)
                 {
@@ -177,6 +183,12 @@ namespace TerraLeague.Projectiles
             }
 
             base.Kill(timeLeft);
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            width = height = 16;
+            return true;
         }
     }
 }

@@ -45,6 +45,7 @@ namespace TerraLeague
         public const byte Active = 5;
         public const byte SummonerSpells = 6;
         public const byte Abilities = 7;
+        public const byte World = 8;
         internal static PlayerPacketHandler playerHandler = new PlayerPacketHandler(Player);
         internal static NPCPacketHandler npcHandler = new NPCPacketHandler(NPC);
         internal static ProjectilePacketHandler projectileHandler = new ProjectilePacketHandler(Projectile);
@@ -52,6 +53,7 @@ namespace TerraLeague
         internal static ActivePacketHandler activeHandler = new ActivePacketHandler(Active);
         internal static SummonerSpellsPacketHandler summonerSpellHandler = new SummonerSpellsPacketHandler(SummonerSpells);
         internal static AbilitiesPacketHandler abilitiesHandler = new AbilitiesPacketHandler(Abilities);
+        internal static WorldPacketHandler worldHandler = new WorldPacketHandler(World);
         public static void HandlePacket(BinaryReader r, int fromWho)
         {
             switch (r.ReadByte())
@@ -77,6 +79,9 @@ namespace TerraLeague
                 case Abilities:
                     abilitiesHandler.HandlePacket(r, fromWho);
                     break;
+                case World:
+                    worldHandler.HandlePacket(r, fromWho);
+                    break;
             }
         }
     }
@@ -94,6 +99,7 @@ namespace TerraLeague
         public const byte Ascension = 8;
         public const byte NewShield = 9;
         public const byte Biome = 10;
+        public const byte NPCRetarget = 11;
 
         public const byte Stoneplate = 50;
         #endregion
@@ -132,6 +138,9 @@ namespace TerraLeague
                     break;
                 case (Biome):
                     ReceiveBiome(reader, fromWho);
+                    break;
+                case (NPCRetarget):
+                    ReceiveRetarget(reader, fromWho);
                     break;
             }
         }
@@ -420,6 +429,27 @@ namespace TerraLeague
             //{
             //    Main.player[user].GetModPlayer<PLAYERGLOBAL>().AscensionStacks = value;
             //}
+        }
+
+        //Biome Check
+        public void SendRetarget(int toWho, int fromWho, int player)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(NPCRetarget, fromWho);
+                packet.Write(player);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Retarget", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveRetarget(BinaryReader reader, int fromWho)
+        {
+            int player = reader.ReadInt32();
+            TerraLeague.Log("[DEBUG] - Received Retarget", new Color(80, 80, 0));
+            if (Main.netMode == NetmodeID.Server)
+            {
+                TerraLeague.ForceNPCStoRetarget(Main.player[player]);
+            }
         }
     }
 
@@ -1372,6 +1402,42 @@ namespace TerraLeague
             {
                 Main.player[Applier].GetModPlayer<PLAYERGLOBAL>().umbralTaggedNPC = Main.npc[Npc];
             }
+        }
+    }
+
+    internal class WorldPacketHandler : PacketHandler
+    {
+        #region Values
+        public const byte UpdateBlackMist = 1;
+        #endregion
+
+        public WorldPacketHandler(byte handlerType) : base(handlerType)
+        {
+        }
+
+        public override void HandlePacket(BinaryReader reader, int fromWho)
+        {
+            switch (reader.ReadByte())
+            {
+                case (UpdateBlackMist):
+                    ReceiveBlackMist(reader, fromWho);
+                    break;
+            }
+        }
+
+        public void SendBlackMist(int toWho, int fromWho, bool active)
+        {
+            ModPacket packet = GetPacket(UpdateBlackMist, fromWho);
+            packet.Write(active);
+            packet.Send(toWho, fromWho);
+        }
+
+        public void ReceiveBlackMist(BinaryReader reader, int fromWho)
+        {
+            bool active = reader.ReadBoolean();
+            TerraLeague.Log("Recieved Global Black Mist is now set to " + active, Color.SeaGreen);
+
+            WORLDGLOBAL.BlackMistEvent = active;
         }
     }
 }

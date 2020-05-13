@@ -22,7 +22,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetQuote()
         {
-            return "New Lucian quotes not on wiki >:c";
+            return "Everybody deserves a second shot";
         }
 
         public override string GetAbilityName(AbilityType type)
@@ -130,7 +130,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 15;
+            item.damage = 12;
             item.ranged = true;
             item.useStyle = 5;
             item.width = 64;

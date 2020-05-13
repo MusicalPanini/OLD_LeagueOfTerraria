@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<Hexdrinker>(), 1);
             recipe.AddIngredient(ItemType<Warhammer>(), 1);
             recipe.AddIngredient(ItemType<SilversteelBar>(), 10);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 10);
+            recipe.AddIngredient(ItemID.SoulofFright, 10);
             recipe.AddIngredient(ItemID.CrystalShard, 20);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

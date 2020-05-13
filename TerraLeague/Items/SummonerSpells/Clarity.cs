@@ -31,7 +31,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override int GetRawCooldown()
         {
-            return 120;
+            return 60;
         }
         public override string GetTooltip()
         {
@@ -59,6 +59,7 @@ namespace TerraLeague.Items.SummonerSpells
             }
 
             player.ManaEffect((int)(player.statManaMax2));
+            player.statMana += player.statManaMax2;
             Efx(player);
             PacketHandler.SendClarity(-1, player.whoAmI, player.whoAmI);
 

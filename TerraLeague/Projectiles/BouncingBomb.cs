@@ -80,12 +80,23 @@ namespace TerraLeague.Projectiles
             {
                 if (projectile.oldVelocity.Y > 0)
                 {
-                    projectile.velocity.Y = -8;
+                    //if (projectile.oldVelocity.Y < 6)
+                        projectile.velocity.Y = -6;
+
+                    if (projectile.oldVelocity.X > 6)
+                        projectile.velocity.X = 6;
+                    if (projectile.oldVelocity.X < -6)
+                        projectile.velocity.X = -6;
+                    //else if (projectile.oldVelocity.Y > 10)
+                    //    projectile.velocity.Y = -10;
+                    //else
+                    //    projectile.velocity.Y *= -1f;
+
                     bounces--;
                 }
                 else
                 {
-                    projectile.velocity.Y = 8;
+                    projectile.velocity.Y = 6;
                 }
 
                 

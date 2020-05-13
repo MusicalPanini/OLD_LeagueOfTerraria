@@ -45,7 +45,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new MagicBolt(30, 60);
+            return new MagicBolt(20, 10, 60);
         }
 
         public override string GetStatText()
@@ -53,9 +53,29 @@ namespace TerraLeague.Items.AdvItems
             int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
 
             if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString() + "%";
+            {
+                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                    return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
+                else
+                    return "";
+            }
             else
                 return "";
+        }
+
+        public override bool OnCooldown(Player player)
+        {
+            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
+
+            if (slot != -1)
+            {
+                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false;
         }
     }
 }

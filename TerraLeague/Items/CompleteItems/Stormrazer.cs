@@ -32,8 +32,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.meleeDamage += 0.06f;
             player.rangedDamage += 0.06f;
-            player.meleeSpeed += 0.8f;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.8;
+            player.meleeSpeed += 0.08f;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.08;
             player.moveSpeed += 0.05f;
             base.UpdateAccessory(player, hideVisual);
         }

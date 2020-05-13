@@ -468,7 +468,7 @@ namespace TerraLeague
 
 
         // Summoner Spells
-        public SummonerSpell[] sumSpells = new SummonerSpell[2];
+        public SummonerSpell[] sumSpells = new SummonerSpell[2] { GetInstance<GhostRune>(), GetInstance<BarrierRune>() };
         public int[] sumCooldowns = new int[2];
         SummonerSpell initSum1 = null;
         SummonerSpell initSum2 = null;
@@ -847,10 +847,10 @@ namespace TerraLeague
 
             if (player.whoAmI == Main.myPlayer)
             {
-                if (sumSpells[0].item.type == ItemType<ReviveRune>() && TerraLeague.Sum1.JustPressed && sumCooldowns[0] == 0)
+                if (sumSpells[0].Name == "ReviveRune" && TerraLeague.Sum1.JustPressed && sumCooldowns[0] == 0)
                     UseSummonerSpell(1);
 
-                if (sumSpells[1].item.type == ItemType<ReviveRune>() && TerraLeague.Sum2.JustPressed && sumCooldowns[1] == 0)
+                if (sumSpells[1].Name == "ReviveRune" && TerraLeague.Sum2.JustPressed && sumCooldowns[1] == 0)
                     UseSummonerSpell(2);
             }
         }
@@ -872,6 +872,8 @@ namespace TerraLeague
                             sumSpells[i] = initSum1;
                         else
                             sumSpells[i] = (SummonerSpell)GetInstance<BarrierRune>();
+
+                        mod.Logger.Debug("OnEnterWorld: set Sum 1 to" + sumSpells[i].Name);
                     }
                     else if (i == 1)
                     {
@@ -879,6 +881,8 @@ namespace TerraLeague
                             sumSpells[i] = initSum2;
                         else
                             sumSpells[i] = (SummonerSpell)GetInstance<GhostRune>();
+
+                        mod.Logger.Debug("OnEnterWorld: set Sum 2 to" + sumSpells[i].Name);
                     }
                 }
             }
@@ -886,23 +890,18 @@ namespace TerraLeague
 
         public override TagCompound Save()
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI && player.active)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
+                mod.Logger.Debug("Completed Save with Sums " + sumSpells[0] + " and " + sumSpells[1]);
+
                 return new TagCompound
                 {
                     {"manaChargeStacks", manaChargeStacks},
                     {"sumSpellOne", sumSpells[0].GetType().Name},
                     {"sumSpellTwo", sumSpells[1].GetType().Name},
                 };
-            }
-            else if (player.whoAmI == Main.LocalPlayer.whoAmI)
-            {
-                return new TagCompound
-                {
-                    {"manaChargeStacks", manaChargeStacks},
-                    {"sumSpellOne", GetInstance<GhostRune>().GetType().Name},
-                    {"sumSpellTwo", GetInstance<BarrierRune>().GetType().Name},
-                };
+
+                
             }
             return null;
         }
@@ -914,6 +913,8 @@ namespace TerraLeague
                 manaChargeStacks = tag.GetInt("manaChargeStacks");
                 initSum1 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellOne"));
                 initSum2 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellTwo"));
+
+                mod.Logger.Debug("Completed Load with Sums " + initSum1 + " and " + initSum2);
             }
         }
 
@@ -1204,7 +1205,7 @@ namespace TerraLeague
                     int deathTomeDamage = player.inventory.Where(x => x.type == ItemType<DeathsingerTome>()).First().damage;
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
-                        if (!Main.npc[i].townNPC)
+                        if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != 548)
                             Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<RequiemProj>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
                     }
                 }
@@ -1260,14 +1261,17 @@ namespace TerraLeague
             // Handles the Revive Summoner Spells effects
             if (reviving)
             {
+                player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
+
+                player.HealEffect(player.statLifeMax2/2);
+                player.statLife = player.statLifeMax2 / 2;
                 player.AddBuff(BuffType<Revived>(), 5 * 60);
 
                 ReviveRune.Efx(player);
                 new ReviveRune().PacketHandler.SendRevive(-1, player.whoAmI, player.whoAmI);
+
+                //player.ChangeSpawn((int)originalSpawn.X, (int)originalSpawn.Y);
                 reviving = false;
-                player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
-                player.HealEffect(9999);
-                player.statLife += 9999;
             }
 
             if (shieldFrame >= 24)
@@ -1406,6 +1410,18 @@ namespace TerraLeague
                 dust.noGravity = true;
                 dust.scale = 1.4f;
             }
+            if (flameHarbinger)
+            {
+                int displacement = Main.rand.Next(30);
+
+                for (int i = 0; i < 12; i++)
+                {
+                    Vector2 pos = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians((30 * i) + displacement)) + player.Center;
+
+                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Fire, Vector2.Zero, 0, default(Color), 2f);
+                    dustR.noGravity = true;
+                }
+            }
 
             // Lifeline cooldown handler
             if (lifeLineCooldown > 0)
@@ -1527,34 +1543,37 @@ namespace TerraLeague
             #endregion
 
             // Runs PostPlayerUpdate() for all equiped LeagueItems
-            for (int i = 3; i < 9; i++)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
+                for (int i = 3; i < 9; i++)
                 {
-                    if (PassivesAreActive[(i-3) * 2])
+                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
+
+                    if (legItem != null)
                     {
-                        Passive primPassive = legItem.GetPrimaryPassive();
-                        if (primPassive != null)
+                        if (PassivesAreActive[(i - 3) * 2])
                         {
-                            primPassive.PostPlayerUpdate(player, legItem);
+                            Passive primPassive = legItem.GetPrimaryPassive();
+                            if (primPassive != null)
+                            {
+                                primPassive.PostPlayerUpdate(player, legItem);
+                            }
                         }
-                    }
-                    if (PassivesAreActive[((i - 3) * 2) + 1])
-                    {
-                        Passive secPassive = legItem.GetSecondaryPassive();
-                        if (secPassive != null)
+                        if (PassivesAreActive[((i - 3) * 2) + 1])
                         {
-                            secPassive.PostPlayerUpdate(player, legItem);
+                            Passive secPassive = legItem.GetSecondaryPassive();
+                            if (secPassive != null)
+                            {
+                                secPassive.PostPlayerUpdate(player, legItem);
+                            }
                         }
-                    }
-                    if (ActivesAreActive[i - 3])
-                    {
-                        Active active = legItem.GetActive();
-                        if (active != null)
+                        if (ActivesAreActive[i - 3])
                         {
-                            active.PostPlayerUpdate(player, legItem);
+                            Active active = legItem.GetActive();
+                            if (active != null)
+                            {
+                                active.PostPlayerUpdate(player, legItem);
+                            }
                         }
                     }
                 }
@@ -1801,7 +1820,7 @@ namespace TerraLeague
 
                 if (toxicShot && proj.ranged)
                 {
-                    onhitdamage += (int)(60 + new ToxicBlowgun().GetAbilityScalingDamage(player, AbilityType.E, DamageType.SUM));
+                    onhitdamage += (int)(new ToxicBlowgun().GetAbilityBaseDamage(player, AbilityType.E) + new ToxicBlowgun().GetAbilityScalingDamage(player, AbilityType.E, DamageType.SUM));
                     target.AddBuff(BuffID.Venom, 240);
                 }
                 if (proj.melee)
@@ -2345,7 +2364,8 @@ namespace TerraLeague
         /// <param name="crit"></param>
         public void OnHitByEnemy(NPC npc, ref int damage, bool crit)
         {
-            player.AddBuff(BuffType<GrievousWounds>(), 120); // 2 seconds
+            if (GetTotalShield() <= 0)
+                player.AddBuff(BuffType<GrievousWounds>(), 120); // 2 seconds
             CombatTimer = 0;
         }
 
@@ -2447,8 +2467,8 @@ namespace TerraLeague
             if (spiritualRestur)
                 lifeToHeal = (int)(lifeToHeal * 1.3);
 
-            if (player.HasBuff(BuffID.PotionSickness))
-                lifeToHeal /= 2;
+            //if (player.HasBuff(BuffID.PotionSickness))
+            //    lifeToHeal /= 2;
 
             if (GetRealHeathWithoutShield(true) - GetRealHeathWithoutShield(false) < lifeToHeal)
             {
@@ -2668,7 +2688,7 @@ namespace TerraLeague
                     Main.spriteBatch.Draw
                        (
                            texture,
-                           new Rectangle((int)(player.Center.X - Main.screenPosition.X - 32), (int)(player.position.Y - Main.screenPosition.Y - 16), 64, 16),
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath ? 32 : 40) - 21), 64, 16),
                            new Rectangle(0, frame * 16, 64, 16),
                            Color.White,
                            0,
@@ -2937,27 +2957,30 @@ namespace TerraLeague
         /// <param name="secondaryPassive">Search the secondary slot of the LeagueItems</param>
         public void FindAndSetPassiveStat(Passive SearchTarget, int setTo, bool secondaryPassive = false)
         {
-            for (int i = 3; i < 9; i++)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                LeagueItem item = player.armor[i].modItem as LeagueItem;
-                Passive passive;
-
-                if (item != null)
+                for (int i = 3; i < 9; i++)
                 {
-                    if (secondaryPassive)
-                        passive = item.GetSecondaryPassive();
-                    else
-                        passive = item.GetPrimaryPassive();
+                    LeagueItem item = player.armor[i].modItem as LeagueItem;
+                    Passive passive;
 
-                    if (passive != null)
+                    if (item != null)
                     {
-                        if (passive.GetType() == SearchTarget.GetType())
+                        if (secondaryPassive)
+                            passive = item.GetSecondaryPassive();
+                        else
+                            passive = item.GetPrimaryPassive();
+
+                        if (passive != null)
                         {
-                            accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, player.armor[i].modItem)] = setTo;
+                            if (passive.GetType() == SearchTarget.GetType())
+                            {
+                                accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, player.armor[i].modItem)] = setTo;
+                            }
                         }
                     }
-                }
 
+                }
             }
         }
 

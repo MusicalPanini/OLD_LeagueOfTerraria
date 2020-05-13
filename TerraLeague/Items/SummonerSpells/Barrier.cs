@@ -28,9 +28,29 @@ namespace TerraLeague.Items.SummonerSpells
         {
             return 120;
         }
+
+        public int GetShieldStat()
+        {
+            if (NPC.downedGolemBoss)
+                return 200;
+            else if (NPC.downedPlantBoss)
+                return 175;
+            else if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
+                return 150;
+            else if (NPC.downedMechBossAny)
+                return 125;
+            else if (Main.hardMode)
+                return 100;
+            else if (NPC.downedBoss2)
+                return 75;
+            else
+                return 50;
+        }
+
         public override string GetTooltip()
         {
-            return "You gain a shield that protects from " + (int)(200 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep) + " damage for 10 seconds";
+            return "You gain a shield that protects from " + (int)(GetShieldStat() * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep) + " damage for 10 seconds" +
+                "\nShield strength scales through the game";
         }
 
         public override void DoEffect(Player player, int spellSlot)

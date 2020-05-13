@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Boots
             recipe.SetResult(this);
             recipe.AddRecipe();
 
-            new ModRecipe(mod);
+            recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<IonianBootsOfLucidity1>());
             recipe.AddIngredient(ItemType<ManaBar>(), 10);
@@ -71,7 +71,7 @@ namespace TerraLeague.Items.Boots
             recipe.SetResult(this);
             recipe.AddRecipe();
 
-            new ModRecipe(mod);
+            recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<IonianBootsOfLucidity1>());
             recipe.AddIngredient(ItemType<ManaBar>(), 10);

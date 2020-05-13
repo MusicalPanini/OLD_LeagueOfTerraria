@@ -62,10 +62,28 @@ namespace TerraLeague.NPCs
                         {
                             if (npc.Distance(healTarget.Center) < effectRadius && healTarget.active && i != npc.whoAmI)
                             {
-                                healTarget.life += 40;
-                                if (healTarget.life > healTarget.lifeMax)
-                                    healTarget.life = healTarget.lifeMax;
-                                healTarget.HealEffect(40);
+                                int heal = (int)((healTarget.lifeMax - healTarget.life) * 0.3);
+
+                                if (heal == 0 && healTarget.lifeMax != healTarget.life)
+                                    heal = 1;
+
+
+                                if (heal > 0)
+                                {
+                                    healTarget.life += heal;
+                                    if (healTarget.life > healTarget.lifeMax)
+                                        healTarget.life = healTarget.lifeMax;
+                                    healTarget.netUpdate = true;
+
+                                    if (Main.netMode == 2)
+                                    {
+                                        NetMessage.SendData(81, -1, -1, null, (int)Color.DarkGreen.PackedValue, healTarget.position.X, healTarget.position.Y, (float)heal, 0, 0, 0);
+                                    }
+                                    else
+                                    {
+                                        CombatText.NewText(healTarget.Hitbox, Color.DarkGreen, heal);
+                                    }
+                                }
                             }
                         }
                     }

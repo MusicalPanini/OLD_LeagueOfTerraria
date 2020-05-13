@@ -24,6 +24,8 @@ namespace TerraLeague
 {
     public class WORLDGLOBAL : ModWorld
     {
+        internal WorldPacketHandler PacketHandler = ModNetHandler.worldHandler;
+
         public static bool BlackMistEvent = false;
 
         public static bool TargonOreSpawned = false;
@@ -406,7 +408,8 @@ namespace TerraLeague
                                 {
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Harrowing has begun..."), new Color(50, 255, 130), -1);
                                     //NetMessage.SendData(MessageID.WorldData);
-                                    NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
+                                    //NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
+                                    PacketHandler.SendBlackMist(-1, -1, BlackMistEvent);
                                 }
                                 break;
                             }
@@ -418,14 +421,15 @@ namespace TerraLeague
             {
                 BlackMistEvent = false;
                 //NetMessage.SendData(MessageID.WorldData);
-                NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
+                //NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
+                if (Main.netMode == 2)
+                    PacketHandler.SendBlackMist(-1, -1, BlackMistEvent);
             }
 
             if (Main.hardMode) 
             {
                 if (!TargonOreSpawned)
                 {
-                    TargonOreSpawned = true;
                     DropTargon();
                 }
             }
@@ -794,6 +798,7 @@ namespace TerraLeague
             {
                 NetMessage.SendTileSquare(-1, i, j, 40, TileChangeType.None);
             }
+            TargonOreSpawned = true;
             return true;
         }
     }

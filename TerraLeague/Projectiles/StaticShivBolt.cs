@@ -82,18 +82,25 @@ namespace TerraLeague.Projectiles
             {
                 NPC npc = Main.npc[(int)projectile.ai[0]];
 
-                float shootToX = npc.Center.X - projectile.Center.X;
-                float shootToY = npc.Center.Y - projectile.Center.Y;
-                float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+                if (!npc.active)
+                {
+                    projectile.ai[0] = FindNewTarget();
+                }
+                else
+                {
+                    float shootToX = npc.Center.X - projectile.Center.X;
+                    float shootToY = npc.Center.Y - projectile.Center.Y;
+                    float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
-                if (distance != 0)
-                    distance = 2f / distance;
+                    if (distance != 0)
+                        distance = 2f / distance;
 
-                shootToX *= distance * 5;
-                shootToY *= distance * 5;
+                    shootToX *= distance * 5;
+                    shootToY *= distance * 5;
 
-                projectile.velocity.X = shootToX;
-                projectile.velocity.Y = shootToY;
+                    projectile.velocity.X = shootToX;
+                    projectile.velocity.Y = shootToY;
+                }
             }
             else if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
@@ -115,6 +122,7 @@ namespace TerraLeague.Projectiles
         {
             if ((bool)CanHitNPC(target))
             {
+                target.immune[projectile.owner] = 2;
                 projectile.netUpdate = true;
                 projectile.timeLeft = 301;
                 for (int i = 0; i < HaveHit.Length; i++)

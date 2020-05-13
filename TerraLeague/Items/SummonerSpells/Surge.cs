@@ -27,18 +27,18 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override int GetRawCooldown()
         {
-            return 180;
+            return 120;
         }
         public override string GetTooltip()
         {
-            return "Increase all damage by 1.1x and increased knockback for 5 seconds";
+            return "Increase all damage by 1.1x and increased knockback for 10 seconds";
         }
 
         public override void DoEffect(Player player, int spellSlot)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.AddBuff(BuffType<Surge>(), 5 * 60);
+            player.AddBuff(BuffType<Surge>(), 10 * 60);
 
             Efx(player);
             PacketHandler.SendSurge(-1, player.whoAmI, player.whoAmI);

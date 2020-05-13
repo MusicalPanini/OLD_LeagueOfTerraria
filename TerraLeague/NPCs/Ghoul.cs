@@ -33,7 +33,17 @@ namespace TerraLeague.NPCs
         public override bool PreAI()
         {
             Lighting.AddLight(npc.Center, new Color(5, 245, 150).ToVector3());
+            if (npc.localAI[3] == 0)
+            {
+                for (int j = 0; j < 50; j++)
+                {
+                    Dust dust = Dust.NewDustDirect(npc.position, 18, 40, 188);
+                    dust.noGravity = true;
+                    dust.scale = 2;
+                }
 
+                npc.localAI[3] = 1;
+            }
             return base.PreAI();
         }
 
