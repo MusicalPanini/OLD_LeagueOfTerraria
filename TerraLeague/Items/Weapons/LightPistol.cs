@@ -132,7 +132,7 @@ namespace TerraLeague.Items.Weapons
         {
             item.damage = 12;
             item.ranged = true;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.width = 64;
             item.height = 30;
             item.useAnimation = 16;
@@ -142,7 +142,7 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 6000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.scale = 0.75f;
             item.shoot = ProjectileType<LightPistolProj>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);

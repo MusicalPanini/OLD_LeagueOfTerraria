@@ -22,14 +22,14 @@ namespace TerraLeague.Items.Weapons
         {
             item.damage = 14;
             item.mana = 25;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.magic = true;
             item.useTime = 35;
             item.useAnimation = 35;
             item.noMelee = true; 
             item.knockBack = 0;
             item.value = 4000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item8;
             item.shoot = ProjectileType<CelestialHeal>();
             item.shootSpeed = 12f;

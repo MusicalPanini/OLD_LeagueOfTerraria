@@ -28,10 +28,10 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;
             item.useTime = 25;
             item.useAnimation = 25;
-            item.useStyle = 3;
+            item.useStyle = ItemUseStyleID.Stabbing;
             item.knockBack = 0;
             item.value = 10000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
             item.shoot = ProjectileType<DancingBlade>();

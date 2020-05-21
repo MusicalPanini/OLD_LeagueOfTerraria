@@ -21,7 +21,7 @@ namespace TerraLeague.Items
             item.maxStack = 999;
             item.width = 28;
             item.height = 28;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.value = 2500;
         }
     }

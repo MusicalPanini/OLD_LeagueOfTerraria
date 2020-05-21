@@ -194,14 +194,14 @@ namespace TerraLeague.Items.Weapons
         {
             item.damage = 35;
             item.mana = 4;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.magic = true;
             item.useTime = 34;
             item.useAnimation = 34;
             item.noMelee = true;
             item.knockBack = 3;
             item.value = 55000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.UseSound = new LegacySoundStyle(2, 8, Terraria.Audio.SoundType.Sound);
             item.shoot = ProjectileType<LightShot>();
             item.shootSpeed = 10f;

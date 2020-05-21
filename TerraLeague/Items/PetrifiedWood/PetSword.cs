@@ -21,10 +21,10 @@ namespace TerraLeague.Items.PetrifiedWood
             item.height = 32;
             item.useTime = 20;
             item.useAnimation = 20;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 5f;
             item.value = 100;
-            item.rare = 0;
+            item.rare = ItemRarityID.White;
             item.UseSound = SoundID.Item1;
             base.SetDefaults();
         }

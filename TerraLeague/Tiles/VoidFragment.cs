@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -11,7 +12,7 @@ namespace TerraLeague.Tiles
         float bLast = 0.3f;
         public override void SetDefaults()
         {
-            soundType = 21;
+            soundType = SoundID.Tink;
 
             Main.tileSolid[Type] = true; 
             Main.tileMergeDirt[Type] = true;

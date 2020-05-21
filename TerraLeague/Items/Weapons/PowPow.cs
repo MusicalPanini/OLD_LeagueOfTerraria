@@ -128,13 +128,13 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 12;
             item.useTime = 4;
             item.reuseDelay = 14;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 0;
             item.value = 60000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 31);
-            item.shoot = 10;
+            item.shoot = ProjectileID.PurificationPowder;
             item.autoReuse = true;
             item.shootSpeed = 13f;
             item.useAmmo = AmmoID.Bullet;

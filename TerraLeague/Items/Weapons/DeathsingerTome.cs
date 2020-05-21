@@ -180,14 +180,14 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.magic = true;
             item.mana = 10;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 10000;
             item.width = 28;
             item.height = 32;
             item.useTime = 35;
             item.useAnimation = 35;
             item.UseSound = new LegacySoundStyle(2,8);
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.shoot = ProjectileType<DeathTomeShot>();
         }
 

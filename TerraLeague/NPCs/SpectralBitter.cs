@@ -72,7 +72,7 @@ namespace TerraLeague.NPCs
             }
 
             bool attackTarget = false;
-            if (npc.type != 55)
+            if (npc.type != NPCID.Goldfish)
             {
                 npc.TargetClosest(false);
                 if (!Main.player[npc.target].dead)
@@ -188,7 +188,7 @@ namespace TerraLeague.NPCs
                         npc.ai[0] = -1f;
                     }
                 }
-                if (npc.type != 157 && ((double)npc.velocity.Y > 0.4 || (double)npc.velocity.Y < -0.4))
+                if (npc.type != NPCID.Arapaima && ((double)npc.velocity.Y > 0.4 || (double)npc.velocity.Y < -0.4))
                 {
                     npc.velocity.Y *= 0.95f;
                 }

@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
                             {
                                 modPlayer.AddShield(shieldAmount, 240, Color.SeaGreen, ShieldType.Basic);
                             }
-                            else if (Main.netMode == 1)
+                            else if (Main.netMode == NetmodeID.MultiplayerClient)
                             {
                                 modPlayer.SendShieldPacket(shieldAmount, i, ShieldType.Basic, 240, -1, player.whoAmI, Color.SeaGreen);
                             }

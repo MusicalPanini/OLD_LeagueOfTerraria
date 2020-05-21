@@ -138,7 +138,7 @@ namespace TerraLeague.Items.Weapons
         {
             item.damage = 34;
             item.ranged = true;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.width = 24;
             item.height = 64;
             item.channel = true;
@@ -148,7 +148,7 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 6000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.shoot = ProjectileType<DarkinBowArrowControl>();
             item.useAmmo = AmmoID.Arrow;
         }

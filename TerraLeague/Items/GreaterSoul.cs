@@ -23,7 +23,7 @@ namespace TerraLeague.Items
             item.width = 32;
             item.height = 32;
             item.uniqueStack = false;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 100;
         }
 

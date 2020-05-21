@@ -130,7 +130,7 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.magic = true;
             item.mana = 14;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.value = 72000;
             item.width = 28;
             item.height = 32;
@@ -138,7 +138,7 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 45;
             item.knockBack = 2;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2,8);
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.shootSpeed = 16;
             item.shoot = ProjectileType<IceShard>();
         }

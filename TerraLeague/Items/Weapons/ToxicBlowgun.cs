@@ -172,9 +172,9 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 6000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.autoReuse = true;
-            item.shoot = 10;
+            item.shoot = ProjectileID.PurificationPowder;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

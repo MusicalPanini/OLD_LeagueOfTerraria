@@ -56,7 +56,7 @@ namespace TerraLeague.Items.SummonerSpells
             if (!pathBlocked)
             {
                 player.Teleport(new Vector2((int)(Main.mouseX + Main.screenPosition.X - 16), (int)(Main.mouseY + Main.screenPosition.Y - 24)), 1, 0);
-                NetMessage.SendData(65, -1, -1, null, 0, player.whoAmI, (int)(Main.mouseX + Main.screenPosition.X), (int)(Main.mouseY + Main.screenPosition.Y), 1, 0, 0);
+                NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, (int)(Main.mouseX + Main.screenPosition.X), (int)(Main.mouseY + Main.screenPosition.Y), 1, 0, 0);
 
                 SetCooldowns(player, spellSlot);
             }

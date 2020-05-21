@@ -21,7 +21,7 @@ namespace TerraLeague.Items.Armor
             item.width = 22;
             item.height = 18;
             item.value = 40000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.defense = 5;
         }
 

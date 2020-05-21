@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CompleteItems
             item.width = 32;
             item.height = 32;
             item.value = 150000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.accessory = true;
         }
 
@@ -53,7 +53,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<Kindlegem>(), 1);
             recipe.AddIngredient(ItemType<AetherWisp>(), 1);
             recipe.AddIngredient(ItemType<FaerieCharm>(), 1);
-            recipe.AddIngredient(3783, 1); // Forbidden Fragment
+            recipe.AddIngredient(ItemID.AncientBattleArmorMaterial, 1); // Forbidden Fragment
             recipe.AddIngredient(ItemType<Sunstone>(), 10);
             recipe.AddIngredient(ItemID.SoulofLight, 5);
             recipe.AddTile(TileID.Anvils);

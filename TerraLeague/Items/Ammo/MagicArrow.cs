@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Ammo
             item.ammo = AmmoID.Arrow;
             item.knockBack = 3f;
             item.value = 40;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.ranged = true;
             base.SetDefaults();
         }

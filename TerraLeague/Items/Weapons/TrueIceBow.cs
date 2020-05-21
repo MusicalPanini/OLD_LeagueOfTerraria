@@ -138,14 +138,14 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 5;
             item.reuseDelay = 20;
             item.shootSpeed = 10f;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 72000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item5;
             item.autoReuse = true;
-            item.shoot = 10;
+            item.shoot = ProjectileID.PurificationPowder;
             item.useAmmo = AmmoID.Arrow;
         }
 

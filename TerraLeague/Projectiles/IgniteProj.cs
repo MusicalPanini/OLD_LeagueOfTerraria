@@ -81,7 +81,7 @@ namespace TerraLeague.Projectiles
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Fire,0,0,0,default(Color),2);
                 dust.noGravity = true;
             }
-            Main.PlaySound(0, projectile.Center);
+            Main.PlaySound(SoundID.Dig, projectile.Center);
 
             base.Kill(timeLeft);
         }

@@ -124,11 +124,11 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.useTime = 23;
             item.useAnimation = 23;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 2;
             item.mana = 8;
             item.value = 300000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shoot = ProjectileType<Kunai>();
             item.shootSpeed = 16f;

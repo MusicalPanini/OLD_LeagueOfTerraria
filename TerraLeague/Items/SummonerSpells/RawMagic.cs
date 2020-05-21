@@ -23,7 +23,7 @@ namespace TerraLeague.Items.SummonerSpells
         {
             item.maxStack = 999;
             item.material = true;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.width = 32;
             item.height = 32;
             base.SetDefaults();

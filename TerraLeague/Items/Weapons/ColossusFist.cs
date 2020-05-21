@@ -125,9 +125,9 @@ namespace TerraLeague.Items.Weapons
             item.width = 30;
             item.height = 10;
             item.value = 2400;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.noMelee = true;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 40;
             item.useTime = 40;
             item.knockBack = 7F;

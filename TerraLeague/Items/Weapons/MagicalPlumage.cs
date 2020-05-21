@@ -119,13 +119,13 @@ namespace TerraLeague.Items.Weapons
             item.ranged = true;
             item.useTime = 22;
             item.useAnimation = 22;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 1;
             item.value = 54000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 20f;
-            item.shoot = 10;
+            item.shoot = ProjectileID.PurificationPowder;
             item.useAmmo = ItemType<RazorFeather>();
             item.noMelee = true;
             item.useTurn = true;

@@ -47,7 +47,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] <= 0)
             {
                 Efx(player);
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
 
                 player.HealEffect((int)(player.statLifeMax2 * 0.5));

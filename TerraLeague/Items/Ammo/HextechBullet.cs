@@ -29,7 +29,7 @@ namespace TerraLeague.Items.Ammo
             item.knockBack = 2.5f;
             item.value = 40;
             item.ranged = true;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
 
             base.SetDefaults();
         }

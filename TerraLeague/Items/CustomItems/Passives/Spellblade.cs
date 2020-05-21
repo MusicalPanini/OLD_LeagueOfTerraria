@@ -2,6 +2,7 @@
 using TerraLeague.Buffs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -48,14 +49,14 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (modPlayer.summonedBlade)
                 {
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
                     player.ClearBuff(BuffType<SpellBlade>());
                 }
                 else
                 {
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
                     player.ClearBuff(BuffType<SpellBlade>());
                 }
@@ -79,7 +80,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     target.AddBuff(BuffType<Slowed>(), 300);
 
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                 }
             }

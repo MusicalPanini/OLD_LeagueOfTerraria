@@ -23,7 +23,7 @@ namespace TerraLeague.Items.CompleteItems
             item.width = 32;
             item.height = 32;
             item.value = 800000;
-            item.rare = 10;
+            item.rare = ItemRarityID.Blue;
             item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -41,7 +41,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<DarksteelBar>(), 18);
             recipe.AddIngredient(ItemID.ChlorophyteGreataxe, 1);
             recipe.AddIngredient(ItemID.FragmentSolar, 10);
-            recipe.AddTile(412);
+            recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

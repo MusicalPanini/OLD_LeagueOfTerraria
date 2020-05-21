@@ -20,10 +20,10 @@ namespace TerraLeague.Items.ManaBarItems
             item.height = 32;
             item.useTime = 20;
             item.useAnimation = 32;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3f;
             item.value = 12000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.pick = 70;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;

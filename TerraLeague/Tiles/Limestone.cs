@@ -25,7 +25,7 @@ namespace TerraLeague.Tiles
             Main.tileLighted[Type] = true;
             Main.tileBlockLight[Type] = true; 
 
-            soundType = 21;
+            soundType = SoundID.Tink;
             dustType = 85;
             drop = ItemType<Items.Placeable.Limestone>(); 
             AddMapEntry(new Color(255, 255, 200));

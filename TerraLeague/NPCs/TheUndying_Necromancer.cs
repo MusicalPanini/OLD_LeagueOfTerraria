@@ -84,7 +84,7 @@ namespace TerraLeague.NPCs
                 npc.netUpdate = true;
             }
 
-            if (npc.ai[0] >= 350 && Main.netMode != 1)
+            if (npc.ai[0] >= 350 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 npc.ai[0] = 1f;
                 int playerBlockX = (int)Main.player[npc.target].position.X / 16;
@@ -186,7 +186,7 @@ namespace TerraLeague.NPCs
                         {
                             Vector2 boyPos = new Vector2(((randX * 16f) - (float)(npc.width / 2) + 8f), (int)(i * 16f));
 
-                            if (Main.netMode != 1)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 NPC.NewNPC((int)boyPos.X, (int)boyPos.Y, NPCType<Ghoul>());
                             }

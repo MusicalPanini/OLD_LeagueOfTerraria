@@ -531,6 +531,11 @@ namespace TerraLeague
         public bool gathering2 = false;
         public bool gathering3 = false;
 
+        // Feast Stacks
+        public bool feast1 = false;
+        public bool feast2 = false;
+        public bool feast3 = false;
+        public int feastStacks = 0;
         // Umbral Trespass Stuff
         public bool umbralTrespassing = false;
         public NPC umbralTaggedNPC;
@@ -736,6 +741,9 @@ namespace TerraLeague
             gathering1 = false;
             gathering2 = false;
             gathering3 = false;
+            feast1 = false;
+            feast2 = false;
+            feast3 = false;
             #endregion
 
             // Costumes
@@ -829,6 +837,10 @@ namespace TerraLeague
             gathering3 = false;
             ghosted = false;
             finalsparkChannel = false;
+            feast1 = false;
+            feast2 = false;
+            feast3 = false;
+            feastStacks = 0;
 
             angelsProtection = false;
             nightStalker = false;
@@ -1168,7 +1180,20 @@ namespace TerraLeague
 
                 lifeStealCharge = 0;
             }
-
+            if (feastStacks >= 500 && feastStacks < 2500)
+            {
+                player.AddBuff(BuffType<FeastStack1>(), 2);
+            }
+            else if (feastStacks >= 2500 && feastStacks < 12500)
+            {
+                player.AddBuff(BuffType<FeastStack2>(), 2);
+            }
+            else if (feastStacks >= 12500)
+            {
+                player.AddBuff(BuffType<FeastStack3>(), 2);
+                if (feastStacks > 12500)
+                    feastStacks = 12500;
+            }
             if (umbralTrespassing)
             {
                 player.immuneAlpha = 255;
@@ -1205,7 +1230,7 @@ namespace TerraLeague
                     int deathTomeDamage = player.inventory.Where(x => x.type == ItemType<DeathsingerTome>()).First().damage;
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
-                        if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != 548)
+                        if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != NPCID.DD2EterniaCrystal)
                             Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<RequiemProj>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
                     }
                 }
@@ -1877,7 +1902,7 @@ namespace TerraLeague
                                 newProj.ranged = false;
                             }
 
-                            Main.PlaySound(2, (int)player.position.X, (int)player.position.Y, 24);
+                            Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 24);
                             shotsfired++;
                         }
                         if (shotsfired >= 2)
@@ -2379,7 +2404,7 @@ namespace TerraLeague
         /// <param name="fromWho">Who is sending this information (player.whoAmI)</param>
         internal void SendBuffPacket(int buff, int duration, int target, int toWho, int fromWho)
         {
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 PacketHandler.SendBuff(toWho, fromWho, buff, duration, target);
             }
@@ -2394,7 +2419,7 @@ namespace TerraLeague
         /// <param name="fromWho">Who is sending this information (player.whoAmI)</param>
         internal void SendHealPacket(int healAmount, int healTarget, int toWho, int fromWho)
         {
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 if (bloodPool)
                 {
@@ -2424,7 +2449,7 @@ namespace TerraLeague
         /// <param name="shieldColor">The color of the shield</param>
         internal void SendShieldPacket(int shieldAmount, int shieldTarget, ShieldType shieldType, int shieldDuration, int toWho, int fromWho, Color shieldColor)
         {
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 if (bloodPool)
                 {
@@ -2750,7 +2775,7 @@ namespace TerraLeague
                 }
                 else if (abilityAnimationType == 5)
                 {
-                    if (abilityItem.type == 281 || abilityItem.type == 986)
+                    if (abilityItem.type == ItemID.Blowpipe || abilityItem.type == ItemID.Blowgun)
                     {
                         player.bodyFrame.Y = player.bodyFrame.Height * 2;
                     }
@@ -2931,7 +2956,7 @@ namespace TerraLeague
                     currentShieldColor = new Color(255, 255, 255, 0);
                 }
 
-                if (Main.netMode == 1 && (oldCol.R != currentShieldColor.R || oldCol.G != currentShieldColor.G || oldCol.B != currentShieldColor.B || oldCol.A != currentShieldColor.A))
+                if (Main.netMode == NetmodeID.MultiplayerClient && (oldCol.R != currentShieldColor.R || oldCol.G != currentShieldColor.G || oldCol.B != currentShieldColor.B || oldCol.A != currentShieldColor.A))
                 {
                     PacketHandler.SendNewShield(-1, player.whoAmI, player.whoAmI, currentShieldColor);
                 }

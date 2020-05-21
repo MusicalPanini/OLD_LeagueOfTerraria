@@ -2,6 +2,7 @@
 using TerraLeague.Buffs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CustomItems.Actives
@@ -52,7 +53,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 modPlayer.SendBuffPacket(BuffType<GeneralCleanse>(), effectDuration * 60, target, -1, player.whoAmI);
 
             Efx(Main.player[target]);
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
                 PacketHandler.SendActiveEfx(-1, player.whoAmI, target, modItem.item.type);
 
             modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));

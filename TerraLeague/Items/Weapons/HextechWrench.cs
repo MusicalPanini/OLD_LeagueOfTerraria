@@ -3,6 +3,7 @@ using TerraLeague.Buffs;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
@@ -181,11 +182,11 @@ namespace TerraLeague.Items.Weapons
             item.height = 32;
             item.useTime = 36;
             item.useAnimation = 36;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 1000;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<EvolutionTurret>();
         }

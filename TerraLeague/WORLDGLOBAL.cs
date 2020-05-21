@@ -259,7 +259,7 @@ namespace TerraLeague
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
-                        if (chest.item[inventoryIndex].type == 0 )
+                        if (chest.item[inventoryIndex].type == ItemID.None)
                         {
                             chest.item[inventoryIndex].SetDefaults(itemsToPlaceInWoodChests[itemsToPlaceInWoodChestsChoice]);
                             chest.item[inventoryIndex].Prefix(-1);
@@ -280,7 +280,7 @@ namespace TerraLeague
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
-                        if (chest.item[inventoryIndex].type == 0)
+                        if (chest.item[inventoryIndex].type == ItemID.None)
                         {
                             chest.item[inventoryIndex].SetDefaults(itemsToPlaceInGoldChests[itemsToPlaceInGoldChestsChoice]);
                             chest.item[inventoryIndex].Prefix(-1);
@@ -299,7 +299,7 @@ namespace TerraLeague
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
-                        if (chest.item[inventoryIndex].type == 0)
+                        if (chest.item[inventoryIndex].type == ItemID.None)
                         {
                             chest.item[inventoryIndex].SetDefaults(ItemType<CelestialBar>());
                             chest.item[inventoryIndex].stack = Main.rand.Next(6, 13);
@@ -317,7 +317,7 @@ namespace TerraLeague
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
-                        if (chest.item[inventoryIndex].type == 0)
+                        if (chest.item[inventoryIndex].type == ItemID.None)
                         {
                             chest.item[inventoryIndex].SetDefaults(ItemType<BrassBar>());
                             chest.item[inventoryIndex].stack = Main.rand.Next(4, 9);
@@ -337,7 +337,7 @@ namespace TerraLeague
                     {
                         for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                         {
-                            if (chest.item[inventoryIndex].type == 0)
+                            if (chest.item[inventoryIndex].type == ItemID.None)
                             {
                                 chest.item[inventoryIndex].SetDefaults(ItemType<VialofTrueMagic>());
                                 chest.item[inventoryIndex].stack = Main.rand.Next(1, 4);
@@ -391,7 +391,7 @@ namespace TerraLeague
 
         public override void PostUpdate()
         {
-            if (!Main.dayTime && Main.time == 1 && !Main.bloodMoon && Main.netMode != 1)
+            if (!Main.dayTime && Main.time == 1 && !Main.bloodMoon && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int i = 0; i < Main.player.Length; i++)
                 {
@@ -402,9 +402,9 @@ namespace TerraLeague
                             if (Main.rand.Next(0, Main.moonPhase == 4 ? 4 : 12) == 0)
                             {
                                 BlackMistEvent = true;
-                                if (Main.netMode == 0)
+                                if (Main.netMode == NetmodeID.SinglePlayer)
                                     Main.NewText("The Harrowing has begun...", new Color(0, 255, 125));
-                                else if (Main.netMode == 2)
+                                else if (Main.netMode == NetmodeID.Server)
                                 {
                                     NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Harrowing has begun..."), new Color(50, 255, 130), -1);
                                     //NetMessage.SendData(MessageID.WorldData);
@@ -417,12 +417,12 @@ namespace TerraLeague
                     }
                 }
             }
-            if (Main.dayTime && BlackMistEvent && Main.netMode != 1)
+            if (Main.dayTime && BlackMistEvent && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 BlackMistEvent = false;
                 //NetMessage.SendData(MessageID.WorldData);
                 //NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
-                if (Main.netMode == 2)
+                if (Main.netMode == NetmodeID.Server)
                     PacketHandler.SendBlackMist(-1, -1, BlackMistEvent);
             }
 
@@ -440,9 +440,9 @@ namespace TerraLeague
                 {
                     ManaOreSpawned = true;
                     
-                    if (Main.netMode == 0)
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("The Evil is no longer suppressing the magic in the jungle", 0, 130, 255);
-                    else if (Main.netMode == 2)
+                    else if (Main.netMode == NetmodeID.Server)
                     {
                         NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Evil is no longer suppressing the magic in the jungle"), new Color(0, 130, 255), -1);
                         NetMessage.SendData(MessageID.WorldData);
@@ -468,9 +468,9 @@ namespace TerraLeague
                 {
                     VoidOreSpawned = true;  
 
-                    if (Main.netMode == 0)
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);
-                    else if (Main.netMode == 2)
+                    else if (Main.netMode == NetmodeID.Server)
                     {
                         NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("The Void has morphed some of this worlds matter"), new Color(255, 0, 255), -1);
                         NetMessage.SendData(MessageID.WorldData);
@@ -491,9 +491,9 @@ namespace TerraLeague
                 {
                     CelestialMeteorCanSpawn = true;
 
-                    if (Main.netMode == 0)
+                    if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("While the Moon denys the Sun, the Aspects will rain gifts of power", 0, 0, 255);
-                    else if (Main.netMode == 2)
+                    else if (Main.netMode == NetmodeID.Server)
                     {
                         NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("While the Moon denys the Sun, the Aspects will rain gifts of power"), new Color(0, 0, 255), -1);
                         NetMessage.SendData(MessageID.WorldData);
@@ -540,7 +540,7 @@ namespace TerraLeague
         public void DropTargon()
         {
             bool flag = true;
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 return;
             }
@@ -785,16 +785,16 @@ namespace TerraLeague
                 }
             }
 
-            if (Main.netMode == 0)
+            if (Main.netMode == NetmodeID.SinglePlayer)
             {
                 Main.NewText("The Aspects are pleased. A gift has been droped from the heavens", 0, 200, 255); 
 
             }
-            else if (Main.netMode == 2)
+            else if (Main.netMode == NetmodeID.Server)
             {
                 NetMessage.BroadcastChatMessage(NetworkText.FromKey("The Aspects are pleased. A gift has been droped from the heavens", new object[0]), new Color(50, 255, 130), -1);
             }
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NetMessage.SendTileSquare(-1, i, j, 40, TileChangeType.None);
             }

@@ -53,7 +53,7 @@ namespace TerraLeague.Projectiles
             if (new Rectangle((int)projectile.position.X - 30, (int)projectile.position.Y - 30, 102, 102).Intersects(Main.player[projectile.owner].Hitbox) && projectile.timeLeft < 270)
             {
                 Main.player[projectile.owner].AddBuff(BuffType<Buffs.SpinningAxe>(), 240);
-                Main.PlaySound(7, projectile.position);
+                Main.PlaySound(SoundID.Grab, projectile.position);
                 projectile.Kill();
             }
 

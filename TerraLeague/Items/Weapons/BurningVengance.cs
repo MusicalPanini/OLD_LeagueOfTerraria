@@ -182,13 +182,13 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 10;
             item.shootSpeed = 14;
             item.mana = 6;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 300000;
             item.width = 28;
             item.height = 32;
             item.knockBack = 1;
             item.UseSound = new LegacySoundStyle(2, 34);
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.shoot = ProjectileType<BurningVenganceFlame>();
             item.autoReuse = true;
         }

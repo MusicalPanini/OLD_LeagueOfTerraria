@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CompleteItems
             item.width = 32;
             item.height = 32;
             item.value = 800000;
-            item.rare = 10;
+            item.rare = ItemRarityID.Blue;
             item.accessory = true;
         }
 
@@ -49,7 +49,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<BlastingWand>(), 1);
             recipe.AddIngredient(ItemID.BrokenHeroSword, 1);
             recipe.AddIngredient(ItemID.FragmentStardust, 10);
-            recipe.AddTile(412);
+            recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

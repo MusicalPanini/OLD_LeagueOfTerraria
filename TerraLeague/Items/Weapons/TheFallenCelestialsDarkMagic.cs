@@ -211,13 +211,13 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 80;
             item.useAnimation = 80;
             item.mana = 40;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 300000;
             item.width = 28;
             item.height = 32;
             item.knockBack = 0;
             item.UseSound = SoundID.Item20;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.shoot = ProjectileType<TormentedShadow>();
         }
 

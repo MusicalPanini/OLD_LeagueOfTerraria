@@ -182,10 +182,10 @@ namespace TerraLeague.Items.Weapons
             item.height = 56;
             item.useTime = 35;
             item.useAnimation = 35;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 2;
             item.value = 48000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = SoundID.Item1;
             item.crit = 25;
             item.autoReuse = true;

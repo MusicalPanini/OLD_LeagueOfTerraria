@@ -21,7 +21,7 @@ namespace TerraLeague.Items.AdvItems
             item.width = 32;
             item.height = 32;
             item.value = 50000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.accessory = true;
             item.material = true;
         }

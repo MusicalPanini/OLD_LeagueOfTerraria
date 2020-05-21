@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -50,7 +51,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             if (Main.rand.Next(0, 5) == 0)
             {
                 Efx(player);
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
 
                 for (int i = 0; i < Main.npc.Length; i++)

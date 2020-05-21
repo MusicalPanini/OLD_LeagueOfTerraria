@@ -143,12 +143,12 @@ namespace TerraLeague.Items.Weapons
             item.height = 20;
             item.useAnimation = 80;
             item.useTime = 80;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true; 
             item.knockBack = 4;
             item.value = 80000;
-            item.rare = 6;
-            item.shoot = 10;
+            item.rare = ItemRarityID.LightPurple;
+            item.shoot = ProjectileID.PurificationPowder;
             item.shootSpeed = 10f;
             item.useAmmo = AmmoID.Bullet;
             item.autoReuse = true;

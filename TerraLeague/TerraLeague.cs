@@ -727,18 +727,18 @@ namespace TerraLeague
         /// <returns></returns>
         internal static bool IsEnemyActuallyProj(NPC npc)
         {
-            if (npc.type == 25
-                || npc.type == 30
-                || npc.type == 33
-                || npc.type == 72
-                || npc.type == 112
-                || npc.type == 371
-                || npc.type == 378
-                || npc.type == 401
-                || npc.type == 516
-                || npc.type == 521
-                || npc.type == 522
-                || npc.type == 523)
+            if (npc.type == NPCID.BurningSphere
+                || npc.type == NPCID.ChaosBall
+                || npc.type == NPCID.WaterSphere
+                || npc.type == NPCID.BlazingWheel
+                || npc.type == NPCID.VileSpit
+                || npc.type == NPCID.DetonatingBubble
+                || npc.type == NPCID.ChatteringTeethBomb
+                || npc.type == NPCID.MoonLordLeechBlob
+                || npc.type == NPCID.SolarFlare
+                || npc.type == NPCID.AncientCultistSquidhead
+                || npc.type == NPCID.AncientLight
+                || npc.type == NPCID.AncientDoom)
             {
                 return true;
             }
@@ -823,7 +823,7 @@ namespace TerraLeague
 
         public static void ForceNPCStoRetarget(Player player)
         {
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().PacketHandler.SendRetarget(-1, -1, player.whoAmI);
             }

@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
                 Efx(player);
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
 
                 player.AddBuff(BuffID.Swiftness, effectDuration * 60);

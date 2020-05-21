@@ -49,7 +49,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(0, projectile.Center);
+            Main.PlaySound(SoundID.Dig, projectile.Center);
             return true;
         }
 

@@ -164,11 +164,11 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 35;
             item.useTime = 35;
             item.shootSpeed = 6f;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 5400;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound =  new LegacySoundStyle(2, 75);
             item.autoReuse = true;
             item.shoot = ProjectileType<VoidEnergy>();

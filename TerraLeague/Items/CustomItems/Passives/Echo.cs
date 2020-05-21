@@ -8,6 +8,7 @@ using TerraLeague.Items.CompleteItems;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -46,7 +47,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 damage += bonusDamage;
 
                 Efx(player, target);
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
 
                 for (int i = 0; i < 8; i++)

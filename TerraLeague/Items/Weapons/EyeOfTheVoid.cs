@@ -160,14 +160,14 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.channel = true;
             item.mana = 6;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 5400;
             item.width = 28;
             item.height = 32;
             item.useTime = 20;
             item.useAnimation = 20;
             item.UseSound = new LegacySoundStyle(2, 15);
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.shootSpeed = 10;
             item.shoot = ProjectileType<EyeLaser>();
         }

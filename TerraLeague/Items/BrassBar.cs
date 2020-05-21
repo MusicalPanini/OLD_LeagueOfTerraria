@@ -20,7 +20,7 @@ namespace TerraLeague.Items
             item.maxStack = 99;
             item.width = 30;
             item.height = 24;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.value = 1500;
             item.uniqueStack = false;
             item.createTile = TileType<Tiles.BrassBarTile>();
@@ -28,7 +28,7 @@ namespace TerraLeague.Items
             item.autoReuse = true;
             item.useAnimation = 15;
             item.useTime = 10;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.consumable = true;
         }
 

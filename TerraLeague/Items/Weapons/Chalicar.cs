@@ -129,10 +129,10 @@ namespace TerraLeague.Items.Weapons
             item.ranged = true;
             item.useTime = 25;
             item.useAnimation = 25;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 0;
             item.value = 10000;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 12f;
             item.shoot = ProjectileType<Projectiles.Chalicar>();

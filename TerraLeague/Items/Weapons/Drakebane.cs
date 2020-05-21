@@ -135,10 +135,10 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;
             item.useTime = 30;
             item.useAnimation = 30;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 2;
             item.value = 6000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 101);
             item.shootSpeed = 1f;
             item.shoot = ProjectileType<DrakebaneProj>();

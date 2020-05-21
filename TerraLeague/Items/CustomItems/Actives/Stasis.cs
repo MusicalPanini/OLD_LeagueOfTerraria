@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CustomItems.Actives
@@ -51,7 +52,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 player.AddBuff(BuffType<Buffs.Stasis>(), 120);
 
                 Efx(player);
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
             }
         }

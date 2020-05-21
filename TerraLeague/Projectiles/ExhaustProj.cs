@@ -3,6 +3,7 @@ using System;
 using TerraLeague.Buffs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -74,7 +75,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(0, projectile.Center);
+            Main.PlaySound(SoundID.Dig, projectile.Center);
 
             for (int i = 0; i < 10; i++)
             {

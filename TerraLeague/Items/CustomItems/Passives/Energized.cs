@@ -4,6 +4,7 @@ using TerraLeague.Items.CompleteItems;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -103,7 +104,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     damage += bonusDamage;
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
@@ -120,7 +121,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     damage += bonusDamage;
 
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                 }
 
@@ -158,7 +159,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     damage += bonusDamage;
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
@@ -173,7 +174,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 else if (modPlayer.EnergizedStorm)
                 {
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                     damage += bonusDamage;
                 }
@@ -193,7 +194,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (modPlayer.EnergizedStorm)
                 {
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
@@ -203,7 +204,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (modPlayer.EnergizedStorm)
                 {
                     Efx(player, target);
-                    if (Main.netMode == 1)
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                         PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }

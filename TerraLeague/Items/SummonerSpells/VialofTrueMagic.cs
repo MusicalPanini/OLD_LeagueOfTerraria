@@ -16,7 +16,7 @@ namespace TerraLeague.Items.SummonerSpells
         public override void SetDefaults()
         {
             item.maxStack = 999;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.width = 12;
             item.height = 30;
             base.SetDefaults();

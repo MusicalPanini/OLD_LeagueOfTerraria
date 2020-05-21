@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items.Placeable;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -16,7 +17,7 @@ namespace TerraLeague.Tiles
             Main.tileSpelunker[Type] = true;
             Main.tileValue[Type] = 420;
             Main.tileLighted[Type] = true;
-            soundType = 21;
+            soundType = SoundID.Tink;
             dustType = 96;
             drop = ItemType<Ferrospike>();
             ModTranslation name = CreateMapEntryName();

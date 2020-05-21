@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using TerraLeague.Items.Placeable;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -18,7 +19,7 @@ namespace TerraLeague.Tiles
             Main.tileBlockLight[Type] = true;
             Main.tileBlendAll[Type] = true;
 
-            soundType = 21;
+            soundType = SoundID.Tink;
             dustType = 172;
             drop = ItemType<TargonGraniteBlock>(); 
             ModTranslation name = CreateMapEntryName();

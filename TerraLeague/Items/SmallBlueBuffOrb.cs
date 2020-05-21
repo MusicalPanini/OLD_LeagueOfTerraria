@@ -23,7 +23,7 @@ namespace TerraLeague.Items
         public override void SetDefaults()
         {
             item.maxStack = 1;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.width = 46;
             item.height = 46;
             

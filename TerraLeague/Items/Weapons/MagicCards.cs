@@ -148,11 +148,11 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.useTime = 28;
             item.useAnimation = 28;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 2;
             item.mana = 6;
             item.value = 3500;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
             item.shoot = ProjectileType<GreenCard>();

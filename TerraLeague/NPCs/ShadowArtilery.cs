@@ -92,7 +92,7 @@ namespace TerraLeague.NPCs
                     }
                     npc.ai[0] -= 1f;
                 }
-                if (Main.netMode != 1 && npc.ai[0] == 0f)
+                if (Main.netMode != NetmodeID.MultiplayerClient && npc.ai[0] == 0f)
                 {
                     npc.ai[0] = 200f;
                     for (int i = 0; i < 3; i++)
@@ -103,7 +103,7 @@ namespace TerraLeague.NPCs
                         Main.projectile[num280].ai[0] = 2f;
                         Main.projectile[num280].timeLeft = 300;
                         Main.projectile[num280].friendly = false;
-                        NetMessage.SendData(27, -1, -1, null, num280, 0f, 0f, 0f, 0, 0, 0);
+                        NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, num280, 0f, 0f, 0f, 0, 0, 0);
                         npc.netUpdate = true;
                     }
 

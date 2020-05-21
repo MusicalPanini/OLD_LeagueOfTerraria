@@ -8,6 +8,7 @@ using TerraLeague.Buffs;
 using TerraLeague.Items.CompleteItems;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -45,7 +46,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 modPlayer.meleeFlatDamage += 2 * modPlayer.armorLastStep;
 
                 Efx(player, target);
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
 
                 modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;
@@ -66,7 +67,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 modPlayer.minionFlatDamage += 2 * modPlayer.armorLastStep;
 
                 Efx(player, target);
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
 
                 modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;

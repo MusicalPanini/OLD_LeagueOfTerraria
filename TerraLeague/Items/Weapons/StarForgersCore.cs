@@ -145,11 +145,11 @@ namespace TerraLeague.Items.Weapons
             item.height = 42;
             item.useTime = 36;
             item.useAnimation = 36;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 1;
             item.value = 40000;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<ForgedStar>();
         }

@@ -127,7 +127,7 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Main.PlaySound(0, projectile.Center);
+            Main.PlaySound(SoundID.Dig, projectile.Center);
             for (int i = 0; i < 6; i++)
             {
                 Dust.NewDustDirect(projectile.Center, 8, 8, 51,0,0,0,default(Color), 0.75f);

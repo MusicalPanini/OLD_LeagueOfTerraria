@@ -65,7 +65,7 @@ namespace TerraLeague.Projectiles
             if (bounces <= 0)
                 Prime();
             else
-                Main.PlaySound(0, (int)projectile.position.X, (int)projectile.position.Y);
+                Main.PlaySound(SoundID.Dig, (int)projectile.position.X, (int)projectile.position.Y);
 
             return false;
         }

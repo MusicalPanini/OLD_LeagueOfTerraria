@@ -198,10 +198,10 @@ namespace TerraLeague.Items.Weapons
             item.height = 34;
             item.useTime = 26;
             item.useAnimation = 26;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 0f;
             item.value = 1000;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.shootSpeed = 10f;
             item.shoot = ProjectileType<ToxicArrow>();
             item.UseSound = SoundID.Item5;

@@ -22,7 +22,7 @@ namespace TerraLeague.Items
             item.width = 16;
             item.height = 16;
             item.uniqueStack = false;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
         }
 
         public override void PostUpdate()

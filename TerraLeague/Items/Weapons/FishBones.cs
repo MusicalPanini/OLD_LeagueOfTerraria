@@ -131,14 +131,14 @@ namespace TerraLeague.Items.Weapons
             item.ranged = true;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 3;
             item.value = 120000;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.UseSound = SoundID.Item11;
             item.autoReuse = true;
-            item.shoot = 134;
+            item.shoot = ProjectileID.RocketI;
             item.shootSpeed = 6;
             item.useAmmo = AmmoID.Rocket;
         }

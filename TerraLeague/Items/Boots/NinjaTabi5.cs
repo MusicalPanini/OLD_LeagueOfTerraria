@@ -43,7 +43,7 @@ namespace TerraLeague.Items.Boots
             item.width = 26;
             item.height = 22;
             item.value = 350000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.accessory = true;
             item.material = true;
         }

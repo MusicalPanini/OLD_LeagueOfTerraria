@@ -51,7 +51,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.R)
             {
-                return "Strike the targeted area with an X then strike after a delay." +
+                return "Mark the targeted area with an X then strike after a delay." +
                     "\nKills will allow you to cast again for a short time.";
             }
             else
@@ -163,10 +163,10 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;
             item.useTime = 24;
             item.useAnimation = 24;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 2;
             item.value = 3500;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item1;
         }
 

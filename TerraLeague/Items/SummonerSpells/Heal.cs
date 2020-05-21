@@ -62,7 +62,7 @@ namespace TerraLeague.Items.SummonerSpells
                 }
             }
 
-            if (target != -1 && Main.netMode == 1 && Main.player[target].active)
+            if (target != -1 && Main.netMode == NetmodeID.MultiplayerClient && Main.player[target].active)
             {
                 modPlayer.SendHealPacket((int)((Main.player[target].statLifeMax2 * 0.4) * modPlayer.healPower), target, -1, player.whoAmI);
                 modPlayer.SendBuffPacket(BuffID.Swiftness, 360, target, -1, player.whoAmI);

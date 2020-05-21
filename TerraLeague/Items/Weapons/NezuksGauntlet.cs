@@ -188,7 +188,7 @@ namespace TerraLeague.Items.Weapons
                         if ((Main.tile[blockX, blockY].wall != 87 || !((double)blockY > Main.worldSurface) || NPC.downedPlantBoss) && !Collision.SolidCollision(teleportPos, player.width, player.height))
                         {
                             player.Teleport(teleportPos, 1, 0);
-                            NetMessage.SendData(65, -1, -1, null, 0, (float)player.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
+                            NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, (float)player.whoAmI, teleportPos.X, teleportPos.Y, 1, 0, 0);
 
                             player.velocity.Y = 0;
 
@@ -218,10 +218,10 @@ namespace TerraLeague.Items.Weapons
             item.height = 34;
             item.useTime = 40;
             item.useAnimation = 40;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 4f;
             item.value = 55000;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.shootSpeed = 10f;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 73);
             item.shoot = ProjectileType<MysticShot>();

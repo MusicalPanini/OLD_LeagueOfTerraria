@@ -19,7 +19,7 @@ namespace TerraLeague.Items
             item.maxStack = 99;
             item.width = 30;
             item.height = 24;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.value = 30000;
             item.uniqueStack = false;
             item.createTile = TileType<CelestialBarTile>();
@@ -27,7 +27,7 @@ namespace TerraLeague.Items
             item.autoReuse = true;
             item.useAnimation = 15;
             item.useTime = 10;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
         }
 
         public override void AddRecipes()

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             return "[c/0099cc:Passive: GUINSOO'S RAGE -] [c/99e6ff:Every second in combat will grant a stack up to 6]" +
-                "\n[c/99e6ff:Gain " + meleeRangedAttackSpeed + "% melee and ranged attack speed]" +
+                "\n[c/99e6ff:Gain " + meleeRangedAttackSpeed + "% melee and ranged attack speed per stack]" +
                 "\n[c/99e6ff:At max stacks, melee and ranged On Hit damage will be doubled]";
         }
 

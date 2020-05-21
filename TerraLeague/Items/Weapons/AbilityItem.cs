@@ -468,7 +468,7 @@ namespace TerraLeague.Items.Weapons
         /// <param name="player"></param>
         /// <param name="type"></param>
         /// <param name="SendToServer"></param>
-        protected void DoEfx(Player player, AbilityType type, bool SendToServer = true)
+        public void DoEfx(Player player, AbilityType type, bool SendToServer = true)
         {
             if (SendToServer && Main.netMode == NetmodeID.MultiplayerClient)
                 PacketHandler.SendEfx(-1, player.whoAmI, item.type, player.whoAmI, type);

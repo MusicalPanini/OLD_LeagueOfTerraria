@@ -23,7 +23,7 @@ namespace TerraLeague.Items.Accessories
         {
             item.width = 20;
             item.height = 44;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.value = 100000;
             item.accessory = true;
         }

@@ -1,4 +1,5 @@
 ﻿using TerraLeague.Items.Weapons;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -16,7 +17,7 @@ namespace TerraLeague.Items.StartingItems
         {
             item.maxStack = 1;
             item.material = true;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             base.SetDefaults();
         }
 

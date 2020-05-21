@@ -95,7 +95,7 @@ namespace TerraLeague.Projectiles
             }
             else if ((int)projectile.ai[0] == 0)
             {
-                Main.PlaySound(0, projectile.Center);
+                Main.PlaySound(SoundID.Dig, projectile.Center);
 
                 for (int i = 0; i < 12; i++)
                 {

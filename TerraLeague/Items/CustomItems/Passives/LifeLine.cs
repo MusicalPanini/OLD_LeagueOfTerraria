@@ -8,6 +8,7 @@ using TerraLeague.Items.AdvItems;
 using TerraLeague.Items.CompleteItems;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -170,7 +171,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             TriggerLifeLine(player);
             modPlayer.lifeLineCooldown = (int)(cooldown * modPlayer.Cdr * 60);
             Efx(player);
-            if (Main.netMode == 1)
+            if (Main.netMode == NetmodeID.MultiplayerClient)
                 PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
         }
 

@@ -52,7 +52,7 @@ namespace TerraLeague.NPCs
 
             if (npc.ai[3] > 240)
             {
-                if (Main.netMode != 1)
+                if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
@@ -75,9 +75,9 @@ namespace TerraLeague.NPCs
                                         healTarget.life = healTarget.lifeMax;
                                     healTarget.netUpdate = true;
 
-                                    if (Main.netMode == 2)
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
-                                        NetMessage.SendData(81, -1, -1, null, (int)Color.DarkGreen.PackedValue, healTarget.position.X, healTarget.position.Y, (float)heal, 0, 0, 0);
+                                        NetMessage.SendData(MessageID.CombatTextInt, -1, -1, null, (int)Color.DarkGreen.PackedValue, healTarget.position.X, healTarget.position.Y, (float)heal, 0, 0, 0);
                                     }
                                     else
                                     {

@@ -100,28 +100,28 @@ namespace TerraLeague.Items
                 item.SetNameOverride("Cannoneer Bandana");
                 item.vanity = false;
                 item.defense = 5;
-                item.rare = 3;
+                item.rare = ItemRarityID.Orange;
             }
             if (item.type == ItemID.BuccaneerShirt)
             {
                 item.SetNameOverride("Cannoneer Shirt");
                 item.vanity = false;
                 item.defense = 5;
-                item.rare = 3;
+                item.rare = ItemRarityID.Orange;
             }
             if (item.type == ItemID.BuccaneerPants)
             {
                 item.SetNameOverride("Cannoneer Pants");
                 item.vanity = false;
                 item.defense = 5;
-                item.rare = 3;
+                item.rare = ItemRarityID.Orange;
             }
             base.SetDefaults(item);
         }
 
         public override bool OnPickup(Item item, Player player)
         {
-            if (item.type == 184 || item.type == 1735 || item.type == 1868)
+            if (item.type == ItemID.Star || item.type == ItemID.SoulCake || item.type == ItemID.SugarPlum)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 if (modPlayer.manaCharge && modPlayer.manaChargeStacks < 750)

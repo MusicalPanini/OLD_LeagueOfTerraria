@@ -121,10 +121,10 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;        
             item.useTime = 52;        
             item.useAnimation = 26;
-            item.useStyle = 1;          
+            item.useStyle = ItemUseStyleID.SwingThrow;          
             item.knockBack = 3;    
             item.value = 5400;
-            item.rare = 3; 
+            item.rare = ItemRarityID.Orange; 
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
             item.shoot = ProjectileType<VoidSpike>();

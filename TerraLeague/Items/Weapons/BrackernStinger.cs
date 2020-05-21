@@ -122,10 +122,10 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;
             item.useTime = 45;
             item.useAnimation = 45;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 2;
             item.value = 10000;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = new LegacySoundStyle(2, 101);
             item.shootSpeed = 1f;
             item.shoot = ProjectileType<BrackernStingerProj>();

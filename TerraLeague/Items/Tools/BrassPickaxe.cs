@@ -22,10 +22,10 @@ namespace TerraLeague.Items.Tools
             item.height = 32;
             item.useTime = 14;
             item.useAnimation = 17;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 2f;
             item.value = 2000;
-            item.rare = 1;
+            item.rare = ItemRarityID.Blue;
             item.pick = 48;
             item.UseSound = SoundID.Item1;
         }

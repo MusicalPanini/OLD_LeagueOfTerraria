@@ -17,13 +17,13 @@ namespace TerraLeague.Items.SummonerSpells
         public override void SetDefaults()
         {
             item.CloneDefaults(ItemID.FallenStar);
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.width = 20;
             item.height = 26;
             item.maxStack = 1;
             item.notAmmo = true;
             item.ammo = AmmoID.None;
-            item.shoot = 0;
+            item.shoot = ItemID.None;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

@@ -128,11 +128,11 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.useTime = 23;
             item.useAnimation = 23;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 2;
             item.mana = 8;
             item.value = 6000;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 14f;
             item.shoot = ProjectileType<DarksteelDaggerProj>();

@@ -121,10 +121,10 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 32;
             item.useAnimation = 32;
             item.scale = 1.3f;
-            item.useStyle = 1;
+            item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 6;
             item.value = 100000;
-            item.rare = 5;
+            item.rare = ItemRarityID.Pink;
             item.autoReuse = true;
             item.UseSound = SoundID.Item1;
         }

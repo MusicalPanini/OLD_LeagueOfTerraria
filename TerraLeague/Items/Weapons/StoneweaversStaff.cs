@@ -20,14 +20,14 @@ namespace TerraLeague.Items.Weapons
         {
             item.damage = 17;
             item.mana = 4;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.magic = true;
             item.useTime = 35;
             item.useAnimation = 35;
             item.noMelee = true;
             item.knockBack = 2;
             item.value = 10000;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item8;
             item.shoot = ProjectileType<WeaversStoneProj>();
             item.shootSpeed = 12f;

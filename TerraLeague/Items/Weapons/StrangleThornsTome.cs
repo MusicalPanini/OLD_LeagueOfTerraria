@@ -131,10 +131,10 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.useTime = 30;
             item.useAnimation = 30;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 1;
             item.value = 140000;
-            item.rare = 7;
+            item.rare = ItemRarityID.Lime;
             item.UseSound = SoundID.Item8;
             item.mana = 16;
             item.shootSpeed = 32;

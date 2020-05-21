@@ -22,7 +22,7 @@ namespace TerraLeague.Items.CompleteItems
             item.width = 32;
             item.height = 32;
             item.value = 800000;
-            item.rare = 10;
+            item.rare = ItemRarityID.Blue;
             item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -42,7 +42,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemID.DestroyerEmblem, 1);
             recipe.AddIngredient(ItemID.TrueExcalibur, 1);
             recipe.AddIngredient(ItemID.FragmentVortex, 10);
-            recipe.AddTile(412);
+            recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

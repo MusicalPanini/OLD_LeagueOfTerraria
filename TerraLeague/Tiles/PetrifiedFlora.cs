@@ -2,6 +2,7 @@
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
@@ -13,7 +14,7 @@ namespace TerraLeague.Tiles
             Main.tileCut[Type] = true;
             Main.tileSolid[Type] = false;
             Main.tileMergeDirt[Type] = true;
-            soundType = 6;
+            soundType = SoundID.Grass;
             dustType = 192;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.LavaDeath = true;

@@ -11,7 +11,7 @@ namespace TerraLeague.Tiles
     {
         public override void SetDefaults()
         {
-            soundType = 21;
+            soundType = SoundID.Tink;
 
             Main.tileSolid[Type] = true;
             Main.tileMerge[TileID.Sandstone][Type] = true;

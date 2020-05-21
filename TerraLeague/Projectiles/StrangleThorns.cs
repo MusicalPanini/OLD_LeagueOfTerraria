@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -68,7 +69,7 @@ namespace TerraLeague.Projectiles
                             num49 = ProjectileType<StrangleThornsEnd>();
                         }
                         int number = Projectile.NewProjectile(projectile.Center.X + new Vector2(0, -32).RotatedBy(projectile.rotation).X, projectile.Center.Y + new Vector2(0, -32).RotatedBy(projectile.rotation).Y, projectile.velocity.X + new Vector2(0, -32).RotatedBy(projectile.rotation).X, projectile.velocity.Y + new Vector2(0, -32).RotatedBy(projectile.rotation).Y, num49, projectile.damage, projectile.knockBack, projectile.owner, 0f, projectile.ai[1] + 1f);
-                        NetMessage.SendData(27, -1, -1, null, number, 0f, 0f, 0f, 0, 0, 0);
+                        NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, number, 0f, 0f, 0f, 0, 0, 0);
                         return;
                     }
                 }

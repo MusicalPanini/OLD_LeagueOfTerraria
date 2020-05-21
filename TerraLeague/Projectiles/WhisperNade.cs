@@ -3,6 +3,7 @@ using TerraLeague.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerraLeague.Projectiles
 {
@@ -75,7 +76,7 @@ namespace TerraLeague.Projectiles
         {
             Rebound();
 
-            Main.PlaySound(2, (int)projectile.position.X, (int)projectile.position.Y, 10);
+            Main.PlaySound(SoundID.Item, (int)projectile.position.X, (int)projectile.position.Y, 10);
             return false;
         }
 

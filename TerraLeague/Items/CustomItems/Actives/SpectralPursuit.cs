@@ -2,6 +2,7 @@
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CustomItems.Actives
@@ -50,7 +51,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 }
 
                 // For Server
-                if (Main.netMode == 1)
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
                 }
