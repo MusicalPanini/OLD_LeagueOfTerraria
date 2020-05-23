@@ -19,25 +19,32 @@ namespace TerraLeague.Projectiles
         {
             projectile.width = 4;
             projectile.height = 4;
-            projectile.alpha = 255;
-            projectile.timeLeft = 90;
+            projectile.alpha = 0;
+            projectile.timeLeft = 360;
             projectile.penetrate = 1;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.ranged = true;
             projectile.tileCollide = true;
             projectile.ignoreWater = false;
-            projectile.extraUpdates = 8;
+            projectile.extraUpdates = 48;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft == 90)
+            if (projectile.timeLeft == 360)
             {
                 SoundEffectInstance sound = Main.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/WhisperShot"), projectile.position);
                 if (sound != null)
                     sound.Pitch = -0.5f;
             }
+
+            Dust dust = Dust.NewDustPerfect(projectile.position, 182, Vector2.Zero);
+            dust.noGravity = true;
+            dust.velocity *= 0;
+            dust = Dust.NewDustPerfect(projectile.position - projectile.velocity.SafeNormalize(Vector2.Zero), 182, Vector2.Zero);
+            dust.noGravity = true;
+            dust.velocity *= 0;
 
             Lighting.AddLight(projectile.position, 1f, 0.0f, 0.0f);
             if (projectile.alpha > 0)

@@ -18,27 +18,34 @@ namespace TerraLeague.Projectiles
         {
             projectile.width = 3;
             projectile.height = 3;
-            projectile.alpha = 255;
-            projectile.timeLeft = 90;
+            projectile.alpha = 0;
+            projectile.timeLeft = 360;
             projectile.penetrate = 1;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.ranged = true;
             projectile.tileCollide = true;
             projectile.ignoreWater = false;
-            projectile.extraUpdates = 6;
+            projectile.extraUpdates = 24;
         }
 
         public override void AI()
         {
-            if (projectile.timeLeft == 90)
+            if (projectile.timeLeft == 360)
                 Main.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/WhisperShot"), projectile.position);
             Lighting.AddLight(projectile.Left, 1f, 0.5f, 0.01f);
 
-            if (projectile.alpha > 0)
-                projectile.alpha -= 15;
-            if (projectile.alpha < 0)
-                projectile.alpha = 0;
+            Dust dust = Dust.NewDustPerfect(projectile.position, 75, Vector2.Zero, 0, new Color(255, 0, 0));
+            dust.noGravity = true;
+            dust.velocity *= 0;
+            dust = Dust.NewDustPerfect(projectile.position - projectile.velocity.SafeNormalize(Vector2.Zero), 75, Vector2.Zero, 0, new Color(255, 0, 0));
+            dust.noGravity = true;
+            dust.velocity *= 0;
+
+            //if (projectile.alpha > 0)
+            //    projectile.alpha -= 15;
+            //if (projectile.alpha < 0)
+            //    projectile.alpha = 0;
 
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
 

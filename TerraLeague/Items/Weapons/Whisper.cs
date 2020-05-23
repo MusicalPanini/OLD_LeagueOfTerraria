@@ -149,7 +149,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 80000;
             item.rare = ItemRarityID.LightPurple;
             item.shoot = ProjectileID.PurificationPowder;
-            item.shootSpeed = 10f;
+            item.shootSpeed = 1f;
             item.useAmmo = AmmoID.Bullet;
             item.autoReuse = true;
         }
@@ -171,7 +171,6 @@ namespace TerraLeague.Items.Weapons
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
             if (modPlayer.WhisperShotsLeft == 1)
             {
                 type = ProjectileType<WhisperFShot>();
