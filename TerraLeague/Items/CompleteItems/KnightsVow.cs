@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statLifeMax += 40;
+            player.statLifeMax2 += 40;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 8;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
             player.hasPaladinShield = true;
