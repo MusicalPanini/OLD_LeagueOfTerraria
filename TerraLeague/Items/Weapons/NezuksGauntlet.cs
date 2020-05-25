@@ -138,7 +138,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                    int projType = ProjectileType<EssenceFlux>();
+                    int projType = ProjectileType<NezuksGauntlet_EssenceFlux>();
                     int damage = (int)(1);
                     int knockback = 0;
 
@@ -192,7 +192,7 @@ namespace TerraLeague.Items.Weapons
 
                             player.velocity.Y = 0;
 
-                            Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileType<ArcaneShiftProj>(), GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG), 0, player.whoAmI, -1);
+                            Projectile.NewProjectileDirect(player.Center, new Vector2(0, 0), ProjectileType<NezuksGauntlet_ArcaneShift>(), GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG), 0, player.whoAmI, -1);
                             player.CheckMana(GetBaseManaCost(type), true);
                             
                             DoEfx(player, type);
@@ -224,7 +224,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.LightRed;
             item.shootSpeed = 10f;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 73);
-            item.shoot = ProjectileType<MysticShot>();
+            item.shoot = ProjectileType<NezuksGauntlet_MysticShot>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

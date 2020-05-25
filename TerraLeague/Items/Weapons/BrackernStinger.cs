@@ -128,14 +128,14 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Green;
             item.UseSound = new LegacySoundStyle(2, 101);
             item.shootSpeed = 1f;
-            item.shoot = ProjectileType<BrackernStingerProj>();
+            item.shoot = ProjectileType<BrackernStinger_Whip>();
             item.noMelee = true;
             item.noUseGraphic = true;
         }
 
         public override bool CanUseItem(Player player)
         {
-            if (player.ownedProjectileCounts[ProjectileType<BrackernStingerProj>()] < 1)
+            if (player.ownedProjectileCounts[ProjectileType<BrackernStinger_Whip>()] < 1)
                 return base.CanUseItem(player);
             return false;
         }

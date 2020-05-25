@@ -34,7 +34,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
-            item.shoot = ProjectileType<DancingBlade>();
+            item.shoot = ProjectileType<XanCrestBlades_DancingBlade>();
             item.noMelee = true;
             item.useTurn = true;
             item.autoReuse = false;
@@ -44,14 +44,14 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            return player.ownedProjectileCounts[ProjectileType<DancingBlade>()] < 1;
+            return player.ownedProjectileCounts[ProjectileType<XanCrestBlades_DancingBlade>()] < 1;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             for (int i = 0; i < item.stack; i++)
             {
-                Projectile.NewProjectileDirect(position, Vector2.Zero, ProjectileType<DancingBlade>(), damage, knockBack, player.whoAmI, i).Center = player.Center;
+                Projectile.NewProjectileDirect(position, Vector2.Zero, ProjectileType<XanCrestBlades_DancingBlade>(), damage, knockBack, player.whoAmI, i).Center = player.Center;
             }
 
             return false;

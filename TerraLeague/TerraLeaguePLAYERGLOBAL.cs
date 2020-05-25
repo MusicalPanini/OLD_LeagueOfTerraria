@@ -1231,7 +1231,7 @@ namespace TerraLeague
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
                         if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != NPCID.DD2EterniaCrystal)
-                            Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<RequiemProj>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
+                            Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
                     }
                 }
             }
@@ -1248,7 +1248,7 @@ namespace TerraLeague
                 player.velocity = Vector2.Zero;
             }
 
-            if (player.ownedProjectileCounts[ProjectileType<ReapingSlash>()] > 0)
+            if (player.ownedProjectileCounts[ProjectileType<DarkinScythe_ReapingSlash>()] > 0)
             {
                 player.noKnockback = true;
             }
@@ -1889,7 +1889,7 @@ namespace TerraLeague
 
                             if (windsFury)
                             {
-                                Projectile.NewProjectile(player.Center.X, player.Center.Y, shootToX, shootToY, ProjectileType<RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, projTarget.whoAmI);
+                                Projectile.NewProjectile(player.Center.X, player.Center.Y, shootToX, shootToY, ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, projTarget.whoAmI);
                             }
                             else
                             {
@@ -2657,7 +2657,7 @@ namespace TerraLeague
         {
             if (player.HasBuff(BuffType<Buffs.SpinningAxe>()) && !trueInvis)
             {
-                Texture2D texture = mod.GetTexture("Projectiles/SpinningAxe");
+                Texture2D texture = mod.GetTexture("Projectiles/DarksteelThrowingAxe_SpinningAxe");
                 Color color = Lighting.GetColor((int)player.Center.X / 16, (int)player.Center.Y / 16);
                 float rotation = MathHelper.ToRadians(((float)Main.time % 15)*24) * player.direction;
                 Main.spriteBatch.Draw

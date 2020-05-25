@@ -109,7 +109,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     Vector2 position = player.MountedCenter;
-                    int projType = ProjectileType<DarkinArrowRain>();
+                    int projType = ProjectileType<DarkinBow_ArrowRain>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 0;
 
@@ -149,16 +149,16 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 1;
             item.value = 6000;
             item.rare = ItemRarityID.LightRed;
-            item.shoot = ProjectileType<DarkinBowArrowControl>();
+            item.shoot = ProjectileType<DarkinBow_ArrowControl>();
             item.useAmmo = AmmoID.Arrow;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             if (type == ProjectileID.WoodenArrowFriendly)
-                type = ProjectileType<DarkinArrow>();
+                type = ProjectileType<DarkinBow_DarkinArrow>();
 
-            Projectile proj = Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<DarkinBowArrowControl>(), damage, knockBack, player.whoAmI, type);
+            Projectile proj = Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<DarkinBow_ArrowControl>(), damage, knockBack, player.whoAmI, type);
             proj.rotation = new Vector2(speedX, speedY).ToRotation();
 
             return false;

@@ -29,7 +29,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 10000;
             item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item8;
-            item.shoot = ProjectileType<WeaversStoneProj>();
+            item.shoot = ProjectileType<StoneweaversStaff_WeaversStone>();
             item.shootSpeed = 12f;
             item.autoReuse = true;
             item.useAmmo = ItemType<BlackIceChunk>();
@@ -145,7 +145,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(player.Top, 1f);
-                    int projType = ProjectileType<StoneShard>();
+                    int projType = ProjectileType<StoneweaversStaff_ThreadedVolley>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 3;
 
@@ -188,7 +188,7 @@ namespace TerraLeague.Items.Weapons
                     }
 
                     Vector2 velocity = Vector2.Zero;
-                    int projType = ProjectileType<SeismicShove>();
+                    int projType = ProjectileType<StoneweaversStaff_SeismicShove>();
                     int damage = GetAbilityBaseDamage(player, type);
                     int knockback = 0;
 

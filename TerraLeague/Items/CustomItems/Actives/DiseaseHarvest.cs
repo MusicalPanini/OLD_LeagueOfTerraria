@@ -58,7 +58,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                     if (npc.GetGlobalNPC<NPCsGLOBAL>().pox)
                     {
                         modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
-                        Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<DiseaseHarvestProj>(), stackDamage + (int)(magicScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG/100d), 0, player.whoAmI, i, manaRestore);
+                        Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Item_DiseaseHarvest>(), stackDamage + (int)(magicScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG/100d), 0, player.whoAmI, i, manaRestore);
                     }
                 }
             }

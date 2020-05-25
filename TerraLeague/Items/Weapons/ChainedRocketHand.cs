@@ -103,7 +103,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     Vector2 position = player.Center;
-                    int projType = ProjectileType<StaticField>();
+                    int projType = ProjectileType<ChainedRocketHand_StaticField>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 1;
 
@@ -135,7 +135,7 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item10;
             item.shootSpeed = 8f;
             item.melee = true;
-            item.shoot = ProjectileType<RobotFist>();
+            item.shoot = ProjectileType<ChainedRocketHand_RobotFist>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

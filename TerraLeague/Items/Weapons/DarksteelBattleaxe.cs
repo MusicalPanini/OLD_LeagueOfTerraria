@@ -108,7 +108,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = Vector2.Zero;
-                    int projType = ProjectileType<DarksteelDecimate>();
+                    int projType = ProjectileType<DarksteelBattleaxe_Decimate>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
                     int knockback = 4;
 

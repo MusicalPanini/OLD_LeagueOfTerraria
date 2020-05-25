@@ -113,7 +113,7 @@ namespace TerraLeague.Items.Weapons
                     {
                         Vector2 position = Main.player[target].position;
                         Vector2 velocity = Vector2.Zero;
-                        int projType = ProjectileType<DivineJudgement>();
+                        int projType = ProjectileType<StarfireSpellblades_DivineJudgement>();
                         int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL) + GetAbilityScalingDamage(player, type, DamageType.SUM);
                         int knockback = 10;
 
@@ -164,7 +164,7 @@ namespace TerraLeague.Items.Weapons
             if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks >= 6)
             {
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 13f);
-                int projType = ProjectileType<TrueIceVolley>();
+                int projType = ProjectileType<TrueIceBow_Volley>();
                 damage = item.damage + (int)(player.GetModPlayer<PLAYERGLOBAL>().MEL * 0.2) + (int)(player.GetModPlayer<PLAYERGLOBAL>().SUM * 0.40);
                 int numberProjectiles = 15;
                 float startingAngle = 24;

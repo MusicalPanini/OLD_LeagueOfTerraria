@@ -43,7 +43,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 if (npc != -1)
                 {
                     int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
-                    Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<LightningBoltProj>(), damage, 0, player.whoAmI, npc);
+                    Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Item_LightningBolt>(), damage, 0, player.whoAmI, npc);
                     modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
                 }
             }

@@ -104,7 +104,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = Main.MouseWorld;
                     
-                    int projType = ProjectileType<WindsofWar>();
+                    int projType = ProjectileType<ColossusFist_WindsofWar>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
                     int knockback = 0;
 
@@ -139,7 +139,7 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;
             item.autoReuse = true;
             item.noUseGraphic = true;
-            item.shoot = ProjectileType<ColossusFistP>();
+            item.shoot = ProjectileType<ColossusFist_Fist>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

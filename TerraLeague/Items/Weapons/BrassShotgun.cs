@@ -105,7 +105,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                    int projType = ProjectileType<EndoftheLine>();
+                    int projType = ProjectileType<BrassShotgun_EndoftheLine>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 3;
 

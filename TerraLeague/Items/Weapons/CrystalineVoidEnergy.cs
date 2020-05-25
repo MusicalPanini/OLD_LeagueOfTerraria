@@ -132,7 +132,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
-                    int projType = ProjectileType<VoidSeeker>();
+                    int projType = ProjectileType<CrystalineVoidEnergy_VoidSeeker>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 1;
 
@@ -171,7 +171,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Orange;
             item.UseSound =  new LegacySoundStyle(2, 75);
             item.autoReuse = true;
-            item.shoot = ProjectileType<VoidEnergy>();
+            item.shoot = ProjectileType<CrystalineVoidEnergy_VoidEnergy>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

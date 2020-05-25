@@ -98,7 +98,7 @@ namespace TerraLeague.NPCs
                     for (int i = 0; i < 3; i++)
                     {
                         int damage = 16;
-                        int type = ProjectileType<Projectiles.LiquidShadow>();
+                        int type = ProjectileType<Projectiles.ShadowArtillery_LiquidShadow>();
                         int num280 = Projectile.NewProjectile(npcCenter, new Vector2(0,-16).RotatedBy(npc.rotation + MathHelper.Pi * (-1 + i) / 12f), type, damage, 0f, Main.myPlayer, 0f, 0f);
                         Main.projectile[num280].ai[0] = 2f;
                         Main.projectile[num280].timeLeft = 300;

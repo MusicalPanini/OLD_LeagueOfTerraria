@@ -151,7 +151,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 40000;
             item.rare = ItemRarityID.Blue;
             item.UseSound = new LegacySoundStyle(2, 113);
-            item.shoot = ProjectileType<ForgedStar>();
+            item.shoot = ProjectileType<StarForgersCore_ForgedStar>();
         }
 
         public override bool AltFunctionUse(Player player)

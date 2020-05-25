@@ -154,8 +154,8 @@ namespace TerraLeague.Items.Weapons
                         stacks = 3;
 
 
-                    Projectile.NewProjectileDirect(position, velocity, ProjectileType<FeastTop>(), damage, knockback, player.whoAmI, stacks);
-                    Projectile.NewProjectileDirect(position, velocity, ProjectileType<FeastBot>(), damage, knockback, player.whoAmI, stacks);
+                    Projectile.NewProjectileDirect(position, velocity, ProjectileType<TerrorOfTheVoid_FeastTop>(), damage, knockback, player.whoAmI, stacks);
+                    Projectile.NewProjectileDirect(position, velocity, ProjectileType<TerrorOfTheVoid_FeastBot>(), damage, knockback, player.whoAmI, stacks);
 
                     SetCooldowns(player, type);
                 }
@@ -172,8 +172,8 @@ namespace TerraLeague.Items.Weapons
 
                     for (int i = 0; i < 20; i++)
                     {
-                        Projectile.NewProjectileDirect(new Vector2(position.X - (32 * i + 16), position.Y), velocity, ProjectileType<RuptureSpike>(), damage, knockback, player.whoAmI, -1);
-                        Projectile.NewProjectileDirect(new Vector2(position.X + (32 * i + 16), position.Y), velocity, ProjectileType<RuptureSpike>(), damage, knockback, player.whoAmI, 1);
+                        Projectile.NewProjectileDirect(new Vector2(position.X - (32 * i + 16), position.Y), velocity, ProjectileType<TerrorOfTheVoid_RuptureSpike>(), damage, knockback, player.whoAmI, -1);
+                        Projectile.NewProjectileDirect(new Vector2(position.X + (32 * i + 16), position.Y), velocity, ProjectileType<TerrorOfTheVoid_RuptureSpike>(), damage, knockback, player.whoAmI, 1);
 
                     }
 
@@ -200,7 +200,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 3500;
             item.rare = ItemRarityID.Green;
             item.scale = 1.5f;
-            item.shoot = ProjectileType<VorpalSpike>();
+            item.shoot = ProjectileType<TerrorOfTheVoid_VorpalSpike>();
             item.shootSpeed = 8f;
             item.UseSound = SoundID.Item1;
         }

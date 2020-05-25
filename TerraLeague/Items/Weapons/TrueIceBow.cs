@@ -104,7 +104,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 13f);
-                    int projType = ProjectileType<TrueIceVolley>();
+                    int projType = ProjectileType<TrueIceBow_Volley>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 1;
 
@@ -165,7 +165,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (player.itemAnimation != player.itemAnimationMax - 1)
             {
-                type = ProjectileType<TrueIceFlurry>();
+                type = ProjectileType<TrueIceBow_Flurry>();
                 damage = (int)(damage * 0.3);
                 knockBack = 0;
                 //int numberProjectiles = 5;

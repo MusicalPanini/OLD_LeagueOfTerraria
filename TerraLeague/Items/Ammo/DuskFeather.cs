@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Ammo
         public override void SetDefaults()
         {
             item.shootSpeed = 3f;
-            item.shoot = ProjectileType<Projectiles.DuskFeather>();
+            item.shoot = ProjectileType<Projectiles.MagicalPlumage_DuskFeather>();
             item.damage = 9;
             item.width = 8;
             item.height = 8;

@@ -46,7 +46,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                             hSpeed = 10 * ((i) / (float)(modPlayer.maxMinionsLastStep - 1));
 
 
-                        Projectile.NewProjectile(player.position.X, player.position.Y, hSpeed-5, -4, ProjectileType<SpookyGhost>(), baseDamage + (int)(modPlayer.SUM * minionScaling / 100d), 0, player.whoAmI);
+                        Projectile.NewProjectile(player.position.X, player.position.Y, hSpeed-5, -4, ProjectileType<Item_SpookyGhost>(), baseDamage + (int)(modPlayer.SUM * minionScaling / 100d), 0, player.whoAmI);
                     }
                 }
 

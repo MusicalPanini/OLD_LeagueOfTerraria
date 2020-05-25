@@ -110,7 +110,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.Center;
                     Vector2 velocity = Vector2.Zero;
-                    int projType = ProjectileType<FrostRing>();
+                    int projType = ProjectileType<DarkIceTome_FrostRing>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -140,7 +140,7 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2,8);
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.shootSpeed = 16;
-            item.shoot = ProjectileType<IceShard>();
+            item.shoot = ProjectileType<DarkIceTome_IceShard>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

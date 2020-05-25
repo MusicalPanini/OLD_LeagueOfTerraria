@@ -110,7 +110,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
-                    int projType = ProjectileType<PiercingLight>();
+                    int projType = ProjectileType<LightPistol_PiercingLight>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 0;
 
@@ -144,7 +144,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 6000;
             item.rare = ItemRarityID.Orange;
             item.scale = 0.75f;
-            item.shoot = ProjectileType<LightPistolProj>();
+            item.shoot = ProjectileType<LightPistol_Bullet>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
             item.autoReuse = true;
         }

@@ -31,7 +31,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 4000;
             item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item8;
-            item.shoot = ProjectileType<CelestialHeal>();
+            item.shoot = ProjectileType<CelestialStaff_CelestialHeal>();
             item.shootSpeed = 12f;
             item.autoReuse = true;
         }
@@ -192,7 +192,7 @@ namespace TerraLeague.Items.Weapons
                     Vector2 position = player.Center;
                     position.Y -= 600;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
-                    int projType = ProjectileType<Starcall>();
+                    int projType = ProjectileType<CelestialStaff_Starcall>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
 
                     Projectile.NewProjectile(position, velocity, projType, damage, 0, player.whoAmI);

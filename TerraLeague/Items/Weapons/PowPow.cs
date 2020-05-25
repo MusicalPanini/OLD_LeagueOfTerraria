@@ -104,7 +104,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
-                    int projType = ProjectileType<Zap>();
+                    int projType = ProjectileType<PowPow_Zap>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 0;
 

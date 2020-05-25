@@ -152,7 +152,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.Center;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
-                    int projType = ProjectileType<VenomCask>();
+                    int projType = ProjectileType<ChemCrossbow_VenomCask>();
                     int damage = 5;
                     int knockback = 0;
 
@@ -176,7 +176,7 @@ namespace TerraLeague.Items.Weapons
                         {
                             if (npc.HasBuff(BuffType<DeadlyVenom>()) && npc.active && !npc.immortal)
                             {
-                                Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Projectiles.Contaminate>(), GetAbilityBaseDamage(player, type), 0, player.whoAmI, i);
+                                Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Projectiles.ChemCrossbow_Contaminate>(), GetAbilityBaseDamage(player, type), 0, player.whoAmI, i);
                                 SetCooldowns(player, type);
                             }
                         }
@@ -203,7 +203,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 1000;
             item.rare = ItemRarityID.Blue;
             item.shootSpeed = 10f;
-            item.shoot = ProjectileType<ToxicArrow>();
+            item.shoot = ProjectileType<ChemCrossbow_ToxicArrow>();
             item.UseSound = SoundID.Item5;
             item.useAmmo = AmmoID.Arrow;
         }
@@ -222,7 +222,7 @@ namespace TerraLeague.Items.Weapons
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             if (type == ProjectileID.WoodenArrowFriendly)
-                type = ProjectileType<ToxicArrow>();
+                type = ProjectileType<ChemCrossbow_ToxicArrow>();
             return true;
         }
 

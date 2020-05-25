@@ -54,7 +54,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             modPlayer.SendBuffPacket(BuffType<HarbingerOfFire>(), effectDuration * 60, target, -1, player.whoAmI);
             player.AddBuff(BuffType<HarbingerOfFrost>(), effectDuration * 60);
             modPlayer.frostHarbinger = true;
-            Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<FrostStorm>(), damage, 0, player.whoAmI, target).timeLeft = effectDuration * 60;
+            Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Item_FrostStorm>(), damage, 0, player.whoAmI, target).timeLeft = effectDuration * 60;
 
             modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
         }

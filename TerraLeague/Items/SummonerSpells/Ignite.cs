@@ -40,7 +40,7 @@ namespace TerraLeague.Items.SummonerSpells
             int npc = TerraLeague.NPCMouseIsHovering();
             if (npc != -1)
             {
-                Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<IgniteProj>(), 1, 0, player.whoAmI, npc);
+                Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Ignite>(), 1, 0, player.whoAmI, npc);
 
                 SetCooldowns(player, spellSlot);
             }

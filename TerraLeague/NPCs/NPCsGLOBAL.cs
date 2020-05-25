@@ -570,7 +570,7 @@ namespace TerraLeague.NPCs
                 {
                     int x = Main.rand.Next(-5, 4);
                     x *= Main.rand.Next(0, 2) == 0 ? 1 : -1;
-                    Projectile.NewProjectile(npc.Center, new Vector2(x, -8), ProjectileType<StrangleThornSeed>(), 0, 0, 255);
+                    Projectile.NewProjectile(npc.Center, new Vector2(x, -8), ProjectileType<StrangleThornsTome_Seed>(), 0, 0, 255);
                 }
             }
 

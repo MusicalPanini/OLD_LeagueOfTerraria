@@ -60,7 +60,7 @@ namespace TerraLeague.Items.SummonerSpells
             int npc = TerraLeague.NPCMouseIsHovering();
             if (npc != -1)
             {
-                Projectile.NewProjectile(new Vector2(Main.npc[npc].Center.X, Main.npc[npc].Center.Y - 1500), Vector2.Zero, ProjectileType<SmiteProj>(), GetDamageStat(), 0, player.whoAmI, npc);
+                Projectile.NewProjectile(new Vector2(Main.npc[npc].Center.X, Main.npc[npc].Center.Y - 1500), Vector2.Zero, ProjectileType<Summoner_Smite>(), GetDamageStat(), 0, player.whoAmI, npc);
 
                 SetCooldowns(player, spellSlot);
             }

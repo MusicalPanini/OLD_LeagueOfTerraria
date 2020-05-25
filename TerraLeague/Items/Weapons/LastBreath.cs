@@ -146,7 +146,7 @@ namespace TerraLeague.Items.Weapons
                         Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
                         proj.magic = false;
                         proj.melee = true;
-                        Projectile.NewProjectile(position, velocity/4, ProjectileType<SteelTempest>(), damage, knockback, player.whoAmI, 0, 1);
+                        Projectile.NewProjectile(position, velocity/4, ProjectileType<LastBreath_SteelTempest>(), damage, knockback, player.whoAmI, 0, 1);
 
                         SetCooldowns(player, type);
                     }
@@ -158,7 +158,7 @@ namespace TerraLeague.Items.Weapons
                         DoEfx(player, type);
                         Vector2 position = player.MountedCenter;
                         Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 3f);
-                        int projType = ProjectileType<SteelTempest>();
+                        int projType = ProjectileType<LastBreath_SteelTempest>();
                         int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
                         int knockback = 5;
                         player.ClearBuff(BuffType<LastBreath3>());

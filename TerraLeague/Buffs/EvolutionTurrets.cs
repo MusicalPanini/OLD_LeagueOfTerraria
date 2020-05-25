@@ -19,7 +19,7 @@ namespace TerraLeague.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
 
-            if (player.ownedProjectileCounts[ProjectileType<EvolutionTurret>()] <= 0)
+            if (player.ownedProjectileCounts[ProjectileType<HextechWrench_EvolutionTurret>()] <= 0)
                 player.ClearBuff(Type);
             else
                 player.buffTime[buffIndex] = 100;

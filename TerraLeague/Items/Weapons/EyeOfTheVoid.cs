@@ -110,7 +110,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CurrentlyHasSpecialCast(Player player, AbilityType type)
         {
-            if (type == AbilityType.Q && Main.LocalPlayer.ownedProjectileCounts[ProjectileType<Plasma>()] > 0 && player.GetModPlayer<PLAYERGLOBAL>().AbilityCooldowns[0] <= GetCooldown(type) * 60 - 10)
+            if (type == AbilityType.Q && Main.LocalPlayer.ownedProjectileCounts[ProjectileType<EyeOfTheVoid_Plasma>()] > 0 && player.GetModPlayer<PLAYERGLOBAL>().AbilityCooldowns[0] <= GetCooldown(type) * 60 - 10)
                 return true;
             else
                 return false;
@@ -130,13 +130,13 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CurrentlyHasSpecialCast(Main.LocalPlayer, type))
                 {
-                    Main.projectile.Where(x => x.type == ProjectileType<Plasma>() && x.owner == player.whoAmI).FirstOrDefault().Kill();
+                    Main.projectile.Where(x => x.type == ProjectileType<EyeOfTheVoid_Plasma>() && x.owner == player.whoAmI).FirstOrDefault().Kill();
                 }
                 else if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                    int projType = ProjectileType<Plasma>();
+                    int projType = ProjectileType<EyeOfTheVoid_Plasma>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 1;
 
@@ -169,7 +169,7 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new LegacySoundStyle(2, 15);
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.shootSpeed = 10;
-            item.shoot = ProjectileType<EyeLaser>();
+            item.shoot = ProjectileType<EyeOfTheVoid_Lazer>();
         }
 
         public override bool CanUseItem(Player player)

@@ -131,7 +131,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                    int projType = ProjectileType<BouncingBomb>();
+                    int projType = ProjectileType<Hexplosives_BouncingBomb>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 7;
 
@@ -147,7 +147,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 10);
-                    int projType = ProjectileType<Minefield>();
+                    int projType = ProjectileType<Hexplosives_HexplosiveMineField>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -177,7 +177,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.LightRed;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 12f;
-            item.shoot = ProjectileType<HexplosiveShot>();
+            item.shoot = ProjectileType<Hexplosives_Bomb>();
             item.mana = 8;
             item.noMelee = true;
             item.useTurn = true;

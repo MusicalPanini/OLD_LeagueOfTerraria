@@ -40,8 +40,8 @@ namespace TerraLeague.Items.CustomItems.Passives
                     int totalSwords = player.maxMinions;
                     for (int i = 0; i < totalSwords; i++)
                     {
-                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<SummonedSwordA>(), (int)(modPlayer.SUM * minionScaling / 100d), 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
-                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<SummonedSwordB>(), (int)(modPlayer.SUM * minionScaling / 100d), 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
+                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Item_SummonedSwordA>(), (int)(modPlayer.SUM * minionScaling / 100d), 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
+                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Item_SummonedSwordB>(), (int)(modPlayer.SUM * minionScaling / 100d), 1, player.whoAmI, ((MathHelper.TwoPi * i) / totalSwords), target.whoAmI);
                     }
                 }
             }

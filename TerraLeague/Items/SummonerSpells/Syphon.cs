@@ -63,7 +63,7 @@ namespace TerraLeague.Items.SummonerSpells
                     float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
                     if (player.Distance(Main.npc[i].Center) < distance)
                     {
-                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<SyphonProj>(), GetDamageStat(), 0, player.whoAmI, i);
+                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, i);
                         SetCooldowns(player, spellSlot);
                     }
                 }

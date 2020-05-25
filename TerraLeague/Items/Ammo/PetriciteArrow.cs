@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Ammo
         public override void SetDefaults()
         {
             item.shootSpeed = 3f;
-            item.shoot = ProjectileType<PetriciteArrowProj>();
+            item.shoot = ProjectileType<Arrow_PetriciteArrow>();
             item.damage = 9;
             item.width = 10;
             item.height = 28;

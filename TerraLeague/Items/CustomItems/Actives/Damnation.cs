@@ -56,10 +56,10 @@ namespace TerraLeague.Items.CustomItems.Actives
             player.ApplyDamageToNPC(NPC, damage, 0, 0, false);
             modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
 
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2( 2,  5), ProjectileType<DamnationProj>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2(-2,  5), ProjectileType<DamnationProj>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2( 2, -5), ProjectileType<DamnationProj>(), 0, 0, player.whoAmI);
-            Projectile.NewProjectileDirect(NPC.Center, new Vector2(-2, -5), ProjectileType<DamnationProj>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(NPC.Center, new Vector2( 2,  5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(NPC.Center, new Vector2(-2,  5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(NPC.Center, new Vector2( 2, -5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
+            Projectile.NewProjectileDirect(NPC.Center, new Vector2(-2, -5), ProjectileType<Item_Damnation>(), 0, 0, player.whoAmI);
         }
 
         public override void Efx(Player user)

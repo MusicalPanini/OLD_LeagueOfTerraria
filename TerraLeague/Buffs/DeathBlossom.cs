@@ -45,8 +45,8 @@ namespace TerraLeague.Buffs
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(-MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDaggerProj>(), damage, 2, player.whoAmI, 1, 0);
-                    proj = Projectile.NewProjectileDirect(player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDaggerProj>(), damage, 2, player.whoAmI, 1);
+                    Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(-MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDagger_Dagger>(), damage, 2, player.whoAmI, 1, 0);
+                    proj = Projectile.NewProjectileDirect(player.MountedCenter, new Microsoft.Xna.Framework.Vector2(0, 10).RotatedBy(MathHelper.TwoPi * (player.buffTime[buffIndex] / 75f) + ((MathHelper.TwoPi * i)/3)), ProjectileType<DarksteelDagger_Dagger>(), damage, 2, player.whoAmI, 1);
                 }
             }
 

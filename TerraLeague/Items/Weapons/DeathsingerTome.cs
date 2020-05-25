@@ -139,7 +139,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = Vector2.Zero;
-                    int projType = ProjectileType<DeathTomeAura>();
+                    int projType = ProjectileType<DeathsingerTome_Defile>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -188,7 +188,7 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 35;
             item.UseSound = new LegacySoundStyle(2,8);
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = ProjectileType<DeathTomeShot>();
+            item.shoot = ProjectileType<DeathsingerTome_LayWaste>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

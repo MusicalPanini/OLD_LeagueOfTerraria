@@ -128,7 +128,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CurrentlyHasSpecialCast(Player player, AbilityType type)
         {
-            if (type == AbilityType.E && Main.LocalPlayer.ownedProjectileCounts[ProjectileType<LucentSingularity>()] > 0)
+            if (type == AbilityType.E && Main.LocalPlayer.ownedProjectileCounts[ProjectileType<RadiantStaff_LucentSingularity>()] > 0)
                 return true;
             else
                 return false;
@@ -150,7 +150,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CurrentlyHasSpecialCast(Main.LocalPlayer, type))
                 {
-                    Projectile proj = Main.projectile.Where(x => x.type == ProjectileType<LucentSingularity>() && x.owner == player.whoAmI).FirstOrDefault();
+                    Projectile proj = Main.projectile.Where(x => x.type == ProjectileType<RadiantStaff_LucentSingularity>() && x.owner == player.whoAmI).FirstOrDefault();
                     if (proj.width != 8)
                         proj.timeLeft = 1;
                 }
@@ -158,7 +158,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                    int projType = ProjectileType<LucentSingularity>();
+                    int projType = ProjectileType<RadiantStaff_LucentSingularity>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -175,7 +175,7 @@ namespace TerraLeague.Items.Weapons
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 1);
 
-                    int projType = ProjectileType<FinalSpark>();
+                    int projType = ProjectileType<RadiantStaff_FinalSpark>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 3;
                     player.AddBuff(BuffType<Buffs.FinalSparkChannel>(), 60);
@@ -203,7 +203,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 55000;
             item.rare = ItemRarityID.Pink;
             item.UseSound = new LegacySoundStyle(2, 8, Terraria.Audio.SoundType.Sound);
-            item.shoot = ProjectileType<LightShot>();
+            item.shoot = ProjectileType<RadiantStaff_LightShot>();
             item.shootSpeed = 10f;
             item.autoReuse = true;
         }

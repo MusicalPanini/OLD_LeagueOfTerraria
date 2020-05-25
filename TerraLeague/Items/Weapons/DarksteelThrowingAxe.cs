@@ -135,7 +135,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Orange;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
-            item.shoot = ProjectileType<ThrowingAxe>();
+            item.shoot = ProjectileType<DarksteelThrowingAxe_ThrowingAxe>();
             item.autoReuse = true;
             item.noMelee = true;
             item.useTurn = true;
@@ -148,7 +148,7 @@ namespace TerraLeague.Items.Weapons
 
             if (player.GetModPlayer<PLAYERGLOBAL>().spinningAxe)
             {
-                Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY) * 1.2f, ProjectileType<Projectiles.SpinningAxe>(), damage + (int)(GetAbilityBaseDamage(player, AbilityType.Q) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.RNG)), knockBack + 1.5f, player.whoAmI, 1, player.velocity.X);
+                Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY) * 1.2f, ProjectileType<Projectiles.DarksteelThrowingAxe_SpinningAxe>(), damage + (int)(GetAbilityBaseDamage(player, AbilityType.Q) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.RNG)), knockBack + 1.5f, player.whoAmI, 1, player.velocity.X);
                 player.ClearBuff(BuffType<Buffs.SpinningAxe>());
                 return false;
             }

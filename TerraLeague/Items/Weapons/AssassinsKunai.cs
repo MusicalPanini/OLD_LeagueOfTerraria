@@ -102,10 +102,10 @@ namespace TerraLeague.Items.Weapons
 
                     for (int i = 0; i < 9; i++)
                     {
-                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<ShroudSmoke>(), 0, 0, player.whoAmI);
-                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<ShroudSmoke>(), 0, 0, player.whoAmI);
-                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<ShroudSmoke>(), 0, 0, player.whoAmI);
-                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<ShroudSmoke>(), 0, 0, player.whoAmI);
+                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
+                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
+                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
+                        Projectile.NewProjectile(player.Center, new Vector2(order[i], 0), ProjectileType<AssassinsKunai_ShroudSmoke>(), 0, 0, player.whoAmI);
                     }
                     SetCooldowns(player, type);
                 }
@@ -130,7 +130,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 300000;
             item.rare = ItemRarityID.Pink;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
-            item.shoot = ProjectileType<Kunai>();
+            item.shoot = ProjectileType<AssassinsKunai_Kunai>();
             item.shootSpeed = 16f;
             item.noMelee = true;
             item.useTurn = true;

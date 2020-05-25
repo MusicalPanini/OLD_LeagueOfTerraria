@@ -42,7 +42,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 Vector2 position = player.Center;
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 20f);
-                int projType = ProjectileType<TrueIceVolley>();
+                int projType = ProjectileType<TrueIceBow_Volley>();
                 int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 int knockback = 1;
                 int numberProjectiles = 5;

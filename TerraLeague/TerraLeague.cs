@@ -753,7 +753,7 @@ namespace TerraLeague
         /// <returns></returns>
         internal static bool IsProjActuallyMeleeAttack(Projectile proj)
         {
-            if (proj.aiStyle == 19 || proj.aiStyle == 20 || proj.aiStyle == 75 || proj.type == ModContent.ProjectileType<DarksteelDecimate>() || proj.type == ModContent.ProjectileType<ReapingSlash>())
+            if (proj.aiStyle == 19 || proj.aiStyle == 20 || proj.aiStyle == 75 || proj.type == ModContent.ProjectileType<DarksteelBattleaxe_Decimate>() || proj.type == ModContent.ProjectileType<DarkinScythe_ReapingSlash>())
                 return true;
             else
                 return false;

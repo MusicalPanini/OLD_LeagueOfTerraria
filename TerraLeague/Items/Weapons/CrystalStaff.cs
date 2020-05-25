@@ -156,7 +156,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y - (Main.screenHeight / 2));
                     Vector2 velocity = new Vector2(0, 25);
-                    int projType = ProjectileType<DarkMatter>();
+                    int projType = ProjectileType<CrystalStaff_DarkMatter>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 10;
 

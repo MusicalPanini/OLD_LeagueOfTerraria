@@ -132,7 +132,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
-                    int projType = ProjectileType<NoxiousTrap>();
+                    int projType = ProjectileType<ToxicBlowgun_NoxiousTrap>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
                     int knockback = 0;
 

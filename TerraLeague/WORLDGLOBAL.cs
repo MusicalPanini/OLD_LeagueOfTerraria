@@ -519,7 +519,7 @@ namespace TerraLeague
                         num144 = 12f / num144;
                         num142 *= num144;
                         num143 *= num144;
-                        Projectile.NewProjectile(vector.X, vector.Y, num142, num143, ProjectileType<CelestialMeteorite>(), 10000, 10f, Main.myPlayer, 0f, 0f);
+                        Projectile.NewProjectile(vector.X, vector.Y, num142, num143, ProjectileType<World_CelestialMeteorite>(), 10000, 10f, Main.myPlayer, 0f, 0f);
                     }
                 }
             }

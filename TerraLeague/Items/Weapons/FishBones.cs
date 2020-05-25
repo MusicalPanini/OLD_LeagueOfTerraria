@@ -106,7 +106,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 2.5f);
-                    int projType = ProjectileType<SMDR>();
+                    int projType = ProjectileType<FishBones_SMDR>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 6;
 

@@ -134,7 +134,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     DoEfx(player, type);
-                    int projType = ProjectileType<MicroRocket>();
+                    int projType = ProjectileType<HextechWrench_MicroRocket>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
                     int knockback = 1;
 
@@ -157,7 +157,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
-                    int projType = ProjectileType<StormNade>();
+                    int projType = ProjectileType<HextechWrench_StormGrenade>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
                     int knockback = 0;
 
@@ -188,7 +188,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 1000;
             item.rare = ItemRarityID.Blue;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 113);
-            item.shoot = ProjectileType<EvolutionTurret>();
+            item.shoot = ProjectileType<HextechWrench_EvolutionTurret>();
         }
 
         public override bool AltFunctionUse(Player player)

@@ -16,7 +16,7 @@ namespace TerraLeague.Items.Ammo
         public override void SetDefaults()
         {
             item.shootSpeed = 3f;
-            item.shoot = ProjectileType<BrassShot>();
+            item.shoot = ProjectileType<Bullet_BrassShot>();
             item.damage = 6;
             item.width = 8;
             item.height = 8;

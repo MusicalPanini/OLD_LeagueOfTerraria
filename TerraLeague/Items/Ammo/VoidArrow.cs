@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Ammo
         public override void SetDefaults()
         {
             item.shootSpeed = 3f;
-            item.shoot = ProjectileType<VoidArrowProj>();
+            item.shoot = ProjectileType<Arrow_VoidArrow>();
             item.damage = 8;
             item.width = 10;
             item.height = 28;

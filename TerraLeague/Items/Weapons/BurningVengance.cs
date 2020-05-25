@@ -140,7 +140,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y + 600);
                     Vector2 velocity = new Vector2(0, -1.25f);
-                    int projType = ProjectileType<PillarOfFlame>();
+                    int projType = ProjectileType<BurningVengance_PillarOfFlame>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -157,7 +157,7 @@ namespace TerraLeague.Items.Weapons
                     {
                         Vector2 position = player.position;
                         Vector2 velocity = new Vector2(0, 0);
-                        int projType = ProjectileType<Pyroclasm>();
+                        int projType = ProjectileType<BurningVengance_Pyroclasm>();
                         int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                         int knockback = 0;
 
@@ -189,7 +189,7 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 1;
             item.UseSound = new LegacySoundStyle(2, 34);
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = ProjectileType<BurningVenganceFlame>();
+            item.shoot = ProjectileType<BurningVengance_Flame>();
             item.autoReuse = true;
         }
 

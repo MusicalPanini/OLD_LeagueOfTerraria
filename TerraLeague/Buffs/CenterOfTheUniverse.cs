@@ -20,7 +20,7 @@ namespace TerraLeague.Buffs
         {
             player.buffTime[buffIndex] = 100;
 
-            if (player.ownedProjectileCounts[ProjectileType<ForgedStar>()] <= 0)
+            if (player.ownedProjectileCounts[ProjectileType<StarForgersCore_ForgedStar>()] <= 0)
                 player.ClearBuff(Type);
         }
 

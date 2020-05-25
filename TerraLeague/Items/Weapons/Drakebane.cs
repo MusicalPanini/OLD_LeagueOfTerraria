@@ -112,7 +112,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y - (Main.screenHeight / 2));
                     Vector2 velocity = new Vector2(0, 25);
-                    int projType = ProjectileType<DemacianStandard>();
+                    int projType = ProjectileType<Drakebane_DemacianStandard>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 2;
 
@@ -141,14 +141,14 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 101);
             item.shootSpeed = 1f;
-            item.shoot = ProjectileType<DrakebaneProj>();
+            item.shoot = ProjectileType<Drakebane_Whip>();
             item.noMelee = true;
             item.noUseGraphic = true;
         }
 
         public override bool CanUseItem(Player player)
         {
-            if (player.ownedProjectileCounts[ProjectileType<DrakebaneProj>()] < 1)
+            if (player.ownedProjectileCounts[ProjectileType<Drakebane_Whip>()] < 1)
                 return base.CanUseItem(player);
             return false;
         }

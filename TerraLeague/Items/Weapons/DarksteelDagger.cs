@@ -135,7 +135,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 14f;
-            item.shoot = ProjectileType<DarksteelDaggerProj>();
+            item.shoot = ProjectileType<DarksteelDagger_Dagger>();
             item.noMelee = true;
             item.useTurn = true;
             item.autoReuse = true;

@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                     int damage = (int)(Main.npc[npc].lifeMax * percentMaxLife * 0.01);
                     if (damage > damageCap)
                         damage = damageCap;
-                    Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<DeathfireProj>(), damage, 0, player.whoAmI, npc);
+                    Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Item_DoomBomb>(), damage, 0, player.whoAmI, npc);
                     modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
                 }
             }

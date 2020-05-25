@@ -133,7 +133,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
-                    int projType = ProjectileType<TideCallerBubble>();
+                    int projType = ProjectileType<TideCallerStaff_AquaPrison>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -149,7 +149,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                    int projType = ProjectileType<EbbandFlow>();
+                    int projType = ProjectileType<TideCallerStaff_EbbandFlow>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int healing = GetAbilityBaseDamage(player, AbilityType.E) + GetAbilityScalingDamage(player, AbilityType.E, DamageType.MAG);
                     int knockback = 1;
@@ -179,7 +179,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 4000;
             item.rare = ItemRarityID.Green;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound);
-            item.shoot = ProjectileType<TideCallerShot>();
+            item.shoot = ProjectileType<TideCallerStaff_WaterShot>();
             item.shootSpeed = 7f;
             item.autoReuse = true;
         }

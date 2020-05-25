@@ -120,7 +120,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
-                    int projType = ProjectileType<PiercingDarkness>();
+                    int projType = ProjectileType<LightCannon_PiercingDarkness>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int healing = GetAbilityBaseDamage(player, AbilityType.W) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.RNG) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.MAG);
                     int knockback = 0;
@@ -154,7 +154,7 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 7;
             item.value = 6000;
             item.rare = ItemRarityID.LightRed;
-            item.shoot = ProjectileType<LightCannonProj>();
+            item.shoot = ProjectileType<LightCannon_Beam>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 13);
         }
 

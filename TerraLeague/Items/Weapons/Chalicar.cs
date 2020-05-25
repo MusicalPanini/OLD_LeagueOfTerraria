@@ -104,7 +104,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.Center;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
-                    int projType = ProjectileType<ChalicarRicochet>();
+                    int projType = ProjectileType<Chalicar_Ricochet>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG);
 
                     int knockback = 1;
@@ -135,7 +135,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Green;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 12f;
-            item.shoot = ProjectileType<Projectiles.Chalicar>();
+            item.shoot = ProjectileType<Projectiles.Chalicar_Disk>();
             item.noMelee = true;
             item.useTurn = true;
             item.autoReuse = true;
@@ -144,7 +144,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            if (player.ownedProjectileCounts[ProjectileType<Projectiles.Chalicar>()] < 1)
+            if (player.ownedProjectileCounts[ProjectileType<Projectiles.Chalicar_Disk>()] < 1)
                 return base.CanUseItem(player);
             else
                 return false;

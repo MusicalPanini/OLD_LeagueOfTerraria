@@ -18,7 +18,7 @@ namespace TerraLeague.Items.Ammo
         public override void SetDefaults()
         {
             item.shootSpeed = 3f;
-            item.shoot = ProjectileType<DarksteelShot>();
+            item.shoot = ProjectileType<Bullet_DarksteelShot>();
             item.damage = 7;
             item.width = 8;
             item.height = 8;

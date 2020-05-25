@@ -163,7 +163,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y + 600);
                     Vector2 velocity = new Vector2(0, -1.25f);
-                    int projType = ProjectileType<PillarOfFlame>();
+                    int projType = ProjectileType<BurningVengance_PillarOfFlame>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -185,7 +185,7 @@ namespace TerraLeague.Items.Weapons
                             {
                                 Vector2 position = player.MountedCenter;
                                 Vector2 velocity = Vector2.Zero;
-                                int projType = ProjectileType<SoulShackles>();
+                                int projType = ProjectileType<TheFallenCelestialsDarkMagic_SoulShackles>();
                                 int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                                 int knockback = 0;
 
@@ -218,7 +218,7 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 0;
             item.UseSound = SoundID.Item20;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.shoot = ProjectileType<TormentedShadow>();
+            item.shoot = ProjectileType<TheFallenCelestialsDarkMagic_TormentedShadow>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

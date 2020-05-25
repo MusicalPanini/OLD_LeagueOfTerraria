@@ -119,7 +119,7 @@ namespace TerraLeague.Items.Weapons
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 18f);
                     velocity.Y *= 0.8f;
-                    int projType = ProjectileType<WhisperNade>();
+                    int projType = ProjectileType<Whisper_DancingGrenade>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 4;
 
@@ -173,12 +173,12 @@ namespace TerraLeague.Items.Weapons
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (modPlayer.WhisperShotsLeft == 1)
             {
-                type = ProjectileType<WhisperFShot>();
+                type = ProjectileType<Whisper_ForthShot>();
                 damage *= 2;
             }
             else
             {
-                type = ProjectileType<WhisperShot>();
+                type = ProjectileType<Whisper_Shot>();
             }
             SetStatsPostShoot(player);
             return true;

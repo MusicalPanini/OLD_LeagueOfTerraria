@@ -127,7 +127,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Orange; 
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
-            item.shoot = ProjectileType<VoidSpike>();
+            item.shoot = ProjectileType<VoidReaverScythe_VoidSpike>();
             item.shootSpeed = 18;
             item.scale = 1.3f;
         }

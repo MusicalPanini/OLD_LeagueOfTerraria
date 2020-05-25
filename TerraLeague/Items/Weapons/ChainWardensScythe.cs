@@ -112,7 +112,7 @@ namespace TerraLeague.Items.Weapons
                     }
 
                     Vector2 velocity = Vector2.Zero;
-                    int projType = ProjectileType<Lantern>();
+                    int projType = ProjectileType<ChainWardensScythe_Lantern>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
                     int knockback = 0;
 
@@ -147,7 +147,7 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 14F;
             item.melee = true;
             item.channel = true;
-            item.shoot = ProjectileType<ChainWardensScytheProj>();
+            item.shoot = ProjectileType<ChainWardensScythe_Scythe>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -117,7 +117,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15 * 0.6f);
-                    int projType = ProjectileType<GreenCard>();
+                    int projType = ProjectileType<MagicCards_GreenCard>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.MAG);
                     int knockback = 4;
 
@@ -155,7 +155,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Green;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
-            item.shoot = ProjectileType<GreenCard>();
+            item.shoot = ProjectileType<MagicCards_GreenCard>();
             item.noMelee = true;
             item.useTurn = true;
             item.autoReuse = true;
@@ -174,16 +174,16 @@ namespace TerraLeague.Items.Weapons
                 switch (Main.rand.Next(0, 3))
                 {
                     case 0:
-                        type = ProjectileType<RedCard>();
+                        type = ProjectileType<MagicCards_RedCard>();
                         knockBack *= 2;
                         damage = (int)(damage * 1.25);
                         break;
                     case 1:
-                        type = ProjectileType<BlueCard>();
+                        type = ProjectileType<MagicCards_BlueCard>();
                         damage = (int)(damage * 1.5);
                         break;
                     case 2:
-                        type = ProjectileType<YellowCard>();
+                        type = ProjectileType<MagicCards_YellowCard>();
                         knockBack = 0;
                         break;
                     default:

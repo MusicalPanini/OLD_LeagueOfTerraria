@@ -177,7 +177,7 @@ namespace TerraLeague.Items.Weapons
                     player.velocity = TerraLeague.CalcVelocityToMouse(player.Center, 10f);
                     Vector2 position = player.Center;
                     Vector2 velocity = Vector2.Zero;
-                    int projType = ProjectileType<ReapingSlash>();
+                    int projType = ProjectileType<DarkinScythe_ReapingSlash>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL);
                     int knockback = 4;
 

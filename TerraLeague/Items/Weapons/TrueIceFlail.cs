@@ -108,7 +108,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15f);
-                    int projType = ProjectileType<GlacialPrisonBola>();
+                    int projType = ProjectileType<TrueIceFlail_GlacialPrison>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 0;
 
@@ -143,7 +143,7 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 13F;
             item.melee = true;
             item.channel = true;
-            item.shoot = ProjectileType<TrueIceFlailP>();
+            item.shoot = ProjectileType<TrueIceFlail_Ball>();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

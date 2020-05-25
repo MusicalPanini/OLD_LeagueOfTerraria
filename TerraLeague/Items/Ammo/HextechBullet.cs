@@ -19,7 +19,7 @@ namespace TerraLeague.Items.Ammo
         public override void SetDefaults()
         {
             item.shootSpeed = 3f;
-            item.shoot = ProjectileType<HextechShot>();
+            item.shoot = ProjectileType<Bullet_HextechShot>();
             item.damage = 10;
             item.width = 8;
             item.height = 16;

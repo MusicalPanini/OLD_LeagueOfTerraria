@@ -115,7 +115,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = Vector2.Zero;
-                    int projType = ProjectileType<FoxFire>();
+                    int projType = ProjectileType<OrbofDeception_FoxFire>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
 
                     int knockback = 1;
@@ -149,7 +149,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 8, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
-            item.shoot = ProjectileType<DecepOrb>();
+            item.shoot = ProjectileType<OrbofDeception_Orb>();
             item.noMelee = true;
             item.useTurn = true;
             item.autoReuse = true;
@@ -160,7 +160,7 @@ namespace TerraLeague.Items.Weapons
         {
 
 
-            return player.ownedProjectileCounts[ProjectileType<DecepOrb>()] < 1;
+            return player.ownedProjectileCounts[ProjectileType<OrbofDeception_Orb>()] < 1;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

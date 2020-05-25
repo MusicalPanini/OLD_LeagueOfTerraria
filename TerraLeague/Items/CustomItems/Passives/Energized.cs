@@ -98,7 +98,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (modPlayer.EnergizedDischarge)
                 {
-                    projID = ProjectileType<StaticShivBolt>();
+                    projID = ProjectileType<Item_EnergizedBolt>();
                 }
                 else if (modPlayer.EnergizedStorm)
                 {
@@ -111,9 +111,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (projID != -1)
                 {
-                    if (projID == ProjectileType<StaticShivBolt>())
+                    if (projID == ProjectileType<Item_EnergizedBolt>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, -1, modPlayer.EnergizedStorm ? 1 : 0);
-                    else if (projID == ProjectileType<RapidfireExplosion>())
+                    else if (projID == ProjectileType<Item_RapidfireExplosion>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
                 else if (modPlayer.EnergizedStorm)
@@ -149,11 +149,11 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (modPlayer.EnergizedDischarge)
                 {
-                    projID = ProjectileType<StaticShivBolt>();
+                    projID = ProjectileType<Item_EnergizedBolt>();
                 }
                 else if (modPlayer.EnergizedDetonate)
                 {
-                    projID = ProjectileType<RapidfireExplosion>();
+                    projID = ProjectileType<Item_RapidfireExplosion>();
                 }
                 else if (modPlayer.EnergizedStorm)
                 {
@@ -166,9 +166,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (projID != -1)
                 {
-                    if (projID == ProjectileType<StaticShivBolt>())
+                    if (projID == ProjectileType<Item_EnergizedBolt>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, -1, modPlayer.EnergizedStorm ? 1 : 0);
-                    else if (projID == ProjectileType<RapidfireExplosion>())
+                    else if (projID == ProjectileType<Item_RapidfireExplosion>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
                 else if (modPlayer.EnergizedStorm)
@@ -183,13 +183,13 @@ namespace TerraLeague.Items.CustomItems.Passives
             }
 
             // Energized Stuff
-            if (proj.type == ProjectileType<StaticShivBolt>())
+            if (proj.type == ProjectileType<Item_EnergizedBolt>())
             {
                 int bonusDamage = baseDamage + (int)(modPlayer.RNG * rangedScaling / 100d);
 
                 if (modPlayer.EnergizedDetonate)
                 {
-                    Projectile.NewProjectile(target.Center, Vector2.Zero, ProjectileType<RapidfireExplosion>(), bonusDamage, 0, Main.player[proj.owner].whoAmI, modPlayer.EnergizedStorm ? 0 : 1);
+                    Projectile.NewProjectile(target.Center, Vector2.Zero, ProjectileType<Item_RapidfireExplosion>(), bonusDamage, 0, Main.player[proj.owner].whoAmI, modPlayer.EnergizedStorm ? 0 : 1);
                 }
                 if (modPlayer.EnergizedStorm)
                 {
@@ -199,7 +199,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
             }
-            if (proj.type == ProjectileType<RapidfireExplosion>())
+            if (proj.type == ProjectileType<Item_RapidfireExplosion>())
             {
                 if (modPlayer.EnergizedStorm)
                 {

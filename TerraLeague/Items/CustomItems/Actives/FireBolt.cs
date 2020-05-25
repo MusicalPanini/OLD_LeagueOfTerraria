@@ -45,7 +45,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
                 Vector2 position = player.Center;
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 20f);
-                int projType = ProjectileType<ProtobeltShot>();
+                int projType = ProjectileType<Item_FlameBolt>();
                 int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 int knockback = 1;
                 int numberProjectiles = 7;
