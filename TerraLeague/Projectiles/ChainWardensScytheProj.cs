@@ -24,6 +24,7 @@ namespace TerraLeague.Projectiles
             projectile.height = 50;
             projectile.melee = true;
             projectile.penetrate = -1;
+			projectile.tileCollide = false;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -72,133 +73,152 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            Lighting.AddLight(projectile.Center, Color.SeaGreen.ToVector3());
-            Player player = Main.player[projectile.owner];
-            player.itemAnimation = 5;
-            player.itemTime = 5;
-            if (projectile.alpha == 0)
-            {
-                if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))
-                {
-                    player.ChangeDir(1);
-                }
-                else
-                {
-                    player.ChangeDir(-1);
-                }
-            }
-            projectile.spriteDirection = player.direction;
+			Player player = Main.player[projectile.owner];
 
+			if (!player.active || player.dead || Vector2.Distance(projectile.Center, player.Center) > 900f)
+			{
+				projectile.Kill();
+			}
+			else if (Main.myPlayer == projectile.owner && Main.mapFullscreen)
+			{
+				projectile.Kill();
+			}
+			else
+			{
+				Vector2 mountedCenter = player.MountedCenter;
+				bool flag2 = false;
+				int num = 10;
+				float num2 = 24;//24f;
+				float num3 = 800f;
+				float num4 = 3f;
+				float num5 = 16f;
+				int generalHitCooldown = 10;
+				int swingHitCooldown = 20;
+				int throwHitCooldown = 10;
+				float swingDistance = 50f;
+				float swingSpeed = 75f;
 
-            float distance = projectile.Distance(player.Center);
-            if (projectile.ai[0] == 0f)
-            {
-                projectile.ai[1] += 1f;
-                if (projectile.ai[1] >= 17f)
-                {
-                    projectile.ai[0] = 1f;
-                    projectile.ai[1] = 0f;
-                    projectile.netUpdate = true;
-                }
+				float speedMultiplier = 1f / player.meleeSpeed;
+				num2 *= speedMultiplier;
+				num4 *= speedMultiplier;
+				num5 *= speedMultiplier;
 
-                if (projectile.velocity.X < 0f)
+				projectile.localNPCHitCooldown = generalHitCooldown;
+                switch ((int)projectile.ai[0])
                 {
-                    projectile.rotation = projectile.velocity.ToRotation() + (float)(Math.PI * (projectile.spriteDirection == 1 ? 5 : 5) / 4f);
-                }
-                else
-                {
-                    projectile.rotation = projectile.velocity.ToRotation() - (float)(Math.PI * (projectile.spriteDirection == 1 ? 1 : 7) / 4f);
-                }
-            }
-            else
-            {
-                projectile.tileCollide = false;
-                float returnSpeed = 15f;
-                float acceleration = 0.5f;
+                    case 0:
+                        flag2 = true;
+                        if (projectile.owner == Main.myPlayer)
+                        {
+                            Vector2 position = Main.MouseWorld - mountedCenter;
+                            position = position.SafeNormalize(Vector2.UnitX * (float)player.direction);
+                            player.ChangeDir((position.X > 0f) ? 1 : (-1));
+                            if (!player.channel)
+                            {
+                                projectile.ai[0] = 1f;
+                                projectile.ai[1] = 0f;
+                                projectile.velocity = position * num2 + player.velocity;
+                                projectile.Center = mountedCenter;
+                                projectile.netUpdate = true;
+                                projectile.tileCollide = true;
+                                for (int i = 0; i < projectile.localNPCImmunity.Length; i++)
+                                {
+                                    projectile.localNPCImmunity[i] = 0;
+                                }
+                                projectile.localNPCHitCooldown = throwHitCooldown;
+                                break;
+                            }
+                        }
+                        projectile.localAI[1] += 1f;
+                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (projectile.localAI[1] / swingSpeed) * (float)player.direction), default(Vector2));
+                        vector3.Y *= 0.8f;
+                        if (vector3.Y * player.gravDir > 0f)
+                        {
+                            vector3.Y *= 0.5f;
+                        }
+                        projectile.Center = mountedCenter + vector3 * swingDistance; ;
+                        projectile.velocity = Vector2.Zero;
+                        projectile.localNPCHitCooldown = swingHitCooldown;
 
-                float xDif = player.Center.X - projectile.Center.X;
-                float yDif = player.Center.Y - projectile.Center.Y;
+                        break;
+                    case 1:
+                        ref float val = ref projectile.ai[1];
+                        float num19 = val;
+                        val = num19 + 1f;
+                        bool flag3 = num19 >= (float)num;
+                        flag3 |= (projectile.Distance(mountedCenter) >= num3);
 
-                if (distance > 3000f)
-                {
-                    projectile.Kill();
-                }
-                distance = returnSpeed / distance;
-                xDif *= distance;
-                yDif *= distance;
+                        if (flag3)
+                        {
+                            projectile.ai[0] = 2f;
+                            projectile.ai[1] = 0f;
+                            projectile.netUpdate = true;
+                            projectile.velocity *= 0.3f;
+                            if (Main.myPlayer == projectile.owner && projectile.type == 757)
+                            {
+                                Projectile.NewProjectile(projectile.Center, projectile.velocity, 928, projectile.damage, projectile.knockBack, Main.myPlayer, 0f, 0f);
+                            }
+                        }
+                        player.ChangeDir((player.Center.X < projectile.Center.X) ? 1 : (-1));
+                        projectile.localNPCHitCooldown = throwHitCooldown;
 
-                if (projectile.velocity.X < xDif)
-                {
-                    projectile.velocity.X = projectile.velocity.X + acceleration;
-                    if (projectile.velocity.X < 0f && xDif > 0f)
-                    {
-                        projectile.velocity.X = projectile.velocity.X + acceleration;
-                    }
-                }
-                else if (projectile.velocity.X > xDif)
-                {
-                    projectile.velocity.X = projectile.velocity.X - acceleration;
-                    if (projectile.velocity.X > 0f && xDif < 0f)
-                    {
-                        projectile.velocity.X = projectile.velocity.X - acceleration;
-                    }
-                }
-                if (projectile.velocity.Y < yDif)
-                {
-                    projectile.velocity.Y = projectile.velocity.Y + acceleration;
-                    if (projectile.velocity.Y < 0f && yDif > 0f)
-                    {
-                        projectile.velocity.Y = projectile.velocity.Y + acceleration;
-                    }
-                }
-                else if (projectile.velocity.Y > yDif)
-                {
-                    projectile.velocity.Y = projectile.velocity.Y - acceleration;
-                    if (projectile.velocity.Y > 0f && yDif < 0f)
-                    {
-                        projectile.velocity.Y = projectile.velocity.Y - acceleration;
-                    }
-                }
-                if (Main.myPlayer == projectile.owner)
-                {
-                    Rectangle rectangle = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
-                    Rectangle value2 = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
-                    if (rectangle.Intersects(value2))
-                    {
-                        projectile.Kill();
-                    }
-                }
-                if (projectile.ai[0] == 0f)
-                {
-                    Vector2 velocity = projectile.velocity;
-                    velocity.Normalize();
-                    return;
-                }
-                Vector2 vector4 = projectile.Center - player.Center;
-                vector4.Normalize();
+                        break;
+                    case 2:
+                        projectile.tileCollide = false;
+                        Vector2 value = projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
+                        if (projectile.Distance(mountedCenter) <= num5)
+                        {
+                            projectile.Kill();
+                            return;
+                        }
+                        projectile.velocity *= 0.98f;
+                        projectile.velocity = MoveTowards(projectile.velocity, value * num5, num4);
+                        player.ChangeDir((player.Center.X < projectile.Center.X) ? 1 : (-1));
 
-                if (projectile.velocity.X < 0f)
-                {
-                    projectile.rotation = projectile.AngleTo(player.Center) - (float)(Math.PI * (projectile.spriteDirection == 1 ? 5 : 7) / 4f)/*1.57f*/;
+                        break;
                 }
-                else
-                {
-                    projectile.rotation = projectile.AngleTo(player.Center) - (float)(Math.PI * (projectile.spriteDirection == 1 ? 5 : 7)/ 4f)/*1.57f*/;
-                }
-            }
-        }
+				projectile.spriteDirection = player.direction;
+				projectile.ownerHitCheck = flag2;
+				player.itemTime = 5;
+				projectile.timeLeft = 2;
+				player.heldProj = projectile.whoAmI;
+				player.itemRotation = projectile.DirectionFrom(mountedCenter).ToRotation();
+				if (projectile.Center.X < mountedCenter.X)
+				{
+					player.itemRotation += 3.14159274f;
+				}
+				player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
+
+				if (projectile.spriteDirection == -1)
+					projectile.rotation = (projectile.Center - mountedCenter).ToRotation() -  (MathHelper.Pi * 0.75f);
+				else
+					projectile.rotation = (projectile.Center - mountedCenter).ToRotation() - (MathHelper.Pi * 0.25f);
+				//projectile.AI_015_Flails_Dust(doFastThrowDust);
+			}
+		}
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+			if ((int)projectile.ai[0] == 0)
+			{
+				damage = (int)(damage * 0.25);
+				knockback = (int)(knockback * 0.25);
+			}
+
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.velocity *= 0;
-            projectile.ai[0] = 1;
-            return false;
+            projectile.ai[0] = 2;
+
+			if (oldVelocity.X != projectile.velocity.X)
+				projectile.velocity.X *= 0.1f;
+			if (oldVelocity.Y != projectile.velocity.Y)
+				projectile.velocity.Y *= 0.1f;
+
+			return false;
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
@@ -207,5 +227,52 @@ namespace TerraLeague.Projectiles
 
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
-    }
+
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+		{
+			if (projectile.ai[0] == 0f)
+			{
+				Vector2 mountedCenter = Main.player[projectile.owner].MountedCenter;
+				Vector2 vector = ClosestPointInRect(targetHitbox, mountedCenter) - mountedCenter;
+				vector.Y /= 0.8f;
+				float num = 90f;
+				return vector.Length() <= num;
+			}
+
+			return base.Colliding(projHitbox, targetHitbox);
+		}
+
+		public Vector2 MoveTowards(Vector2 currentPosition, Vector2 targetPosition, float maxAmountAllowedToMove)
+		{
+			Vector2 v = targetPosition - currentPosition;
+			if (v.Length() < maxAmountAllowedToMove)
+			{
+				return targetPosition;
+			}
+			return currentPosition + v.SafeNormalize(Vector2.Zero) * maxAmountAllowedToMove;
+		}
+
+
+		public Vector2 ClosestPointInRect(Rectangle r, Vector2 point)
+		{
+			Vector2 vector = point;
+			if (vector.X < (float)r.Left)
+			{
+				vector.X = (float)r.Left;
+			}
+			if (vector.X > (float)r.Right)
+			{
+				vector.X = (float)r.Right;
+			}
+			if (vector.Y < (float)r.Top)
+			{
+				vector.Y = (float)r.Top;
+			}
+			if (vector.Y > (float)r.Bottom)
+			{
+				vector.Y = (float)r.Bottom;
+			}
+			return vector;
+		}
+	}
 }

@@ -19,12 +19,13 @@ namespace TerraLeague.Projectiles
         public override void SetDefaults()
         {
             projectile.friendly = true;
-            projectile.alpha = 255;
+            projectile.alpha = 0;
             projectile.width = 22;
             projectile.height = 22;
             projectile.melee = true;
             projectile.penetrate = -1;
             projectile.scale = 1.25f;
+            projectile.tileCollide = false;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor)
@@ -66,96 +67,134 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.alpha > 0)
-                projectile.alpha -= 20;
-
-            for (int i = 0; i < 1; i++)
-            {
-                Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color),1.5f);
-                dustIndex.noGravity = true;
-                dustIndex.velocity *= 0.3f;
-            }
-
             Player player = Main.player[projectile.owner];
 
-            player.itemAnimation = 5;
-            player.itemTime = 5;
+            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 113, 0f, 0f, 100, default(Color));
+            dust.velocity *= 0.2f;
+            dust.scale *= 0.7f;
 
-            if (projectile.ai[0] == 0f)
+            if (!player.active || player.dead || Vector2.Distance(projectile.Center, player.Center) > 900f)
             {
-                projectile.ai[1] += 1f;
-
-
-                if (projectile.ai[1] >= 10f)
-                {
-                    projectile.velocity.Y = projectile.velocity.Y + 0.5f;
-                    projectile.velocity.X = projectile.velocity.X * 0.95f;
-                    if (projectile.velocity.Y > 16f)
-                    {
-                        projectile.velocity.Y = 16f;
-                    }
-                }
-                else if (projectile.ai[1] >= 20f)
-                {
-                    projectile.ai[0] = 1f;
-                    projectile.ai[1] = 0f;
-                    projectile.netUpdate = true;
-                }
+                projectile.Kill();
+            }
+            else if (Main.myPlayer == projectile.owner && Main.mapFullscreen)
+            {
+                projectile.Kill();
             }
             else
             {
-                projectile.tileCollide = false;
-                float maxReturnSpeed = 9f;
-                float ReturnAccel = 0.4f;
-                maxReturnSpeed = 24f;
-                ReturnAccel = 6f;
+                Vector2 mountedCenter = player.MountedCenter;
+                bool flag2 = false;
+                int throwTimerMax = 14;
+                float throwSpeed = 24;//24f;
+                float ProjectileMaxDistance = 800f;
+                float maxReturnSpeed = 3f;
+                float returnMagnitude = 16f;
+                int generalHitCooldown = 60;
+                int swingHitCooldown = 60;
+                int throwHitCooldown = 60;
+                float swingDistance = 45f;
+                float swingSpeed = 90f;
 
-                Vector2 vector2 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
-                float num44 = Main.player[projectile.owner].position.X + (float)(Main.player[projectile.owner].width / 2) - vector2.X;
-                float num45 = Main.player[projectile.owner].position.Y + (float)(Main.player[projectile.owner].height / 2) - vector2.Y;
-                float num46 = (float)Math.Sqrt((double)(num44 * num44 + num45 * num45));
-                if (num46 > 3000f)
-                {
-                    projectile.Kill();
-                }
-                num46 = maxReturnSpeed / num46;
-                num44 *= num46;
-                num45 *= num46;
+                float speedMultiplier = 1f / player.meleeSpeed;
+                throwSpeed *= speedMultiplier;
+                maxReturnSpeed *= speedMultiplier;
+                returnMagnitude *= speedMultiplier;
+                swingSpeed *= player.meleeSpeed;
 
-                Vector2 vector3 = new Vector2(num44, num45) - projectile.velocity;
-                if (vector3 != Vector2.Zero)
+                projectile.localNPCHitCooldown = generalHitCooldown;
+                switch ((int)projectile.ai[0])
                 {
-                    Vector2 value = vector3;
-                    value.Normalize();
-                    projectile.velocity += value * Math.Min(ReturnAccel, vector3.Length());
-                }
+                    case 0:
+                        flag2 = true;
+                        if (projectile.owner == Main.myPlayer)
+                        {
+                            Vector2 CursorPosition = Main.MouseWorld - mountedCenter;
+                            CursorPosition = CursorPosition.SafeNormalize(Vector2.UnitX * (float)player.direction);
+                            player.ChangeDir((CursorPosition.X > 0f) ? 1 : (-1));
+                            if (!player.channel)
+                            {
+                                projectile.ai[0] = 1f;
+                                projectile.ai[1] = 0f;
+                                projectile.velocity = CursorPosition * throwSpeed + player.velocity;
+                                projectile.Center = mountedCenter;
+                                projectile.netUpdate = true;
+                                projectile.tileCollide = true;
+                                for (int i = 0; i < projectile.localNPCImmunity.Length; i++)
+                                {
+                                    projectile.localNPCImmunity[i] = 0;
+                                }
+                                projectile.localNPCHitCooldown = throwHitCooldown;
+                                break;
+                            }
+                        }
+                        projectile.localAI[1] += 1f;
+                        Vector2 vector3 = new Vector2((float)player.direction).RotatedBy((double)(31.4159279f * (projectile.localAI[1] / swingSpeed) * (float)player.direction), default(Vector2));
+                        vector3.Y *= 0.8f;
+                        if (vector3.Y * player.gravDir > 0f)
+                        {
+                            vector3.Y *= 0.5f;
+                        }
+                        projectile.Center = mountedCenter + vector3 * swingDistance;
+                        projectile.velocity = Vector2.Zero;
+                        projectile.localNPCHitCooldown = swingHitCooldown;
 
-                if (Main.myPlayer == projectile.owner)
-                {
-                    Rectangle rectangle = new Rectangle((int)projectile.position.X, (int)projectile.position.Y, projectile.width, projectile.height);
-                    Rectangle value2 = new Rectangle((int)Main.player[projectile.owner].position.X, (int)Main.player[projectile.owner].position.Y, Main.player[projectile.owner].width, Main.player[projectile.owner].height);
-                    if (rectangle.Intersects(value2))
-                    {
-                        projectile.Kill();
-                    }
+                        break;
+                    case 1:
+                        projectile.ai[1]++;
+                        bool PullProjectileBack = projectile.ai[1] >= (float)throwTimerMax;
+                        PullProjectileBack |= (projectile.Distance(mountedCenter) >= ProjectileMaxDistance);
+
+                        if (PullProjectileBack)
+                        {
+                            projectile.ai[0] = 2f;
+                            projectile.ai[1] = 0f;
+                            projectile.netUpdate = true;
+                            projectile.velocity *= 0.3f;
+                        }
+                        player.ChangeDir((player.Center.X < projectile.Center.X) ? 1 : (-1));
+                        projectile.localNPCHitCooldown = throwHitCooldown;
+
+                        break;
+                    case 2:
+                        projectile.tileCollide = false;
+                        Vector2 direction = projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
+                        if (projectile.Distance(mountedCenter) <= returnMagnitude)
+                        {
+                            projectile.Kill();
+                            return;
+                        }
+                        projectile.velocity *= 0.98f;
+                        projectile.velocity = MoveTowards(projectile.velocity, direction * returnMagnitude, maxReturnSpeed);
+                        player.ChangeDir((player.Center.X < projectile.Center.X) ? 1 : (-1));
+
+                        break;
                 }
+                projectile.spriteDirection = player.direction;
+                projectile.ownerHitCheck = flag2;
+                player.itemTime = 5;
+                projectile.timeLeft = 2;
+                player.heldProj = projectile.whoAmI;
+                player.itemRotation = projectile.DirectionFrom(mountedCenter).ToRotation();
+                if (projectile.Center.X < mountedCenter.X)
+                {
+                    player.itemRotation += 3.14159274f;
+                }
+                player.itemRotation = MathHelper.WrapAngle(player.itemRotation);
+
+                projectile.rotation = (projectile.Center - mountedCenter).ToRotation() + (MathHelper.Pi * 0.5f);
+                //projectile.AI_015_Flails_Dust(doFastThrowDust);
             }
-
-            if (projectile.ai[0] == 0f)
-            {
-                Vector2 velocity = projectile.velocity;
-                velocity.Normalize();
-                projectile.rotation = (float)Math.Atan2((double)velocity.Y, (double)velocity.X) + 1.57f;
-                return;
-            }
-            Vector2 vector4 = projectile.Center - Main.player[projectile.owner].Center;
-            vector4.Normalize();
-            projectile.rotation = (float)Math.Atan2((double)vector4.Y, (double)vector4.X) + 1.57f;
-            return;
         }
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if ((int)projectile.ai[0] == 0)
+            {
+                damage = (int)(damage * 0.25);
+                knockback = (int)(knockback * 0.25);
+            }
+
             if (Main.rand.Next(0, 4) == 0)
             {
                 if (target.HasBuff(BuffType<Slowed>()))
@@ -178,7 +217,12 @@ namespace TerraLeague.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Main.PlaySound(SoundID.Dig, projectile.Center);
-            projectile.ai[0] = 1;
+            projectile.ai[0] = 2;
+
+            if (oldVelocity.X != projectile.velocity.X)
+                projectile.velocity.X *= 0.1f;
+            if (oldVelocity.Y != projectile.velocity.Y)
+                projectile.velocity.Y *= 0.1f;
             return false;
         }
 
@@ -187,6 +231,38 @@ namespace TerraLeague.Projectiles
             width = height = 16;
 
             return base.TileCollideStyle(ref width, ref height, ref fallThrough);
+        }
+
+        public Vector2 MoveTowards(Vector2 currentPosition, Vector2 targetPosition, float maxAmountAllowedToMove)
+        {
+            Vector2 v = targetPosition - currentPosition;
+            if (v.Length() < maxAmountAllowedToMove)
+            {
+                return targetPosition;
+            }
+            return currentPosition + v.SafeNormalize(Vector2.Zero) * maxAmountAllowedToMove;
+        }
+
+        public Vector2 ClosestPointInRect(Rectangle r, Vector2 point)
+        {
+            Vector2 vector = point;
+            if (vector.X < (float)r.Left)
+            {
+                vector.X = (float)r.Left;
+            }
+            if (vector.X > (float)r.Right)
+            {
+                vector.X = (float)r.Right;
+            }
+            if (vector.Y < (float)r.Top)
+            {
+                vector.Y = (float)r.Top;
+            }
+            if (vector.Y > (float)r.Bottom)
+            {
+                vector.Y = (float)r.Bottom;
+            }
+            return vector;
         }
     }
 }

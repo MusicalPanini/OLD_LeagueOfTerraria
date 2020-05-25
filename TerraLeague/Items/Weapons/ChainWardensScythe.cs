@@ -144,8 +144,9 @@ namespace TerraLeague.Items.Weapons
             item.scale = 1;
             item.noUseGraphic = true;
             item.UseSound = SoundID.Item1;
-            item.shootSpeed = 17F;
+            item.shootSpeed = 14F;
             item.melee = true;
+            item.channel = true;
             item.shoot = ProjectileType<ChainWardensScytheProj>();
         }
 

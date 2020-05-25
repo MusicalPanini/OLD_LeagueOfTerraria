@@ -142,6 +142,7 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item1;
             item.shootSpeed = 13F;
             item.melee = true;
+            item.channel = true;
             item.shoot = ProjectileType<TrueIceFlailP>();
         }
 
