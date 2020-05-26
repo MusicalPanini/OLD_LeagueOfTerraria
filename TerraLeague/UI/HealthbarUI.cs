@@ -77,7 +77,8 @@ namespace TerraLeague.UI
 
             Player drawPlayer = Main.LocalPlayer;
             Rectangle destRec = new Rectangle((int)((base.Width.Pixels/2) - 58), (int)((base.Height.Pixels/2) - 48), 116, 20);
-            Rectangle destRec2 = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
+            Rectangle destRecBreath = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 * (drawPlayer.breath / (double)drawPlayer.breathMax)), 16);
+            Rectangle destRecLavaCharm = new Rectangle((int)((base.Width.Pixels / 2) - 50), (int)((base.Height.Pixels / 2) - 46), (int)(100 - 100 * (drawPlayer.lavaTime / (double)drawPlayer.lavaMax)), 16);
 
             if (drawPlayer.breath != drawPlayer.breathMax)
             {
@@ -87,7 +88,20 @@ namespace TerraLeague.UI
 
                 Texture2D texture2 = TerraLeague.instance.GetTexture("UI/Blank");
                 Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
-                spriteBatch.Draw(texture2, destRec2, sourRec2, Color.DarkCyan);
+                spriteBatch.Draw(texture2, destRecBreath, sourRec2, Color.DarkCyan);
+            }
+
+            if (drawPlayer.lavaTime != drawPlayer.lavaMax)
+            {
+                Texture2D texture = TerraLeague.instance.GetTexture("UI/LavaCharmBar");
+                Rectangle sourRec = new Rectangle(0, 0, 116, 20);
+                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
+
+                Texture2D texture2 = TerraLeague.instance.GetTexture("UI/Blank");
+                Rectangle sourRec2 = new Rectangle(0, 0, 16, 16);
+                Color color = new Color((int)(255 - 255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)), 0, (int)(255 * (drawPlayer.lavaTime / (float)drawPlayer.lavaMax)));
+                //(drawPlayer.lavaTime / (double)drawPlayer.lavaMax)
+                spriteBatch.Draw(texture2, destRecLavaCharm, sourRec2, color);
             }
         }
     }
