@@ -553,8 +553,8 @@ namespace TerraLeague.Items.Weapons
             player.itemAnimationMax = animationTime + 1;
             player.itemAnimation = animationTime;
             player.itemTime = useTime;
-            
-        
+            NetMessage.SendData(MessageID.ItemAnimation, -1, -1, null, player.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+
         }
     }
 }
