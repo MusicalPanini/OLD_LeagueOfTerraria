@@ -33,11 +33,12 @@ namespace TerraLeague.Projectiles
             {
                 projectile.Center = player.MountedCenter;
 
-                int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
-                player.ChangeDir(dir);
+                
 
                 if (projectile.owner == Main.LocalPlayer.whoAmI)
                 {
+                    int dir = player.Center.X > Main.MouseWorld.X ? -1 : 1;
+                    player.ChangeDir(dir);
                     projectile.ai[1] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
                     projectile.netUpdate = true;
                 }
