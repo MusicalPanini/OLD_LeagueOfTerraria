@@ -11,7 +11,7 @@ namespace TerraLeague.Items.StartingItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Doran's Ring");
-            Tooltip.SetDefault("+4 magic and minion damage" +
+            Tooltip.SetDefault("+2 magic and minion damage" +
                 "\nIncreases health by 5" +
                 "\nIncreases mana regeneration by 1" +
                 "\nRestore 20 mana on kill");
@@ -30,8 +30,8 @@ namespace TerraLeague.Items.StartingItems
             player.GetModPlayer<PLAYERGLOBAL>().dring = true;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegen += 1;
             player.statLifeMax2 += 5;
-            player.GetModPlayer<PLAYERGLOBAL>().magicFlatDamage += 4;
-            player.GetModPlayer<PLAYERGLOBAL>().minionFlatDamage += 4;
+            player.GetModPlayer<PLAYERGLOBAL>().magicFlatDamage += 2;
+            player.GetModPlayer<PLAYERGLOBAL>().minionFlatDamage += 2;
         }
     }
 }
