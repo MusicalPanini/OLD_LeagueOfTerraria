@@ -173,6 +173,7 @@ namespace TerraLeague.Projectiles
                 projectile.spriteDirection = player.direction;
                 projectile.ownerHitCheck = flag2;
                 player.itemTime = 5;
+                player.itemAnimation = 5;
                 projectile.timeLeft = 2;
                 player.heldProj = projectile.whoAmI;
                 player.itemRotation = projectile.DirectionFrom(mountedCenter).ToRotation();

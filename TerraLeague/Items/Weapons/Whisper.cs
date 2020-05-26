@@ -105,7 +105,7 @@ namespace TerraLeague.Items.Weapons
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
             if (type == AbilityType.Q)
-                return true;
+                return false;
             else
                 return false;
         }
