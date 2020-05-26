@@ -154,7 +154,7 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 7;
             item.value = 6000;
             item.rare = ItemRarityID.LightRed;
-            item.shoot = ProjectileType<LightCannon_Beam>();
+            item.shoot = ProjectileType<LightCannon_BeamControl>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 13);
         }
 
