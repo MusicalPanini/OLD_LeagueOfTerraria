@@ -128,7 +128,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
                 return 70;
             else if (type == AbilityType.Q)
-                return 1; //18
+                return 12;
             else
                 return base.GetRawCooldown(type);
         }
@@ -207,8 +207,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            item.knockBack = 5;
-            player.GetModPlayer<PLAYERGLOBAL>().feastStacks = 12500;
             return base.CanUseItem(player);
         }
 
