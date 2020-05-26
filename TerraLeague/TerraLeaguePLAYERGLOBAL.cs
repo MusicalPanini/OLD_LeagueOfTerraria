@@ -854,6 +854,8 @@ namespace TerraLeague
             cauterizedDamage = 0;
             veil = false;
 
+            ClearShields();
+
             SummonerCooldowns();
             AbilityCooldownsAndStuff();
 
@@ -2968,6 +2970,8 @@ namespace TerraLeague
         /// </summary>
         public void ClearShields()
         {
+            player.statLifeMax2 -= MagicShield + PhysicalShield + NormalShield;
+
             Shields.RemoveAll(x => true);
             MagicShield = 0;
             PhysicalShield = 0;
