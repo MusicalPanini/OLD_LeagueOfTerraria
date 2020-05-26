@@ -24,6 +24,7 @@ namespace TerraLeague.Projectiles
             projectile.friendly = false;
             projectile.ranged = true;
             projectile.alpha = 255;
+            projectile.tileCollide = false;
         }
 
         public override void AI()
