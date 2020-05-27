@@ -213,8 +213,8 @@ namespace TerraLeague.Items.Weapons
 
         public override void Efx(Player player, AbilityType type)
         {
-            if (type == AbilityType.E || type == AbilityType.R)
-                Main.PlaySound(new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound), player.Center);
+            if (type == AbilityType.E)
+                Main.PlaySound(SoundID.Item8, player.MountedCenter);
         }
     }
 }
