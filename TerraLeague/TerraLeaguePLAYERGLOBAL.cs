@@ -1234,7 +1234,7 @@ namespace TerraLeague
                     int deathTomeDamage = player.inventory.Where(x => x.type == ItemType<DeathsingerTome>()).First().damage;
                     for (int i = 0; i < Main.npc.Length; i++)
                     {
-                        if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != NPCID.DD2EterniaCrystal)
+                        if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != NPCID.DD2EterniaCrystal && Main.npc[i].active)
                             Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
                     }
                 }

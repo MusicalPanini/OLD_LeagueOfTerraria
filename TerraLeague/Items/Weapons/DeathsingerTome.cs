@@ -157,7 +157,7 @@ namespace TerraLeague.Items.Weapons
                         player.GetModPlayer<PLAYERGLOBAL>().TaggedNPC = npcs;
                         for (int i = 0; i < npcs.Count - 1; i++)
                         {
-                            if (!npcs[i].townNPC)
+                            if (!npcs[i].townNPC && !npcs[i].immortal && npcs[i].active)
                             {
                                 npcs[i].AddBuff(BuffType<Requiem>(), 240);
                             }
