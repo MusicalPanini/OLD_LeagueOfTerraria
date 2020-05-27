@@ -23,6 +23,7 @@ namespace TerraLeague.Projectiles
             projectile.friendly = false;
             projectile.magic = true;
             projectile.alpha = 255;
+            projectile.tileCollide = false;
         }
 
         public override void AI()
