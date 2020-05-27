@@ -133,8 +133,8 @@ namespace TerraLeague.Items.Weapons
             item.damage = 12;
             item.ranged = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 64;
-            item.height = 30;
+            item.width = 52;
+            item.height = 26;
             item.useAnimation = 16;
             item.reuseDelay = 20;
             item.useTime = 8;
@@ -143,7 +143,7 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 1;
             item.value = 6000;
             item.rare = ItemRarityID.Orange;
-            item.scale = 0.75f;
+            item.scale = 0.9f;
             item.shoot = ProjectileType<LightPistol_Bullet>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
             item.autoReuse = true;
