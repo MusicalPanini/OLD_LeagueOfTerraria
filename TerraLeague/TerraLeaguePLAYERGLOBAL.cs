@@ -508,6 +508,7 @@ namespace TerraLeague
         public bool projectileDodge = false;
         public bool rally = false;
         public bool rejuvenation = false;
+        public bool rightoftheArcaneChannel = false;
         public bool spinningAxe = false;
         public bool stopWatchActive = true;
         public bool slowed = false;
@@ -721,6 +722,7 @@ namespace TerraLeague
             rejuvenation = false;
             requiem = false;
             requiemChannel = false;
+            rightoftheArcaneChannel = false;
             slowed = false;
             spinningAxe = false;
             stonePlating = false;
@@ -1238,13 +1240,7 @@ namespace TerraLeague
                 }
             }
 
-            if (finalsparkChannel)
-            {
-                player.position = player.oldPosition;
-                player.velocity = Vector2.Zero;
-            }
-
-            if (deathLotus)
+            if (finalsparkChannel || deathLotus || rightoftheArcaneChannel)
             {
                 player.position = player.oldPosition;
                 player.velocity = Vector2.Zero;
@@ -2644,7 +2640,7 @@ namespace TerraLeague
 
             AnimateSpellEffects();
 
-            if (player.HasBuff(BuffType<RequiemChannel>()) || player.HasBuff(BuffType<FinalSparkChannel>()))
+            if (requiemChannel || finalsparkChannel || rightoftheArcaneChannel)
             {
                 player.bodyFrame.Y = player.bodyFrame.Height * 5;
             }
