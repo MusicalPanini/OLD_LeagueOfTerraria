@@ -44,7 +44,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
                 return "AbilityImages/ShockingOrb";
             else if (type == AbilityType.R)
-                return "AbilityImages/RightoftheArcane";
+                return "AbilityImages/RiteoftheArcane";
             else
                 return base.GetIconTexturePath(type);
         }
@@ -150,7 +150,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetBaseManaCost(type), true))
                 {
                     //DoEfx(player, type);
-                    player.AddBuff(BuffType<RightoftheArcane>(), GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG));
+                    player.AddBuff(BuffType<RiteoftheArcane>(), GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG));
                     SetCooldowns(player, type);
                 }
             }

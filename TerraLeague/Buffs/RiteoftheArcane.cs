@@ -8,14 +8,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Buffs
 {
-    public class RightoftheArcane : ModBuff
+    public class RiteoftheArcane : ModBuff
     {
         public bool initial = true;
         int damage = 0;
 
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Right of the Arcane");
+            DisplayName.SetDefault("Rite of the Arcane");
             Description.SetDefault("Magic Artillery!");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
