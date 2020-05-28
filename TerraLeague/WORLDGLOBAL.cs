@@ -492,10 +492,10 @@ namespace TerraLeague
                     CelestialMeteorCanSpawn = true;
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText("While the Moon denys the Sun, the Aspects will rain gifts of power", 0, 0, 255);
+                        Main.NewText("While the Sun and Moon are one, the Aspects will rain gifts of power", 0, 0, 255);
                     else if (Main.netMode == NetmodeID.Server)
                     {
-                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("While the Moon denys the Sun, the Aspects will rain gifts of power"), new Color(0, 0, 255), -1);
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("While the Sun and Moon are one, the Aspects will rain gifts of power"), new Color(0, 0, 255), -1);
                         NetMessage.SendData(MessageID.WorldData);
                     }
                 }
