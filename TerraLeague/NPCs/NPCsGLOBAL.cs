@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TerraLeague.Buffs;
 using TerraLeague.Projectiles;
 using static Terraria.ModLoader.ModContent;
+using Terraria.Localization;
 
 namespace TerraLeague.NPCs
 {
@@ -26,6 +27,8 @@ namespace TerraLeague.NPCs
         public int baseDefence = 0;
         public int requiemDamage = 0;
         public int requiemTime = 0;
+        public int vesselTarget = -1;
+        public int vesselTimer = 420;
         public bool requiem = false;
         public bool bubbled = false;
         public bool slowed = false;
@@ -42,6 +45,7 @@ namespace TerraLeague.NPCs
         public bool ablaze = false;
         public bool illuminated = false;
         public bool seeded = false;
+        public bool vessel = false;
         public bool harbingersInferno = false;
         public bool doomed = false;
 
@@ -311,6 +315,19 @@ namespace TerraLeague.NPCs
                 dust.noGravity = true;
                 dust.velocity *= 1.3f;
             }
+            if (vessel)
+            {
+                if (Main.rand.Next(0, 2) == 0)
+                {
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 59, 0f, -2f, 200, new Color(0, 255, 201), 3f);
+                    dust.noGravity = true;
+                    dust.velocity.Y -= 2;
+
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 59, 0f, -1f, 200, new Color(0, 255, 201), 3f);
+                    dust.noGravity = true;
+                    dust.velocity.Y -= 2;
+                }
+            }
 
             npc.defense = npc.defDefense;
             npc.damage = npc.defDamage;
@@ -334,10 +351,26 @@ namespace TerraLeague.NPCs
             if (timer <= 0)
                 timer = 60;
 
-            if (stunned || bubbled)
+            if (vessel)
+            {
+                vesselTimer--;
+
+                if (vesselTimer <= 0 || !Main.npc[vesselTarget].active)
+                {
+                    npc.life = 0;
+                }
+            }
+
+            if (stunned || bubbled || vessel)
             {
                 npc.frameCounter = 0;
                 npc.velocity = Vector2.Zero;
+                if (vessel)
+                {
+                    npc.position = vesselTimer == 419 ? npc.position : npc.oldPosition;
+                    npc.SpawnedFromStatue = true;
+                }
+
                 return false;
             }
 
@@ -345,8 +378,6 @@ namespace TerraLeague.NPCs
         }
         public override void AI(NPC npc)
         {
-            
-
             
         }
 
@@ -357,6 +388,7 @@ namespace TerraLeague.NPCs
 
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
+            
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
@@ -537,13 +569,34 @@ namespace TerraLeague.NPCs
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
-
+            vesselStriked(player.whoAmI, damage, crit);
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (OrgDest)
                 damage = (int)(damage * 1.1);
+
+            if (projectile.owner != -1 || projectile.owner != 255)
+                vesselStriked(projectile.owner, damage, crit);
+
+            if (projectile.type == ProjectileType<EyeofGod_TestofSpirit>())
+            {
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    PacketHandler.SendCreateVessel(-1, projectile.owner, npc.whoAmI, projectile.owner);
+                }
+                else
+                {
+                    Player player = Main.player[projectile.owner];
+                    int vessel = NPC.NewNPC((int)player.Bottom.X + (64 * player.direction), (int)player.Bottom.Y, npc.type);
+                    Main.npc[vessel].life = npc.life;
+                    Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTarget = npc.whoAmI;
+                    Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vessel = true;
+                    Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTimer = 420;
+                }
+                //Main.npc[vessel].AddBuff(ModContent.BuffType<Vessel>(), 60 * 7);
+            }
 
             base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
@@ -560,6 +613,14 @@ namespace TerraLeague.NPCs
                 shop.item[nextSlot].SetDefaults(ItemID.Revolver);
                 nextSlot++;
             }
+        }
+
+        public override bool PreNPCLoot(NPC npc)
+        {
+            if (vessel)
+                return false;
+
+            return base.PreNPCLoot(npc);
         }
 
         public override void NPCLoot(NPC npc)
@@ -629,6 +690,10 @@ namespace TerraLeague.NPCs
             if (OrgDest)
             {
                 drawColor = new Color(255, 0, 255);
+            }
+            if (vessel)
+            {
+                drawColor = new Color(0, 255, 144);
             }
 
             base.DrawEffects(npc, ref drawColor);
@@ -714,10 +779,56 @@ namespace TerraLeague.NPCs
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
-            if (target.HasBuff(BuffType<UmbralTrespassing>()))
+            if (target.HasBuff(BuffType<UmbralTrespassing>()) || vessel)
                 return false;
             else
                 return base.CanHitPlayer(npc, target, ref cooldownSlot);
+        }
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        {
+            if (vessel)
+            {
+                Texture2D texture = mod.GetTexture("Gores/VesselLink");
+
+                Vector2 position = npc.Center + new Vector2(0, 6);
+                Vector2 center = Main.npc[vesselTarget].Center;
+                Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
+                Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
+                float num1 = (float)texture.Height;
+                Vector2 vector2_4 = center - position;
+                float rotation = (float)System.Math.Atan2((double)vector2_4.Y, (double)vector2_4.X) - 1.57f;
+                bool flag = true;
+                if (float.IsNaN(position.X) && float.IsNaN(position.Y))
+                    flag = false;
+                if (float.IsNaN(vector2_4.X) && float.IsNaN(vector2_4.Y))
+                    flag = false;
+                while (flag)
+                {
+                    if ((double)vector2_4.Length() < (double)num1 + 1.0)
+                    {
+                        flag = false;
+                    }
+                    else
+                    {
+                        Vector2 vector2_1 = vector2_4;
+                        vector2_1.Normalize();
+                        position += vector2_1 * num1;
+                        vector2_4 = center - position;
+                        //Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
+                        //color2 = projectile.GetAlpha(color2);
+                        //Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, Color.White, rotation, origin, 1f, SpriteEffects.None, 0f);
+
+                        if (Main.rand.Next(0, 6) == 0)
+                        {
+                            Dust dust = Dust.NewDustPerfect(position, 59, null, 200, new Color(0, 255, 201), 3f);
+                            dust.noGravity = true;
+                        }
+
+                    }
+                }
+            }
+
+            return base.PreDraw(npc, spriteBatch, drawColor);
         }
 
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
@@ -957,7 +1068,17 @@ namespace TerraLeague.NPCs
                     0f
                 );
             }
+
+            
             base.PostDraw(npc, spriteBatch, drawColor);
+        }
+
+        public void vesselStriked(int attacker, int damage, bool crit)
+        {
+            if (vessel && vesselTarget != -1)
+            {
+                Main.player[attacker].ApplyDamageToNPC(Main.npc[vesselTarget], (int)(damage * 0.5), 0, 0, crit);
+            }
         }
     }
 }

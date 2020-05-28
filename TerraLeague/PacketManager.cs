@@ -13,6 +13,7 @@ using TerraLeague.Items.CustomItems;
 using TerraLeague.Items.Weapons;
 using static Terraria.ModLoader.ModContent;
 using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace TerraLeague
 {
@@ -459,6 +460,8 @@ namespace TerraLeague
         public const byte BattleText = 1;
         public const byte RemoveBuff = 2;
         public const byte SyncStats = 3;
+        public const byte CreateVessel = 4;
+        public const byte SyncVessel = 5;
         #endregion
 
         public NPCPacketHandler(byte handlerType) : base(handlerType)
@@ -477,6 +480,12 @@ namespace TerraLeague
                     break;
                 case (SyncStats):
                     ReceiveSyncStats(reader, fromWho);
+                    break;
+                case (CreateVessel):
+                    ReceiveCreateVessel(reader, fromWho);
+                    break;
+                case (SyncVessel):
+                    ReceiveSyncVessel(reader, fromWho);
                     break;
             }
         }
@@ -611,6 +620,54 @@ namespace TerraLeague
                     break;
             }
 
+        }
+
+        public void SendCreateVessel(int toWho, int fromWho, int targetNPC, int player)
+        {
+            ModPacket packet = GetPacket(CreateVessel, fromWho);
+            packet.Write(targetNPC);
+            packet.Write(player);
+            packet.Send(toWho, fromWho);
+            TerraLeague.Log("[DEBUG] - Sending Vessel of " + Main.npc[targetNPC].FullName, Color.White);
+        }
+
+        public void ReceiveCreateVessel(BinaryReader reader, int fromWho)
+        {
+            int targetNPC = reader.ReadInt32();
+            int player = reader.ReadInt32();
+
+            NPC npc = Main.npc[targetNPC];
+
+            int vessel = NPC.NewNPC((int)Main.player[player].Bottom.X + (64 * Main.player[player].direction), (int)Main.player[player].Bottom.Y, npc.type);
+            Main.npc[vessel].life = npc.life;
+            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTarget = npc.whoAmI;
+            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vessel = true;
+            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTimer = 420;
+
+            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, vessel);
+
+            if (Main.netMode == NetmodeID.Server)
+                SendSyncVessel(-1, -1, vessel, targetNPC);
+        }
+
+        public void SendSyncVessel(int toWho, int fromWho, int vessel, int vesselTarget)
+        {
+            ModPacket packet = GetPacket(SyncVessel, fromWho);
+            packet.Write(vessel);
+            packet.Write(vesselTarget);
+            packet.Send(toWho, fromWho);
+        }
+
+        public void ReceiveSyncVessel(BinaryReader reader, int fromWho)
+        {
+            int vessel = reader.ReadInt32();
+            int vesselTarget = reader.ReadInt32();
+
+            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTarget = vesselTarget;
+            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vessel = true;
+            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTimer = 420;
+
+            TerraLeague.Log("[DEBUG] - Recieved Vessel Sync for " + Main.npc[vessel].FullName, Color.White);
         }
     }
 
