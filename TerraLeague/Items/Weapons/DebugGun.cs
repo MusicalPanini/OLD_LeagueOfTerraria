@@ -155,28 +155,14 @@ namespace TerraLeague.Items.Weapons
             item.value = 1;
             item.rare = ItemRarityID.Expert;
             item.scale = 0.9f;
-            item.shoot = ProjectileType<EyeofGod_Tentacle>();
+            item.shoot = ProjectileType<EmperoroftheSands_SandSolder>();
             //item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
             item.autoReuse = false;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.shoot = ProjectileType<EyeofGod_Tentacle>();
-            var p = Main.MouseWorld.ToTileCoordinates();
-
-            int num194 = default(int);
-            int num195 = default(int);
-            int num196 = default(int);
-            player.FindSentryRestingSpot(item.shoot, out num194, out num195, out num196);
-            Projectile.NewProjectile((float)num194, (float)(num195 - num196) - 26, 0f, 0f, type, damage, knockBack, player.whoAmI, 10, -1);
-
-            //if (!Collision.SolidTiles(p.X, p.X, p.Y, p.Y + 4))
-            //{
-            //    Projectile.NewProjectileDirect(Main.MouseWorld, new Vector2(0, 1000), ProjectileType<EyeofGod_Tentacle>(), damage, knockBack, player.whoAmI, 10, -1);
-            //}
-
-            player.UpdateMaxTurrets();
+            Projectile.NewProjectile(position, Vector2.Zero, type, damage, knockBack, player.whoAmI);
 
             return false;
         }
@@ -184,7 +170,7 @@ namespace TerraLeague.Items.Weapons
         public override bool GetIfAbilityExists(AbilityType type)
         {
             if (type == AbilityType.E)
-                return true;
+                return false;
             return base.GetIfAbilityExists(type);
         }
 
