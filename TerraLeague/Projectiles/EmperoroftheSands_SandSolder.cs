@@ -54,7 +54,7 @@ namespace TerraLeague.Projectiles
             idleFrame = 0;
             idleFrameCount = 1;
 
-            AIPrioritiseNearPlayer = true;
+            AIPrioritiseNearPlayer = false;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 30;
         }
