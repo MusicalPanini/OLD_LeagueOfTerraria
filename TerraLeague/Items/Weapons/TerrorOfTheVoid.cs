@@ -197,8 +197,8 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 35;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 5;
-            item.value = 3500;
-            item.rare = ItemRarityID.Green;
+            item.value = 35000;
+            item.rare = ItemRarityID.Lime;
             item.scale = 1.5f;
             item.shoot = ProjectileType<TerrorOfTheVoid_VorpalSpike>();
             item.shootSpeed = 8f;
