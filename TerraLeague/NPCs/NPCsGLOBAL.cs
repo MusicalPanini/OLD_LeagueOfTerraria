@@ -792,11 +792,8 @@ namespace TerraLeague.NPCs
 
                 Vector2 position = npc.Center + new Vector2(0, 6);
                 Vector2 center = Main.npc[vesselTarget].Center;
-                Microsoft.Xna.Framework.Rectangle? sourceRectangle = new Microsoft.Xna.Framework.Rectangle?();
-                Vector2 origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
                 float num1 = (float)texture.Height;
                 Vector2 vector2_4 = center - position;
-                float rotation = (float)System.Math.Atan2((double)vector2_4.Y, (double)vector2_4.X) - 1.57f;
                 bool flag = true;
                 if (float.IsNaN(position.X) && float.IsNaN(position.Y))
                     flag = false;
@@ -814,9 +811,6 @@ namespace TerraLeague.NPCs
                         vector2_1.Normalize();
                         position += vector2_1 * num1;
                         vector2_4 = center - position;
-                        //Microsoft.Xna.Framework.Color color2 = Lighting.GetColor((int)position.X / 16, (int)((double)position.Y / 16.0));
-                        //color2 = projectile.GetAlpha(color2);
-                        //Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, Color.White, rotation, origin, 1f, SpriteEffects.None, 0f);
 
                         if (Main.rand.Next(0, 6) == 0)
                         {

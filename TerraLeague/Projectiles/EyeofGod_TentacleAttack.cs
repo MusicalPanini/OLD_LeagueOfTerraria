@@ -110,7 +110,7 @@ namespace TerraLeague.Projectiles
 
                 if (projectile.frame == 5)
                 {
-                    Projectile.NewProjectileDirect(new Vector2(projectile.Left.X + (72 * (int)projectile.ai[0]), projectile.Center.Y), Vector2.Zero, ModContent.ProjectileType<EyeofGod_TentacleHitbox>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    Projectile.NewProjectileDirect(new Vector2(projectile.Center.X + (72 * (int)projectile.ai[0]), projectile.Center.Y), Vector2.Zero, ModContent.ProjectileType<EyeofGod_TentacleHitbox>(), projectile.damage, projectile.knockBack, projectile.owner);
                     Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.Center);
                     if (sound != null)
                         sound.Pitch = -0.25f;

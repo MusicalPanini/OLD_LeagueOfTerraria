@@ -32,8 +32,7 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = false;
             projectile.minion = true;
             projectile.usesLocalNPCImmunity = true;
-            projectile.usesIDStaticNPCImmunity = true;
-            projectile.localNPCHitCooldown = 0;
+            projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()

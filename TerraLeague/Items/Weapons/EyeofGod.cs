@@ -136,7 +136,7 @@ namespace TerraLeague.Items.Weapons
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             player.FindSentryRestingSpot(item.shoot, out int xPos, out int yPos, out int yDis);
-            Projectile.NewProjectile((float)xPos, (float)(yPos - yDis) - 28, 0f, 0f, type, damage, knockBack, player.whoAmI, 10, -1);
+            Projectile.NewProjectile((float)xPos, (float)(yPos - yDis) - 24, 0f, 0f, type, damage, knockBack, player.whoAmI, 10, -1);
             player.UpdateMaxTurrets();
 
             return false;
