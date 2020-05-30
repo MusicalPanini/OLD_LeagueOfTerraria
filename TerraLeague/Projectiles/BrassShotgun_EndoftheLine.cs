@@ -31,6 +31,7 @@ namespace TerraLeague.Projectiles
             projectile.tileCollide = true;
             projectile.ignoreWater = false;
             projectile.ranged = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

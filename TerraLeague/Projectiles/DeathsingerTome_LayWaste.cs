@@ -25,7 +25,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 75;
             projectile.height = 75;
             projectile.timeLeft = 42;
-            projectile.penetrate = 1000;
+            projectile.penetrate = -1;
             projectile.friendly = false;
             projectile.hostile = false;
             projectile.magic = true;

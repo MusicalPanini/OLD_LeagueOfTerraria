@@ -50,6 +50,13 @@ namespace TerraLeague.Projectiles
             target.AddBuff(BuffType<EssenceFluxDebuff>(), 240);
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            crit = false;
+
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
         public override void Kill(int timeLeft)
         {
             for (int i = 0; i < 10; i++)

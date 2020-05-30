@@ -34,6 +34,8 @@ namespace TerraLeague.Projectiles
             projectile.alpha = 255;
             projectile.extraUpdates = 8;
             projectile.netImportant = true;
+            projectile.ranged = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

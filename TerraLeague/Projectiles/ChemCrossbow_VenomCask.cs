@@ -66,6 +66,13 @@ namespace TerraLeague.Projectiles
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            crit = false;
+
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Shatter, projectile.position);

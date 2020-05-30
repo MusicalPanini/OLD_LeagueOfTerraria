@@ -34,6 +34,7 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.magic = true;
             projectile.alpha = 255;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
 
@@ -176,7 +177,7 @@ namespace TerraLeague.Projectiles
         {
             if (target.GetGlobalNPC<NPCsGLOBAL>().ablaze)
             {
-                crit = true;
+                damage *= 2;
                 Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<BurningVengance_PyroclasmExplosion>(), projectile.damage / 2, 5, projectile.owner);
             }
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

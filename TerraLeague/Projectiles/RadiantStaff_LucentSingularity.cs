@@ -25,6 +25,7 @@ namespace TerraLeague.Projectiles
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.alpha = 255;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

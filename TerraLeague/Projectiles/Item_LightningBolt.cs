@@ -87,6 +87,12 @@ namespace TerraLeague.Projectiles
             base.Kill(timeLeft);
         }
 
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            crit = false;
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
         public override bool? CanHitNPC(NPC target)
         {
             if ((int)projectile.ai[0] == target.whoAmI)

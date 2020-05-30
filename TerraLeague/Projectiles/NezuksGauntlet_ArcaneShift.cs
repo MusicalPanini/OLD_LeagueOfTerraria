@@ -29,6 +29,7 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.ignoreWater = true;
             projectile.extraUpdates = 1;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public virtual string GetName()

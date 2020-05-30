@@ -26,6 +26,7 @@ namespace TerraLeague.Projectiles
             projectile.melee = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
             base.SetDefaults();
         }
         

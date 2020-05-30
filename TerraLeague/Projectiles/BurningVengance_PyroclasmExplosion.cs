@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
+using TerraLeague.NPCs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -24,6 +25,7 @@ namespace TerraLeague.Projectiles
             projectile.friendly = true;
             projectile.alpha = 255;
             projectile.magic = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
@@ -56,6 +58,12 @@ namespace TerraLeague.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             hitDirection = projectile.Center.X > target.Center.X ? -1 : 1;
+
+            if (target.GetGlobalNPC<NPCsGLOBAL>().ablaze)
+            {
+                damage *= 2;
+                Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<BurningVengance_PyroclasmExplosion>(), projectile.damage / 2, 5, projectile.owner);
+            }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }

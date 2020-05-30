@@ -34,7 +34,7 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.minion = true;
             projectile.scale = 1.5f;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().summonAbility = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

@@ -18,7 +18,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.width = 512;
             projectile.height = 512;
-            projectile.timeLeft = 480;
+            projectile.timeLeft = 160;
             projectile.penetrate = 1000;
             projectile.friendly = false;
             projectile.hostile = false;
@@ -26,7 +26,7 @@ namespace TerraLeague.Projectiles
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.alpha = 255;
-            projectile.extraUpdates = 3;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
@@ -46,7 +46,7 @@ namespace TerraLeague.Projectiles
 
             int displacement = Main.rand.Next(24);
 
-            for (int i = 0; i < 18; i++)
+            for (int i = 0; i < 18 * 3; i++)
             {
                 Vector2 pos = new Vector2(256, 0).RotatedBy(MathHelper.ToRadians((20 * i) + displacement)) + projectile.Center;
 

@@ -62,13 +62,15 @@ namespace TerraLeague.Items.Weapons
                 if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().gathering3)
                 {
                     return "Uses 2 stacks" +
-                        "\nLaunch a tornado that knocks up enemies";
+                        "\nLaunch a tornado that knocks up enemies" +
+                        "\nCan Crit";
                 }
                 else
                 {
                     return "Thrust your sword forward." +
                         "\nGain a stack of 'Gathering Storm' if you damage an enemy" +
-                        "\nCreate a tornado at 2 stacks";
+                        "\nCreate a tornado at 2 stacks" +
+                        "\nCan Crit";
                 }
             }
             else

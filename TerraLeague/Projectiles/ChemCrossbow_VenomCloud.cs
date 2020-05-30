@@ -30,8 +30,6 @@ namespace TerraLeague.Projectiles
             base.SetDefaults();
         }
 
-        
-
         public override void AI()
         {
             projectile.tileCollide = false;
@@ -104,6 +102,13 @@ namespace TerraLeague.Projectiles
             target.AddBuff(BuffType<DeadlyVenom>(), 300);
 
             base.OnHitNPC(target, damage, knockback, crit);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            crit = false;
+
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
         public override void Kill(int timeLeft)

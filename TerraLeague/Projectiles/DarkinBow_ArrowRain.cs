@@ -27,6 +27,7 @@ namespace TerraLeague.Projectiles
             projectile.timeLeft = 300;
             projectile.ranged = true;
             projectile.extraUpdates = 1;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

@@ -30,6 +30,7 @@ namespace TerraLeague.Projectiles
             drawOriginOffsetX = -128;
             drawOriginOffsetY = 192;
             projectile.hide = false;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

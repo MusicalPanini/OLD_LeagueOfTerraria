@@ -27,6 +27,7 @@ namespace TerraLeague.Projectiles
             projectile.ranged = true;
             projectile.alpha = 255;
             projectile.penetrate = -1;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

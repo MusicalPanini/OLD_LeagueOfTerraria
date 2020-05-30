@@ -46,7 +46,8 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return "Throw a projectile that will bounce towards other enemies";
+                return "Throw a projectile that will bounce towards other enemies" +
+                    "\nCan Crit";
             }
             else
             {

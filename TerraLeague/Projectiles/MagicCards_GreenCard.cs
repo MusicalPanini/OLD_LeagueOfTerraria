@@ -20,7 +20,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 28;
             projectile.height = 28;
             projectile.timeLeft = 180;
-            projectile.penetrate = 1000;
+            projectile.penetrate = -1;
             projectile.aiStyle = 2;
             projectile.friendly = true;
             projectile.magic = true;
@@ -30,6 +30,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.ai[0] == 2)
             {
+                projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
                 if (projectile.timeLeft == 180)
                 {
                     projectile.timeLeft = 60;

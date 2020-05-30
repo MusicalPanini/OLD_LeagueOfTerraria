@@ -32,6 +32,7 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.tileCollide = false;
             projectile.alpha = 150;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)

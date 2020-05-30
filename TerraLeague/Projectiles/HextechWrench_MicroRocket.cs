@@ -24,7 +24,7 @@ namespace TerraLeague.Projectiles
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.minion = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().summonAbility = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
             projectile.tileCollide = true;
             projectile.ignoreWater = true;
         }

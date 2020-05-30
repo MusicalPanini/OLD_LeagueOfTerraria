@@ -25,7 +25,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 400;
             projectile.height = 400;
             projectile.timeLeft = 180;
-            projectile.penetrate = 1000;
+            projectile.penetrate = -1;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.magic = true;
@@ -33,6 +33,7 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.scale = 1;
             projectile.alpha = 180;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

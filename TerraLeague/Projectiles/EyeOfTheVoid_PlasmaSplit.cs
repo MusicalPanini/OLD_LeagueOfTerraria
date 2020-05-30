@@ -26,6 +26,7 @@ namespace TerraLeague.Projectiles
             projectile.magic = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = false;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void SendExtraAI(BinaryWriter writer)

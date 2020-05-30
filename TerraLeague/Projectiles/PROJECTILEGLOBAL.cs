@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
+using TerraLeague.Items.CustomItems.Passives;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -12,6 +13,7 @@ namespace TerraLeague.Projectiles
     {
         internal ProjectilePacketHandler PacketHandler = new ProjectilePacketHandler(3);
         public bool summonAbility = false;
+        public bool abilitySpell = false;
 
         public override bool InstancePerEntity
         {
@@ -38,6 +40,18 @@ namespace TerraLeague.Projectiles
             }
 
             base.OnHitNPC(projectile, target, damage, knockback, crit);
+        }
+
+        public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            if (abilitySpell)
+            {
+                crit = (Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().arcanePrecision && Main.rand.Next(0, 100) < ArcanePrecision.critChance);
+            }
+            else
+            {
+                base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
+            }
         }
 
         public bool DoNotCountRangedDamage(Projectile proj)

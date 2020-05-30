@@ -537,6 +537,7 @@ namespace TerraLeague
         public bool feast2 = false;
         public bool feast3 = false;
         public int feastStacks = 0;
+
         // Umbral Trespass Stuff
         public bool umbralTrespassing = false;
         public NPC umbralTaggedNPC;
@@ -550,7 +551,6 @@ namespace TerraLeague
         // Whisper Shots
         public int WhisperShotsLeft = 4;
         public int ReloadTimer = 0;
-
 
         // Requiem Stuff
         public bool requiem = false;
@@ -619,6 +619,7 @@ namespace TerraLeague
         public bool truemanaCharge = false;
         public int manaChargeStacks = 0;
         public bool awe = false;
+        public bool arcanePrecision = false;
 
 
         // Energized Items
@@ -781,7 +782,6 @@ namespace TerraLeague
             awe = false;
 
             // Complete
-
             summonedBlade = false;
             tiamat = false;
             titanic = false;
@@ -808,6 +808,7 @@ namespace TerraLeague
             critEdge = false;
             ardentsFrenzy = false;
             guinsoosRage = false;
+            arcanePrecision = false;
 
             if (spiritualRestur)
                 hasSpiritualRestorationLastStep = true;
@@ -1755,7 +1756,7 @@ namespace TerraLeague
                 int onhitdamage = 0;
 
                 // Adds the mods custom minion damage stat to the modifier to apply the correct damage
-                if (TerraLeague.IsMinionDamage(proj) && !proj.GetGlobalProjectile<PROJECTILEGLOBAL>().summonAbility)
+                if (TerraLeague.IsMinionDamage(proj) && !proj.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell)
                 {
                     minionModifer *= (float)TrueMinionDamage + 1;
                 }

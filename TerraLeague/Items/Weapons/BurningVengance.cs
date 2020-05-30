@@ -61,7 +61,7 @@ namespace TerraLeague.Items.Weapons
             else if (type == AbilityType.R)
             {
                 return "Launch a homing fireball at a target that bounces between enemies" +
-                    "\nCrits enemies who are 'Ablaze' and causes an explosion";
+                    "\nDeals double damage to enemies who are 'Ablaze' and causes an explosion";
             }
             else
             {

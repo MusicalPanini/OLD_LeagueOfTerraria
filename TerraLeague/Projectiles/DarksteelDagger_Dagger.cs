@@ -28,6 +28,8 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
+            if (projectile.ai[0] > 0)
+                projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
 
             projectile.spriteDirection = projectile.direction;
 

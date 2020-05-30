@@ -23,6 +23,7 @@ namespace TerraLeague.Projectiles
             projectile.friendly = false;
             projectile.minion = true;
             projectile.scale = 1.2f;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

@@ -145,7 +145,7 @@ namespace TerraLeague.NPCs
                     return "Did you know enemies afflicted with 'Slowed' also have their damage reduced by 30%!";
                 case 6:
                     return "Take care near the beaches of this world during New Moons." +
-                        "\nAn evil and twisted Black Mist rolls ashore, bringing with it a damning undead evil." +
+                        "\nAn evil and twisted Black Mist rolls ashore, bringing with it a damning, undead evil." +
                         "\nIt's even rumored to sometimes travel further inland...";
                 default:
                     return "Open mid pls";
@@ -174,32 +174,34 @@ namespace TerraLeague.NPCs
                             "\nYou can change your Summoner Spells by using the Runes I create. Just bring the necessary Vials of True Magic for their creation.";
                         break;
                     case 1:
-                        text = "Armor decreases contact damage." +
-                            "\nResist decreases projectile damage." +
-                            "\nDefence decreases all damage.";
+                        text = "Your abilities can not crit under most circumstances, though I have heard of an item allowing such power!";
                         break;
                     case 2:
+                        text = "Armor decreases contact damage." +
+                            "\nResist decreases projectile damage.";
+                        break;
+                    case 3:
                         text = "Lifesteal can be very powerful, but it has its drawbacks. In most cases it will reduces your max life and increase the damage you take." +
                             "\nUpon taking damage, you will be afflicted with 'Grevious Wounds'. This debuff will negate your lifesteal." +
                             "\nProjectiles that pierce or chase down their target also have their lifesteal reduced.";
                         break;
-                    case 3:
+                    case 4:
                         text = "On Hit Damage is an additional proc of damage that follows a different rule set." +
                             "\nIt has a 25% chance to be applied" +
                             "\nMelee projectiles deal reduced On Hit Damage.";
                         break;
-                    case 4:
+                    case 5:
                         text = "Actives and Passives of the same name do not stack." +
                             "\nThe accessory you have equipped first will take priority";
                         break;
-                    case 5:
+                    case 6:
                         text = "Grievous Wounds when applied to an enemy will take double damage from all damage over time effects";
                         break;
-                    case 6:
+                    case 7:
                         text = "Heal Power (HEAL) increases all out-going healing." +
                             "\nIt addtionally will increase the amount potions will heal for.";
                         break;
-                    case 7:
+                    case 8:
                         text = "Cooldown Reduction (CDR) reduces the recharge time of Summoner Spells, Abilities and Active Items" +
                             "\nThis reduction is capped at 40%.";
                         break;
@@ -210,7 +212,7 @@ namespace TerraLeague.NPCs
 
                 Main.npcChatText = text;
                 currentHelp++;
-                if (currentHelp > 7)
+                if (currentHelp > 8)
                     currentHelp = 0;
             }
         }

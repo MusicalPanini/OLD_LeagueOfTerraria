@@ -30,11 +30,7 @@ namespace TerraLeague.Projectiles
             projectile.hostile = false;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-        }
-
-        public virtual string GetName()
-        {
-            return "Echo";
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
