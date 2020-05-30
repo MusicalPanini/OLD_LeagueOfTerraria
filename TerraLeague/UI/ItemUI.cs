@@ -32,7 +32,7 @@ namespace TerraLeague.UI
             
             ItemPanel = new UIItemPanel(99,0,149,101, new Color(10, 100, 50));
             SummonerPanel = new UISummonerPanel(0, 47,99,54, new Color(10, 100, 50));
-            StatPanel = new UIStatPanel(66, Main.screenHeight - (int)(54 + 44), 150, 54, new Color(10, 100, 50));
+            StatPanel = new UIStatPanel(66, Main.screenHeight - (int)(58 + 48), 150, 54, new Color(10, 100, 50));
 
             MainPanel.Append(SummonerPanel);
             MainPanel.Append(ItemPanel);
@@ -78,10 +78,11 @@ namespace TerraLeague.UI
         
     }
 
-    class UISummonerPanel : UIPanel
+    class UISummonerPanel : UIElement
     {
         UISummonerSlot Slot1;
         UISummonerSlot Slot2;
+        Texture2D _backgroundTexture = null;
 
         public UISummonerPanel(int left, int top, int width, int height, Color color)
         {
@@ -90,7 +91,9 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(width, 0f);
             Height.Set(height, 0f);
-            BackgroundColor = color;
+            //BackgroundColor = color;
+            if (_backgroundTexture == null)
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/SummonerBackground");
 
             Slot1 = new UISummonerSlot(1,5,5,44);
             Append(Slot1);
@@ -98,10 +101,21 @@ namespace TerraLeague.UI
             Slot2 = new UISummonerSlot(2,52,5,44);
             Append(Slot2);
         }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            CalculatedStyle dimensions = this.GetDimensions();
+            Point point1 = new Point((int)dimensions.X, (int)dimensions.Y - 2);
+            int width = (int)Math.Ceiling(dimensions.Width);
+            int height = (int)Math.Ceiling(dimensions.Height);
+            spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+            base.DrawSelf(spriteBatch);
+        }
     }
 
-    class UISummonerSlot : UIPanel
+    class UISummonerSlot : UIElement
     {
+        Texture2D _backgroundTexture = null;
         Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
         public UIImage sumImage;
         public UIText sumCD;
@@ -116,23 +130,25 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(dimentions, 0f);
             Height.Set(dimentions, 0f);
-            BackgroundColor = new Color(35, 100, 80);
+            //BackgroundColor = new Color(35, 100, 80);
+            if (_backgroundTexture == null)
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/AbilityBorder");
 
             sumImage = new UIImage(placeholderArt);
             sumImage.Width.Pixels = Width.Pixels;
             sumImage.Height.Pixels = Height.Pixels;
-            sumImage.Left.Pixels = -6;
-            sumImage.Top.Pixels = -6;
+            sumImage.Left.Pixels = 6;
+            sumImage.Top.Pixels = 4;
             Append(sumImage);
 
             sumCD = new UIText("", 1);
-            sumCD.Left.Pixels = 9;
-            sumCD.Top.Pixels = 2;
+            sumCD.Left.Pixels = 8;
+            sumCD.Top.Pixels = 12;
             Append(sumCD);
 
             itemKey = new UIText(slotNum.ToString(), 0.75f);
-            itemKey.Left.Pixels = -7;
-            itemKey.Top.Pixels = -8;
+            itemKey.Left.Pixels = 2;
+            itemKey.Top.Pixels = -2;
             Append(itemKey);
 
             toolTip = new UIText("",1);
@@ -169,7 +185,7 @@ namespace TerraLeague.UI
                 else
                     sumCD.SetText((modPlayer.sumCooldowns[slotNum - 1] / 60 + 1).ToString());
 
-                sumCD.Left.Pixels = 8 - (sumCD.Text.Length * 4);
+                sumCD.Left.Pixels = 18 - (sumCD.Text.Length * 4);
             }
             else
             {
@@ -201,9 +217,19 @@ namespace TerraLeague.UI
             Recalculate();
             base.Update(gameTime);
         }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            CalculatedStyle dimensions = this.GetDimensions();
+            Point point1 = new Point((int)dimensions.X, (int)dimensions.Y - 2);
+            int width = (int)Math.Ceiling(dimensions.Width);
+            int height = (int)Math.Ceiling(dimensions.Height);
+            spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+            base.DrawSelf(spriteBatch);
+        }
     }
 
-    class UIItemPanel : UIPanel
+    class UIItemPanel : UIElement
     {
         UIItemSlot Item1;
         UIItemSlot Item2;
@@ -212,6 +238,8 @@ namespace TerraLeague.UI
         UIItemSlot Item5;
         UIItemSlot Item6;
 
+        Texture2D _backgroundTexture = null;
+
         public UIItemPanel(int left, int top, int width, int height, Color color)
         {
             SetPadding(0);
@@ -219,7 +247,10 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(width, 0f);
             Height.Set(height, 0f);
-            BackgroundColor = color;
+            //BackgroundColor = color;
+
+            if (_backgroundTexture == null)
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBackground");
 
             Item1 = new UIItemSlot(1, 5, 5, 44);
             Append(Item1);
@@ -239,10 +270,21 @@ namespace TerraLeague.UI
             Item6 = new UIItemSlot(6, 99, 52, 44);
             Append(Item6);
         }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            CalculatedStyle dimensions = this.GetDimensions();
+            Point point1 = new Point((int)dimensions.X, (int)dimensions.Y - 2);
+            int width = (int)Math.Ceiling(dimensions.Width);
+            int height = (int)Math.Ceiling(dimensions.Height);
+            spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+            base.DrawSelf(spriteBatch);
+        }
     }
 
-    class UIItemSlot : UIPanel
+    class UIItemSlot : UIElement
     {
+        Texture2D _backgroundTexture = null;
         Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
         UIImage itemImage;
         UIText itemStat;
@@ -252,18 +294,21 @@ namespace TerraLeague.UI
 
         public UIItemSlot(int SlotNum, int left, int top, int dimentions)
         {
+            if (_backgroundTexture == null)
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorder");
+
             slotNum = SlotNum;
             Left.Set(left, 0f);
             Top.Set(top, 0f);
             Width.Set(dimentions, 0f);
             Height.Set(dimentions, 0f);
-            BackgroundColor = new Color(35, 100, 80);
+            //BackgroundColor = new Color(35, 100, 80);
 
             itemImage = new UIImage(placeholderArt);
             itemImage.Width.Pixels = Width.Pixels;
             itemImage.Height.Pixels = Height.Pixels;
-            itemImage.Left.Pixels = -6;
-            itemImage.Top.Pixels = -6;
+            itemImage.Left.Pixels = 0;//-6;
+            itemImage.Top.Pixels = 0;//-6;
             Append(itemImage);
 
             itemStat = new UIText("", 0.75f);
@@ -272,8 +317,8 @@ namespace TerraLeague.UI
             Append(itemStat);
 
             itemKey = new UIText(slotNum.ToString(), 0.75f);
-            itemKey.Left.Pixels = -7;
-            itemKey.Top.Pixels = -8;
+            itemKey.Left.Pixels = 2;
+            itemKey.Top.Pixels = -2;
             Append(itemKey);
 
             if (slotNum > 3)
@@ -320,21 +365,21 @@ namespace TerraLeague.UI
 
                 if (legItem.OnCooldown(Main.LocalPlayer))
                 {
-                    BackgroundColor = new Color(50, 50, 50);
+                    _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorderCooldown");
                 }
                 else if (legItem.GetActive() != null)
                 {
-                    BackgroundColor = new Color(70, 150, 120);
+                    _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorderActive");
                 }
                 else
                 {
-                    BackgroundColor = new Color(35, 100, 80);
+                    _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorder");
                 }
             }
             else
             {
                 itemStat.SetText("");
-                BackgroundColor = new Color(35, 100, 80);
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorder");
             }
 
 
@@ -342,8 +387,10 @@ namespace TerraLeague.UI
             {
                 Texture2D texture = GetTexture(Main.LocalPlayer.armor[slotNum + 2]);
                 itemImage.SetImage(texture);
-                itemImage.Left.Pixels = ((32 - texture.Width) / 2) - 6;
-                itemImage.Top.Pixels = ((32 - texture.Height) / 2) - 6;
+                itemImage.Left.Pixels = ((32 - texture.Width) / 2) + 6;
+                itemImage.Top.Pixels = ((32 - texture.Height) / 2) + 4;
+                itemStat.Left.Pixels = 16;
+                itemStat.Top.Pixels = 30;
                 itemImage.ImageScale = 1;
             }
             else
@@ -395,6 +442,16 @@ namespace TerraLeague.UI
             }
 
             return texture;
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            CalculatedStyle dimensions = this.GetDimensions();
+            Point point1 = new Point((int)dimensions.X, (int)dimensions.Y - 2);
+            int width = (int)Math.Ceiling(dimensions.Width);
+            int height = (int)Math.Ceiling(dimensions.Height);
+            spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+            base.DrawSelf(spriteBatch);
         }
     }
 
@@ -533,7 +590,7 @@ namespace TerraLeague.UI
         }
     }
 
-    class UIStatPanel : UIPanel
+    class UIStatPanel : UIState
     {
         public bool extraStats = false;
 
@@ -551,6 +608,8 @@ namespace TerraLeague.UI
 
         UIText tooltip;
 
+        Texture2D _backgroundTexture;
+
         public UIStatPanel(int left, int top, int width, int height, Color color)
         {
             SetPadding(0);
@@ -558,8 +617,9 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(width, 0f);
             Height.Set(height, 0f);
-            BackgroundColor = color;
-
+            //BackgroundColor = color;
+            if (_backgroundTexture == null)
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundSmall");
 
             armorStats = new UIText("ARM: 000", 0.65f);
             armorStats.Left.Pixels = 8;
@@ -646,12 +706,16 @@ namespace TerraLeague.UI
 
             if (extraStats)
             {
-                Height.Set(86, 0f);
+                    _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundLarge");
+
+                Height.Set(90, 0f);
                 GetStats(true);
             }
             else
             {
-                Height.Set(54, 0f);
+                    _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundSmall");
+
+                Height.Set(58, 0f);
                 GetStats();
             }
             Top.Set(Main.screenHeight - (Height.Pixels + 44), 0f);
@@ -773,6 +837,16 @@ namespace TerraLeague.UI
                 CDRStats.SetText("");
                 manaStats.SetText("");
             }
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            CalculatedStyle dimensions = this.GetDimensions();
+            Point point1 = new Point((int)dimensions.X, (int)dimensions.Y - 2);
+            int width = (int)Math.Ceiling(dimensions.Width);
+            int height = (int)Math.Ceiling(dimensions.Height);
+            spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
+            base.DrawSelf(spriteBatch);
         }
     }
 }
