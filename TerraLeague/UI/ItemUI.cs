@@ -661,36 +661,61 @@ namespace TerraLeague.UI
             if (armorStats.IsMouseHovering)
             {
                 text = "[c/FFFF00:Armor]" +
-                    "\nReduces damage from contact by 0.5 (0.75 in Expert) damage per point";
+                    "\nReduces damage from contact by " + (Main.expertMode ? "0.75" : "0.5") + " damage per point" +
+                    "\nFrom Armor: " + modPlayer.armorLastStep +
+                    "\nFrom Defence: " + modPlayer.defenceLastStep;
             }
             else if (resistStats.IsMouseHovering)
             {
                 text = "[c/B0C4DE:Resist]" +
-                    "\nReduces damage from projectiles by 0.5 (0.75 in Expert) damage per point";
+                    "\nReduces damage from projectiles by " + (Main.expertMode ? "0.75" : "0.5") + " damage per point" +
+                    "\nFrom Resist: " + modPlayer.resist +
+                    "\nFrom Defence: " + modPlayer.defenceLastStep;
             }
             else if (meleeStats.IsMouseHovering)
             {
                 text = "[c/FFA500:Melee Damage]" +
                     "\nUsed for Abilities and Items scaling damage." +
-                    "\nMelee Weapons Deal " + (int)(modPlayer.meleeDamageLastStep * 100) + "% damage.";
+                    "\nMelee Weapons Deal " + (int)(modPlayer.meleeDamageLastStep * 100) + "% damage." +
+                    "\nExtra Damage: +" + modPlayer.meleeFlatDamage +
+                    "\nCrit Chance: +" + (modPlayer.player.meleeCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealMelee * 100) + "%" +
+                    "\nFlat On Hit: " + modPlayer.meleeOnHit +
+                    "\nArmor Penetration: " + (modPlayer.meleeArmorPen + modPlayer.player.armorPenetration);
             }
             else if (rangedStats.IsMouseHovering)
             {
                 text = "[c/20B2AA:Ranged Damage]" +
                     "\nUsed for Abilities and Items scaling damage." +
-                    "\nRanged Weapons Deal " + (int)(modPlayer.rangedDamageLastStep * 100) + "% damage.";
+                    "\nRanged Weapons Deal " + (int)(modPlayer.rangedDamageLastStep * 100) + "% damage." +
+                    "\nExtra Damage: +" + modPlayer.rangedFlatDamage +
+                    "\nCrit Chance: +" + (modPlayer.player.rangedCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealRange * 100) + "%" +
+                    "\nFlat On Hit: " + modPlayer.rangedOnHit +
+                    "\nArmor Penetration: " + (modPlayer.rangedArmorPen + modPlayer.player.armorPenetration);
             }
             else if (magicStats.IsMouseHovering)
             {
                 text = "[c/8E70DB:Magic Damage]" +
                     "\nUsed for Abilities and Items scaling damage." +
-                    "\nMagic Weapons Deal " + (int)(modPlayer.magicDamageLastStep * 100) + "% damage.";
+                    "\nMagic Weapons Deal " + (int)(modPlayer.magicDamageLastStep * 100) + "% damage." +
+                    "\nExtra Damage: +" + modPlayer.magicFlatDamage +
+                    "\nCrit Chance: +" + (modPlayer.player.magicCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealMagic * 100) + "%" +
+                    "\nFlat On Hit: " + modPlayer.magicOnHit +
+                    "\nArmor Penetration: " + (modPlayer.magicArmorPen + modPlayer.player.armorPenetration);
             }
             else if (summonStats.IsMouseHovering)
             {
                 text = "[c/87CEEB:Summon Damage]" +
                     "\nUsed for Abilities and Items scaling damage." +
-                    "\nSummoner Weapons Deal " + (int)(modPlayer.minionDamageLastStep * 100) + "% damage.";
+                    "\nSummoner Weapons Deal " + (int)(modPlayer.minionDamageLastStep * 100) + "% damage." +
+                    "\nExtra Damage: +" + modPlayer.minionFlatDamage +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealMinion * 100) + "%" +
+                    "\nFlat On Hit: " + modPlayer.meleeOnHit +
+                    "\nArmor Penetration: " + (modPlayer.minionArmorPen + modPlayer.player.armorPenetration) +
+                    "\nMinions: " + (modPlayer.player.maxMinions) +
+                    " ~ Sentries: " + (modPlayer.player.maxTurrets);
             }
             else if (CDRStats.IsMouseHovering)
             {
@@ -727,8 +752,8 @@ namespace TerraLeague.UI
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
 
-            armorStats.SetText("ARM: " + modPlayer.armor.ToString());
-            resistStats.SetText("RST: " + modPlayer.resist.ToString());
+            armorStats.SetText("ARM: " + (modPlayer.armor + modPlayer.player.statDefense));
+            resistStats.SetText("RST: " + (modPlayer.resist + modPlayer.player.statDefense));
             meleeStats.SetText("MEL: " + modPlayer.MEL);
             rangedStats.SetText("RNG: " + modPlayer.RNG);
             magicStats.SetText("MAG: " + modPlayer.MAG);

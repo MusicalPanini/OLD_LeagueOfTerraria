@@ -23,6 +23,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void UpdateAccessory(Player player, ModItem modItem)
         {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            modPlayer.meleeOnHit += baseDamage + (int)(modPlayer.SUM * minionScaling / 100d);
 
             base.UpdateAccessory(player, modItem);
         }
@@ -31,7 +34,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            OnHitDamage += baseDamage + (int)(modPlayer.SUM * minionScaling / 100d);
+            //OnHitDamage += baseDamage + (int)(modPlayer.SUM * minionScaling / 100d);
 
             base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
         }
@@ -39,11 +42,6 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            if (proj.melee)
-            {
-                OnHitDamage += baseDamage + (int)(modPlayer.SUM * minionScaling / 100d);
-            }
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
         }

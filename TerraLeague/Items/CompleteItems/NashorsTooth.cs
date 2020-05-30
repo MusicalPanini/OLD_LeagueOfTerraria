@@ -31,6 +31,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.1;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.2;
             player.meleeSpeed += 0.25f;
+            base.UpdateAccessory(player, hideVisual);
         }
 
         public override void AddRecipes()
