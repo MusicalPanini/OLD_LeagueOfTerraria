@@ -17,8 +17,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 4;
-            projectile.height = 4;
+            projectile.width = 8;
+            projectile.height = 8;
             projectile.alpha = 0;
             projectile.timeLeft = 360;
             projectile.penetrate = 1;
@@ -39,10 +39,10 @@ namespace TerraLeague.Projectiles
                     sound.Pitch = -0.5f;
             }
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 182, Vector2.Zero);
+            Dust dust = Dust.NewDustPerfect(projectile.Center, 182, Vector2.Zero);
             dust.noGravity = true;
             dust.velocity *= 0;
-            dust = Dust.NewDustPerfect(projectile.position - projectile.velocity.SafeNormalize(Vector2.Zero), 182, Vector2.Zero);
+            dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 182, Vector2.Zero);
             dust.noGravity = true;
             dust.velocity *= 0;
 

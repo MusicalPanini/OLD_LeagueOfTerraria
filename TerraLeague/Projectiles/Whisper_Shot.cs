@@ -16,8 +16,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 3;
-            projectile.height = 3;
+            projectile.width = 8;
+            projectile.height = 8;
             projectile.alpha = 0;
             projectile.timeLeft = 360;
             projectile.penetrate = 1;
@@ -35,10 +35,10 @@ namespace TerraLeague.Projectiles
                 Main.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/WhisperShot"), projectile.position);
             Lighting.AddLight(projectile.Left, 1f, 0.5f, 0.01f);
 
-            Dust dust = Dust.NewDustPerfect(projectile.position, 75, Vector2.Zero, 0, new Color(255, 0, 0));
+            Dust dust = Dust.NewDustPerfect(projectile.Center, 75, Vector2.Zero, 0, new Color(255, 0, 0));
             dust.noGravity = true;
             dust.velocity *= 0;
-            dust = Dust.NewDustPerfect(projectile.position - projectile.velocity.SafeNormalize(Vector2.Zero), 75, Vector2.Zero, 0, new Color(255, 0, 0));
+            dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 75, Vector2.Zero, 0, new Color(255, 0, 0));
             dust.noGravity = true;
             dust.velocity *= 0;
 
