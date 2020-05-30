@@ -26,7 +26,9 @@ namespace TerraLeague
     {
         internal PlayerPacketHandler PacketHandler = ModNetHandler.playerHandler;
         internal NPCSpawnInfo nPCSpawnInfo = new NPCSpawnInfo();
-        
+
+        public static int lifestealMax = 25;
+
         // Ability Animation
         public int abilityAnimationType = 0;
         public int abilityAnimation = 0;
@@ -1170,6 +1172,9 @@ namespace TerraLeague
 
             if (lifeStealCharge >= 1)
             {
+                if (lifeStealCharge > lifestealMax)
+                    lifeStealCharge = lifestealMax;
+
                 int heal = (int)(lifeStealCharge * healPower);
                 
                 if (bloodShield && GetRealHeathWithoutShield() >= GetRealHeathWithoutShield(true))
