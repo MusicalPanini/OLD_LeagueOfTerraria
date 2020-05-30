@@ -46,7 +46,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             if (modPlayer.rally)
-                modPlayer.minionModifer += modPlayer.SUM * minionScaling / 100d;
+                modPlayer.minionModifer += modPlayer.SUM * minionScaling / 10000d;
 
             base.PostPlayerUpdate(player, modItem);
         }
