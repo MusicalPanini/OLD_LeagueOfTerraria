@@ -21,7 +21,7 @@ namespace TerraLeague.Items.CompleteItems
             item.width = 32;
             item.height = 32;
             item.value = 800000;
-            item.rare = ItemRarityID.Blue;
+            item.rare = ItemRarityID.Red;
             item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
