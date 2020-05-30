@@ -7,48 +7,36 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DebugGun : AbilityItem
+    public class VoidProphetsStaff : AbilityItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Debug Gun");
+            DisplayName.SetDefault("Void Prophets Staff");
             Tooltip.SetDefault("");
         }
 
         public override string GetWeaponTooltip()
         {
-            return "";
+            return "Summon a gate way from the void";
         }
 
         public override string GetQuote()
         {
-            return "You probably shouldn't have this";
+            return "Bow to the void! Or be consumed by it!";
         }
 
         public override string GetAbilityName(AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return "";
-            else if (type == AbilityType.W)
-                return "";
-            else if (type == AbilityType.E)
-                return "Test of Spirit";
-            else if (type == AbilityType.R)
-                return "";
+            if (type == AbilityType.E)
+                return "Malefic Visions";
             else
                 return base.GetAbilityName(type);
         }
 
         public override string GetIconTexturePath(AbilityType type)
         {
-            if (type == AbilityType.Q)
-                return "AbilityImages/Template";
-            else if (type == AbilityType.W)
-                return "AbilityImages/Template";
-            else if (type == AbilityType.E)
-                return "AbilityImages/Template";
-            else if (type == AbilityType.R)
-                return "AbilityImages/Template";
+            if (type == AbilityType.E)
+                return "AbilityImages/MaleficVisions";
             else
                 return base.GetIconTexturePath(type);
         }
@@ -57,8 +45,8 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
-                return "Reach out and pull the spirit of an enemy." +
-                    "\nThis spirit can be attacked to deal 50% of the damage back to the owner of the spirit.";
+                return "Infect an enemy's mind, dealing damage over time." +
+                    "\nIf the enemy dies during the visions, it will spread to anpther near by enemy";
             }
             else
             {
@@ -68,20 +56,17 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
-            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-            if (type == AbilityType.Q)
-                return (int)(item.damage * 2f);
-            else
-                return base.GetAbilityBaseDamage(player, type);
+            if (type == AbilityType.E)
+                return item.damage * 2;
+            return base.GetAbilityBaseDamage(player, type);
         }
 
         public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
         {
-            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-            if (type == AbilityType.Q)
+            if (type == AbilityType.E)
             {
-                if (dam == DamageType.RNG)
-                    return 120;
+                if (dam == DamageType.SUM)
+                    return 20;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -90,24 +75,21 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
                 return 40;
-            else
-                return base.GetBaseManaCost(type);
+            return base.GetBaseManaCost(type);
         }
 
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
             if (type == AbilityType.E)
-                return "";
-            else
-                return base.GetDamageTooltip(player, type);
+                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.SUM) + " summon damage per half second";
+            return base.GetDamageTooltip(player, type);
         }
 
         public override int GetRawCooldown(AbilityType type)
         {
             if (type == AbilityType.E)
-                return 3;
-            else
-                return base.GetRawCooldown(type);
+                return 16;
+            return base.GetRawCooldown(type);
         }
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
@@ -119,19 +101,23 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
+                int npc = TerraLeague.NPCMouseIsHovering();
+                if (npc != -1)
                 {
-                    Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
-                    int projType = ProjectileType<EyeofGod_TestofSpirit>();
-                    int damage = 1;
-                    int knockback = 0;
+                    if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
+                    {
+                        Vector2 position = player.MountedCenter;
+                        Vector2 velocity = TerraLeague.CalcVelocityToMouse(player.Center, 4);
+                        int projType = ProjectileType<VoidProphetsStaff_MaleficVisions>();
+                        int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
+                        int knockback = 0;
 
-                    Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
+                        Projectile proj = Projectile.NewProjectileDirect(position, new Vector2(0, -10), projType, damage, knockback, player.whoAmI, npc);
 
-                    SetAnimation(player, 30, 30, position + velocity);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
+                        SetAnimation(player, 30, 30, position + velocity);
+                        DoEfx(player, type);
+                        SetCooldowns(player, type);
+                    }
                 }
             }
             else
@@ -144,19 +130,19 @@ namespace TerraLeague.Items.Weapons
         {
             item.damage = 20;
             item.summon = true;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 40;
-            item.height = 24;
+            item.useStyle = ItemUseStyleID.SwingThrow;
+            item.width = 48;
+            item.height = 48;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.shootSpeed = 12f;
+            item.mana = 10;
             item.noMelee = true;
-            item.knockBack = 0;
-            item.value = 1;
-            item.rare = ItemRarityID.Expert;
-            item.scale = 0.9f;
+            item.knockBack = 1;
+            item.value = 35000;
+            item.rare = ItemRarityID.Lime;
+            item.scale = 1f;
             item.shoot = ProjectileType<VoidProphetsStaff_ZzrotPortal>();
-            //item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
+            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 113);
             item.autoReuse = false;
         }
 
@@ -165,19 +151,24 @@ namespace TerraLeague.Items.Weapons
             player.FindSentryRestingSpot(item.shoot, out int xPos, out int yPos, out int yDis);
             Projectile.NewProjectile((float)xPos, (float)(yPos - yDis), 0f, 0f, type, damage, knockBack, player.whoAmI, 10, -1);
             player.UpdateMaxTurrets();
+
             return false;
         }
 
         public override bool GetIfAbilityExists(AbilityType type)
         {
             if (type == AbilityType.E)
-                return false;
+                return true;
             return base.GetIfAbilityExists(type);
         }
 
-        public override Vector2? HoldoutOffset()
+        public override void AddRecipes()
         {
-            return new Vector2(0, 0);
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemType<VoidBar>(), 14);
+            recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
 
         public override void Efx(Player player, AbilityType type)

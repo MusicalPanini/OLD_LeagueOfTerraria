@@ -8,6 +8,7 @@ using TerraLeague.Buffs;
 using TerraLeague.Projectiles;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
+using System;
 
 namespace TerraLeague.NPCs
 {
@@ -48,6 +49,7 @@ namespace TerraLeague.NPCs
         public bool vessel = false;
         public bool harbingersInferno = false;
         public bool doomed = false;
+        public bool maleficVisions = false;
 
         public bool snared = false;
         public bool stunned = false;
@@ -98,6 +100,7 @@ namespace TerraLeague.NPCs
             seeded = false;
             harbingersInferno = false;
             doomed = false;
+            maleficVisions = false;
 
             snared = false;
             stunned = false;
@@ -539,6 +542,15 @@ namespace TerraLeague.NPCs
                 if (damage < 10)
                 {
                     damage = 10;
+                }
+            }
+            if (maleficVisions)
+            {
+                npc.lifeRegen -= 20;
+
+                if (damage < 2)
+                {
+                    damage = 2;
                 }
             }
 
