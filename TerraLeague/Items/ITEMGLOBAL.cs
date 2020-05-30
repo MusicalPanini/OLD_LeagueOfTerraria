@@ -302,6 +302,14 @@ namespace TerraLeague.Items
             base.UpdateInventory(item, player);
         }
 
+        public override bool CanUseItem(Item item, Player player)
+        {
+            if (player.GetModPlayer<PLAYERGLOBAL>().umbralTrespassing)
+                return false;
+
+            return base.CanUseItem(item, player);
+        }
+
         public override bool UseItem(Item item, Player player)
         {
             return base.UseItem(item, player);
