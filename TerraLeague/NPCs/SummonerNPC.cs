@@ -70,12 +70,14 @@ namespace TerraLeague.NPCs
 
         public override string TownNPCName()
         {
-            switch (WorldGen.genRand.Next(3))
+            switch (WorldGen.genRand.Next(4))
             {
                 case 0:
                     return "Marc";
                 case 1:
                     return "Merrill";
+                case 2:
+                    return "Lance";
                 default:
                     return "Rito";
             }
