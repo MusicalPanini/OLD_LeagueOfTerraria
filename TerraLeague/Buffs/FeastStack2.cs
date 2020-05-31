@@ -11,14 +11,15 @@ namespace TerraLeague.Buffs
         {
             DisplayName.SetDefault("Medium Feast");
             Description.SetDefault("Gain 50 Life" +
-                "\nYou melee attacks now deal 10% max life On Hit");
+                "\nYou melee and magic attacks now deal 5% max life On Hit");
             Main.buffNoSave[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetModPlayer<PLAYERGLOBAL>().feast2 = true;
-            player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit = player.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep/10;
+            player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit = player.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep/ 20;
+            player.GetModPlayer<PLAYERGLOBAL>().magicOnHit = player.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep/ 20;
             player.statLifeMax2 += 50;
         }
     }

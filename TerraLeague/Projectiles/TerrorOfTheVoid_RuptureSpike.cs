@@ -30,7 +30,7 @@ namespace TerraLeague.Projectiles
             //projectile.scale = 4;
             //drawOriginOffsetX = -128;
             //drawOriginOffsetY = 192;
-            projectile.hide = true;
+            projectile.hide = false;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
@@ -68,6 +68,16 @@ namespace TerraLeague.Projectiles
                 {
                     Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 97, 0f, -4f, projectile.alpha, default(Color), 2);
                 }
+
+                if ((int)projectile.ai[1] != 0)
+                {
+                    int numberProjectiles = Main.rand.Next(0, 4);
+                    for (int i = 0; i < numberProjectiles; i++)
+                    {
+                        Vector2 perturbedSpeed = new Vector2(0, -16).RotatedByRandom(MathHelper.ToRadians(16));
+                        Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<TerrorOfTheVoid_VorpalSpike>(), projectile.damage, 1, projectile.owner);
+                    }
+                }
             }
             else if (projectile.timeLeft < 52)
             {
@@ -97,7 +107,7 @@ namespace TerraLeague.Projectiles
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI)
         {
-            drawCacheProjsBehindNPCsAndTiles.Add(index);
+            //drawCacheProjsBehindNPCsAndTiles.Add(index);
         }
     }
 }

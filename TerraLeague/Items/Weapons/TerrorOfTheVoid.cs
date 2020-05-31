@@ -189,35 +189,42 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 80;
+            item.damage = 120;
             item.width = 48;
             item.height = 48;
-            item.melee = true;
+            item.magic = true;
             item.useTime = 35;
             item.useAnimation = 35;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 5;
+            item.mana = 40;
             item.value = 35000;
             item.rare = ItemRarityID.Lime;
-            item.scale = 1.5f;
-            item.shoot = ProjectileType<TerrorOfTheVoid_VorpalSpike>();
-            item.shootSpeed = 8f;
-            item.UseSound = SoundID.Item1;
+            item.shoot = ProjectileType<TerrorOfTheVoid_RuptureControl>();
+            item.shootSpeed = 1f;
+            item.UseSound = SoundID.Item8;
+            item.noMelee = true;
         }
 
         public override bool CanUseItem(Player player)
         {
+            //if (player.ownedProjectileCounts[ProjectileType<TerrorOfTheVoid_RuptureSpike>()] > 0)
+            if (player.ownedProjectileCounts[ProjectileType<TerrorOfTheVoid_RuptureControl>()] > 0)
+                return false;
             return base.CanUseItem(player);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            int numberProjectiles = Main.rand.Next(4,7);
-            for (int i = 0; i < numberProjectiles; i++)
-            {
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(16));
-                Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, player.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep / 10, 2, player.whoAmI);
-            }
+            item.damage = 120;
+            if (speedX > 0)
+                speedX = 3;
+            else
+                speedX = -3;
+
+            speedY = 0;
+
+            Projectile.NewProjectile(player.Top.X, player.Top.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, player.GetModPlayer<PLAYERGLOBAL>().feast3 ? 1 : 0);
 
             return false;
         }
@@ -235,8 +242,8 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.R)
                 return true;
-            if (type == AbilityType.Q && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().feast3)
-                return true;
+            //if (type == AbilityType.Q && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().feast3)
+            //    return true;
             return base.GetIfAbilityExists(type);
         }
 
