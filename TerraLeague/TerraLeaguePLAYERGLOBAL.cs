@@ -493,6 +493,7 @@ namespace TerraLeague
         public bool petriciteSet = false;
 
         // Buffs
+        public bool bioBarrage = false;
         public bool crushingBlows = false;
         public bool deadlyPlumage = false;
         public bool deathLotus = false;
@@ -706,6 +707,7 @@ namespace TerraLeague
             #endregion
 
             #region Buffs
+            bioBarrage = false;
             crushingBlows = false;
             deadlyPlumage = false;
             deathLotus = false;
@@ -1778,6 +1780,17 @@ namespace TerraLeague
                     magicModifer *= 1.2;
                 }
 
+                if (bioBarrage && proj.ranged)
+                {
+                    int bioonhit = (int)(target.lifeMax * (0.04 + (MAG * 0.0005)));
+                    if (bioonhit > MouthoftheAbyss.GetMaxOnHit(this))
+                    {
+                        bioonhit = MouthoftheAbyss.GetMaxOnHit(this);
+                    }
+
+                    onhitdamage += bioonhit;
+                }
+
                 // Runs NPCHitWithProjectile() for all equiped LeagueItems
                 for (int i = 3; i < 9; i++)
                 {
@@ -1955,6 +1968,7 @@ namespace TerraLeague
                     if (proj.melee)
                         onhitdamage = (int)(onhitdamage * 0.75);
                     target.GetGlobalNPC<NPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, (guinsoosRage && (proj.ranged || proj.melee)));
+                    player.addDPS(onhitdamage);
                 }
 
                 OnKilledEnemy(target, damage, crit);
@@ -2129,6 +2143,7 @@ namespace TerraLeague
             if (onhitdamage > 0 && Main.rand.NextBool(4))
             {
                 target.GetGlobalNPC<NPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, guinsoosRage);
+                player.addDPS(onhitdamage);
             }
 
             OnKilledEnemy(target, damage, crit);
