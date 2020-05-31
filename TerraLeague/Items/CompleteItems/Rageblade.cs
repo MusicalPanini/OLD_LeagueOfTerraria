@@ -53,12 +53,12 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new GuinsoosRage(3);
+            return new GuinsoosRage(2);
         }
 
         public override Passive GetSecondaryPassive()
         {
-            return new Afterburn(15, 10, 10);
+            return new Afterburn(15, 5, 5, 10);
         }
 
         public override string GetStatText()

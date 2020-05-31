@@ -736,7 +736,7 @@ namespace TerraLeague.NPCs
                 num = Main.CalculateDamage((int)num, num2);
                 if (crit)
                 {
-                    num *= 2.0;
+                    num *= 1.5;
                 }
                 if (npc.takenDamageMultiplier > 1f)
                 {

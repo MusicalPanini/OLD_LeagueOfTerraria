@@ -10,12 +10,12 @@ namespace TerraLeague.Items.CustomItems.Passives
         int rangedScaling;
         int magicScaling;
 
-        public Afterburn(int MinionScaling, int MeleeScaling, int RangedScaling)
+        public Afterburn(int MinionScaling, int MeleeScaling, int RangedScaling, int MagicScaling)
         {
             minionScaling = MinionScaling;
             meleeScaling = MeleeScaling;
             rangedScaling = RangedScaling;
-            magicScaling = RangedScaling;
+            magicScaling = MagicScaling;
         }
 
         public override string Tooltip(Player player, ModItem modItem)
