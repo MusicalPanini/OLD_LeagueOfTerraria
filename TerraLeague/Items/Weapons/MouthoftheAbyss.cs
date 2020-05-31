@@ -149,10 +149,7 @@ namespace TerraLeague.Items.Weapons
             int numberProjectiles = Main.rand.Next(0,4) != 0 ? 0 : Main.rand.Next(1, 4);
             for (int i = 0; i < numberProjectiles; i++)
             {
-                speedX += Main.rand.NextFloat(-2, 2);
-                speedY += Main.rand.NextFloat(-1, 1);
-
-                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(8));
+                Vector2 perturbedSpeed = new Vector2(speedX + Main.rand.NextFloat(-2, 2), speedY + Main.rand.NextFloat(-1, 1)).RotatedByRandom(MathHelper.ToRadians(8));
                 Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ProjectileType<MouthoftheAbyss_AcidBlob>(), damage, knockBack, player.whoAmI);
             }
 
