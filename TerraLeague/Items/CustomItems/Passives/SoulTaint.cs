@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             return "[c/0099cc:Passive: SOUL TAINT -] [c/99e6ff:Melee and ranged attack will deal " + percentMaxLifeDamage + "% of their max life as On Hit damage]" +
-                "\n[c/0099cc:(Min damage: " + minDamage + " | Max damage: " + maxDamage + ")]";
+                "\n[c/0099cc:(Max damage: " + maxDamage + ")]";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -40,8 +40,6 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (SoulTaintDamage > maxDamage)
                 SoulTaintDamage = maxDamage;
-            else if (SoulTaintDamage < minDamage)
-                SoulTaintDamage = minDamage;
 
             OnHitDamage += SoulTaintDamage;
 

@@ -58,7 +58,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetSecondaryPassive()
         {
-            return new Afterburn(15, 5, 5, 10);
+            return new Afterburn(15, 5, 5, 5);
         }
 
         public override string GetStatText()
