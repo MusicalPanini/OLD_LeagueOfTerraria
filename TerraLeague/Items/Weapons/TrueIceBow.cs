@@ -130,7 +130,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 24;
+            item.damage = 30;
             item.ranged = true;
             item.width = 24;
             item.height = 54;
@@ -141,7 +141,7 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 1;
-            item.value = 72000;
+            item.value = 200000;
             item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item5;
             item.autoReuse = true;
@@ -188,6 +188,7 @@ namespace TerraLeague.Items.Weapons
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
             recipe.AddIngredient(ItemID.HellwingBow, 1);
+            recipe.AddIngredient(ItemID.FrostCore, 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

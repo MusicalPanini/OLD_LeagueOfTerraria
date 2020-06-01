@@ -126,12 +126,12 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 45;
+            item.damage = 50;
             item.noMelee = true;
             item.magic = true;
             item.mana = 14;
+            item.value = 200000;
             item.rare = ItemRarityID.LightRed;
-            item.value = 72000;
             item.width = 28;
             item.height = 32;
             item.useTime = 45;
@@ -153,7 +153,8 @@ namespace TerraLeague.Items.Weapons
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<TrueIceChunk>(), 4);
             recipe.AddIngredient(ItemID.DemonScythe, 1);
-            recipe.AddTile(TileID.DemonAltar);
+            recipe.AddIngredient(ItemID.FrostCore, 1);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
