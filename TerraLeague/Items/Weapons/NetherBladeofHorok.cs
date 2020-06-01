@@ -185,7 +185,7 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Lime;
             item.shoot = ProjectileType<NetherBladeofHorok_NullSphere>();
             item.autoReuse = true;
-            item.UseSound = SoundID.Item1;
+            item.UseSound = new LegacySoundStyle(2, 15);
             item.shootSpeed = 7;
         }
 
@@ -193,6 +193,15 @@ namespace TerraLeague.Items.Weapons
         {
             Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(speedX, speedY), type, damage, 0, player.whoAmI, -1);
             return false;
+        }
+
+        public override void MeleeEffects(Player player, Rectangle hitbox)
+        {
+            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, 112, 0,0, 255, new Color(59, 0, 255), 1f);
+            dust.noGravity = true;
+            dust.noLight = true;
+
+            base.MeleeEffects(player, hitbox);
         }
 
         public override bool GetIfAbilityExists(AbilityType type)
