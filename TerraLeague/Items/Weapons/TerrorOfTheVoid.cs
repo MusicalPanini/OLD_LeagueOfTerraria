@@ -189,7 +189,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 120;
+            item.damage = 55;
             item.width = 48;
             item.height = 48;
             item.magic = true;
@@ -216,7 +216,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.damage = 120;
             if (speedX > 0)
                 speedX = 3;
             else

@@ -63,7 +63,6 @@ namespace TerraLeague.Projectiles
             {
                 projectile.velocity *= 0;
                 projectile.extraUpdates = 0;
-                projectile.friendly = false;
                 for (int i = 0; i < 3; i++)
                 {
                     Dust dustIndex = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 97, 0f, -4f, projectile.alpha, default(Color), 2);
@@ -90,7 +89,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            target.velocity = new Vector2(0, -16);
+            //target.velocity = new Vector2(0, -16);
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
