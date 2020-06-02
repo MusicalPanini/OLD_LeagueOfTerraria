@@ -49,7 +49,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            for (int i = 0; i < item.stack; i++)
+            for (int i = item.stack - 1; i >= 0; i--)
             {
                 Projectile.NewProjectileDirect(position, Vector2.Zero, ProjectileType<XanCrestBlades_DancingBlade>(), damage, knockBack, player.whoAmI, i).Center = player.Center;
             }
