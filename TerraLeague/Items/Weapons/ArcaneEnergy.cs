@@ -54,7 +54,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
             {
                 return "Launch an orb of magical energy that explodes on contact, stunning all hit." +
-                    "Stun duration and explosion radius are based on travel distance";
+                    "\nStun duration and explosion radius are based on travel distance";
             }
             else if (type == AbilityType.R)
             {
