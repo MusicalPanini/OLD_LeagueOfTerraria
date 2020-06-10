@@ -19,7 +19,7 @@ namespace TerraLeague.Projectiles
             projectile.height = 16;
             projectile.alpha = 255;
             projectile.timeLeft = 90;
-            projectile.penetrate = 2;
+            projectile.penetrate = -1;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.magic = true;
@@ -40,7 +40,7 @@ namespace TerraLeague.Projectiles
                 dust2.noLight = true;
                 dust2.velocity *= 0.6f;
             }
-            if (projectile.timeLeft == 1)
+            if (projectile.timeLeft == 2)
                 Prime();
         }
 
@@ -96,7 +96,7 @@ namespace TerraLeague.Projectiles
             
             projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 1;
+            projectile.timeLeft = 2;
         }
     }
 }
