@@ -20,8 +20,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 32;
-            projectile.height = 32;
+            projectile.width = 24;
+            projectile.height = 24;
             projectile.alpha = 255;
             projectile.timeLeft = 90;
             projectile.penetrate = 1;
@@ -30,7 +30,6 @@ namespace TerraLeague.Projectiles
             projectile.melee = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
-            projectile.scale = 0.75f;
         }
 
         public override void AI()
@@ -107,7 +106,7 @@ namespace TerraLeague.Projectiles
             {
                 NPC npcCheck = Main.npc[k];
 
-                if (npcCheck.active && !npcCheck.friendly && npcCheck.lifeMax > 5 && !npcCheck.dontTakeDamage && !npcCheck.immortal)
+                if (npcCheck.active && !npcCheck.friendly && npcCheck.lifeMax > 5 && !npcCheck.dontTakeDamage && !npcCheck.immortal && npcCheck.CanBeChasedBy())
                 {
                     Vector2 newMove = Main.npc[k].Center - projectile.Center;
                     float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
@@ -149,6 +148,28 @@ namespace TerraLeague.Projectiles
                 spriteBatch.Draw(Main.projectileTexture[projectile.type], drawPos, null, color, projectile.rotation, drawOrigin, projectile.scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             }
             return true;
+        }
+
+        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
+        {
+            Texture2D texture = Main.projectileTexture[projectile.type];
+            spriteBatch.Draw
+            (
+                texture,
+                new Vector2
+                (
+                    projectile.position.X - Main.screenPosition.X + projectile.width * 0.5f,
+                    projectile.position.Y - Main.screenPosition.Y + projectile.height * 0.5f
+                ),
+                new Rectangle(0, 0, texture.Width, texture.Height),
+                Color.White,
+                projectile.rotation,
+                new Vector2(texture.Width, texture.Width) * 0.5f,
+                projectile.scale,
+                SpriteEffects.None,
+                0f
+            );
+            base.PostDraw(spriteBatch, lightColor);
         }
     }
 }
