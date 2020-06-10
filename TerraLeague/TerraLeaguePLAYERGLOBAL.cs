@@ -495,6 +495,7 @@ namespace TerraLeague
         // Buffs
         public bool bioBarrage = false;
         public bool crushingBlows = false;
+        public bool contactDodge = false;
         public bool deadlyPlumage = false;
         public bool deathLotus = false;
         public bool decisiveStrike = false;
@@ -507,6 +508,7 @@ namespace TerraLeague
         public bool ghosted = false;
         public bool grievousWounds = false;
         public bool highlander = false;
+        public bool lightningRush = false;
         public bool minions = false;
         public bool projectileDodge = false;
         public bool rally = false;
@@ -709,6 +711,7 @@ namespace TerraLeague
             #region Buffs
             bioBarrage = false;
             crushingBlows = false;
+            contactDodge = false;
             deadlyPlumage = false;
             deathLotus = false;
             decisiveStrike = false;
@@ -721,6 +724,7 @@ namespace TerraLeague
             ghosted = false;
             grievousWounds = false;
             highlander = false;
+            lightningRush = false;
             minions = false;
             projectileDodge = false;
             rally = false;
@@ -2322,7 +2326,7 @@ namespace TerraLeague
         /// <returns></returns>
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
-            if (npc.GetGlobalNPC<NPCsGLOBAL>().bubbled || invincible)
+            if (npc.GetGlobalNPC<NPCsGLOBAL>().bubbled || invincible || contactDodge)
                 return false;
 
             return base.CanBeHitByNPC(npc, ref cooldownSlot);
