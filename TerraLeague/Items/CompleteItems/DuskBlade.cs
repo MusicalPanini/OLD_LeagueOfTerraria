@@ -41,8 +41,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<SerratedDirk>(), 1);
             recipe.AddIngredient(ItemType<Warhammer>(), 1);
             recipe.AddIngredient(ItemID.WarriorEmblem, 1);
-            recipe.AddIngredient(ItemType<DarksteelBar>(), 8);
-            recipe.AddRecipeGroup("TerraLeague:DemonGroup", 5);
+            recipe.AddIngredient(ItemType<HarmonicBar>(), 8);
             recipe.AddIngredient(ItemID.SoulofSight, 6);
             recipe.AddIngredient(ItemID.SoulofFright, 6);
             recipe.AddTile(TileID.MythrilAnvil);

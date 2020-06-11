@@ -49,6 +49,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<BFSword>(), 1);
             recipe.AddIngredient(ItemType<Stinger>(), 1);
             recipe.AddIngredient(ItemType<Dagger>(), 1);
+            recipe.AddIngredient(ItemType<HarmonicBar>(), 12);
             recipe.AddIngredient(ItemID.Cloud, 10);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);

@@ -48,7 +48,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<Sheen>(), 1);
             recipe.AddIngredient(ItemType<Phage>(), 1);
             recipe.AddIngredient(ItemType<Stinger>(), 1);
-            recipe.AddIngredient(ItemType<VoidBar>(), 3);
+            recipe.AddIngredient(ItemType<HarmonicBar>(), 3);
             recipe.AddIngredient(ItemID.ShroomiteBar, 3);
             recipe.AddIngredient(ItemID.SpectreBar, 3);
             recipe.AddTile(TileID.MythrilAnvil);
