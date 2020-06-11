@@ -516,14 +516,14 @@ namespace TerraLeague.NPCs
 
                 if (npc.boss)
                 {
-                    regen = 100;
+                    regen = 1000;
                 }
                 else
                 {
-                    regen = (int)(npc.lifeMax * 0.05f);
-                    if (regen > 100)
+                    regen = (int)(npc.lifeMax * 0.1f);
+                    if (regen > 1000)
                     {
-                        regen = 100;
+                        regen = 1000;
                     }
                 }
 
