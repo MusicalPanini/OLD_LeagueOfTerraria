@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "Deals an additional [c/" + TerraLeague.RNGColor + ":" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG/4 + "] damage";
+            return "Deals an additional [c/" + TerraLeague.RNGColor + ":" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG/2 + "] damage";
         }
 
         public override string GetQuote()
@@ -141,7 +141,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 100;
+            item.damage = 150;
             item.ranged = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.width = 108;
@@ -160,7 +160,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Projectile proj = Projectile.NewProjectileDirect(player.Center, Vector2.Zero, type, damage + player.GetModPlayer<PLAYERGLOBAL>().RNG / 4, knockBack, player.whoAmI);
+            Projectile proj = Projectile.NewProjectileDirect(player.Center, Vector2.Zero, type, damage + player.GetModPlayer<PLAYERGLOBAL>().RNG / 2, knockBack, player.whoAmI);
             proj.rotation = new Vector2(speedX, speedY).ToRotation();
 
             return false;
