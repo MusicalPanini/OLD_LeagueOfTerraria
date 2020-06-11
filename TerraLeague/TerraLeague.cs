@@ -559,11 +559,14 @@ namespace TerraLeague
         {
             for (int i = 0; i < Main.npc.Length; i++)
             {
-                if (!includeCritters && Main.npc[i].lifeMax != 5 && !Main.npc[i].friendly || !includeTownNPCS && !Main.npc[i].townNPC)
+                if (!Main.npc[i].dontTakeDamage)
                 {
-                    if (Main.npc[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - mouseLength/2, (int)Main.MouseWorld.Y - mouseLength/2, mouseLength, mouseLength)) && !Main.npc[i].immortal && Main.npc[i].active)
+                    if (!includeCritters && Main.npc[i].lifeMax != 5 && !Main.npc[i].friendly || !includeTownNPCS && !Main.npc[i].townNPC)
                     {
-                        return i;
+                        if (Main.npc[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - mouseLength / 2, (int)Main.MouseWorld.Y - mouseLength / 2, mouseLength, mouseLength)) && !Main.npc[i].immortal && Main.npc[i].active)
+                        {
+                            return i;
+                        }
                     }
                 }
             }
