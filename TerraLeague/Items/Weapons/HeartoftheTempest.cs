@@ -137,9 +137,8 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 25;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 2.5f;
-            item.mana = 20;
-            item.value = 54000;
-            item.rare = ItemRarityID.Lime;
+            item.value = 70000;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = SoundID.Item1;
             item.shootSpeed = 16f;
             item.shoot = ProjectileType<HeartoftheTempest_Yoyo>();
@@ -156,8 +155,8 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ManaBar>(), 16);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

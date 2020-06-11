@@ -118,7 +118,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 40;
+            item.damage = 26;
             item.width = 18;
             item.height = 36;
             item.magic = true;
@@ -127,8 +127,8 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 2;
             item.mana = 8;
-            item.value = 300000;
-            item.rare = ItemRarityID.Pink;
+            item.value = 70000;
+            item.rare = ItemRarityID.Orange;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
             item.shoot = ProjectileType<AssassinsKunai_Kunai>();
             item.shootSpeed = 16f;
@@ -160,9 +160,7 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.SoulofMight, 10);
-            recipe.AddIngredient(ItemID.SmokeBomb);
-            recipe.AddIngredient(ItemID.MagicDagger);
+            recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();

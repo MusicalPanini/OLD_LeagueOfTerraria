@@ -137,7 +137,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 144;
+            item.damage = 100;
             item.ranged = true;
             item.width = 44;
             item.height = 20;
@@ -146,8 +146,8 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true; 
             item.knockBack = 4;
-            item.value = 80000;
-            item.rare = ItemRarityID.LightPurple;
+            item.value = 70000;
+            item.rare = ItemRarityID.Orange;
             item.shoot = ProjectileID.PurificationPowder;
             item.shootSpeed = 1f;
             item.useAmmo = AmmoID.Bullet;
@@ -203,11 +203,7 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.HallowedBar, 10);
-            recipe.AddIngredient(ItemID.SoulofFright, 5);
-            recipe.AddIngredient(ItemID.SoulofMight, 5);
-            recipe.AddIngredient(ItemID.SoulofSight, 5);
-            recipe.AddIngredient(ItemID.Marble, 30);
+            recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
