@@ -116,6 +116,7 @@ namespace TerraLeague.Items.Weapons
         public override void SetDefaults()
         {
             item.damage = 15;
+            item.sentry = true;
             item.summon = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.width = 32;

@@ -176,6 +176,7 @@ namespace TerraLeague.Items.Weapons
         public override void SetDefaults()
         {
             item.damage = 8;
+            item.sentry = true;
             item.summon = true;
             item.mana = 20;
             item.width = 32;

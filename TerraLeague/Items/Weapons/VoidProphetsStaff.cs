@@ -46,7 +46,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
             {
                 return "Infect an enemy's mind, dealing damage over time." +
-                    "\nIf the enemy dies during the visions, it will spread to anpther near by enemy";
+                    "\nIf the enemy dies during the visions, it will spread to another near by enemy";
             }
             else
             {
@@ -129,6 +129,7 @@ namespace TerraLeague.Items.Weapons
         public override void SetDefaults()
         {
             item.damage = 20;
+            item.sentry = true;
             item.summon = true;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.width = 48;
