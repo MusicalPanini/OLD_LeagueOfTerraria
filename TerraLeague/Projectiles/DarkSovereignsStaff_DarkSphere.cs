@@ -48,7 +48,11 @@ namespace TerraLeague.Projectiles
                 }
             }
 
-            if (projectile.Distance(player.Center) > 1000)
+            if (projectile.Distance(player.Center) > 1500)
+            {
+                projectile.Center = player.Top;
+            }
+            else if (projectile.Distance(player.Center) > 1000)
             {
                 targetPosition = player.Top;
             }
