@@ -141,8 +141,8 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 1;
-            item.value = 200000;
-            item.rare = ItemRarityID.LightRed;
+            item.value = 160000;
+            item.rare = ItemRarityID.Pink;
             item.UseSound = SoundID.Item5;
             item.autoReuse = true;
             item.shoot = ProjectileID.PurificationPowder;

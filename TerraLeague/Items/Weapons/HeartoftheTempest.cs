@@ -137,8 +137,8 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 25;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 2.5f;
-            item.value = 70000;
-            item.rare = ItemRarityID.Orange;
+            item.value = 100000;
+            item.rare = ItemRarityID.Pink;
             item.UseSound = SoundID.Item1;
             item.shootSpeed = 16f;
             item.shoot = ProjectileType<HeartoftheTempest_Yoyo>();

@@ -49,8 +49,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
             {
                 return "Grant an ally or yourself invulnerability for 2 seconds." +
-                    "When the shield wears off, 7 celestial swords will fall from the sky and explode on the ground" +
-                "\nRecast to leave the enemy";
+                    "\nWhen the shield wears off, 7 celestial swords will fall from the sky and explode on the ground";
             }
             else
             {
@@ -153,7 +152,6 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Yellow;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
-            
             item.shoot = ProjectileID.AmberBolt;
             item.shootSpeed = 8;
         }

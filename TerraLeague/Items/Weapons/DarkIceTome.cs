@@ -130,8 +130,8 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.magic = true;
             item.mana = 14;
-            item.value = 200000;
-            item.rare = ItemRarityID.LightRed;
+            item.value = 160000;
+            item.rare = ItemRarityID.Pink;
             item.width = 28;
             item.height = 32;
             item.useTime = 45;

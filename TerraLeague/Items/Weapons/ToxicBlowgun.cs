@@ -171,8 +171,8 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 10f;
             item.noMelee = true;
             item.knockBack = 1;
-            item.value = 6000;
-            item.rare = ItemRarityID.LightRed;
+            item.value = 200000;
+            item.rare = ItemRarityID.Lime;
             item.autoReuse = true;
             item.shoot = ProjectileID.PurificationPowder;
         }

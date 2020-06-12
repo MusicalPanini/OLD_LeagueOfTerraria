@@ -128,8 +128,8 @@ namespace TerraLeague.Items.Weapons
         {
             item.width = 32;
             item.height = 32;
-            item.value = 200000;
-            item.rare = ItemRarityID.LightRed;
+            item.value = 160000;
+            item.rare = ItemRarityID.Pink;
             item.noMelee = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 40;

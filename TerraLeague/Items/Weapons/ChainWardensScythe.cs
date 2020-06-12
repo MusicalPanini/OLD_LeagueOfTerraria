@@ -133,14 +133,13 @@ namespace TerraLeague.Items.Weapons
             item.width = 50;
             item.height = 46;
             item.value = 54000;
-            item.rare = ItemRarityID.Orange;
-
+            item.rare = ItemRarityID.Green;
             item.noMelee = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.useAnimation = 40;
             item.useTime = 40;
             item.knockBack = 6F;
-            item.damage = 30;
+            item.damage = 14;
             item.scale = 1;
             item.noUseGraphic = true;
             item.UseSound = SoundID.Item1;

@@ -151,8 +151,8 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 1;
-            item.value = 70000;
-            item.rare = ItemRarityID.Orange;
+            item.value = 100000;
+            item.rare = ItemRarityID.Pink;
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<DarkSovereignsStaff_DarkSphere>();
         }

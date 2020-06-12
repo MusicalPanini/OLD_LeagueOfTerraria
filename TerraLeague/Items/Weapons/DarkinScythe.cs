@@ -201,7 +201,7 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 20;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 3;
-            item.value = 6000;
+            item.value = 100000;
             item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;

@@ -124,7 +124,7 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 6;
             item.value = 100000;
-            item.rare = ItemRarityID.Pink;
+            item.rare = ItemRarityID.LightRed;
             item.autoReuse = true;
             item.UseSound = SoundID.Item1;
         }

@@ -22,7 +22,7 @@ namespace TerraLeague.Items
             item.width = 30;
             item.height = 24;
             item.uniqueStack = false;
-            item.rare = ItemRarityID.Orange;
+            item.rare = ItemRarityID.Pink;
             item.value = 22000;
             item.createTile = TileType<Tiles.HarmonicBarTile>();
             item.useTurn = true;

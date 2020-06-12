@@ -138,7 +138,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 30;
+            item.damage = 60;
             item.summon = true;
             item.mana = 20;
             item.width = 40;
@@ -148,8 +148,8 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 1;
-            item.value = 40000;
-            item.rare = ItemRarityID.Blue;
+            item.value = 200000;
+            item.rare = ItemRarityID.Yellow;
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<StarForgersCore_ForgedStar>();
         }
@@ -189,10 +189,11 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<CelestialBar>(), 12);
-            recipe.AddIngredient(ItemID.FallenStar, 12);
-            recipe.AddIngredient(ItemID.SoulofLight, 6);
-            recipe.AddIngredient(ItemID.SoulofNight, 6);
+            recipe.AddIngredient(ItemType<CelestialBar>(), 20);
+            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
+            recipe.AddIngredient(ItemID.FallenStar, 20);
+            recipe.AddIngredient(ItemID.SoulofLight, 10);
+            recipe.AddIngredient(ItemID.SoulofNight, 10);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();

@@ -147,7 +147,7 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 10f;
             item.noMelee = true;
             item.knockBack = 1;
-            item.value = 6000;
+            item.value = 100000;
             item.rare = ItemRarityID.LightRed;
             item.shoot = ProjectileType<DarkinBow_ArrowControl>();
             item.useAmmo = AmmoID.Arrow;

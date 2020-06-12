@@ -211,7 +211,7 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 80;
             item.useAnimation = 80;
             item.mana = 40;
-            item.rare = ItemRarityID.Pink;
+            item.rare = ItemRarityID.Yellow;
             item.value = 300000;
             item.width = 28;
             item.height = 32;
