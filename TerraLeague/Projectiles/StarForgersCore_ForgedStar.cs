@@ -29,6 +29,8 @@ namespace TerraLeague.Projectiles
             projectile.minionSlots = 1;
             projectile.netImportant = true;
             projectile.netUpdate = true;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 30;
         }
 
         public override void AI()
@@ -94,8 +96,8 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            int count = Main.player[projectile.owner].ownedProjectileCounts[projectile.type];
-            damage = (int)(damage * (1 + ((count - 1) * 0.05)));
+            //int count = Main.player[projectile.owner].ownedProjectileCounts[projectile.type];
+            //damage = (int)(damage * (1 + ((count - 1) * 0.05)));
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
