@@ -13,6 +13,7 @@ namespace TerraLeague.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
+            ProjectileID.Sets.MinionTargettingFeature[item.type] = true;
             DisplayName.SetDefault("Dark Sovereigns Staff");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
