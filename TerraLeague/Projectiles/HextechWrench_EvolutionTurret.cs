@@ -29,7 +29,7 @@ namespace TerraLeague.Projectiles
             projectile.minion = true;
             projectile.minionSlots = 1;
             projectile.penetrate = 1;
-            projectile.timeLeft = 18000;
+            projectile.timeLeft = Projectile.SentryLifeTime;
             projectile.tileCollide = true;
             projectile.ignoreWater = true;
             shoot = ProjectileType<HextechWrench_EvoTurretShot>();
@@ -49,10 +49,10 @@ namespace TerraLeague.Projectiles
         public override void Behavior()
         {
             Player player = Main.player[projectile.owner];
-            if (player.HasBuff(BuffType<EvolutionTurrets>()))
-            {
-                projectile.timeLeft = 2;
-            }
+            //if (player.HasBuff(BuffType<EvolutionTurrets>()))
+            //{
+            //    projectile.timeLeft = 2;
+            //}
             base.Behavior();
         }
 

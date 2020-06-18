@@ -192,61 +192,22 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<HextechWrench_EvolutionTurret>();
         }
 
-        public override bool AltFunctionUse(Player player)
-        {
-            return true;
-        }
-
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            position = Main.MouseWorld;
-
-            if (player.altFunctionUse != 2)
-            {
-                bool pathBlocked = false;
-                for (int x = (int)((Main.mouseX + Main.screenPosition.X) / 16) - 1; x < (int)((Main.mouseX + Main.screenPosition.X) / 16) + 1; x++)
-                {
-                    for (int y = (int)((Main.mouseY + Main.screenPosition.Y) / 16) - 1; y <= (int)((Main.mouseY + Main.screenPosition.Y) / 16) + 1; y++)
-                    {
-                        if (Main.tile[x, y].collisionType > 0)
-                        {
-                            pathBlocked = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!pathBlocked)
-                {
-                    return true;
-                }
-            }
+            player.FindSentryRestingSpot(item.shoot, out int xPos, out int yPos, out int yDis);
+            Projectile.NewProjectile((float)xPos, (float)(yPos - yDis) - 24, 0f, 0f, type, damage, knockBack, player.whoAmI, 10, -1);
+            player.UpdateMaxTurrets();
 
             return false;
         }
 
         public override bool UseItem(Player player)
         {
-
             return base.UseItem(player);
         }
 
         public override bool CanUseItem(Player player)
         {
-            if (player.altFunctionUse == 2)
-            {
-
-            }
-            else
-            {
-                item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 113);
-
-                player.AddBuff(BuffType<EvolutionTurrets>(), 2);
-                if (player.numMinions == player.maxMinions)
-                {
-                    player.WipeOldestTurret();
-                }
-            }
             return base.CanUseItem(player);
         }
 
