@@ -13,7 +13,6 @@ namespace TerraLeague.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.MinionTargettingFeature[item.type] = true;
             DisplayName.SetDefault("Dark Sovereigns Staff");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
@@ -185,7 +184,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (player.altFunctionUse == 2)
             {
-
+                Main.LocalPlayer.MinionNPCTargetAim();
             }
             else
             {
@@ -211,6 +210,7 @@ namespace TerraLeague.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 16);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();

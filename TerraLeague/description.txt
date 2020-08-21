@@ -1,1 +1,1 @@
-League of Terraria is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+League of Terraria adds many weapons, items, and systems from the worlds number one moba League of Legends by Riot Games.

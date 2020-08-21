@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Locket of the Solari");
+            DisplayName.SetDefault("Locket of the Iron Solari");
             Tooltip.SetDefault("Increases armor by 4" +
                 "\nIncreases resist by 6" +
                 "\nGrants immunity to knockback and fire blocks" +

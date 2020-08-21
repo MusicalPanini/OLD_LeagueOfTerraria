@@ -130,6 +130,7 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<VoidReaverScythe_VoidSpike>();
             item.shootSpeed = 18;
             item.scale = 1.3f;
+            item.GetGlobalItem<ITEMGLOBAL>().meleeProjCooldown = true;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
@@ -140,13 +141,11 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            Vector2 velocity = new Vector2(speedX, speedY);
+                Vector2 velocity = new Vector2(speedX, speedY);
 
-            Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI);
-            Projectile.NewProjectile(position, velocity.RotatedBy(0.3f), type, damage, knockBack, player.whoAmI);
-            Projectile.NewProjectile(position, velocity.RotatedBy(-0.3f), type, damage, knockBack, player.whoAmI);
-
-
+                Projectile.NewProjectile(position, velocity, type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position, velocity.RotatedBy(0.3f), type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position, velocity.RotatedBy(-0.3f), type, damage, knockBack, player.whoAmI);
 
             return false;
         }

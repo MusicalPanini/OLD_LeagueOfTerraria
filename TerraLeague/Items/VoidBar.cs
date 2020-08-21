@@ -35,7 +35,7 @@ namespace TerraLeague.Items
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.HallowedBar, 4);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 4);
             recipe.AddIngredient(ItemType<VoidFragment>(), 16);
             recipe.AddTile(TileID.AdamantiteForge);
             recipe.SetResult(this, 4);

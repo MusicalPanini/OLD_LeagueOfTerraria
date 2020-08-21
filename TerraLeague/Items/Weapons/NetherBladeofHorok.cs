@@ -176,7 +176,7 @@ namespace TerraLeague.Items.Weapons
             item.width = 40;
             item.height = 40;
             item.melee = true;
-            item.useTime = 32;
+            item.useTime = 52;
             item.useAnimation = 32;
             item.scale = 1.3f;
             item.useStyle = ItemUseStyleID.SwingThrow;
@@ -187,10 +187,12 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.UseSound = new LegacySoundStyle(2, 15);
             item.shootSpeed = 7;
+            item.GetGlobalItem<ITEMGLOBAL>().meleeProjCooldown = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            item.useTime = 52;
             Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(speedX, speedY), type, damage, 0, player.whoAmI, -1);
             return false;
         }

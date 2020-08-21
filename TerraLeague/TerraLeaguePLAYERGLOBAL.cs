@@ -443,6 +443,9 @@ namespace TerraLeague
         public int lifeToHeal = 0;
         #endregion
 
+        // Other
+        public bool meleeProjCooldown = false;
+
         // Costume Stuff
         public bool darkinCostume = false;
         public bool darkinCostumeHideVanity = false;
@@ -491,6 +494,12 @@ namespace TerraLeague
         public bool cannonSet = false;
         public int cannonTimer = 0;
         public bool petriciteSet = false;
+        public bool prophetSet = false;
+        public int prophetTimer = 0;
+        public bool solariSet = false;
+        public int solariCharge = 0;
+        public static int solariMaxCharge = 7200; // 4 minutes
+        public bool solarStorm = false;
 
         // Buffs
         public bool bioBarrage = false;
@@ -510,6 +519,7 @@ namespace TerraLeague
         public bool highlander = false;
         public bool lightningRush = false;
         public bool minions = false;
+        public bool onslaught = false;
         public bool projectileDodge = false;
         public bool rally = false;
         public bool rejuvenation = false;
@@ -556,6 +566,14 @@ namespace TerraLeague
         // Whisper Shots
         public int WhisperShotsLeft = 4;
         public int ReloadTimer = 0;
+
+        // Lunari Gun Stuff
+        public int currentGun = 0;
+        public float calibrumAmmo = 100;
+        public float severumAmmo = 100;
+        public float gravitumAmmo = 100;
+        public float infernumAmmo = 100;
+        public float crescendumAmmo = 100;
 
         // Requiem Stuff
         public bool requiem = false;
@@ -727,6 +745,7 @@ namespace TerraLeague
             lightningRush = false;
             minions = false;
             projectileDodge = false;
+            onslaught = false;
             rally = false;
             rejuvenation = false;
             requiem = false;
@@ -747,6 +766,11 @@ namespace TerraLeague
             pirateSet = false;
             cannonSet = false;
             petriciteSet = false;
+            prophetSet = false;
+            if (!solariSet)
+                solariCharge = 0;
+            solariSet = false;
+            solarStorm = false;
 
             excited = false;
             gathering1 = false;
@@ -832,6 +856,34 @@ namespace TerraLeague
             bloodShield = false;
             bloodPool = false;
             #endregion
+
+            for (int i = 1; i < 6; i++)
+            {
+                switch (i)
+                {
+                    case 1:
+                        currentGun = player.HasItem(ItemType<Calibrum>()) ? 1 : 0;
+                        break;
+                    case 2:
+                        currentGun = player.HasItem(ItemType<Severum>()) ? 2 : 0;
+                        break;
+                    case 3:
+                        currentGun = player.HasItem(ItemType<Gravitum>()) ? 3 : 0;
+                        break;
+                    case 4:
+                        currentGun = player.HasItem(ItemType<Infernum>()) ? 4 : 0;
+                        break;
+                    case 5:
+                        currentGun = player.HasItem(ItemType<Crescendum>()) ? 5 : 0;
+                        break;
+                    default:
+                        currentGun = 0;
+                        break;
+                }
+
+                if (currentGun != 0)
+                    break;
+            }
         }
 
         public override void UpdateDead()
@@ -852,6 +904,7 @@ namespace TerraLeague
             feast2 = false;
             feast3 = false;
             feastStacks = 0;
+            meleeProjCooldown = false;
 
             angelsProtection = false;
             nightStalker = false;
@@ -969,8 +1022,6 @@ namespace TerraLeague
                 player.blind = true;
             }
         }
-
-        
 
         #region Multiplayer Stuff
         public override void clientClone(ModPlayer clientClone)
@@ -1280,6 +1331,12 @@ namespace TerraLeague
                 {
                     sumCooldowns[i] = 0;
                 }
+
+                calibrumAmmo = 100;
+                severumAmmo = 100;
+                gravitumAmmo = 100;
+                infernumAmmo = 100;
+                crescendumAmmo = 100;
             }
 
             if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
@@ -1289,9 +1346,11 @@ namespace TerraLeague
                 oldUsedInventorySlot = -1;
             }
 
-
             // Handles the modded regen
             LinearManaRegen();
+
+            // Handles Melee Projectile Cooldowns to look like Vanilla
+            MeleeProjectileCooldown();
 
             // Handles the Revive Summoner Spells effects
             if (reviving)
@@ -1334,10 +1393,104 @@ namespace TerraLeague
                 stopWatchActive = true;
             }
 
+            // Lunari Ammo Handler
+            if (currentGun != 1 && calibrumAmmo < 100)
+            {
+                calibrumAmmo += 5 / 60f;
+                if (calibrumAmmo > 100)
+                    calibrumAmmo = 100;
+            }
+            if (currentGun != 2 && severumAmmo < 100)
+            {
+                severumAmmo += 5 / 60f;
+                if (severumAmmo > 100)
+                    severumAmmo = 100;
+            }
+            if (currentGun != 3 && gravitumAmmo < 100)
+            {
+                gravitumAmmo += 5 / 60f;
+                if (gravitumAmmo > 100)
+                    gravitumAmmo = 100;
+            }
+            if (currentGun != 4 && infernumAmmo < 100)
+            {
+                infernumAmmo += 5 / 60f;
+                if (infernumAmmo > 100)
+                    infernumAmmo = 100;
+            }
+            if (currentGun != 5 && crescendumAmmo < 100)
+            {
+                crescendumAmmo += 5 / 60f;
+                if (crescendumAmmo > 100)
+                    crescendumAmmo = 100;
+            }
+
             // Cannon armor set bonus cooldown
             if (cannonTimer > 0)
             {
                 cannonTimer--;
+            }
+
+            // Prophet set bonus cooldown
+            if (prophetTimer > 0)
+            {
+                prophetTimer--;
+            }
+            else if (prophetSet)
+            {
+                SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 103), player.MountedCenter);
+                if (sound != null)
+                    sound.Pitch = -0.25f;
+
+                for (int i = 0; i < player.maxMinions; i++)
+                {
+                    Projectile.NewProjectile(player.MountedCenter, new Vector2(Main.rand.NextFloat(-4, 4), -6), ProjectileType<VoidProphetsStaff_Zzrot>(), (int)(20 * minionDamageLastStep), 1, player.whoAmI);
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 27, 0, -3);
+                }
+
+                prophetTimer = 60 * 6;
+            }
+            
+            // Solari set bonus
+            if (solariSet)
+            {
+                Lighting.AddLight((int)(player.position.X + (float)(player.width / 2)) / 16, (int)(player.position.Y + (float)(player.height / 2)) / 16, 0.8f, 0.95f, 1f);
+                if (Main.dayTime)
+                {
+                    player.lifeRegen += 2;
+                    player.statDefense += 4;
+                    player.meleeSpeed += 0.1f;
+                    player.meleeDamage += 0.1f;
+                    player.meleeCrit += 2;
+                    player.rangedDamage += 0.1f;
+                    player.rangedCrit += 2;
+                    player.magicDamage += 0.1f;
+                    player.magicCrit += 2;
+                    player.pickSpeed -= 0.15f;
+                    TrueMinionDamage += 0.1f;
+                    player.minionKB += 0.5f;
+
+                    if (solariCharge < solariMaxCharge)
+                        solariCharge++;
+                    else
+                        player.AddBuff(BuffType<SolarFlareCharged>(), 2);
+
+                    if(solariCharge == solariMaxCharge - 1)
+                    {
+                        Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
+                        for (int num225 = 0; num225 < 12; num225++)
+                        {
+                            int num226 = Dust.NewDust(player.position, player.width, player.height, DustID.AmberBolt, 0f, 0f, 0, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
+                            Main.dust[num226].noGravity = true;
+                            Dust obj2 = Main.dust[num226];
+                            obj2.velocity *= 0.5f;
+                        }
+                    }
+                }
             }
 
             // Starfire Spellblade stack handler
@@ -1363,7 +1516,6 @@ namespace TerraLeague
                 if (ReloadTimer == 0)
                     WhisperShotsLeft = 4;
             }
-
 
             if (highlander)
             {
@@ -1484,6 +1636,19 @@ namespace TerraLeague
             if (lifeToHeal > 0)
             {
                 HealLife();
+            }
+
+            // Double Tap Actions
+            if (player.doubleTapCardinalTimer[0] > 0 && player.doubleTapCardinalTimer[0] < 15)
+            {
+                if (player.releaseDown)
+                {
+                    if (solariSet && solariCharge >= solariMaxCharge)
+                    {
+                        solariCharge = 0;
+                        player.AddBuff(BuffType<SolarFlareStorm>(), 360);
+                    }
+                }
             }
 
             // Ability and Summoner Spells Handler
@@ -1659,7 +1824,7 @@ namespace TerraLeague
                 }
             }
         }
-
+        
         public override void UpdateBiomeVisuals()
         {
             //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
@@ -1712,9 +1877,6 @@ namespace TerraLeague
                     return doesKill == 0 ? false : true;
                 }
             }
-
-            
-
             
             if (GetRealHeathWithoutShield() <= 0)
             {
@@ -2746,6 +2908,28 @@ namespace TerraLeague
                        );
                 }
             }
+            if (onslaught)
+            {
+                Texture2D texture = mod.GetTexture("UI/OnslaughtRange");
+
+                if (texture != null)
+                {
+                    Color c = Color.White;
+                    c.A = 255;
+
+                    Main.spriteBatch.Draw
+                       (
+                           texture,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 300), (int)(player.MountedCenter.Y - Main.screenPosition.Y - 300), 600, 600),
+                           new Rectangle(0, 0, 600, 600),
+                           c,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+                }
+            }
         }
 
         /// <summary>
@@ -3225,6 +3409,23 @@ namespace TerraLeague
 
             if (oldUsedInventorySlot == 58 && player.selectedItem == -1)
                 player.selectedItem = 58;
+        }
+
+        public void MeleeProjectileCooldown()
+        {
+            if (player.itemTime == 1 && meleeProjCooldown && player.whoAmI == Main.myPlayer)
+            {
+                Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
+                for (int num225 = 0; num225 < 5; num225++)
+                {
+                    int num226 = Dust.NewDust(player.position, player.width, player.height, 45, 0f, 0f, 255, default(Color), (float)Main.rand.Next(20, 26) * 0.1f);
+                    Main.dust[num226].noLight = true;
+                    Main.dust[num226].noGravity = true;
+                    Dust obj2 = Main.dust[num226];
+                    obj2.velocity *= 0.5f;
+                }
+                meleeProjCooldown = false;
+            }
         }
     }
 }

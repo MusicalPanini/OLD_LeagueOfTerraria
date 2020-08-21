@@ -50,6 +50,9 @@ namespace TerraLeague.NPCs
         public bool harbingersInferno = false;
         public bool doomed = false;
         public bool maleficVisions = false;
+        public bool calibrumMark = false;
+        public bool gravitumMark = false;
+        public bool infernumMark = false;
 
         public bool snared = false;
         public bool stunned = false;
@@ -101,6 +104,9 @@ namespace TerraLeague.NPCs
             harbingersInferno = false;
             doomed = false;
             maleficVisions = false;
+            calibrumMark = false;
+            gravitumMark = false;
+            infernumMark = false;
 
             snared = false;
             stunned = false;
@@ -250,6 +256,17 @@ namespace TerraLeague.NPCs
                     dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 0, new Color(255, 0, 0), 1);
                 }
             }
+            if (infernumMark)
+            {
+                if (Main.rand.Next(0, 2) == 0)
+                {
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 88, 0f, -2f, 0, default(Color), 2);
+                    dust.noGravity = true;
+                    dust.velocity.X *= 0.1f;
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 88, 0f, -3f, 0, default(Color), 0.5f);
+                    dust.velocity.X *= 0.2f;
+                }
+            }
             if (doomed)
             {
                 if (Main.rand.Next(0, 2) == 0)
@@ -330,6 +347,19 @@ namespace TerraLeague.NPCs
                     dust.noGravity = true;
                     dust.velocity.Y -= 2;
                 }
+            }
+            if (calibrumMark)
+            {
+                dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 111, 0, -2, 100, default(Color), 1f);
+                dust.noGravity = true;
+                dust.velocity.X *= 0;
+            }
+            if (gravitumMark)
+            {
+                dust = Dust.NewDustDirect(new Vector2(npc.Center.X - 16, npc.position.Y - 16), 32, 32, 71, 0f, 0f, 100, new Color(0, 0, 0), 1f);
+                dust.noGravity = true;
+                dust.fadeIn = 1.2f;
+                dust.velocity = (dust.position - npc.Center) * -0.05f;
             }
 
             npc.defense = npc.defDefense;
@@ -453,6 +483,15 @@ namespace TerraLeague.NPCs
                 if (damage < 3)
                 {
                     damage = 3;
+                }
+            }
+            if (infernumMark)
+            {
+                npc.lifeRegen -= 300;
+
+                if (damage < 100)
+                {
+                    damage = 100;
                 }
             }
             if (sunfire)
@@ -581,11 +620,21 @@ namespace TerraLeague.NPCs
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            if (calibrumMark)
+            {
+                damage = (int)(damage * 1.5);
+            }
+
             vesselStriked(player.whoAmI, damage, crit);
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            if (calibrumMark)
+            {
+                damage = (int)(damage * 1.5);
+            }
+
             if (OrgDest)
                 damage = (int)(damage * 1.1);
 

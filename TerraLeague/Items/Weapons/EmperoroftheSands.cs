@@ -13,7 +13,6 @@ namespace TerraLeague.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.MinionTargettingFeature[item.type] = true;
             DisplayName.SetDefault("Emperor of the Sands");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
@@ -236,7 +235,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (player.altFunctionUse == 2)
             {
-
+                Main.LocalPlayer.MinionNPCTargetAim();
             }
             else
             {

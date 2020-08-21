@@ -29,6 +29,8 @@ namespace TerraLeague.Items
         public byte MAG;
         public byte SUM;
 
+        public bool meleeProjCooldown = false;
+
         public ITEMGLOBAL()
         {
             Transedent = false;
@@ -510,6 +512,15 @@ namespace TerraLeague.Items
 
         public override bool Shoot(Item item, Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            if (player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
+            {
+                return false;
+            }
+            else if (meleeProjCooldown && !player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
+            {
+                player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown = true;
+            }
+
             return base.Shoot(item, player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
 

@@ -26,8 +26,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 48;
             projectile.height = 47;
             projectile.friendly = true;
-            projectile.minion = true;
-            projectile.minionSlots = 1;
+            projectile.sentry = true;
             projectile.penetrate = 1;
             projectile.timeLeft = Projectile.SentryLifeTime;
             projectile.tileCollide = true;

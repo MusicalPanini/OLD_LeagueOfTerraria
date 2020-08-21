@@ -103,6 +103,52 @@ namespace TerraLeague.UI
                 //(drawPlayer.lavaTime / (double)drawPlayer.lavaMax)
                 spriteBatch.Draw(texture2, destRecLavaCharm, sourRec2, color);
             }
+
+            if (drawPlayer.GetModPlayer<PLAYERGLOBAL>().currentGun != 0 && !Main.playerInventory)
+            {
+                PLAYERGLOBAL modPlayer = drawPlayer.GetModPlayer<PLAYERGLOBAL>();
+                int left = (int)((base.Width.Pixels / 2) - 312);
+                int top = (int)((base.Height.Pixels) - 242);
+
+
+                destRec = new Rectangle(left, top, 48, 232);
+
+                Texture2D texture = TerraLeague.instance.GetTexture("UI/LunariAmmoBar");
+                Rectangle sourRec = new Rectangle(0, 0, 48, 232);
+                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
+
+                Texture2D texture2 = TerraLeague.instance.GetTexture("UI/SmallBlank_V");
+                Rectangle sourRec2 = new Rectangle(0, 0, 8, 8);
+                Color color;
+                Rectangle ammoBarPos;
+                int ammoBarHeight = 0;
+
+                // Calibrum
+                color = new Color(141, 252, 245);
+                ammoBarHeight = (int)(216 * (modPlayer.calibrumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 4, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(216, 0, 32);
+                ammoBarHeight = (int)(216 * (modPlayer.severumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 12, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(200, 37, 255);
+                ammoBarHeight = (int)(216 * (modPlayer.gravitumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 20, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(0, 148, 255);
+                ammoBarHeight = (int)(216 * (modPlayer.infernumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 28, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(255, 255, 255);
+                ammoBarHeight = (int)(216 * (modPlayer.crescendumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 36, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+            }
         }
     }
 

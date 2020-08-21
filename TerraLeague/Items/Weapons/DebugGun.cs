@@ -143,7 +143,7 @@ namespace TerraLeague.Items.Weapons
         public override void SetDefaults()
         {
             item.damage = 20;
-            item.summon = true;
+            item.magic = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.width = 40;
             item.height = 24;
@@ -155,17 +155,18 @@ namespace TerraLeague.Items.Weapons
             item.value = 1;
             item.rare = ItemRarityID.Expert;
             item.scale = 0.9f;
-            item.shoot = ProjectileType<VoidProphetsStaff_ZzrotPortal>();
+            item.shoot = ProjectileType<SolariSet_SolarSigil>();
             //item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
             item.autoReuse = false;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            player.FindSentryRestingSpot(item.shoot, out int xPos, out int yPos, out int yDis);
-            Projectile.NewProjectile((float)xPos, (float)(yPos - yDis), 0f, 0f, type, damage, knockBack, player.whoAmI, 10, -1);
-            player.UpdateMaxTurrets();
-            return false;
+            position = Main.MouseWorld;
+            speedX = 0;
+            speedY = 0;
+            item.channel = false;
+            return true;
         }
 
         public override bool GetIfAbilityExists(AbilityType type)
