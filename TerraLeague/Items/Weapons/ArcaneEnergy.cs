@@ -71,7 +71,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
                 return (int)(item.damage * 1.5);
             else if (type == AbilityType.R)
-                return (int)(item.damage * 0.6);
+                return (int)(item.damage);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -87,7 +87,7 @@ namespace TerraLeague.Items.Weapons
             else if (type == AbilityType.R)
             {
                 if (dam == DamageType.MAG)
-                    return 45;
+                    return 75;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -195,13 +195,14 @@ namespace TerraLeague.Items.Weapons
 
         public override void AddRecipes()
         {
-            //ModRecipe recipe = new ModRecipe(mod);
-            //recipe.AddIngredient(ItemType<HextechCore>(), 2);
-            //recipe.AddIngredient(ItemID.Bomb, 20);
-            //recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 6);
-            //recipe.AddTile(TileID.MythrilAnvil);
-            //recipe.SetResult(this);
-            //recipe.AddRecipe();
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemType<Sunstone>(), 20);
+            recipe.AddIngredient(ItemID.Chain, 4);
+            recipe.AddIngredient(ItemID.SoulofMight, 10);
+            recipe.AddIngredient(ItemID.FallenStar, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
 
         public override bool GetIfAbilityExists(AbilityType type)
