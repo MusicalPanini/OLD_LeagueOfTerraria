@@ -28,6 +28,7 @@ namespace TerraLeague.Projectiles
             projectile.localNPCHitCooldown = -1;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()

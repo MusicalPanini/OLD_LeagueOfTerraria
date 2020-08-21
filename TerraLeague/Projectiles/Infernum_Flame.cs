@@ -29,6 +29,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
+            if (projectile.timeLeft == 75 && (int)projectile.ai[1] == 1)
+                projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+
             if (Main.rand.Next(0, 1) == 0)
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 88, 0, 0, 0, default(Color), 2.5f);
@@ -41,12 +44,18 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            base.OnHitNPC(target, damage, knockback, crit);
+
+
             target.AddBuff(ModContent.BuffType<InfernumMark>(), 60 * 5);
+
+            int critAI = crit ? 1 : 0;
+
             if ((int)projectile.ai[1] == 1)
             {
                 for (int i = 0; i < 16; i++)
                 {
-                    Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedBy(MathHelper.TwoPi / 16 * i) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(projectile.damage * 0.75), projectile.knockBack, projectile.owner, target.whoAmI);
+                    Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedBy(MathHelper.TwoPi / 16 * i) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(projectile.damage * 0.75), projectile.knockBack, projectile.owner, target.whoAmI, critAI);
                 }
             }
             else
@@ -58,7 +67,7 @@ namespace TerraLeague.Projectiles
 
                     for (int i = 0; i < 6; i++)
                     {
-                        Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedBy(startRad - (rotation * i)) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(projectile.damage * 0.5), projectile.knockBack, projectile.owner, target.whoAmI);
+                        Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedBy(startRad - (rotation * i)) * 0.75f, ModContent.ProjectileType<Infernum_FlameSpread>(), (int)(projectile.damage * 0.5), projectile.knockBack, projectile.owner, target.whoAmI, critAI);
                     }
                 }
                 else
@@ -72,7 +81,6 @@ namespace TerraLeague.Projectiles
                     }
                 }
             }
-            base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
