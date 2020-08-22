@@ -2690,14 +2690,16 @@ namespace TerraLeague
             //if (player.HasBuff(BuffID.PotionSickness))
             //    lifeToHeal /= 2;
 
-            if (GetRealHeathWithoutShield(true) - GetRealHeathWithoutShield(false) < lifeToHeal)
+            int trueLifeHeal = lifeToHeal;
+
+            if (GetRealHeathWithoutShield(true) - GetRealHeathWithoutShield(false) < trueLifeHeal)
             {
-                lifeToHeal = GetRealHeathWithoutShield(true) - GetRealHeathWithoutShield(false);
+                trueLifeHeal = GetRealHeathWithoutShield(true) - GetRealHeathWithoutShield(false);
             }
 
             if (lifeToHeal > 0)
             {
-                player.statLife += lifeToHeal;
+                player.statLife += trueLifeHeal;
                 player.HealEffect(lifeToHeal);
                 lifeToHeal = 0;
             }
