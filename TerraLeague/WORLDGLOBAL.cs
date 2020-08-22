@@ -56,9 +56,10 @@ namespace TerraLeague
                 return;
             }
             tasks.Insert(genIndex + 1, new PassLegacy("Surface Marble", GenerateMarble));
+            tasks.Insert(genIndex + 2, new PassLegacy("Targon", GenerateTargon));
 
             int end = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
-            if (genIndex == -1)
+            if (end == -1)
             {
                 return;
             }
@@ -242,6 +243,43 @@ namespace TerraLeague
                             if (WorldGen.PlaceObject(x, y - 1, TileType<PetrifiedFlora>(), false, style))
                                 NetMessage.SendObjectPlacment(-1, x, y - 1, TileType<PetrifiedFlora>(), style, 0, -1, -1);
                         }
+                    }
+                }
+            }
+        }
+
+        private void GenerateTargon(GenerationProgress progress)
+        {
+            progress.Message = "Buildning a peak to the heavens";
+            progress.Value += 0.01f;
+            int startingPointX = -1;
+
+            while (startingPointX == -1)
+            {
+                int X = Main.rand.Next(2) == 0 ? WorldGen.genRand.Next((Main.maxTilesX * 1) / 5, (Main.maxTilesX * 2) / 5) : WorldGen.genRand.Next((Main.maxTilesX * 3) / 5, (Main.maxTilesX * 4) / 5);
+
+                for (int Y = 0; Y < Main.maxTilesY/2; Y++)
+                {
+                    if (Main.tile[X, Y].type == TileID.Grass || Main.tile[X, Y].type == TileID.Stone || Main.tile[X, Y].type == TileID.ClayBlock || Main.tile[X, Y].type == TileType<PetrifiedGrass>() || Main.tile[X, Y].type == TileID.Marble || Main.tile[X, Y].type == TileType<Limestone>() && Y > Main.maxTilesY / 5)
+                    {
+                        startingPointX = X;
+                        break;
+                    }
+                }
+            }
+
+            int width = 300;
+
+            for (int x = startingPointX - width/2; x < startingPointX + width/2; x++)
+            {
+                for (int y = 100; y < Main.maxTilesY / 3; y++)
+                {
+                    if (!Main.tile[x, y].active() && !Main.tile[x, y + 10].active())
+                    {
+                        Main.tile[x, y].type = TileID.StoneSlab;
+                        Main.tile[x, y].active(true);
+                        Main.tile[x, y].halfBrick(false);
+                        Main.tile[x, y].slope(0);
                     }
                 }
             }
