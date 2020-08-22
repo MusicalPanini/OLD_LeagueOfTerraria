@@ -49,10 +49,10 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                int dir = player.Center.X > projectile.Center.X ? -1 : 1;
-                player.ChangeDir(dir);
+                //int dir = player.Center.X > projectile.Center.X ? -1 : 1;
+                //player.ChangeDir(dir);
 
-                projectile.Center = player.Center + new Vector2(0, -6) + new Vector2(38,0).RotatedBy(projectile.rotation);
+                projectile.Center = player.Center + new Vector2(0, -6) + new Vector2(38,0).RotatedBy(projectile.velocity.ToRotation());
 
                 for (int k = 0; k < 2 + 1; k++)
                 {
@@ -76,7 +76,7 @@ namespace TerraLeague.Projectiles
                     projectile.friendly = true;
                     projectile.timeLeft = 50;
                     projectile.extraUpdates = 16;
-                    projectile.velocity = new Vector2(10, 0).RotatedBy(projectile.rotation);
+                    //projectile.velocity = new Vector2(10, 0).RotatedBy(projectile.rotation);
 
                     Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 12, Terraria.Audio.SoundType.Sound), projectile.Center);
                     if (sound != null)

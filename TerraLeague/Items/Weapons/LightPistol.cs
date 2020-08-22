@@ -114,8 +114,7 @@ namespace TerraLeague.Items.Weapons
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 0;
 
-                    Projectile proj = Projectile.NewProjectileDirect(position, Vector2.Zero, projType, damage, knockback, player.whoAmI);
-                    proj.rotation = velocity.ToRotation();
+                    Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
 
                     SetAnimation(player, 30, 30, position + velocity);
                     DoEfx(player, type);
