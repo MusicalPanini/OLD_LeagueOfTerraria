@@ -112,6 +112,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<Buffs.SpinningAxe>(), 240);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -172,6 +173,15 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
                 return true;
             return base.GetIfAbilityExists(type);
+        }
+
+        public override void Efx(Player player, AbilityType type)
+        {
+            if (type == AbilityType.Q)
+            {
+                Main.PlaySound(SoundID.Item7, player.MountedCenter);
+            }
+            base.Efx(player, type);
         }
     }
 }

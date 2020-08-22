@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
         {
-            if (type == AbilityType.Q)
+            if (type == AbilityType.W)
             {
                 if (dam == DamageType.MAG)
                     return 30;
@@ -188,7 +188,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-
+                Main.PlaySound(new LegacySoundStyle(2, 20).WithPitchVariance(0.8f), player.Center);
             }
         }
     }

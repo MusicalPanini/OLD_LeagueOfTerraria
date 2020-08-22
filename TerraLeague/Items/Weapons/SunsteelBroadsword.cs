@@ -1,4 +1,5 @@
-﻿using TerraLeague.Buffs;
+﻿using Microsoft.Xna.Framework;
+using TerraLeague.Buffs;
 using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -114,6 +115,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<DecisiveStrike>(), 300);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -122,6 +124,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<Courage>(), 300);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -157,11 +160,34 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
+                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 9), player.Center);
+                if (sound != null)
+                    sound.Pitch = -0.5f;
 
+                for (int j = 0; j < 10; j++)
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 64, 0, -10);
+                    dust.velocity.X *= 0;
+                    dust.velocity.Y -= 4;
+                    dust.noGravity = true;
+                    dust.scale = 2;
+                }
             }
             else if (type == AbilityType.W)
             {
+                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 37), player.Center);
+                if (sound != null)
+                    sound.Pitch = -1f;
 
+                int radius = 100;
+                for (int i = 0; i < radius / 5; i++)
+                {
+                    Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f)))) + player.MountedCenter;
+
+                    Dust dustR = Dust.NewDustPerfect(pos, DustID.Iron, Vector2.Zero, 0, default(Color), 1.5f);
+                    dustR.noGravity = true;
+                    dustR.velocity = (dustR.position - player.MountedCenter) * -0.1f + player.velocity;
+                }
             }
         }
     }

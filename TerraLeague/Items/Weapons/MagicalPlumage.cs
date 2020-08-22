@@ -102,6 +102,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<DeadlyPlumage>(), 60 * 5);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -168,7 +169,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-
+                Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
             }
         }
     }

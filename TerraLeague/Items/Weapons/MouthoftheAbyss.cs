@@ -108,6 +108,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<BioArcaneBarrage>(), 60 * 3);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -191,7 +192,9 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-
+                var sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 95), player.MountedCenter);
+                if (sound != null)
+                    sound.Pitch = -1;
             }
         }
 
