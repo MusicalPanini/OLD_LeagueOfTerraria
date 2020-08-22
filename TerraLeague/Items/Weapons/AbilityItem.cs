@@ -55,22 +55,22 @@ namespace TerraLeague.Items.Weapons
                 string text = GetWeaponTooltip() != "" ? "\n" + GetWeaponTooltip() : "";
                 if (GetIfAbilityExists(AbilityType.Q))
                 {
-                    text += "\n[c/2eb82e:Ability " + TerraLeague.QAbility.GetAssignedKeys().First() + ":] [c/5cd65c:" + GetAbilityName(AbilityType.Q) + "]" +
+                    text += "\n[c/2eb82e:Ability " + TerraLeague.ConvertKeyString(TerraLeague.QAbility) + ":] [c/5cd65c:" + GetAbilityName(AbilityType.Q) + "]" +
                         "\n" + GetTooltip(AbilityType.Q);
                 }
                 if (GetIfAbilityExists(AbilityType.W))
                 {
-                    text += "\n[c/2eb82e:Ability " + TerraLeague.WAbility.GetAssignedKeys().First() + ":] [c/5cd65c:" + GetAbilityName(AbilityType.W) + "]" +
+                    text += "\n[c/2eb82e:Ability " + TerraLeague.ConvertKeyString(TerraLeague.WAbility) + ":] [c/5cd65c:" + GetAbilityName(AbilityType.W) + "]" +
                         "\n" + GetTooltip(AbilityType.W);
                 }
                 if (GetIfAbilityExists(AbilityType.E))
                 {
-                    text += "\n[c/2eb82e:Ability " + TerraLeague.EAbility.GetAssignedKeys().First() + ":] [c/5cd65c:" + GetAbilityName(AbilityType.E) + "]" +
+                    text += "\n[c/2eb82e:Ability " + TerraLeague.ConvertKeyString(TerraLeague.EAbility) + ":] [c/5cd65c:" + GetAbilityName(AbilityType.E) + "]" +
                         "\n" + GetTooltip(AbilityType.E);
                 }
                 if (GetIfAbilityExists(AbilityType.R))
                 {
-                    text += "\n[c/2eb82e:Ability " + TerraLeague.RAbility.GetAssignedKeys().First() + ":] [c/5cd65c:" + GetAbilityName(AbilityType.R) + "]" +
+                    text += "\n[c/2eb82e:Ability " + TerraLeague.ConvertKeyString(TerraLeague.RAbility) + ":] [c/5cd65c:" + GetAbilityName(AbilityType.R) + "]" +
                         "\n" + GetTooltip(AbilityType.R);
                 }
                 text += "\n[c/cc9900:'" + GetQuote() + "']";
