@@ -55,19 +55,22 @@ namespace TerraLeague.Projectiles
                         dust.scale = 2;
                     }
 
-                    for (int i = 0; i < Main.player.Length; i++)
+                    if (Main.LocalPlayer.whoAmI == player.whoAmI)
                     {
-                        Player healTarget = Main.player[i];
-
-                        if (projectile.Distance(healTarget.Center) < 300 && healTarget.active)
+                        for (int i = 0; i < Main.player.Length; i++)
                         {
-                            if (i == projectile.owner)
+                            Player healTarget = Main.player[i];
+
+                            if (projectile.Distance(healTarget.Center) < effectRadius && healTarget.active)
                             {
-                                modPlayer.AddShield(shieldAmount, 240, Color.SeaGreen, ShieldType.Basic);
-                            }
-                            else if (Main.netMode == NetmodeID.MultiplayerClient)
-                            {
-                                modPlayer.SendShieldPacket(shieldAmount, i, ShieldType.Basic, 240, -1, player.whoAmI, Color.SeaGreen);
+                                if (i == projectile.owner)
+                                {
+                                    modPlayer.AddShield(shieldAmount, 240, Color.SeaGreen, ShieldType.Basic);
+                                }
+                                else if (Main.netMode == NetmodeID.MultiplayerClient)
+                                {
+                                    modPlayer.SendShieldPacket(shieldAmount, i, ShieldType.Basic, 240, -1, player.whoAmI, Color.SeaGreen);
+                                }
                             }
                         }
                     }
