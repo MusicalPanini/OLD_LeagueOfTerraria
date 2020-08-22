@@ -28,7 +28,7 @@ namespace TerraLeague.Buffs
                 player.buffTime[buffIndex] = 239;
             }
 
-            if (player.buffTime[buffIndex] % 10 == 0)
+            if (player.buffTime[buffIndex] % 10 == 0 && Main.LocalPlayer.whoAmI == player.whoAmI)
             {
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {

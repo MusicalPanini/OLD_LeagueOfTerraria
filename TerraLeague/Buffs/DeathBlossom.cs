@@ -39,7 +39,7 @@ namespace TerraLeague.Buffs
             player.ChangeDir(player.oldDirection);
             player.GetModPlayer<PLAYERGLOBAL>().deathLotus = true;
 
-            if (player.buffTime[buffIndex] % 3 == 1)
+            if (player.buffTime[buffIndex] % 3 == 1 && Main.LocalPlayer.whoAmI == player.whoAmI)
             {
                 player.ChangeDir(player.direction == 1 ? -1 : 1);
 
