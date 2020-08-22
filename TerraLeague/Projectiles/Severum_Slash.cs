@@ -11,7 +11,6 @@ namespace TerraLeague.Projectiles
 {
     public class Severum_Slash : ModProjectile
     {
-        int frameCount = 0;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Severum");
@@ -145,7 +144,7 @@ namespace TerraLeague.Projectiles
             {
                 projectile.friendly = true;
                 if (Main.LocalPlayer.whoAmI == projectile.owner)
-                    Projectile.NewProjectileDirect(projectile.Center, (Main.player[projectile.owner].MountedCenter - projectile.Center).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) / -6, 684, projectile.damage/2, projectile.knockBack, projectile.owner);
+                    Projectile.NewProjectileDirect(projectile.Center, (Main.player[projectile.owner].MountedCenter - projectile.Center).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) / -6, ProjectileID.DD2SquireSonicBoom, projectile.damage/2, projectile.knockBack, projectile.owner);
                 Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().severumAmmo -= 2;
                 Main.PlaySound(SoundID.Item10, projectile.Center);
             }
