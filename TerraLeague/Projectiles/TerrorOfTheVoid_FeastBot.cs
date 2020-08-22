@@ -95,7 +95,9 @@ namespace TerraLeague.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             if (target.life <= Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().feastStacks && !target.immortal)
-                target.life = 1;
+            {
+                Main.player[projectile.owner].ApplyDamageToNPC(target, 99999, 0, 0, false);
+            }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }

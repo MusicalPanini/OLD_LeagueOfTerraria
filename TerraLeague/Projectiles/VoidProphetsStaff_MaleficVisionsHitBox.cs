@@ -79,7 +79,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            if (timeLeft > 0)
+            if (timeLeft > 0 && projectile.owner == Main.LocalPlayer.whoAmI)
             {
                 float distance = 700f;
                 NPC target = null;

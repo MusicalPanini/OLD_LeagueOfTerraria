@@ -150,6 +150,7 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     player.AddBuff(BuffType<Buffs.ToxicShot>(), 300);
+                    DoEfx(player, type);
                     SetCooldowns(player, type);
                 }
             }
@@ -209,6 +210,12 @@ namespace TerraLeague.Items.Weapons
 
         public override void Efx(Player player, AbilityType type)
         {
+            if (type == AbilityType.E)
+            {
+                var efx = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 102), player.MountedCenter);
+                if (efx != null)
+                    efx.Pitch = -1;
+            }
             if (type == AbilityType.R)
                 Main.PlaySound(SoundID.Item1, player.Center);
         }

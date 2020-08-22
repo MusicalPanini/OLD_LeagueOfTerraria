@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (player.active && modPlayer.lightningRush)
+            if (player.active && modPlayer.lightningRush || projectile.timeLeft > 990)
                 projectile.Center = player.MountedCenter;
             else
                 projectile.Kill();

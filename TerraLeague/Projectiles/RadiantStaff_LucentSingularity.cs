@@ -107,11 +107,15 @@ namespace TerraLeague.Projectiles
                     dust.noGravity = true;
                 }
 
-                for (int i = 0; i < 200; i++)
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
-                    if (Main.npc[i].Hitbox.Intersects(projectile.Hitbox))
+                    NPC npc = Main.npc[i];
+                    if (!npc.friendly && !npc.immortal && !npc.townNPC && npc.active && npc.CanBeChasedBy())
                     {
-                        Main.npc[i].AddBuff(BuffType<Buffs.Slowed>(), 2);
+                        if (npc.Hitbox.Intersects(projectile.Hitbox))
+                        {
+                            npc.AddBuff(BuffType<Buffs.Slowed>(), 2);
+                        }
                     }
                 }
             }

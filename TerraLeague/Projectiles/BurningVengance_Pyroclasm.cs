@@ -151,6 +151,8 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            projectile.netUpdate = true;
+
             if (target.HasBuff(BuffID.OnFire))
             {
                 target.AddBuff(BuffType<Ablaze>(), 600);

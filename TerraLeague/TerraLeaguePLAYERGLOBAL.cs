@@ -1609,6 +1609,16 @@ namespace TerraLeague
                     dustR.noGravity = true;
                 }
             }
+            if (bioBarrage)
+            {
+                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, 167, 0, -4, 50);
+                dustIndex.velocity *= 0.3f;
+            }
+            if (toxicShot)
+            {
+                Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, 186, 0, -4, 50);
+                dustIndex.velocity *= 0.3f;
+            }
 
             // Lifeline cooldown handler
             if (lifeLineCooldown > 0)

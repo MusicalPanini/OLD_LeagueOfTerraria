@@ -136,13 +136,13 @@ namespace TerraLeague.Items.Weapons
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG);
                     int knockback = 1;
 
-                    Projectile proj = Projectile.NewProjectileDirect(player.Center, velocity, projType, damage, knockback, player.whoAmI);
-
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+                    int poweredUp = 0;
                     if (modPlayer.MAG >= 50)
-                        proj.magic = true;
-                    else
-                        proj.ranged = true;
+                        poweredUp = 1;
+
+                    Projectile proj = Projectile.NewProjectileDirect(player.Center, velocity, projType, damage, knockback, player.whoAmI, poweredUp);
+
 
                     SetAnimation(player, 20, 20, position + velocity);
                     DoEfx(player, type);

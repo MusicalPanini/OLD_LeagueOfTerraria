@@ -41,6 +41,18 @@ namespace TerraLeague.Projectiles
             int offsetX = 22;
             int offsetY = 14;
 
+            if (projectile.timeLeft == 300)
+            {
+                if ((int)projectile.ai[0] == 1)
+                {
+                    projectile.magic = true;
+                }
+                else
+                {
+                    projectile.ranged = true;
+                }
+            }
+
             if (projectile.ranged)
             {
                 Color color = new Color(250, 114, 247);

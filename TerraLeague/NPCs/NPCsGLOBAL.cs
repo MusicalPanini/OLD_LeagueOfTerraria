@@ -75,7 +75,8 @@ namespace TerraLeague.NPCs
 
         public override void SetDefaults(NPC npc)
         {
-            
+            if (npc.type == NPCID.GolemFistLeft || npc.type == NPCID.GolemFistRight || npc.type == NPCID.GolemHead)
+                npc.buffImmune[BuffType<Stunned>()] = true;
             base.SetDefaults(npc);
         }
 
