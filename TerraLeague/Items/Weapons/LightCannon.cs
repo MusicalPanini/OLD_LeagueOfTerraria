@@ -85,7 +85,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetBaseManaCost(AbilityType type)
         {
             if (type == AbilityType.Q)
-                return 60;
+                return 80;
             else
                 return base.GetBaseManaCost(type);
         }
