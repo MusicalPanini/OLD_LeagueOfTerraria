@@ -76,12 +76,15 @@ namespace TerraLeague.Projectiles
                     }
                 }
 
-                for (int i = 0; i < Main.player.Length; i++)
+                if (projectile.timeLeft <= 350)
                 {
-                    if (projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != projectile.owner)
+                    for (int i = 0; i < Main.player.Length; i++)
                     {
-                        Main.player[i].Teleport(player.position);
-                        projectile.Kill();
+                        if (projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != projectile.owner)
+                        {
+                            Main.player[i].Teleport(player.position);
+                            projectile.Kill();
+                        }
                     }
                 }
             }
