@@ -675,6 +675,12 @@ namespace TerraLeague.NPCs
                 shop.item[nextSlot].SetDefaults(ItemID.Revolver);
                 nextSlot++;
             }
+
+            if (type == NPCID.Dryad)
+            {
+                shop.item[nextSlot].SetDefaults(ItemType<Items.Placeable.PetSeeds>());
+                nextSlot++;
+            }
         }
 
         public override bool PreNPCLoot(NPC npc)
