@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetIconTexturePath(AbilityType type)
         {
             if (type == AbilityType.R)
-                return "AbilityImages/Template";
+                return "AbilityImages/WorldEnder";
             else
                 return base.GetIconTexturePath(type);
         }
