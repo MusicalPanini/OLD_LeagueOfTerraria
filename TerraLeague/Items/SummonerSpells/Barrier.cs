@@ -58,7 +58,7 @@ namespace TerraLeague.Items.SummonerSpells
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             player.AddBuff(BuffType<Barrier>(), 600);
-            modPlayer.AddShieldAttachedToBuff((int)(200 * modPlayer.healPower), BuffType<Barrier>(), Color.Orange, ShieldType.Basic);
+            modPlayer.AddShieldAttachedToBuff((int)(GetShieldStat() * modPlayer.healPower), BuffType<Barrier>(), Color.Orange, ShieldType.Basic);
 
             Efx(player);
             PacketHandler.SendBarrier(-1, player.whoAmI, player.whoAmI);
