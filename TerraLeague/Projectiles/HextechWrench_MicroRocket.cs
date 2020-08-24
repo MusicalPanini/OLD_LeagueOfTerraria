@@ -25,12 +25,21 @@ namespace TerraLeague.Projectiles
             projectile.hostile = false;
             projectile.minion = true;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
-            projectile.tileCollide = true;
-            projectile.ignoreWater = true;
+            projectile.tileCollide = false;
         }
 
         public override void AI()
         {
+            if (projectile.ai[1] == 0f && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+            {
+                projectile.ai[1] = 1f;
+                projectile.netUpdate = true;
+            }
+            if (projectile.ai[1] != 0f)
+            {
+                projectile.tileCollide = true;
+            }
+
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 130);
             dust.noGravity = true;
             Lighting.AddLight(projectile.position, 0.5f, 0.45f, 0.30f);

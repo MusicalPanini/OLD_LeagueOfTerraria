@@ -76,7 +76,7 @@ namespace TerraLeague.Projectiles
             }
 
             if (Main.player[projectile.owner].HasBuff(ModContent.BuffType<SandSolder>()))
-                projectile.timeLeft = 2;
+                projectile.timeLeft = 10;
 
             if (Main.rand.Next(0, 4) == 0)
             {

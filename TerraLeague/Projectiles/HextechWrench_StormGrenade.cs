@@ -17,7 +17,7 @@ namespace TerraLeague.Projectiles
         public override void SetDefaults()
         {
             projectile.width = 24;
-            projectile.height = 16;
+            projectile.height = 24;
             projectile.alpha = 0;
             projectile.timeLeft = 600;
             projectile.penetrate = 1000;
@@ -68,20 +68,33 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position);
 
             Dust dust;
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 10; i++)
             {
-                dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 31, 0f, 0f, 100, default(Color), 2f);
-                dust.velocity *= 1.4f;
+                dust = Dust.NewDustDirect(projectile.Center, 1, 1, 31, 0f, 0f, 100, default(Color), 2f);
+                dust.velocity *= 2f;
             }
-            for (int i = 0; i < 80; i++)
+            for (int i = 0; i < 40; i++)
             {
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 1f);
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(0, 220, 220), 1f);
                 dust.noGravity = true;
-                dust.velocity *= 5f;
+                dust.velocity = (dust.position - projectile.Center) * 0.1f;
+            }
+            int effectRadius = 75/2;
+            for (int i = 0; i < effectRadius / 2; i++)
+            {
+                Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 2f)))) + projectile.Center;
 
-                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0, 150), 1f);
-                dust.velocity *= 3f;
-                dust.color = new Color(0, 220, 220);
+                Dust dustR = Dust.NewDustPerfect(pos, 261, Vector2.Zero, 0, new Color(0, 220, 220), 2);
+                dustR.noGravity = true;
+                dustR.velocity = (dustR.position - projectile.Center) * 0.1f;
+            }
+
+            for (int i = 0; i < 30; i++)
+            {
+                dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 226, 0, 0, 0, new Color(0, 220, 220), 0.6f);
+                dust.velocity = (dust.position - projectile.Center) * 0.075f;
+                dust.velocity.Y -= 1f;
+                dust.noLight = true;
             }
 
             projectile.position.X = projectile.position.X + (float)(projectile.width / 2);

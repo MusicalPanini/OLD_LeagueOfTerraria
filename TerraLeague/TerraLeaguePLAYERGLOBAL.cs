@@ -19,6 +19,7 @@ using TerraLeague.Items.CustomItems;
 using Microsoft.Xna.Framework.Audio;
 using TerraLeague.Items.CustomItems.Passives;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items;
 
 namespace TerraLeague
 {
@@ -2805,6 +2806,19 @@ namespace TerraLeague
                         AbilityCooldowns[i]--;
                 }
             }
+        }
+
+        public override void AnglerQuestReward(float rareMultiplier, List<Item> rewardItems)
+        {
+            if (Main.rand.Next(3) == 0)
+            {
+                Item item = new Item();
+                item.SetDefaults(ItemType<BrassBar>());
+                item.stack = (int)(30 * rareMultiplier);
+
+                rewardItems.Add(item);
+            }
+            base.AnglerQuestReward(rareMultiplier, rewardItems);
         }
 
         public override void FrameEffects()
