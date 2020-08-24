@@ -30,33 +30,25 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetAbilityName(AbilityType type)
         {
-            if (type == AbilityType.W)
-                return "Hextech Micro-Rockets";
-            else if (type == AbilityType.E)
-                return "CH-2 Electron Storm Grenade";
+            if (type == AbilityType.R)
+                return "Emperor's Divide";
             else
                 return base.GetAbilityName(type);
         }
 
         public override string GetIconTexturePath(AbilityType type)
         {
-            if (type == AbilityType.W)
-                return "AbilityImages/MicroRockets";
-            else if (type == AbilityType.E)
-                return "AbilityImages/StormGrenade";
+            if (type == AbilityType.R)
+                return "AbilityImages/EmperorsDivide";
             else
                 return base.GetIconTexturePath(type);
         }
 
         public override string GetAbilityTooltip(AbilityType type)
         {
-            if (type == AbilityType.W)
+            if (type == AbilityType.R)
             {
-                return "Fire 5 rockets in a cone towards your cursor";
-            }
-            else if (type == AbilityType.E)
-            {
-                return "Throw a granade that stuns hit enemies";
+                return "Call forward 2 walls of sand shields that knock enemies away";
             }
             else
             {
@@ -66,10 +58,8 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
-            if (type == AbilityType.W)
-                return (int)(0.6 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rocketDamageLastStep * item.damage);
-            else if (type == AbilityType.E)
-                return (int)(1.5 * item.damage);
+            if (type == AbilityType.R)
+                return (int)(2 * item.damage);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -77,34 +67,25 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-            if (type == AbilityType.W)
+            if (type == AbilityType.R)
             {
                 if (dam == DamageType.SUM)
-                    return 25;
-            }
-            else if (type == AbilityType.E)
-            {
-                if (dam == DamageType.SUM)
-                    return 60;
+                    return 80;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
 
         public override int GetBaseManaCost(AbilityType type)
         {
-            if (type == AbilityType.W)
-                return 20;
-            else if (type == AbilityType.E)
-                return 20;
+            if (type == AbilityType.R)
+                return 50;
             else
                 return base.GetBaseManaCost(type);
         }
 
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
-            if (type == AbilityType.W)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.SUM) + " summon damage per rocket";
-            else if (type == AbilityType.E)
+            if (type == AbilityType.R)
                 return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.SUM) + " summon damage";
             else
                 return base.GetDamageTooltip(player, type);
@@ -112,7 +93,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
-            if (type == AbilityType.W || type == AbilityType.E)
+            if (type == AbilityType.R)
                 return true;
             else
                 return false;
@@ -120,51 +101,27 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetRawCooldown(AbilityType type)
         {
-            if (type == AbilityType.W)
-                return 8;
-            else if (type == AbilityType.E)
-                return 10;
+            if (type == AbilityType.R)
+                return 45;
             else
                 return base.GetRawCooldown(type);
         }
 
         public override void DoEffect(Player player, AbilityType type)
         {
-            if (type == AbilityType.W)
+            if (type == AbilityType.R)
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     DoEfx(player, type);
-                    int projType = ProjectileType<HextechWrench_MicroRocket>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
-                    int knockback = 1;
-
-                    int numberProjectiles = 5;
-                    int distance = 24;
-                    for (int i = 0; i < numberProjectiles; i++)
-                    {
-                        Vector2 relPosition = new Vector2(0 - (distance * 2) + (i * distance), 0).RotatedBy(TerraLeague.CalcAngle(player.Center, Main.MouseWorld) + MathHelper.PiOver2);
-                        Vector2 position = new Vector2(player.MountedCenter.X + relPosition.X, player.MountedCenter.Y + relPosition.Y);
-                        Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15f);
-
-                        Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                    }
-                    SetCooldowns(player, type);
-                }
-            }
-            else if (type == AbilityType.E)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
                     Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
-                    int projType = ProjectileType<HextechWrench_StormGrenade>();
+                    Vector2 velocity = new Vector2(16, 0);
+                    int projType = ProjectileType<EmperoroftheSands_EmperorsDivide>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
-                    int knockback = 0;
+                    int knockback = 30;
 
-                    
                     Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                    DoEfx(player, type);
+                    Projectile.NewProjectile(position, -velocity, projType, damage, knockback, player.whoAmI);
                     SetCooldowns(player, type);
                 }
             }
@@ -176,7 +133,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 9;
+            item.damage = 11;
             item.summon = true;
             item.mana = 20;
             item.width = 48;
@@ -246,17 +203,19 @@ namespace TerraLeague.Items.Weapons
 
         public override bool GetIfAbilityExists(AbilityType type)
         {
-            if (type == AbilityType.W || type == AbilityType.E)
-                return false;
+            if (type == AbilityType.R)
+                return true;
             return base.GetIfAbilityExists(type);
         }
 
         public override void Efx(Player player, AbilityType type)
         {
-            if (type == AbilityType.W)
-                Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
-            else if (type == AbilityType.E)
-                Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
+            if (type == AbilityType.R)
+            {
+                var sound = Main.PlaySound(new LegacySoundStyle(2, 82), player.Center);
+                if (sound != null)
+                    sound.Pitch = -0.5f;
+            }
         }
 
         public override void AddRecipes()
