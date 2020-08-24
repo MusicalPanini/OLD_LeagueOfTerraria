@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Raptor Cloak");
             Tooltip.SetDefault("4% increased minion damage" +
                 "\nIncreases armor by 3" +
-                "\nIncreases your max number of minions" +
+                "\nIncreases your max number of sentries" +
                 "\nIncreases life regeneration by 2");
         }
 
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.AdvItems
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
             player.lifeRegen += 2;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
-            player.maxMinions += 1;
+            player.maxTurrets += 1;
         }
 
         public override void AddRecipes()

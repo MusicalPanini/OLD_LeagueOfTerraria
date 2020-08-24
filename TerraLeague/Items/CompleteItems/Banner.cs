@@ -16,6 +16,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("Increases armor by 6" +
                 "\nIncreases resist by 4" +
                 "\nIncreases your max number of minions" +
+                "\nIncreases your max number of sentries" +
                 "\nIncreases life regeneration by 2");
         }
 
@@ -38,6 +39,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.maxMinions += 1;
+            player.maxTurrets += 1;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.lifeRegen += 2;

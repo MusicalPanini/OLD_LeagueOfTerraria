@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases armor by 6" +
                 "\nIncreases life regeneration by 3" +
                 "\nAbility cooldown reduced by 10%" +
-                "\nIncreases your max number of minions" +
+                "\nIncreases your max number of sentries" +
                 "\n8% increased movement speed");
         }
 
@@ -35,7 +35,7 @@ namespace TerraLeague.Items.CompleteItems
             player.moveSpeed += 0.08f;
             player.statLifeMax2 += 40;
             player.lifeRegen += 3;
-            player.maxMinions += 1;
+            player.maxTurrets += 1;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
 
