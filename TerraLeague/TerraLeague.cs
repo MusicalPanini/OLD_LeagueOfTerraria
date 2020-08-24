@@ -472,6 +472,14 @@ namespace TerraLeague
             leather1.SetResult(ItemID.Leather);
             leather1.AddRecipe();
 
+            ModRecipe sharktooth = new ModRecipe(this);
+            sharktooth.AddIngredient(ItemID.SharkFin, 4);
+            sharktooth.AddIngredient(ItemID.Chain, 4);
+            sharktooth.AddIngredient(ItemID.SoulofNight, 8);
+            sharktooth.AddTile(TileID.MythrilAnvil);
+            sharktooth.SetResult(ItemID.SharkToothNecklace);
+            sharktooth.AddRecipe();
+
             base.AddRecipes();
         }
 
