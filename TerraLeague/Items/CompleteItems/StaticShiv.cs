@@ -45,7 +45,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<KircheisShard>(), 1);
             recipe.AddIngredient(ItemID.IronBroadsword, 1);
             recipe.AddIngredient(ItemID.NimbusRod, 1);
-            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
