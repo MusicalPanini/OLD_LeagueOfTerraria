@@ -131,7 +131,7 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 25;
             item.useAnimation = 25;
             item.useStyle = ItemUseStyleID.SwingThrow;
-            item.knockBack = 0;
+            item.knockBack = 1.5f;
             item.value = 10000;
             item.rare = ItemRarityID.Green;
             item.UseSound = new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound);
