@@ -84,12 +84,12 @@ namespace TerraLeague.Items
             if (item.type == ItemID.PirateHat)
             {
                 item.vanity = false;
-                item.defense = 4;
+                item.defense = 3;
             }
             if (item.type == ItemID.PirateShirt)
             {
                 item.vanity = false;
-                item.defense = 5;
+                item.defense = 4;
             }
             if (item.type == ItemID.PiratePants)
             {
@@ -101,22 +101,22 @@ namespace TerraLeague.Items
             {
                 item.SetNameOverride("Cannoneer Bandana");
                 item.vanity = false;
-                item.defense = 5;
-                item.rare = ItemRarityID.Orange;
+                item.defense = 9;
+                item.rare = ItemRarityID.LightRed;
             }
             if (item.type == ItemID.BuccaneerShirt)
             {
                 item.SetNameOverride("Cannoneer Shirt");
                 item.vanity = false;
-                item.defense = 5;
-                item.rare = ItemRarityID.Orange;
+                item.defense = 12;
+                item.rare = ItemRarityID.LightRed;
             }
             if (item.type == ItemID.BuccaneerPants)
             {
                 item.SetNameOverride("Cannoneer Pants");
                 item.vanity = false;
-                item.defense = 5;
-                item.rare = ItemRarityID.Orange;
+                item.defense = 9;
+                item.rare = ItemRarityID.LightRed;
             }
             base.SetDefaults(item);
         }
@@ -276,7 +276,7 @@ namespace TerraLeague.Items
             if (modPlayer.cannonTimer <= 0 && modPlayer.cannonSet && Main.rand.Next(0, 1) == 0 && item.ranged && player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 modPlayer.cannonTimer = 90;
-                Projectile.NewProjectileDirect(player.Center, new Vector2(-15, 0).RotatedBy(player.AngleFrom(Main.MouseWorld)), ProjectileID.CannonballFriendly, 50, 7, player.whoAmI);
+                Projectile.NewProjectileDirect(player.Center, new Vector2(-15, 0).RotatedBy(player.AngleFrom(Main.MouseWorld)), ProjectileID.CannonballFriendly, (int)(modPlayer.RNG * 1.5), 7, player.whoAmI);
             }
 
             base.UseStyle(item, player);
@@ -495,7 +495,7 @@ namespace TerraLeague.Items
             if (set == "Cannoneer")
             {
                 player.GetModPlayer<PLAYERGLOBAL>().cannonSet = true;
-                player.setBonus = "Ranged weapons periodically fire a cannon ball";
+                player.setBonus = "Ranged weapons periodically fire a cannon ball dealing [c/" + TerraLeague.SUMColor + ":" + (int)(player.GetModPlayer<PLAYERGLOBAL>().RNG * 1.5) + "] ranged damage";
             }
             if (set == "Spiritual")
             {

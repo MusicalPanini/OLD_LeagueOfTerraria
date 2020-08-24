@@ -58,21 +58,21 @@ namespace TerraLeague.Items
             ModRecipe cannonHat = new ModRecipe(mod);
             cannonHat.AddIngredient(ItemType<BrassBar>(), 10);
             cannonHat.AddIngredient(ItemID.HellstoneBar, 10);
-            cannonHat.AddTile(TileID.Anvils);
+            cannonHat.AddTile(TileID.MythrilAnvil);
             cannonHat.SetResult(ItemID.BuccaneerBandana);
             cannonHat.AddRecipe();
 
             ModRecipe cannonShirt = new ModRecipe(mod);
             cannonShirt.AddIngredient(ItemType<BrassBar>(), 16);
             cannonShirt.AddIngredient(ItemID.HellstoneBar, 16);
-            cannonShirt.AddTile(TileID.Anvils);
+            cannonShirt.AddTile(TileID.MythrilAnvil);
             cannonShirt.SetResult(ItemID.BuccaneerShirt);
             cannonShirt.AddRecipe();
 
             ModRecipe cannonPants = new ModRecipe(mod);
             cannonPants.AddIngredient(ItemType<BrassBar>(), 12);
             cannonPants.AddIngredient(ItemID.HellstoneBar, 12);
-            cannonPants.AddTile(TileID.Anvils);
+            cannonPants.AddTile(TileID.MythrilAnvil);
             cannonPants.SetResult(ItemID.BuccaneerPants);
             cannonPants.AddRecipe();
         }
