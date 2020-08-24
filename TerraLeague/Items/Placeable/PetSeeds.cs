@@ -16,7 +16,7 @@ namespace TerraLeague.Items.Placeable
 
         public override void SetDefaults()
         {
-            item.value = 3500;
+            item.value = 75;
             item.rare = ItemRarityID.Green;
             item.width = 16;
             item.height = 16;
