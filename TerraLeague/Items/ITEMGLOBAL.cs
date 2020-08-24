@@ -526,13 +526,13 @@ namespace TerraLeague.Items
 
         public override bool PreOpenVanillaBag(string context, Player player, int arg)
         {
-            if (context == "crate" && arg == ItemID.WoodenCrate && Main.rand.Next(Main.hardMode ? 14 : 8) == 0)
+            if (context == "crate" && arg == ItemID.WoodenCrate && Main.rand.Next(8) == 0)
                 player.QuickSpawnItem(ItemType<BrassBar>(), Main.rand.Next(8, 13));
 
-            if (context == "crate" && arg == ItemID.IronCrate && Main.rand.Next(Main.hardMode ? 12 : 4) == 0)
+            if (context == "crate" && arg == ItemID.IronCrate && Main.rand.Next(4) == 0)
                 player.QuickSpawnItem(ItemType<BrassBar>(), Main.rand.Next(12, 19));
 
-            if (context == "crate" && arg == ItemID.GoldenCrate &&  Main.rand.Next(Main.hardMode ? 9 : 3) == 0)
+            if (context == "crate" && arg == ItemID.GoldenCrate &&  Main.rand.Next(3) == 0)
                 player.QuickSpawnItem(ItemType<BrassBar>(), Main.rand.Next(18, 25));
 
             return base.PreOpenVanillaBag(context, player, arg);
