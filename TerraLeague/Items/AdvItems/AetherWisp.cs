@@ -37,7 +37,7 @@ namespace TerraLeague.Items.AdvItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<AmpTome>(), 1);
             recipe.AddIngredient(ItemType<DamnedSoul>(), 10);
-            recipe.AddTile(TileID.Bookcases);
+            recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
