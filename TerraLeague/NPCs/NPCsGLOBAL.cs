@@ -300,13 +300,14 @@ namespace TerraLeague.NPCs
             }
             if (deadlyVenom)
             {
-                int num = Main.rand.Next(0, 16);
+                int num = Main.rand.Next(0, 4);
                 if (num == 0)
                 {
-                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 44, 0f, 0f, 200, new Color(0, 192, 255), 1f);
-                    dust.velocity.X *= 0f;
+                    dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 167, 0f, -1f, 125, new Color(0, 192, 255), 1f);
+                    dust.velocity.X *= 0.1f;
                     dust.velocity.Y = -System.Math.Abs(dust.velocity.Y);
-                    dust.noLight = true;
+                    dust.noGravity = true;
+                    dust.fadeIn = 1.5f;
                 }
             }
             if (hemorrhage)
