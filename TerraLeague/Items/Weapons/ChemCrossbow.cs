@@ -203,14 +203,13 @@ namespace TerraLeague.Items.Weapons
             item.value = 1000;
             item.rare = ItemRarityID.Blue;
             item.shootSpeed = 10f;
-            item.shoot = ProjectileType<ChemCrossbow_ToxicArrow>();
+            item.shoot = 10;
             item.UseSound = SoundID.Item5;
             item.useAmmo = AmmoID.Arrow;
         }
 
         public override bool CanUseItem(Player player)
         {
-            item.shoot = player.inventory.Where(x => x.ammo == AmmoID.Arrow).First().shoot;
             return base.CanUseItem(player);
         }
 
