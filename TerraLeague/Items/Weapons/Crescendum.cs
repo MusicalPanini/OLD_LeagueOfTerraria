@@ -220,7 +220,7 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<SilversteelBar>(), 16);
+            recipe.AddIngredient(ItemID.LunarBar, 16);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
