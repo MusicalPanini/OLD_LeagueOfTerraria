@@ -66,7 +66,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                return (int)(0.6 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rocketDamageLastStep * item.damage);
+                return (int)(0.9 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rocketDamageLastStep * item.damage);
             else if (type == AbilityType.E)
                 return (int)(1.5 * item.damage);
             else
