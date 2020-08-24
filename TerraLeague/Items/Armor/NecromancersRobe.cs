@@ -23,8 +23,6 @@ namespace TerraLeague.Items.Armor
             item.rare = ItemRarityID.Blue;
             item.defense = 4;
         }
-
-
         
         public override void UpdateEquip(Player player)
         {
@@ -39,6 +37,12 @@ namespace TerraLeague.Items.Armor
             recipe.AddTile(TileID.Loom);
             recipe.SetResult(this);
             recipe.AddRecipe();
+        }
+
+        public override void DrawHands(ref bool drawHands, ref bool drawArms)
+        {
+            drawHands = true;
+            drawArms = false;
         }
     }
 }
