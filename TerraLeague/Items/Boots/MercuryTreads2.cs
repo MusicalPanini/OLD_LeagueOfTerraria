@@ -59,7 +59,7 @@ namespace TerraLeague.Items.Boots
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.HermesBoots);
             recipe.AddIngredient(ItemType<MercuryTreads1>());
-            recipe.AddIngredient(ItemType<ClothArmor>());
+            recipe.AddIngredient(ItemType<NullMagic>());
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();
@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Boots
             recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<MercuryTreads1>());
-            recipe.AddIngredient(ItemType<ClothArmor>());
+            recipe.AddIngredient(ItemType<NullMagic>());
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();
@@ -75,7 +75,7 @@ namespace TerraLeague.Items.Boots
             recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<MercuryTreads1>());
-            recipe.AddIngredient(ItemType<ClothArmor>());
+            recipe.AddIngredient(ItemType<NullMagic>());
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();
