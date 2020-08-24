@@ -20,7 +20,7 @@ namespace TerraLeague.Tiles
             Main.tileLighted[Type] = true; 
             Main.tileBlockLight[Type] = true; 
             
-            dustType = 65;
+            dustType = 64;
             drop = ItemType<Sunstone>(); 
             ModTranslation name = CreateMapEntryName();
             name.SetDefault("Sunstone");
@@ -30,7 +30,7 @@ namespace TerraLeague.Tiles
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-
+            dustType = 64;
             r = 251/255f/5f;
             g = 127/255f/5f;
             b = 0;
