@@ -2814,7 +2814,7 @@ namespace TerraLeague
             {
                 Item item = new Item();
                 item.SetDefaults(ItemType<BrassBar>());
-                item.stack = (int)(30 * rareMultiplier);
+                item.stack = (int)(Main.rand.Next(6, 20));
 
                 rewardItems.Add(item);
             }
