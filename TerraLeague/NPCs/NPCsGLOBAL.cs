@@ -75,8 +75,13 @@ namespace TerraLeague.NPCs
 
         public override void SetDefaults(NPC npc)
         {
-            if (npc.type == NPCID.GolemFistLeft || npc.type == NPCID.GolemFistRight || npc.type == NPCID.GolemHead)
+            if (npc.type == NPCID.GolemFistLeft || npc.type == NPCID.GolemFistRight || npc.type == NPCID.GolemHead ||
+                npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsTail)
+            {
                 npc.buffImmune[BuffType<Stunned>()] = true;
+                npc.buffImmune[BuffType<TideCallerBubbled>()] = true;
+
+            }
             base.SetDefaults(npc);
         }
 
