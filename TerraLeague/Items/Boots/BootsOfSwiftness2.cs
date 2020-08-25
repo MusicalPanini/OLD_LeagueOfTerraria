@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<BootsOfSwiftness1>());
             recipe.AddIngredient(ItemID.SwiftnessPotion, 5);
-            recipe.AddTile(TileID.TinkerersWoAnvilsrkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
