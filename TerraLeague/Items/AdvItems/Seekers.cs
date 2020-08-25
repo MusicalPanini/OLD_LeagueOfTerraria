@@ -55,7 +55,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Attunement(20, 0.25m, 0.25m);
+            return new Attunement(20, 0.2m, 0.2m);
         }
 
         public override string GetStatText()
