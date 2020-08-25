@@ -30,7 +30,7 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Become immune to all debuffs for 10 seconds" +
+            return "Become immune to most debuffs for 10 seconds" +
                 "\nYou gain 'Swiftness'";
         }
 
