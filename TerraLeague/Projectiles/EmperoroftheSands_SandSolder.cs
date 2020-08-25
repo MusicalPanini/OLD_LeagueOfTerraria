@@ -14,7 +14,7 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sand Solder");
-            Main.projPet[projectile.type] = true;
+            //Main.projPet[projectile.type] = true;
             ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             ProjectileID.Sets.Homing[projectile.type] = true;
             Main.projFrames[projectile.type] = 6;

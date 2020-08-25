@@ -14,6 +14,7 @@ namespace TerraLeague.Projectiles
         {
             DisplayName.SetDefault("Dark Sphere");
             ProjectileID.Sets.Homing[projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
         }
 
         public override void SetDefaults()

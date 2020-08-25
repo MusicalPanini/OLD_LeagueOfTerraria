@@ -15,8 +15,6 @@ namespace TerraLeague.Projectiles
         public override void SetStaticDefaults()
         {
             Main.projFrames[projectile.type] = 6;
-            Main.projPet[projectile.type] = true;
-            ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
         }
 

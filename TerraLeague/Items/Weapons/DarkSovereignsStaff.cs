@@ -184,7 +184,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (player.altFunctionUse == 2)
             {
-                Main.LocalPlayer.MinionNPCTargetAim();
+                player.MinionNPCTargetAim();
             }
             else
             {

@@ -192,11 +192,11 @@ namespace TerraLeague.Items.Weapons
         {
             if (player.altFunctionUse == 2)
             {
-                Main.LocalPlayer.MinionNPCTargetAim();
+                player.MinionNPCTargetAim();
             }
             else
             {
-                player.AddBuff(BuffType<SandSolder>(), 2);
+                player.AddBuff(BuffType<SandSolder>(), 10);
             }
             return base.CanUseItem(player);
         }
