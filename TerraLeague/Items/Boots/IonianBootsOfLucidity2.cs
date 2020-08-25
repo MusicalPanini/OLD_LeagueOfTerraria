@@ -59,7 +59,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.HermesBoots);
             recipe.AddIngredient(ItemType<IonianBootsOfLucidity1>());
             recipe.AddIngredient(ItemType<ManaBar>(), 10);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<IonianBootsOfLucidity1>());
             recipe.AddIngredient(ItemType<ManaBar>(), 10);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -75,7 +75,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<IonianBootsOfLucidity1>());
             recipe.AddIngredient(ItemType<ManaBar>(), 10);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

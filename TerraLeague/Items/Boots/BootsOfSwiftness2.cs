@@ -59,7 +59,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.HermesBoots);
             recipe.AddIngredient(ItemType<BootsOfSwiftness1>());
             recipe.AddIngredient(ItemID.SwiftnessPotion, 5);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<BootsOfSwiftness1>());
             recipe.AddIngredient(ItemID.SwiftnessPotion, 5);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.TinkerersWoAnvilsrkbench);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -75,7 +75,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<BootsOfSwiftness1>());
             recipe.AddIngredient(ItemID.SwiftnessPotion, 5);
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

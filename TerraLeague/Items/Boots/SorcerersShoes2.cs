@@ -60,7 +60,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.HermesBoots);
             recipe.AddIngredient(ItemType<SorcerersShoes1>());
             recipe.AddIngredient(ItemType<Orb>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -68,7 +68,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<SorcerersShoes1>());
             recipe.AddIngredient(ItemType<Orb>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -76,7 +76,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<SorcerersShoes1>());
             recipe.AddIngredient(ItemType<Orb>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }

@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.HermesBoots);
             recipe.AddIngredient(ItemType<BeserkersGreaves1>());
             recipe.AddIngredient(ItemType<Dagger>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -71,7 +71,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.SailfishBoots);
             recipe.AddIngredient(ItemType<BeserkersGreaves1>());
             recipe.AddIngredient(ItemType<Dagger>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
 
@@ -79,7 +79,7 @@ namespace TerraLeague.Items.Boots
             recipe.AddIngredient(ItemID.FlurryBoots);
             recipe.AddIngredient(ItemType<BeserkersGreaves1>());
             recipe.AddIngredient(ItemType<Dagger>());
-            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
