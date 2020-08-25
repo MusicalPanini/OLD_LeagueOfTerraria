@@ -31,11 +31,11 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override int GetRawCooldown()
         {
-            return 120;
+            return 210;
         }
         public override string GetTooltip()
         {
-            return "Heal you self and a near by player for 40% of your max life" +
+            return "Heal you self and a near by player for 30% of your max life" +
                 "\nYou both gain 'Swiftness'";
         }
 
@@ -43,7 +43,7 @@ namespace TerraLeague.Items.SummonerSpells
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.lifeToHeal += (int)((player.statLifeMax2 * 0.4) * modPlayer.healPower);
+            modPlayer.lifeToHeal += (int)((player.statLifeMax2 * 0.3) * modPlayer.healPower);
             player.AddBuff(BuffID.Swiftness, 360);
 
             int target = -1;
