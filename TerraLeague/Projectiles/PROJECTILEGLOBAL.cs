@@ -48,6 +48,10 @@ namespace TerraLeague.Projectiles
             {
                 crit = (Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().arcanePrecision && Main.rand.Next(0, 100) < ArcanePrecision.critChance);
             }
+            else if (projectile.minion && projectile.minionSlots > 0)
+            {
+                crit = (Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().haunted && Main.rand.Next(0, 100) < Haunted.critChance);
+            }
             else
             {
                 base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);

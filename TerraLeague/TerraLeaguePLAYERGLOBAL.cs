@@ -644,6 +644,7 @@ namespace TerraLeague
         public int manaChargeStacks = 0;
         public bool awe = false;
         public bool arcanePrecision = false;
+        public bool haunted = false;
 
 
         // Energized Items
@@ -842,6 +843,7 @@ namespace TerraLeague
             ardentsFrenzy = false;
             guinsoosRage = false;
             arcanePrecision = false;
+            haunted = false;
 
             if (spiritualRestur)
                 hasSpiritualRestorationLastStep = true;
