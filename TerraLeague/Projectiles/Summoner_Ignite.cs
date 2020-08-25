@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using TerraLeague.Buffs;
+using TerraLeague.Items.SummonerSpells;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -68,8 +69,8 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(BuffType<Ignited>(), 300);
-            target.AddBuff(BuffType<GrievousWounds>(), 300);
+            target.AddBuff(BuffType<Ignited>(), IgniteRune.debuffDuration * 60);
+            target.AddBuff(BuffType<GrievousWounds>(), IgniteRune.debuffDuration * 60);
 
             base.OnHitNPC(target, damage, knockback, crit);
         }

@@ -9,6 +9,7 @@ using TerraLeague.Projectiles;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Localization;
 using System;
+using TerraLeague.Items.SummonerSpells;
 
 namespace TerraLeague.NPCs
 {
@@ -512,45 +513,47 @@ namespace TerraLeague.NPCs
             }
             if (ignited)
             {
-                int regen;
-                if (NPC.downedGolemBoss)
-                {
-                    regen = 144;
-                    if (damage < 50)
-                        damage = 50;
-                }
-                else if (NPC.downedPlantBoss)
-                {
-                    regen = 64;
-                    if (damage < 25)
-                        damage = 25;
-                }
-                else if (NPC.downedMechBossAny)
-                {
-                    regen = 38;
-                    if (damage < 10)
-                        damage = 10;
-                }
-                else if (Main.hardMode)
-                {
-                    regen = 24;
-                    if (damage < 5)
-                        damage = 5;
-                }
-                else if (NPC.downedBoss2)
-                {
-                    regen = 12;
-                    if (damage < 2)
-                        damage = 2;
-                }
-                else
-                {
-                    regen = 4;
-                    if (damage < 1)
-                        damage = 1;
-                }
-                npc.lifeRegen -= regen * 4;
-
+                npc.lifeRegen -= IgniteRune.GetDOTDamage();
+                if (damage < 10)
+                    damage = 10;
+                //int regen;
+                //if (NPC.downedGolemBoss)
+                //{
+                //    regen = 144;
+                //    if (damage < 50)
+                //        damage = 50;
+                //}
+                //else if (NPC.downedPlantBoss)
+                //{
+                //    regen = 64;
+                //    if (damage < 25)
+                //        damage = 25;
+                //}
+                //else if (NPC.downedMechBossAny)
+                //{
+                //    regen = 38;
+                //    if (damage < 10)
+                //        damage = 10;
+                //}
+                //else if (Main.hardMode)
+                //{
+                //    regen = 24;
+                //    if (damage < 5)
+                //        damage = 5;
+                //}
+                //else if (NPC.downedBoss2)
+                //{
+                //    regen = 12;
+                //    if (damage < 2)
+                //        damage = 2;
+                //}
+                //else
+                //{
+                //    regen = 4;
+                //    if (damage < 1)
+                //        damage = 1;
+                //}
+                //npc.lifeRegen -= regen * 4;
             }
             if (torment)
             {
