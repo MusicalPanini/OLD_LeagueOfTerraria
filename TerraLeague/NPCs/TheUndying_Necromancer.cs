@@ -261,6 +261,10 @@ namespace TerraLeague.NPCs
             if (rnd <= 0.0067f || (Main.expertMode && rnd <= 0.0133f))
                 Item.NewItem(npc.position, npc.width, npc.height, ItemType<Nightbloom>(), 1);
 
+            rnd = Main.rand.NextFloat();
+            if (rnd <= 0.0133 || (Main.expertMode && rnd <= 0.0266f))
+                Item.NewItem(npc.position, npc.width, npc.height, ItemType<PossessedSkull>(), 1);
+
             base.NPCLoot();
         }
     }
