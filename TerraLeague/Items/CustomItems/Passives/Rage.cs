@@ -29,5 +29,13 @@ namespace TerraLeague.Items.CustomItems.Passives
             
             base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
         }
+
+        public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
+        {
+            if (proj.melee)
+                player.AddBuff(BuffType<Buffs.Rage>(), duration * 60);
+
+            base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
+        }
     }
 }
