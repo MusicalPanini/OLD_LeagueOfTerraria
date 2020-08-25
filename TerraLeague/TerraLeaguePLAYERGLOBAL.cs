@@ -1356,11 +1356,11 @@ namespace TerraLeague
             // Handles the Revive Summoner Spells effects
             if (reviving)
             {
-                player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
-
-                player.HealEffect(player.statLifeMax2/2);
-                player.statLife = player.statLifeMax2 / 2;
-                player.AddBuff(BuffType<Revived>(), 5 * 60);
+                //player.Teleport(new Vector2(player.lastDeathPostion.X, player.lastDeathPostion.Y - 32), 1);
+                player.HealEffect(player.statLifeMax2);
+                player.ManaEffect(player.statManaMax2);
+                player.statLife = player.statLifeMax2;
+                player.AddBuff(BuffType<Revived>(), ReviveRune.buffDuration * 60);
 
                 ReviveRune.Efx(player);
                 new ReviveRune().PacketHandler.SendRevive(-1, player.whoAmI, player.whoAmI);

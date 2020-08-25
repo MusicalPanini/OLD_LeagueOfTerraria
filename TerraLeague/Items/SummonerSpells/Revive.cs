@@ -13,6 +13,8 @@ namespace TerraLeague.Items.SummonerSpells
 {
     public class ReviveRune : SummonerSpell
     {
+        public static int buffDuration = 30;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Revive Rune");
@@ -31,11 +33,11 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override int GetRawCooldown()
         {
-            return 300;
+            return 180;
         }
         public override string GetTooltip()
         {
-            return "Instantly revive at half life where you died with a speed and defence boost";
+            return "Instantly revive at full life and mana with a speed and defence boost for " + buffDuration + " seconds";
         }
 
         public override void DoEffect(Player player, int spellSlot)
