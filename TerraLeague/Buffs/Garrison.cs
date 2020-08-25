@@ -21,6 +21,8 @@ namespace TerraLeague.Buffs
             player.GetModPlayer<PLAYERGLOBAL>().armor += GarrisonRune.GetScalingStat();
             player.GetModPlayer<PLAYERGLOBAL>().resist += GarrisonRune.GetScalingStat();
             player.statDefense += GarrisonRune.GetScalingStat();
+            player.noKnockback = true;
+            player.longInvince = true;
             player.statLifeMax2 += 50;
         }
 

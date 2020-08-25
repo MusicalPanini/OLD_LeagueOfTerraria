@@ -47,7 +47,8 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override string GetTooltip()
         {
-            return "Gain 50 life and " + GetScalingStat() +  " armor, resist, and defence for 10 seconds" +
+            return "Gain 50 life, knockback resistance, increased invincibility after taking damage " +
+                "\nand " + GetScalingStat() +  " armor, resist, and defence for 10 seconds" +
                 "\nThe defensive stats increases throughout the game";
         }
 
