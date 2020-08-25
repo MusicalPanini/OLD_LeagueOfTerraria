@@ -89,7 +89,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetRawCooldown(AbilityType type)
         {
             if (type == AbilityType.W)
-                return 20;
+                return 90;
             else
                 return base.GetRawCooldown(type);
         }
