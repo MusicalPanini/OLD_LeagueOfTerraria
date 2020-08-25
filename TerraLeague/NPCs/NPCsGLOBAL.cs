@@ -848,7 +848,7 @@ namespace TerraLeague.NPCs
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
-            if (target.HasBuff(BuffType<UmbralTrespassing>()) || vessel)
+            if (target.HasBuff(BuffType<UmbralTrespassing>()) || vessel || stunned)
                 return false;
             else
                 return base.CanHitPlayer(npc, target, ref cooldownSlot);
