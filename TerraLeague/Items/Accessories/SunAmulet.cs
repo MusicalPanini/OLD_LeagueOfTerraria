@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using TerraLeague.Items.CustomItems;
+using TerraLeague.NPCs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -67,6 +68,20 @@ namespace TerraLeague.Items.Accessories
                 return modPlayer.sunAmuletDamage + "%";
             else
                 return "";
+        }
+    }
+
+    public class GraymarkNPC : GlobalNPC
+    {
+        public override void NPCLoot(NPC npc)
+        {
+            float rnd = Main.rand.NextFloat();
+            if ((npc.netID == NPCID.Antlion || npc.netID == NPCID.FlyingAntlion || npc.netID == NPCID.WalkingAntlion || npc.netID == NPCType<ShadowArtilery>()) && (rnd <= 0.0133 || (Main.expertMode && rnd <= 0.0266f)) && !npc.SpawnedFromStatue)
+            {
+                Item.NewItem(npc.getRect(), ItemType<SunAmulet>(), 1);
+            }
+
+            base.NPCLoot(npc);
         }
     }
 }
