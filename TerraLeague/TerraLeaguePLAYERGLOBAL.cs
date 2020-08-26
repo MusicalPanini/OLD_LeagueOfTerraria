@@ -538,6 +538,8 @@ namespace TerraLeague
         public bool deathFromBelowRefresh = false;
         public bool greymark = false;
         public bool greymarkBuff = false;
+        public bool sunAmulet = false;
+        public int sunAmuletDamage = 0;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -768,6 +770,7 @@ namespace TerraLeague
             deathFromBelowRefresh = false;
             greymark = false;
             greymarkBuff = false;
+            sunAmulet = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1392,6 +1395,20 @@ namespace TerraLeague
             if (usetime == 0)
             {
                 hasHitMelee = false;
+            }
+
+            if (sunAmulet)
+            {
+                if (Main.time % 60 == 0)
+                {
+                    float light = Lighting.BrightnessAverage((int)player.position.ToTileCoordinates16().X, (int)player.position.ToTileCoordinates16().Y, 2, 3);
+                    sunAmuletDamage = (int)(light * 7);
+                }
+
+                player.meleeDamage += sunAmuletDamage * 0.01f;
+                player.rangedDamage += sunAmuletDamage * 0.01f;
+                player.magicDamage += sunAmuletDamage * 0.01f;
+                TrueMinionDamage += sunAmuletDamage * 0.01f;
             }
 
             // Stopwatch enabler
@@ -2484,6 +2501,10 @@ namespace TerraLeague
                     }
                 }
             }
+
+            // Greymark
+            if (greymark)
+                player.AddBuff(BuffType<GreymarkBuff>(), 4 * 60);
 
             // Reduces the projectile damage based on Players resist stat
             if (Main.expertMode)
