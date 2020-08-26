@@ -24,8 +24,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             item.width = 32;
             item.height = 32;
-            item.value = 300000;
-            item.rare = ItemRarityID.Yellow;
+            item.value = 75000;
+            item.rare = ItemRarityID.Orange;
             item.accessory = true;
         }
 
