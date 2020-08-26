@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Projectiles;
 using Terraria;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.CustomItems.Actives
