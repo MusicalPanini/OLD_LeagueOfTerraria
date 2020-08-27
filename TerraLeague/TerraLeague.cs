@@ -467,9 +467,9 @@ namespace TerraLeague
             }
             
             ModRecipe leather1 = new ModRecipe(this);
-            leather1.AddRecipeGroup("TerraLeague:EvilDropGroup", 2);
+            leather1.AddRecipeGroup("TerraLeague:EvilDropGroup", 3);
             leather1.AddTile(TileID.WorkBenches);
-            leather1.SetResult(ItemID.Leather);
+            leather1.SetResult(ItemID.Leather, 2);
             leather1.AddRecipe();
 
             ModRecipe sharktooth = new ModRecipe(this);
