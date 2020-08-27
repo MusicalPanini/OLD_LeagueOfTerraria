@@ -308,6 +308,17 @@ namespace TerraLeague.Items
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().umbralTrespassing)
                 return false;
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (proj.owner == player.whoAmI)
+                {
+                    if (proj.active && proj.GetGlobalProjectile<Projectiles.PROJECTILEGLOBAL>().channelProjectile)
+                    {
+                        return false;
+                    }
+                }
+            }
 
             return base.CanUseItem(item, player);
         }

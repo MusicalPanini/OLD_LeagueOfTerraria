@@ -14,6 +14,7 @@ namespace TerraLeague.Projectiles
         internal ProjectilePacketHandler PacketHandler = new ProjectilePacketHandler(3);
         public bool summonAbility = false;
         public bool abilitySpell = false;
+        public bool channelProjectile = false;
 
         public override bool InstancePerEntity
         {
