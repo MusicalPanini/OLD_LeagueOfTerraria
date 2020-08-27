@@ -2527,9 +2527,24 @@ namespace TerraLeague
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
             if (npc.GetGlobalNPC<NPCsGLOBAL>().bubbled || invincible || contactDodge)
+            {
                 return false;
-
-            return base.CanBeHitByNPC(npc, ref cooldownSlot);
+            }
+            else
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile projCheck = Main.projectile[i];
+                    if (projCheck.owner == player.whoAmI)
+                    {
+                        if (projCheck.active && projCheck.GetGlobalProjectile<PROJECTILEGLOBAL>().playerInvincible)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return base.CanBeHitByNPC(npc, ref cooldownSlot);
+            }
         }
 
         /// <summary>
@@ -2541,9 +2556,24 @@ namespace TerraLeague
         public override bool CanBeHitByProjectile(Projectile proj)
         {
             if (invincible)
+            {
                 return false;
+            }
             else
+            {
+                for (int i = 0; i < Main.maxProjectiles; i++)
+                {
+                    Projectile projCheck = Main.projectile[i];
+                    if (projCheck.owner == player.whoAmI)
+                    {
+                        if (projCheck.active && projCheck.GetGlobalProjectile<PROJECTILEGLOBAL>().playerInvincible)
+                        {
+                            return false;
+                        }
+                    }
+                }
                 return base.CanBeHitByProjectile(proj);
+            }
         }
 
         /// <summary>

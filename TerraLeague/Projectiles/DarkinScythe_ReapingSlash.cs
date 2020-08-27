@@ -28,6 +28,7 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = true;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().playerInvincible = true;
             base.SetDefaults();
         }
         
