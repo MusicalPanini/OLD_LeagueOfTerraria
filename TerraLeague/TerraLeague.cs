@@ -480,6 +480,13 @@ namespace TerraLeague
             sharktooth.SetResult(ItemID.SharkToothNecklace);
             sharktooth.AddRecipe();
 
+            ModRecipe feralClaws = new ModRecipe(this);
+            feralClaws.AddIngredient(ItemID.Stinger, 5);
+            feralClaws.AddIngredient(ItemID.Leather, 2);
+            feralClaws.AddTile(TileID.MythrilAnvil);
+            feralClaws.SetResult(ItemID.FeralClaws);
+            feralClaws.AddRecipe();
+
             base.AddRecipes();
         }
 
