@@ -27,14 +27,13 @@ namespace TerraLeague.Projectiles
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().channelProjectile = true;
             base.SetDefaults();
         }
         
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
-            player.itemTime = 1;
-            player.noItems = true;
             player.GetModPlayer<PLAYERGLOBAL>().invincible = true;
 
             if (projectile.timeLeft == 26)
