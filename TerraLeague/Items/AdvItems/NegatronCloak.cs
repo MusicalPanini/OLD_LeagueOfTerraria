@@ -35,7 +35,7 @@ namespace TerraLeague.Items.AdvItems
             recipe.AddIngredient(ItemType<NullMagic>(), 1);
             recipe.AddIngredient(ItemType<Petricite>(), 16);
             recipe.AddIngredient(ItemID.Silk, 10);
-            recipe.AddIngredient(ItemID.TatteredCloth, 5);
+            recipe.AddIngredient(ItemID.TatteredCloth, 1);
             recipe.AddTile(TileID.Loom);
             recipe.SetResult(this);
             recipe.AddRecipe();
