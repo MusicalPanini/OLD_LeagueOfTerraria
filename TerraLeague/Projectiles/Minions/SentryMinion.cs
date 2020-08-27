@@ -151,7 +151,7 @@ namespace TerraLeague.Projectiles.Minions
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            return base.OnTileCollide(oldVelocity);
+            return false;
         }
 
         public virtual void ChangeAnimation(double angle)

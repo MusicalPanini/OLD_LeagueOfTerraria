@@ -23,7 +23,8 @@ namespace TerraLeague.Projectiles
             projectile.netImportant = true;
             projectile.width = 48;
             projectile.height = 47;
-            projectile.friendly = true;
+            projectile.friendly = false;
+            projectile.minion = true;
             projectile.sentry = true;
             projectile.penetrate = 1;
             projectile.timeLeft = Projectile.SentryLifeTime;
