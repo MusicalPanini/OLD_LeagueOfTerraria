@@ -45,7 +45,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new MagicBolt(20, 10, 60);
+            return new MagicBolt(20, 20, 60);
         }
 
         public override string GetStatText()
