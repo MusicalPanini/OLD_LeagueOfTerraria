@@ -71,7 +71,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
             {
                 if (dam == DamageType.MEL)
-                    return 120;
+                    return 70;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -95,7 +95,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetRawCooldown(AbilityType type)
         {
             if (type == AbilityType.Q)
-                return 8;
+                return 12;
             else
                 return base.GetRawCooldown(type);
         }
