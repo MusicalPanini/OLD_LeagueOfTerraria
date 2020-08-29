@@ -542,6 +542,10 @@ namespace TerraLeague
         public int sunAmuletDamage = 0;
         public bool flashofBrilliance = false;
         public int flashofBrillianceCooldown = 0;
+        public bool hextechEvolutionSet = false;
+        public int hextechEvoltionCooldown = 0;
+        public Vector2 hextechEvolutionAngle = Vector2.Zero;
+
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -778,6 +782,8 @@ namespace TerraLeague
             cannonSet = false;
             petriciteSet = false;
             prophetSet = false;
+            hextechEvolutionSet = false;
+
             if (!solariSet)
                 solariCharge = 0;
             solariSet = false;
@@ -1484,6 +1490,49 @@ namespace TerraLeague
                 }
 
                 prophetTimer = 60 * 6;
+            }
+
+            // Hextech Evolution set bonus
+            if (hextechEvoltionCooldown > 0)
+                hextechEvoltionCooldown--;
+
+            if (hextechEvolutionSet && hextechEvoltionCooldown <= 0)
+            {
+                float distance = 1000;
+                int target = -1;
+                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16);
+
+                for (int k = 0; k < 200; k++)
+                {
+                    NPC npc = Main.npc[k];
+                    if (npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.immortal)
+                    {
+                        Vector2 newMove = Main.npc[k].Center - handPos;
+                        float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
+                        if (distanceTo < distance && Collision.CanHit(handPos, 4, 4, npc.position, npc.width, npc.height))
+                        {
+                            distance = distanceTo;
+                            target = k;
+                        }
+                    }
+                }
+                if (target != -1)
+                {
+                    hextechEvolutionAngle = TerraLeague.CalcVelocityToPoint(handPos, Main.npc[target].Center, 8).RotatedBy(-0.01f * 20);
+                    Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileID.HeatRay, (int)(20 * player.magicDamage), 0, player.whoAmI);
+                }
+                else
+                {
+                    hextechEvolutionAngle = Vector2.Zero;
+                }
+
+                hextechEvoltionCooldown = 90;
+            }
+            else if (hextechEvolutionSet && hextechEvoltionCooldown > 50 && hextechEvolutionAngle != Vector2.Zero)
+            {
+                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16);
+                hextechEvolutionAngle = hextechEvolutionAngle.RotatedBy(0.01f);
+                Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileID.HeatRay, (int)(20 * player.magicDamage), 0, player.whoAmI);
             }
             
             // Solari set bonus
@@ -2923,6 +2972,16 @@ namespace TerraLeague
             if (requiemChannel || finalsparkChannel || rightoftheArcaneChannel)
             {
                 player.bodyFrame.Y = player.bodyFrame.Height * 5;
+            }
+
+            if (player.armor.FirstOrDefault(x => x.type == ItemType<Items.Armor.HextechEvolutionMask>()) != null)
+            {
+                var hairLayer = layers.FirstOrDefault(x => x.Name == "Hair");
+                var faceLayer = layers.FirstOrDefault(x => x.Name == "Face");
+                if (hairLayer != null || faceLayer != null)
+                {
+                    layers.Insert(16, hairLayer);
+                }
             }
 
             base.ModifyDrawLayers(layers);
