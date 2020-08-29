@@ -16,6 +16,7 @@ namespace TerraLeague.Projectiles
         public bool abilitySpell = false;
         public bool channelProjectile = false;
         public bool playerInvincible = false;
+        public bool noOnHitEffects = false;
 
         public override bool InstancePerEntity
         {

@@ -540,6 +540,8 @@ namespace TerraLeague
         public bool greymarkBuff = false;
         public bool sunAmulet = false;
         public int sunAmuletDamage = 0;
+        public bool flashofBrilliance = false;
+        public int flashofBrillianceCooldown = 0;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -1411,6 +1413,11 @@ namespace TerraLeague
                 TrueMinionDamage += sunAmuletDamage * 0.01f;
             }
 
+            if (flashofBrilliance && flashofBrillianceCooldown <= 0)
+                player.AddBuff(BuffType<FlashofBrilliance>(), 2);
+            if (flashofBrillianceCooldown > 0)
+                flashofBrillianceCooldown--;
+
             // Stopwatch enabler
             if (Main.time == 0 && !stopWatchActive && Main.dayTime)
             {
@@ -2079,6 +2086,8 @@ namespace TerraLeague
 
                 if (flameHarbinger)
                     target.AddBuff(BuffType<HarbingersInferno>(), 180);
+                if (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects)
+                    FlashOfBrillianceEffect(player, damage, target);
 
                 // Performs Winds Fury (Runanns Hurricane)
                 if (proj.ranged && (windsFury || windFuryReplicator) && !TerraLeague.DoNotCountRangedDamage(proj) && windsFuryCooldown == 0)
@@ -2327,6 +2336,7 @@ namespace TerraLeague
                 target.AddBuff(BuffType<HarbingersInferno>(), 180);
             }
 
+            FlashOfBrillianceEffect(player, damage, target);
 
             // Lifesteal calculation
             if (lifeStealMelee > 0 && !target.immortal)
@@ -3508,6 +3518,34 @@ namespace TerraLeague
                     obj2.velocity *= 0.5f;
                 }
                 meleeProjCooldown = false;
+            }
+        }
+
+        public void FlashOfBrillianceEffect(Player player, int Damage, NPC target)
+        {
+            if (flashofBrilliance && flashofBrillianceCooldown <= 0)
+            {
+                flashofBrillianceCooldown = 60;
+                flashofBrilliance = false;
+
+                List<int> magicItems = new List<int>() { ItemID.FlowerofFire, ItemID.FrostStaff, ItemID.ShadowFlameHexDoll, ItemID.StaffofEarth, ItemID.CrystalSerpent, ItemID.HeatRay, ItemID.WaterBolt};
+
+                for (int i = 0; i < Main.rand.Next(1, 4); i++)
+                {
+                    Item chosenItem = new Item();
+                    chosenItem.SetDefaults(magicItems[Main.rand.Next(magicItems.Count)]);
+                    //int dam = chosenItem.damage / 3;
+                    //if (dam < 30)
+                    //    dam = 30;
+
+                    int dam = 50;
+                    float speed = Main.rand.NextFloat(chosenItem.shootSpeed * 0.9f, chosenItem.shootSpeed * 1.1f);
+                    Vector2 velocity = TerraLeague.CalcVelocityToPoint(player.MountedCenter, target.Center, speed).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f));
+
+                    Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, velocity, chosenItem.shoot, dam, chosenItem.knockBack, player.whoAmI);
+                    proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects = true;
+                    Main.PlaySound(chosenItem.UseSound, player.MountedCenter);
+                }
             }
         }
     }
