@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Items;
 using TerraLeague.Items.SummonerSpells;
 using Terraria;
 using Terraria.ID;
@@ -131,7 +132,7 @@ namespace TerraLeague.NPCs
                 }
                 
             }
-            switch (Main.rand.Next(7))
+            switch (Main.rand.Next(Main.hardMode ? 8 : 7))
             {
                 case 0:
                     return "Salutations, " + Main.LocalPlayer.name + ". How goes your travels?";
@@ -149,6 +150,8 @@ namespace TerraLeague.NPCs
                     return "Take care near the beaches of this world during New Moons." +
                         "\nAn evil and twisted Black Mist rolls ashore, bringing with it a damning, undead evil." +
                         "\nIt's even rumored to sometimes travel further inland...";
+                case 7:
+                    return "If your lucky, you might get a Hex Crystal from a Hextech Chest";
                 default:
                     return "Open mid pls";
             }
@@ -306,6 +309,12 @@ namespace TerraLeague.NPCs
                 shop.item[nextSlot].SetDefaults(ItemType<TeleportRune>());
                 shop.item[nextSlot].shopCustomPrice = 15;
                 shop.item[nextSlot].shopSpecialCurrency = TerraLeague.instance.SumCurrencyID;
+                nextSlot++;
+            }
+            if (Main.hardMode)
+            {
+                nextSlot = 38;
+                shop.item[nextSlot].SetDefaults(ItemType<HextechChest>());
                 nextSlot++;
             }
         }
