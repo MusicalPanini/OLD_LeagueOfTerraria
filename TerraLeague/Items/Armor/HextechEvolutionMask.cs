@@ -28,7 +28,7 @@ namespace TerraLeague.Items.Armor
         public override void UpdateEquip(Player player)
         {
             player.magicDamage += 0.15f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1f;
+            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
         }
 
         public override void AddRecipes()
