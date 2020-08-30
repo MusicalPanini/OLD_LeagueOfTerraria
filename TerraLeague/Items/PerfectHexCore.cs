@@ -6,32 +6,32 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Items
 {
-    public class HextechCore : ModItem
+    public class PerfectHexCore : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hex Core MK1");
-            Tooltip.SetDefault("");
+            DisplayName.SetDefault("Perfect Hex Core");
+            Tooltip.SetDefault("It emits a strong energy");
             base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
         {
             item.maxStack = 99;
-            item.width = 20;
-            item.height = 24;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 20000;
+            item.width = 26;
+            item.height = 32;
+            item.rare = ItemRarityID.Pink;
+            item.value = 50000;
             item.uniqueStack = false;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.CrystalShard, 30);
+            recipe.AddIngredient(ModContent.ItemType<HexCrystal>());
             recipe.AddIngredient(ItemID.Bottle, 1);
             recipe.AddRecipeGroup("TerraLeague:GoldGroup", 2);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();
         }

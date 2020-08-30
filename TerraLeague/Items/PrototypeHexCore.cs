@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Items
 {
-    public class HextechCore : ModItem
+    public class PrototypeHexCore : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hex Core MK1");
+            DisplayName.SetDefault("Prototype Hex Core");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
         }
@@ -18,17 +18,17 @@ namespace TerraLeague.Items
         public override void SetDefaults()
         {
             item.maxStack = 99;
-            item.width = 20;
-            item.height = 24;
-            item.rare = ItemRarityID.LightRed;
-            item.value = 20000;
+            item.width = 26;
+            item.height = 16;
+            item.rare = ItemRarityID.Green;
+            item.value = 5000;
             item.uniqueStack = false;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.CrystalShard, 30);
+            recipe.AddIngredient(ItemID.Amethyst, 10);
             recipe.AddIngredient(ItemID.Bottle, 1);
             recipe.AddRecipeGroup("TerraLeague:GoldGroup", 2);
             recipe.AddTile(TileID.Anvils);
