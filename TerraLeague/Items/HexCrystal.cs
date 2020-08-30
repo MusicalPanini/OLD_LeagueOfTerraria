@@ -12,6 +12,7 @@ namespace TerraLeague.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hex Crystal");
+            Tooltip.SetDefault("It emits untapped power");
             base.SetStaticDefaults();
         }
 

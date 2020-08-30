@@ -11,7 +11,7 @@ namespace TerraLeague.Items
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Perfect Hex Core");
-            Tooltip.SetDefault("It emits a strong energy");
+            Tooltip.SetDefault("The perfect power source");
             base.SetStaticDefaults();
         }
 
@@ -30,7 +30,7 @@ namespace TerraLeague.Items
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<HexCrystal>());
             recipe.AddIngredient(ItemID.Bottle, 1);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 2);
+            recipe.AddIngredient(ItemID.MeteoriteBar, 2);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();

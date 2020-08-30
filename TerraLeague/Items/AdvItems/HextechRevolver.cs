@@ -38,6 +38,7 @@ namespace TerraLeague.Items.AdvItems
             recipe.AddIngredient(ItemType<AmpTome>(), 2);
             recipe.AddIngredient(ItemID.Revolver, 1);
             recipe.AddIngredient(ItemID.SpaceGun, 1);
+            recipe.AddIngredient(ItemType<PrototypeHexCore>(), 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

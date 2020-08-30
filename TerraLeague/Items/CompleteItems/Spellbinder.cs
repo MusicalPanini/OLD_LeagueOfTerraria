@@ -46,8 +46,8 @@ namespace TerraLeague.Items.CompleteItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<AetherWisp>(), 1);
             recipe.AddIngredient(ItemType<LargeRod>(), 1);
-            recipe.AddIngredient(ItemID.MeteoriteBar, 20);
-            recipe.AddIngredient(ItemID.Amethyst, 1);
+            recipe.AddIngredient(ItemID.MeteoriteBar, 10);
+            recipe.AddIngredient(ItemType<PrototypeHexCore>(), 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
