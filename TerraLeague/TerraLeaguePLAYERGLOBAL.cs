@@ -578,6 +578,14 @@ namespace TerraLeague
         public int WhisperShotsLeft = 4;
         public int ReloadTimer = 0;
 
+        // Echoing Flames cooldowns
+        public int echoingFlames_LT = 0;
+        public int echoingFlames_LM = 0;
+        public int echoingFlames_LB = 0;
+        public int echoingFlames_RB = 0;
+        public int echoingFlames_RM = 0;
+        public int echoingFlames_RT = 0;
+
         // Lunari Gun Stuff
         public int currentGun = 0;
         public float calibrumAmmo = 100;
@@ -1596,6 +1604,21 @@ namespace TerraLeague
                 if (ReloadTimer == 0)
                     WhisperShotsLeft = 4;
             }
+
+            #region Echoing Flames Cooldown
+            if (echoingFlames_LB > 0)
+                echoingFlames_LB--;
+            if (echoingFlames_LM > 0)
+                echoingFlames_LM--;
+            if (echoingFlames_LT > 0)
+                echoingFlames_LT--;
+            if (echoingFlames_RT > 0)
+                echoingFlames_RT--;
+            if (echoingFlames_RM > 0)
+                echoingFlames_RM--;
+            if (echoingFlames_RB > 0)
+                echoingFlames_RB--;
+            #endregion
 
             if (highlander)
             {
@@ -3060,6 +3083,96 @@ namespace TerraLeague
                        );
                 }
             }
+
+            if (player.HeldItem.type == ItemType<EchoingFlameCannon>() && Main.myPlayer == player.whoAmI)
+            {
+                Texture2D textureLT = mod.GetTexture("UI/EchoingFlames_LT");
+                Texture2D textureLM = mod.GetTexture("UI/EchoingFlames_LM"); ;
+                Texture2D textureLB = mod.GetTexture("UI/EchoingFlames_LB"); ;
+                Texture2D textureRB = mod.GetTexture("UI/EchoingFlames_RB"); ;
+                Texture2D textureRM = mod.GetTexture("UI/EchoingFlames_RM"); ;
+                Texture2D textureRT = mod.GetTexture("UI/EchoingFlames_RT"); ;
+
+
+                if (echoingFlames_LT <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureLT,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureLT.Width/2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureLT.Height / 2)), textureLT.Width, textureLT.Height),
+                           new Rectangle(0, 0, textureLT.Width, textureLT.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (echoingFlames_LM <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureLM,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureLM.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureLM.Height / 2)), textureLM.Width, textureLM.Height),
+                           new Rectangle(0, 0, textureLM.Width, textureLM.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (echoingFlames_LB <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureLB,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureLB.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureLB.Height / 2)), textureLB.Width, textureLB.Height),
+                           new Rectangle(0, 0, textureLB.Width, textureLB.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+                
+                if (echoingFlames_RB <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureRB,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureRB.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureRB.Height / 2)), textureRB.Width, textureRB.Height),
+                           new Rectangle(0, 0, textureRB.Width, textureRB.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (echoingFlames_RM <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureRM,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureRM.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureRM.Height / 2)), textureRM.Width, textureRM.Height),
+                           new Rectangle(0, 0, textureRM.Width, textureRM.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (echoingFlames_RT <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureRT,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureRT.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureRT.Height / 2)), textureRT.Width, textureRT.Height),
+                           new Rectangle(0, 0, textureRT.Width, textureRT.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+            }
+
             if (onslaught)
             {
                 Texture2D texture = mod.GetTexture("UI/OnslaughtRange");
