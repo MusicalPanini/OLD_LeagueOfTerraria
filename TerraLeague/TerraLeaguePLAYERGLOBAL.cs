@@ -1498,9 +1498,9 @@ namespace TerraLeague
 
             if (hextechEvolutionSet && hextechEvoltionCooldown <= 0)
             {
-                float distance = 1000;
+                float distance = 800;
                 int target = -1;
-                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16);
+                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -10, -16);
 
                 for (int k = 0; k < 200; k++)
                 {
@@ -1519,7 +1519,7 @@ namespace TerraLeague
                 if (target != -1)
                 {
                     hextechEvolutionAngle = TerraLeague.CalcVelocityToPoint(handPos, Main.npc[target].Center, 8).RotatedBy(-0.01f * 20);
-                    Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileID.HeatRay, (int)(20 * player.magicDamage), 0, player.whoAmI);
+                    Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI);
                 }
                 else
                 {
@@ -1530,9 +1530,9 @@ namespace TerraLeague
             }
             else if (hextechEvolutionSet && hextechEvoltionCooldown > 50 && hextechEvolutionAngle != Vector2.Zero)
             {
-                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16);
+                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16).RotatedBy(player.fullRotation);
                 hextechEvolutionAngle = hextechEvolutionAngle.RotatedBy(0.01f);
-                Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileID.HeatRay, (int)(20 * player.magicDamage), 0, player.whoAmI);
+                Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI, hextechEvoltionCooldown % 20);
             }
             
             // Solari set bonus
