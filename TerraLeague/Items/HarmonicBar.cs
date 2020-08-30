@@ -22,8 +22,8 @@ namespace TerraLeague.Items
             item.width = 30;
             item.height = 24;
             item.uniqueStack = false;
-            item.rare = ItemRarityID.Pink;
-            item.value = 22000;
+            item.rare = ItemRarityID.Lime;
+            item.value = 50000;
             item.createTile = TileType<Tiles.HarmonicBarTile>();
             item.useTurn = true;
             item.autoReuse = true;
@@ -36,7 +36,8 @@ namespace TerraLeague.Items
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<ManaBar>(), 4);
+            recipe.AddIngredient(ItemType<ManaBar>(), 1);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 3);
             recipe.AddIngredient(ItemID.SoulofLight, 2);
             recipe.AddIngredient(ItemID.SoulofNight, 2);
             recipe.AddTile(TileID.AdamantiteForge);
