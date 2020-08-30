@@ -26,7 +26,7 @@ namespace TerraLeague.NPCs
             NPCID.Sets.AttackType[npc.type] = NPCID.Sets.AttackType[NPCID.Guide];
             NPCID.Sets.AttackTime[npc.type] = 90;
             NPCID.Sets.AttackAverageChance[npc.type] = 30;
-            NPCID.Sets.HatOffsetY[npc.type] = -6;
+            NPCID.Sets.HatOffsetY[npc.type] = -4;
             base.SetStaticDefaults();
         }
 
