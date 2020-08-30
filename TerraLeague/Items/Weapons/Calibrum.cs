@@ -113,6 +113,18 @@ namespace TerraLeague.Items.Weapons
                 return base.GetRawCooldown(type);
         }
 
+        public override bool CanCurrentlyBeCast(Player player, AbilityType type)
+        {
+            if (type == AbilityType.Q)
+            {
+                if (player.GetModPlayer<PLAYERGLOBAL>().calibrumAmmo < 10)
+                {
+                    return false;
+                }
+            }
+            return base.CanCurrentlyBeCast(player, type);
+        }
+
         public override bool CanBeCastWhileUsingItem(AbilityType type)
         {
             return false;
