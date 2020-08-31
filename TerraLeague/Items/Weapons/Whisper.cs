@@ -137,7 +137,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 100;
+            item.damage = 140;
             item.ranged = true;
             item.width = 44;
             item.height = 20;

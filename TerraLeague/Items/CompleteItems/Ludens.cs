@@ -45,7 +45,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<BlastingWand>(), 1);
             recipe.AddIngredient(ItemID.RainbowRod, 1);
             recipe.AddIngredient(ItemID.CrystalShard, 10);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 50);
+            recipe.AddIngredient(ItemType<VoidFragment>(), 100);
             recipe.AddIngredient(ItemID.SoulofNight, 15);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);

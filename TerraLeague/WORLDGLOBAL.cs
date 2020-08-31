@@ -476,7 +476,7 @@ namespace TerraLeague
                         NetMessage.SendData(MessageID.WorldData);
                     }
 
-                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 1E-05); k++)  
+                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.000005); k++)  
                     {
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
                         int Y = WorldGen.genRand.Next((int)(Main.rockLayer * 1.5), Main.maxTilesY - 200);
@@ -788,7 +788,6 @@ namespace TerraLeague
             if (Main.netMode == NetmodeID.SinglePlayer)
             {
                 Main.NewText("The Aspects are pleased. A gift has been droped from the heavens", 0, 200, 255); 
-
             }
             else if (Main.netMode == NetmodeID.Server)
             {

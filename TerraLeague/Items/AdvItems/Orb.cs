@@ -39,7 +39,7 @@ namespace TerraLeague.Items.AdvItems
             recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
             recipe.AddIngredient(ItemType<AmpTome>(), 1);
             recipe.AddIngredient(ItemID.SharkToothNecklace, 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 20);
+            recipe.AddIngredient(ItemType<VoidFragment>(), 50);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

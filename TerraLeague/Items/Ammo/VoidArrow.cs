@@ -34,7 +34,7 @@ namespace TerraLeague.Items.Ammo
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<VoidFragment>(), 1);
+            recipe.AddIngredient(ItemType<VoidFragment>(), 10);
             recipe.AddIngredient(ItemID.WoodenArrow, 10);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 10);

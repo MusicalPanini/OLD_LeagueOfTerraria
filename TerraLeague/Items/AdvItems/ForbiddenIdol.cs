@@ -39,7 +39,7 @@ namespace TerraLeague.Items.AdvItems
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<FaerieCharm>(), 2);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 20);
+            recipe.AddIngredient(ItemType<VoidFragment>(), 50);
             recipe.AddRecipeGroup("TerraLeague:DemonPartGroup", 10);
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);

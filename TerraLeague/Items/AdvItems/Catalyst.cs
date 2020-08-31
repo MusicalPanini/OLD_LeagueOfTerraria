@@ -41,7 +41,7 @@ namespace TerraLeague.Items.AdvItems
             recipe.AddIngredient(ItemType<RubyCrystal>(), 1);
             recipe.AddIngredient(ItemType<SapphireCrystal>(), 1);
             recipe.AddIngredient(ItemID.MagicCuffs, 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 25);
+            recipe.AddIngredient(ItemType<VoidFragment>(), 50);
             recipe.AddIngredient(ItemID.Amethyst, 5);
             recipe.AddTile(TileID.Furnaces);
             recipe.SetResult(this);
