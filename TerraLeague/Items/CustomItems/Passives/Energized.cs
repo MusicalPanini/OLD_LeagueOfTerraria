@@ -116,14 +116,14 @@ namespace TerraLeague.Items.CustomItems.Passives
                     else if (projID == ProjectileType<Item_RapidfireExplosion>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
-                else if (modPlayer.EnergizedStorm)
-                {
-                    damage += bonusDamage;
+                //else if (modPlayer.EnergizedStorm)
+                //{
+                //    damage += bonusDamage;
 
-                    Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
-                }
+                //    Efx(player, target);
+                //    if (Main.netMode == NetmodeID.MultiplayerClient)
+                //        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                //}
 
                 modPlayer.energized = false;
                 modPlayer.FindAndSetPassiveStat(this, 0);
@@ -171,13 +171,13 @@ namespace TerraLeague.Items.CustomItems.Passives
                     else if (projID == ProjectileType<Item_RapidfireExplosion>())
                         Projectile.NewProjectile(target.Center, Vector2.Zero, projID, bonusDamage, 0, player.whoAmI, modPlayer.EnergizedStorm ? 1 : 0);
                 }
-                else if (modPlayer.EnergizedStorm)
-                {
-                    Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
-                    damage += bonusDamage;
-                }
+                //else if (modPlayer.EnergizedStorm)
+                //{
+                //    Efx(player, target);
+                //    if (Main.netMode == NetmodeID.MultiplayerClient)
+                //        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                //    //damage += bonusDamage;
+                //}
 
                 modPlayer.FindAndSetPassiveStat(this, 0);
             }
