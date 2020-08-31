@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Projectiles;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -110,10 +111,9 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                    //int projType = ProjectileType<NezuksGauntlet_EssenceFlux>();
-                    int projType = ProjectileID.ToxicFlask;
-                    int damage = (GetAbilityBaseDamage(player, type) * player.maxTurrets) + GetAbilityScalingDamage(player, type, DamageType.RNG);
+                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16);
+                    int projType = ProjectileType<EchoingFlameCannon_CorrosiveCharge>();
+                    int damage = (GetAbilityBaseDamage(player, type)) + GetAbilityScalingDamage(player, type, DamageType.RNG);
                     int knockback = 0;
 
                     SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
@@ -221,20 +221,14 @@ namespace TerraLeague.Items.Weapons
         public override bool GetIfAbilityExists(AbilityType type)
         {
             if (type == AbilityType.Q)
-                return false;
+                return true;
             return base.GetIfAbilityExists(type);
         }
 
         public override void Efx(Player player, AbilityType type)
         {
-            if (type == AbilityType.W)
-            {
-
-            }
-            else if(type == AbilityType.E)
-            {
-
-            }
+            if (type == AbilityType.Q)
+                Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
         }
 
         public override void AddRecipes()
