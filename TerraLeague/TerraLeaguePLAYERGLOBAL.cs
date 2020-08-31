@@ -501,6 +501,7 @@ namespace TerraLeague
         public int solariCharge = 0;
         public static int solariMaxCharge = 7200; // 4 minutes
         public bool solarStorm = false;
+        public bool voidbornSet = false;
 
         // Buffs
         public bool bioBarrage = false;
@@ -793,6 +794,7 @@ namespace TerraLeague
             petriciteSet = false;
             prophetSet = false;
             hextechEvolutionSet = false;
+            voidbornSet = false;
 
             if (!solariSet)
                 solariCharge = 0;
@@ -2127,6 +2129,12 @@ namespace TerraLeague
                             }
                         }
                     }
+                }
+
+                if (voidbornSet && proj.minion)
+                {
+                    player.ManaEffect(2);
+                    player.statMana += 2;
                 }
 
                 // +-+-+-+-+FINALIZED DAMAGE MODIFIERS+-+-+-+-+
@@ -3581,9 +3589,11 @@ namespace TerraLeague
 
             if (player.manaRegenBuff)
                 manaRegen += 5;
+            if (player.HasBuff(BuffID.StarInBottle))
+                player.manaRegenBonus += 25;
 
             player.manaRegenDelay = 90000;
-            manaRegen += player.statManaMax2 / 100;
+            manaRegen += player.statManaMax2 / 75;
             //player.manaRegen = (int)(player.manaRegen * manaRegenModifer * (1 + (player.manaRegenBonus / 25.0)) * (1 + player.nebulaLevelMana));
 
             double trueModifier = manaRegenModifer + (player.manaRegenBonus / 50.0) + player.nebulaLevelMana;
@@ -3690,6 +3700,8 @@ namespace TerraLeague
                 Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, 80, 0, -2, 0, default(Color), 1.5f);
                 dustIndex.velocity *= 2;
             }
+            if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.LocalPlayer.whoAmI)
+                PacketHandler.SendShatterEFX(-1, player.whoAmI, target.whoAmI);
         }
 
         public void SetTempUseItem(int itemToUse)

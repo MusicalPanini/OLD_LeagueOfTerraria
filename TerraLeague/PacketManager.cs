@@ -101,6 +101,7 @@ namespace TerraLeague
         public const byte NewShield = 9;
         public const byte Biome = 10;
         public const byte NPCRetarget = 11;
+        public const byte Shatter = 12;
 
         public const byte Stoneplate = 50;
         #endregion
@@ -142,6 +143,9 @@ namespace TerraLeague
                     break;
                 case (NPCRetarget):
                     ReceiveRetarget(reader, fromWho);
+                    break;
+                case (Shatter):
+                    ReceiveShatterEFX(reader, fromWho);
                     break;
             }
         }
@@ -432,7 +436,7 @@ namespace TerraLeague
             //}
         }
 
-        //Biome Check
+        // Retarget
         public void SendRetarget(int toWho, int fromWho, int player)
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
@@ -450,6 +454,30 @@ namespace TerraLeague
             if (Main.netMode == NetmodeID.Server)
             {
                 TerraLeague.ForceNPCStoRetarget(Main.player[player]);
+            }
+        }
+
+        public void SendShatterEFX(int toWho, int fromWho, int target)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(Shatter, fromWho);
+                packet.Write(target);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Shatter", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveShatterEFX(BinaryReader reader, int fromWho)
+        {
+            int target = reader.ReadInt32();
+            TerraLeague.Log("[DEBUG] - Received Shatter", new Color(80, 80, 0));
+            if (Main.netMode == NetmodeID.Server)
+            {
+                SendShatterEFX(-1, fromWho, target);
+            }
+            else
+            {
+                Main.player[fromWho].GetModPlayer<PLAYERGLOBAL>().ShatterEffect(Main.npc[target]);
             }
         }
     }
