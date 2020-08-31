@@ -59,7 +59,7 @@ namespace TerraLeague.NPCs
         {
             if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && spawnInfo.player.ZoneCorrupt && Main.hardMode)
                 return SpawnCondition.Corruption.Chance * 0.5f;
-            else if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && Main.ActiveWorldFileData.HasCorruption && Main.hardMode)
+            else if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && Main.ActiveWorldFileData.HasCorruption && Main.hardMode && NPC.downedMechBossAny)
                 return SpawnCondition.OverworldNightMonster.Chance * 0.1f;
             return 0;
         }

@@ -23,8 +23,8 @@ namespace TerraLeague.NPCs
             npc.alpha = 110;
             npc.aiStyle = 0;
             npc.damage = 20;
-            npc.defense = 20;
-            npc.lifeMax = 40;
+            npc.defense = 10;
+            npc.lifeMax = 50;
             npc.behindTiles = true;
             npc.noGravity = true;
             npc.noTileCollide = true;

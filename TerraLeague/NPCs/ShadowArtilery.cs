@@ -39,7 +39,7 @@ namespace TerraLeague.NPCs
         {
             if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && spawnInfo.player.ZoneDesert)
                 return SpawnCondition.OverworldNightMonster.Chance;
-            else if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && NPC.downedBoss3)
+            else if (spawnInfo.player.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist && NPC.downedMechBossAny)
                 return SpawnCondition.OverworldNightMonster.Chance * 0.25f;
             return 0;
         }
