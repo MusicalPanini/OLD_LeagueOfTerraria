@@ -43,6 +43,11 @@ namespace TerraLeague.Projectiles
                 }
             }
 
+            if (sentry == null)
+            {
+                projectile.Kill();
+            }
+
             if (projectile.soundDelay == 0)
             {
                 projectile.soundDelay = 8;
