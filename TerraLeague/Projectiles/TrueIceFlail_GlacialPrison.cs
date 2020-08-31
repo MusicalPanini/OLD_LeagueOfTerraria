@@ -74,8 +74,11 @@ namespace TerraLeague.Projectiles
                 if (sound != null)
                     sound.Pitch = 1;
             }
-            Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileType<TrueIceFlail_GlacialStorm>(), projectile.damage, 0, projectile.owner);
-            proj.Center = projectile.Center;
+            if (Main.LocalPlayer.whoAmI == projectile.owner)
+            {
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileType<TrueIceFlail_GlacialStorm>(), projectile.damage, 0, projectile.owner);
+                //proj.Center = projectile.Center;
+            }
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
