@@ -129,7 +129,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 40;
+            item.damage = 60;
             item.width = 30;
             item.height = 30;
             item.melee = true;
@@ -137,8 +137,8 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 25;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 2.5f;
-            item.value = 100000;
-            item.rare = ItemRarityID.Pink;
+            item.value = 350000;
+            item.rare = ItemRarityID.Lime;
             item.UseSound = SoundID.Item1;
             item.shootSpeed = 16f;
             item.shoot = ProjectileType<HeartoftheTempest_Yoyo>();

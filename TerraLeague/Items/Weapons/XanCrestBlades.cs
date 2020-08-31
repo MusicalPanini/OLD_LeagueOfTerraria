@@ -30,8 +30,8 @@ namespace TerraLeague.Items.Weapons
             item.useAnimation = 25;
             item.useStyle = ItemUseStyleID.Stabbing;
             item.knockBack = 0;
-            item.value = 30000;
-            item.rare = ItemRarityID.Pink;
+            item.value = 350000;
+            item.rare = ItemRarityID.Lime;
             item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
             item.shootSpeed = 15f;
             item.shoot = ProjectileType<XanCrestBlades_DancingBlade>();
@@ -60,7 +60,6 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HarmonicBar>(), 3);
             recipe.AddIngredient(ItemID.HallowedBar, 3);
             recipe.AddIngredient(ItemID.SoulofMight, 3);
             recipe.AddTile(TileID.MythrilAnvil);

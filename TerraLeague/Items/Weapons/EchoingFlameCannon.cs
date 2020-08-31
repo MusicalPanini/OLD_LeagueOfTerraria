@@ -130,7 +130,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 48;
+            item.damage = 52;
             item.ranged = true;
             item.noMelee = true;
             item.width = 40;
@@ -164,7 +164,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (modPlayer.echoingFlames_RT <= 0)
                 {
-                    modPlayer.echoingFlames_RT = 8 * 60;
+                    modPlayer.echoingFlames_RT = cooldown * 60;
                     projectileAngles = new float[] { -85, -75, -65, -55, -45, -35 };
                 }
             }
@@ -172,7 +172,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (modPlayer.echoingFlames_RM <= 0)
                 {
-                    modPlayer.echoingFlames_RM = 8 * 60;
+                    modPlayer.echoingFlames_RM = cooldown * 60;
                     projectileAngles = new float[] { -25, -15, -5, 5, 15, 25 };
                 }
             }
@@ -180,7 +180,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (modPlayer.echoingFlames_RB <= 0)
                 {
-                    modPlayer.echoingFlames_RB = 8 * 60;
+                    modPlayer.echoingFlames_RB = cooldown * 60;
                     projectileAngles = new float[] { 35, 45, 55, 65, 75, 85};
                 }
             }
@@ -188,7 +188,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (modPlayer.echoingFlames_LB <= 0)
                 {
-                    modPlayer.echoingFlames_LB = 8 * 60;
+                    modPlayer.echoingFlames_LB = cooldown * 60;
                     projectileAngles = new float[] { 95, 105, 115, 125, 135, 145 };
                 }
             }
@@ -196,7 +196,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (modPlayer.echoingFlames_LM <= 0)
                 {
-                    modPlayer.echoingFlames_LM = 8 * 60;
+                    modPlayer.echoingFlames_LM = cooldown * 60;
                     projectileAngles = new float[] { 155, 165, 175, -175, -165, -155 };
                 }
             }
@@ -204,7 +204,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (modPlayer.echoingFlames_LT <= 0)
                 {
-                    modPlayer.echoingFlames_LT = 8 * 60;
+                    modPlayer.echoingFlames_LT = cooldown * 60;
                     projectileAngles = new float[] { -145, -135, -125, -115, -105, -95 };
                 }
             }

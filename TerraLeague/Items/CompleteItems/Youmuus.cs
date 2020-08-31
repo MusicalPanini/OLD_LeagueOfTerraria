@@ -50,7 +50,8 @@ namespace TerraLeague.Items.CompleteItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<SerratedDirk>(), 1);
             recipe.AddIngredient(ItemType<Warhammer>(), 1);
-            recipe.AddIngredient(ItemType<HarmonicBar>(), 8);
+            recipe.AddIngredient(ItemID.SoulofLight, 8);
+            recipe.AddIngredient(ItemID.SoulofNight, 8);
             recipe.AddRecipeGroup("TerraLeague:DemonGroup", 5);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);

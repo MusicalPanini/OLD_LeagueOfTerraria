@@ -141,7 +141,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 20;
+            item.damage = 34;
             item.summon = true;
             item.mana = 20;
             item.width = 48;
@@ -151,8 +151,8 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.noMelee = true;
             item.knockBack = 1;
-            item.value = 100000;
-            item.rare = ItemRarityID.Pink;
+            item.value = 350000;
+            item.rare = ItemRarityID.Lime;
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<DarkSovereignsStaff_DarkSphere>();
         }
