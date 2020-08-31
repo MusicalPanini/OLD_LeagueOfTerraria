@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Armor
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddRecipeGroup("TerraLeague:Tier3Bar", 20);
-            recipe.AddIngredient(ItemType<HextechCore>(), 4);
+            recipe.AddIngredient(ItemType<PerfectHexCore>());
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
