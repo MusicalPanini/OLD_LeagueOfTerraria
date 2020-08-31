@@ -1478,71 +1478,75 @@ namespace TerraLeague
                 cannonTimer--;
             }
 
-            // Prophet set bonus cooldown
-            if (prophetTimer > 0)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                prophetTimer--;
-            }
-            else if (prophetSet)
-            {
-                SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 103), player.MountedCenter);
-                if (sound != null)
-                    sound.Pitch = -0.25f;
-
-                for (int i = 0; i < player.maxMinions; i++)
+                // Prophet set bonus cooldown
+                if (prophetTimer > 0)
                 {
-                    Projectile.NewProjectile(player.MountedCenter, new Vector2(Main.rand.NextFloat(-4, 4), -6), ProjectileType<VoidProphetsStaff_Zzrot>(), (int)(20 * minionDamageLastStep), 1, player.whoAmI);
+                    prophetTimer--;
                 }
-
-                for (int i = 0; i < 10; i++)
+                else if (prophetSet)
                 {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 27, 0, -3);
-                }
+                    SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 103), player.MountedCenter);
+                    if (sound != null)
+                        sound.Pitch = -0.25f;
 
-                prophetTimer = 60 * 6;
-            }
-
-            // Hextech Evolution set bonus
-            if (hextechEvoltionCooldown > 0)
-                hextechEvoltionCooldown--;
-
-            if (hextechEvolutionSet && hextechEvoltionCooldown <= 0)
-            {
-                float distance = 800;
-                int target = -1;
-                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -10, -16);
-
-                for (int k = 0; k < 200; k++)
-                {
-                    NPC npc = Main.npc[k];
-                    if (npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.immortal)
+                    for (int i = 0; i < player.maxMinions; i++)
                     {
-                        Vector2 newMove = Main.npc[k].Center - handPos;
-                        float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                        if (distanceTo < distance && Collision.CanHit(handPos, 4, 4, npc.position, npc.width, npc.height))
+                        Projectile.NewProjectile(player.MountedCenter, new Vector2(Main.rand.NextFloat(-4, 4), -6), ProjectileType<VoidProphetsStaff_Zzrot>(), (int)(20 * minionDamageLastStep), 1, player.whoAmI);
+                    }
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 27, 0, -3);
+                    }
+
+                    prophetTimer = 60 * 6;
+                }
+
+                // Hextech Evolution set bonus
+                if (hextechEvoltionCooldown > 0)
+                    hextechEvoltionCooldown--;
+
+
+                if (hextechEvolutionSet && hextechEvoltionCooldown <= 0)
+                {
+                    float distance = 800;
+                    int target = -1;
+                    Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -10, -16);
+
+                    for (int k = 0; k < 200; k++)
+                    {
+                        NPC npc = Main.npc[k];
+                        if (npc.active && !npc.friendly && npc.lifeMax > 5 && !npc.dontTakeDamage && !npc.immortal)
                         {
-                            distance = distanceTo;
-                            target = k;
+                            Vector2 newMove = Main.npc[k].Center - handPos;
+                            float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
+                            if (distanceTo < distance && Collision.CanHit(handPos, 4, 4, npc.position, npc.width, npc.height))
+                            {
+                                distance = distanceTo;
+                                target = k;
+                            }
                         }
                     }
-                }
-                if (target != -1)
-                {
-                    hextechEvolutionAngle = TerraLeague.CalcVelocityToPoint(handPos, Main.npc[target].Center, 8).RotatedBy(-0.01f * 20);
-                    Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI);
-                }
-                else
-                {
-                    hextechEvolutionAngle = Vector2.Zero;
-                }
+                    if (target != -1)
+                    {
+                        hextechEvolutionAngle = TerraLeague.CalcVelocityToPoint(handPos, Main.npc[target].Center, 8).RotatedBy(-0.01f * 20);
+                        Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI);
+                    }
+                    else
+                    {
+                        hextechEvolutionAngle = Vector2.Zero;
+                    }
 
-                hextechEvoltionCooldown = 90;
-            }
-            else if (hextechEvolutionSet && hextechEvoltionCooldown > 50 && hextechEvolutionAngle != Vector2.Zero)
-            {
-                Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16).RotatedBy(player.fullRotation);
-                hextechEvolutionAngle = hextechEvolutionAngle.RotatedBy(0.01f);
-                Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI, hextechEvoltionCooldown % 20);
+                    hextechEvoltionCooldown = 90;
+                }
+                else if (hextechEvolutionSet && hextechEvoltionCooldown > 50 && hextechEvolutionAngle != Vector2.Zero)
+                {
+                    Vector2 handPos = player.MountedCenter + new Vector2(player.direction * -12, -16).RotatedBy(player.fullRotation);
+                    hextechEvolutionAngle = hextechEvolutionAngle.RotatedBy(0.01f);
+                    Projectile.NewProjectile(handPos, hextechEvolutionAngle, ProjectileType<EvolutionSet_Lazer>(), (int)(30 * player.magicDamage), 0, player.whoAmI, hextechEvoltionCooldown % 20);
+                }
             }
             
             // Solari set bonus
