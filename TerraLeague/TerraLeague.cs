@@ -507,6 +507,17 @@ namespace TerraLeague
             }
         }
 
+        internal static void DustBorderRing(int radius, Vector2 center, int dustType, Color color, float scale)
+        {
+            for (int i = 0; i < radius / 5; i++)
+            {
+                Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f)))) + center;
+
+                Dust dustR = Dust.NewDustPerfect(pos, dustType, Vector2.Zero, 0, color, scale);
+                dustR.noGravity = true;
+            }
+        }
+
         /// <summary>
         /// Sends a message to chat if logging is enabled
         /// </summary>
