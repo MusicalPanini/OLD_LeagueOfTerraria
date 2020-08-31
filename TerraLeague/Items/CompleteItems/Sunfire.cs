@@ -33,6 +33,9 @@ namespace TerraLeague.Items.CompleteItems
             player.statLifeMax2 += 30;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
 
+            if (!hideVisual)
+                player.AddBuff(BuffType<Buffs.Immolate>(), 2);
+
             player.buffImmune[BuffID.Bleeding] = true;
             player.buffImmune[BuffID.Poisoned] = true;
         }
@@ -53,7 +56,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Immolate(500);
+            return new Immolate(500, false);
         }
     }
 }

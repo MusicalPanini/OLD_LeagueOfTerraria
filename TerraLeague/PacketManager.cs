@@ -462,6 +462,7 @@ namespace TerraLeague
         public const byte SyncStats = 3;
         public const byte CreateVessel = 4;
         public const byte SyncVessel = 5;
+        public const byte AddBuff = 6;
         #endregion
 
         public NPCPacketHandler(byte handlerType) : base(handlerType)
@@ -474,6 +475,9 @@ namespace TerraLeague
             {
                 case (BattleText):
                     ReceiveBattleText(reader, fromWho);
+                    break;
+                case (AddBuff):
+                    ReceiveAddBuff(reader, fromWho);
                     break;
                 case (RemoveBuff):
                     ReceiveRemoveBuff(reader, fromWho);
@@ -560,6 +564,30 @@ namespace TerraLeague
                 }
                 CombatText.NewText(new Rectangle((int)npc.position.X + 32, (int)npc.position.Y, npc.width, npc.height), color, text, false, false);
             }
+        }
+
+        public void SendAddBuff(int toWho, int fromWho, int buffType, int buffTime, int target)
+        {
+            ModPacket packet = GetPacket(AddBuff, fromWho);
+            packet.Write(buffType);
+            packet.Write(target);
+            packet.Send(toWho, fromWho);
+            TerraLeague.Log("[DEBUG] - Sending Add Buff ID " + buffType + " from NPC " + target, Color.White);
+        }
+
+        public void ReceiveAddBuff(BinaryReader reader, int fromWho)
+        {
+            int buffType = reader.ReadInt32();
+            int buffTime = reader.ReadInt32();
+            int target = reader.ReadInt32();
+            NPC npc = Main.npc[target];
+
+            if (Main.netMode == NetmodeID.Server)
+            {
+                SendAddBuff(-1, fromWho, buffType, buffTime, target);
+            }
+
+            npc.AddBuff(buffType, buffTime);
         }
 
         public void SendRemoveBuff(int toWho, int fromWho, int buffType, int target)

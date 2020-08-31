@@ -29,6 +29,8 @@ namespace TerraLeague.Items.AdvItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 20;
+            if (!hideVisual)
+                player.AddBuff(BuffType<Buffs.Immolate>(), 2);
         }
 
         public override void AddRecipes()
@@ -45,7 +47,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Immolate(300);
+            return new Immolate(300, true);
         }
     }
 }

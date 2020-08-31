@@ -545,6 +545,7 @@ namespace TerraLeague
         public bool hextechEvolutionSet = false;
         public int hextechEvoltionCooldown = 0;
         public Vector2 hextechEvolutionAngle = Vector2.Zero;
+        public bool immolate = false;
 
 
         // Lifeline Garbage
@@ -785,6 +786,7 @@ namespace TerraLeague
             greymark = false;
             greymarkBuff = false;
             sunAmulet = false;
+            immolate = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1722,6 +1724,25 @@ namespace TerraLeague
                 Dust dustIndex = Dust.NewDustDirect(player.position, player.width, player.height, 186, 0, -4, 50);
                 dustIndex.velocity *= 0.3f;
             }
+            if (immolate)
+            {
+                for (int i = 0; i < 1; i++)
+                {
+                    Vector2 pos = new Vector2(player.position.X, player.position.Y + (player.height * 0.9f));
+                    Dust dustIndex = Dust.NewDustDirect(pos, player.width, player.height / 10, 6, 12f, -1f, 100, default(Color), 1.25f);
+                    dustIndex.noGravity = true;
+                    dustIndex.velocity.Y *= 0.4f;
+                    dustIndex.velocity.X *= 0.6f;
+                    dustIndex.velocity.X += player.velocity.X;
+                    dustIndex.noLight = true;
+                    Dust dustIndex2 = Dust.NewDustDirect(pos, player.width, player.height / 10, 6, -12f, -1f, 100, default(Color), 1.5f);
+                    dustIndex2.noGravity = true;
+                    dustIndex2.noLight = true;
+                    dustIndex2.velocity.Y *= 0.4f;
+                    dustIndex2.velocity.X *= 0.6f;
+                    dustIndex2.velocity.X += player.velocity.X;
+                }
+            }
 
             // Lifeline cooldown handler
             if (lifeLineCooldown > 0)
@@ -2590,9 +2611,9 @@ namespace TerraLeague
 
             // Reduces the projectile damage based on Players resist stat
             if (Main.expertMode)
-                damage -= (int)(resist * 0.75);
+                damage -= (int)(resist * 0.75) / 4;
             else
-                damage -= (int)(resist * 0.5);
+                damage -= (int)(resist * 0.5) / 2;
 
 
                 OnHitByEnemy(Main.npc[0], ref damage, crit);
@@ -3700,7 +3721,7 @@ namespace TerraLeague
                 flashofBrillianceCooldown = 60;
                 flashofBrilliance = false;
 
-                List<int> magicItems = new List<int>() { ItemID.FlowerofFire, ItemID.FrostStaff, ItemID.ShadowFlameHexDoll, ItemID.StaffofEarth, ItemID.CrystalSerpent, ItemID.HeatRay, ItemID.WaterBolt};
+                List<int> magicItems = new List<int>() { ItemID.FlowerofFire, ItemID.FrostStaff, ItemID.ShadowFlameHexDoll, ItemID.StaffofEarth, ItemID.CrystalSerpent, ItemID.SpectreStaff, ItemID.WaterBolt};
 
                 for (int i = 0; i < Main.rand.Next(1, 4); i++)
                 {

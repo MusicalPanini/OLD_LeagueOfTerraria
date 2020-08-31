@@ -40,6 +40,7 @@ namespace TerraLeague.NPCs
         public bool grievousWounds = false;
         public bool ignited = false;
         public bool exhaused = false;
+        public bool weakSunfire = false;
         public bool sunfire = false;
         public bool OrgDest = false;
         public bool essenFlux = false;
@@ -101,6 +102,7 @@ namespace TerraLeague.NPCs
             grievousWounds = false;
             ignited = false;
             exhaused = false;
+            weakSunfire = false;
             sunfire = false;
             OrgDest = false;
             essenFlux = false;
@@ -238,11 +240,18 @@ namespace TerraLeague.NPCs
                     Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
                 }
             }
-            if (sunfire)
+            if (sunfire || weakSunfire)
             {
-                if (Main.rand.Next(0, 8) == 0)
+                if (Main.rand.Next(0, 2) == 0)
                 {
-                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 2f);
+                    dust.noGravity = true;
+                }
+
+                if (Main.rand.Next(0, 4) == 0)
+                {
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 1f);
+                    dust.velocity.Y = -Math.Abs(dust.velocity.Y * 2f);
                 }
             }
             if (CausticWounds)
@@ -503,6 +512,15 @@ namespace TerraLeague.NPCs
                 }
             }
             if (sunfire)
+            {
+                npc.lifeRegen -= 100;
+
+                if (damage < 50)
+                {
+                    damage = 50;
+                }
+            }
+            else if (weakSunfire)
             {
                 npc.lifeRegen -= 20;
 
