@@ -84,7 +84,7 @@ namespace TerraLeague.Projectiles
                 {
                     NPC npc = Main.npc[i];
 
-                    if (projectile.Hitbox.Intersects(npc.Hitbox))
+                    if (projectile.Hitbox.Intersects(npc.Hitbox) && npc.active && !npc.townNPC)
                     {
                         totalHit++;
                         if (totalHit > 1)
