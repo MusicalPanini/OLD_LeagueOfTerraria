@@ -630,6 +630,8 @@ namespace TerraLeague
             switch (statType)
             {
                 case 1:
+                    npc.AddBuff(BuffType<CausticWounds>(), 240);
+                    npc.GetGlobalNPC<NPCsGLOBAL>().CausticWounds = true;
                     npc.GetGlobalNPC<NPCsGLOBAL>().CausticStacks = num;
                     break;
                 case 2:
