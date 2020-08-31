@@ -791,7 +791,8 @@ namespace TerraLeague
             }
             else if (Main.netMode == NetmodeID.Server)
             {
-                NetMessage.BroadcastChatMessage(NetworkText.FromKey("The Aspects are pleased. A gift has been droped from the heavens", new object[0]), new Color(50, 255, 130), -1);
+                NetMessage.BroadcastChatMessage(NetworkText.FromKey("The Aspects are pleased. A gift has been droped from the heavens", new object[0]), new Color(0, 200, 255), -1);
+                NetMessage.SendData(MessageID.WorldData);
             }
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
