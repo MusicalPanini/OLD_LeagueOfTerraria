@@ -12,7 +12,7 @@ namespace TerraLeague.Items.Armor
         {
             DisplayName.SetDefault("Voidborn Terror Mask");
             Tooltip.SetDefault("Increases your max number of minions" +
-            "\nIncreases your max life by 50");
+            "\nIncreases your max mana by 40");
             base.SetStaticDefaults();
         }
 
@@ -20,22 +20,22 @@ namespace TerraLeague.Items.Armor
         {
             item.width = 24;
             item.height = 26;
-            item.value = 300000;
-            item.rare = ItemRarityID.Lime;
-            item.defense = 15;
+            item.value = 40000;
+            item.rare = ItemRarityID.Orange;
+            item.defense = 4;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.maxMinions += 1;
-            player.statLifeMax2 += 50;
+            player.statManaMax2 += 40;
+            player.maxMinions++;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(GetInstance<VoidBar>(), 12);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
+            recipe.AddIngredient(ItemID.FossilHelm, 1);
+            recipe.AddIngredient(GetInstance<VoidFragment>(), 60);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
@@ -56,9 +56,9 @@ namespace TerraLeague.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Minions have 4% lifesteal";
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMinion += 0.04;
+            player.setBonus = "When you deal minion damage, restore 2 mana";
             player.armorEffectDrawShadowBasilisk = true;
+            player.GetModPlayer<PLAYERGLOBAL>().voidbornSet = true;
         }
     }
 }

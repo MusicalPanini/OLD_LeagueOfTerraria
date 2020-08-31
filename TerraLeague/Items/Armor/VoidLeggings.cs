@@ -31,12 +31,7 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.FossilPants, 1);
-            recipe.AddIngredient(ItemType<VoidFragment>(), 25);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            
         }
 
         public override void UpdateArmorSet(Player player)

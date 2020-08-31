@@ -13,30 +13,29 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Voidborn Pants");
-            Tooltip.SetDefault("12% increased minion damage" +
-                "\nIncreases your max number of minions");
+            Tooltip.SetDefault("8% increased magic and minion damage");
         }
 
         public override void SetDefaults()
         {
             item.width = 22;
             item.height = 18;
-            item.value = 250000;
-            item.rare = ItemRarityID.Lime;
-            item.defense = 12;
+            item.value = 40000;
+            item.rare = ItemRarityID.Orange;
+            item.defense = 5;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.maxMinions++;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.12;
+            player.magicDamage += 0.8f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.8;
         }
 
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<VoidBar>(), 18);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 18);
+            recipe.AddIngredient(ItemID.FossilPants, 1);
+            recipe.AddIngredient(ItemType<VoidFragment>(), 50);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();

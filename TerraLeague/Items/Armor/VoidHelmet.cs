@@ -33,12 +33,7 @@ namespace TerraLeague.Items.Armor
 
         public override void AddRecipes()
         {
-            ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.FossilHelm, 1);
-            recipe.AddIngredient(GetInstance<VoidFragment>(), 30);
-            recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
