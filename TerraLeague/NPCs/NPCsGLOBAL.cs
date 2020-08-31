@@ -195,12 +195,12 @@ namespace TerraLeague.NPCs
             }
             if (abyssalCurse)
             {
-                if (Main.rand.Next(0, 8) == 0)
+                if (Main.rand.Next(0, 4) == 0)
                 {
                     dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height / 2, 14, 0f, 0f, 100, default(Color));
                     dust.color = new Color(255, 0, 255);
                     dust.alpha = 150;
-                    dust.scale = 0.75f;
+                    dust.scale = 1f;
                     dust.velocity.X = 0;
                     dust.velocity.Y = -0.5f;
                 }

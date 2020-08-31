@@ -63,14 +63,6 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void Efx(Player user)
         {
-            for (int i = 0; i < 18; i++)
-            {
-                Vector2 vel = new Vector2(13, 0).RotatedBy(MathHelper.ToRadians(20 * i));
-
-                Dust dust = Dust.NewDustPerfect(user.Center, 6, vel, 0, default(Color), 3);
-                dust.noGravity = true;
-                dust.noLight = true;
-            }
             TerraLeague.DustRing(14, user, new Color(255, 0, 255));
             TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 14, new Color(255, 0, 255), 3);
             base.Efx(user);
