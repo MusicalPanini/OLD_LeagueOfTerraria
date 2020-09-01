@@ -547,6 +547,7 @@ namespace TerraLeague
         public int hextechEvoltionCooldown = 0;
         public Vector2 hextechEvolutionAngle = Vector2.Zero;
         public bool immolate = false;
+        public bool excessiveForce = false;
 
 
         // Lifeline Garbage
@@ -788,6 +789,7 @@ namespace TerraLeague
             greymarkBuff = false;
             sunAmulet = false;
             immolate = false;
+            excessiveForce = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -2440,7 +2442,17 @@ namespace TerraLeague
             {
                 target.AddBuff(BuffType<HarbingersInferno>(), 180);
             }
+            if (excessiveForce)
+            {
+                player.ClearBuff(BuffType<ExcessiveForce>());
+                excessiveForce = false;
 
+                float angle = player.AngleTo(Main.MouseWorld);
+                for (int i = 0; i < 12; i++)
+                {
+                    Projectile.NewProjectileDirect(target.Center, new Vector2(12, 0).RotatedBy(angle + MathHelper.ToRadians((-30 + (5 * i)))), ProjectileType<AtlasGauntlets_ExcessiveForce>(), damage, knockback/2, player.whoAmI, target.whoAmI);
+                }
+            }
             FlashOfBrillianceEffect(player, damage, target);
 
             // Lifesteal calculation
@@ -3037,6 +3049,15 @@ namespace TerraLeague
                 if (hairLayer != null || faceLayer != null)
                 {
                     layers.Insert(16, hairLayer);
+                }
+            }
+
+            if (player.ownedProjectileCounts[ProjectileType<AtlasGauntlets_Right>()] > 0)
+            {
+                var armsLayer = layers.FirstOrDefault(x => x.Name == "Arms");
+                if (armsLayer != null)
+                {
+                    armsLayer.visible = false;
                 }
             }
 
