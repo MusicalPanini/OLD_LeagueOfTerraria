@@ -30,7 +30,7 @@ namespace TerraLeague.Items
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.CrystalShard, 30);
             recipe.AddIngredient(ItemID.Bottle, 1);
-            recipe.AddRecipeGroup("TerraLeague:GoldGroup", 2);
+            recipe.AddIngredient(ItemID.MeteoriteBar, 2);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this, 1);
             recipe.AddRecipe();
