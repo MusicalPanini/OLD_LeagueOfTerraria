@@ -10,7 +10,7 @@ namespace TerraLeague.Items
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hex Core MK1");
+            DisplayName.SetDefault("Artifical Hex Core");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
         }
