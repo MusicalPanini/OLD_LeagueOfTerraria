@@ -507,14 +507,16 @@ namespace TerraLeague
             }
         }
 
-        internal static void DustBorderRing(int radius, Vector2 center, int dustType, Color color, float scale)
+        internal static void DustBorderRing(int radius, Vector2 center, int dustType, Color color, float scale, bool noLight = true)
         {
+            float dis = Main.rand.NextFloat(MathHelper.TwoPi);
             for (int i = 0; i < radius / 5; i++)
             {
-                Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f)))) + center;
+                Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f))) + dis) + center;
 
                 Dust dustR = Dust.NewDustPerfect(pos, dustType, Vector2.Zero, 0, color, scale);
                 dustR.noGravity = true;
+                dustR.noLight = noLight;
             }
         }
 
@@ -782,7 +784,7 @@ namespace TerraLeague
         /// <returns></returns>
         internal static bool IsProjActuallyMeleeAttack(Projectile proj)
         {
-            if (proj.aiStyle == 19 || proj.aiStyle == 20 || proj.aiStyle == 75 || proj.type == ModContent.ProjectileType<DarksteelBattleaxe_Decimate>() || proj.type == ModContent.ProjectileType<DarkinScythe_ReapingSlash>() || proj.type == ModContent.ProjectileType<Severum_Slash>())
+            if (proj.aiStyle == 19 || proj.aiStyle == 20 || proj.aiStyle == 75 || proj.type == ModContent.ProjectileType<DarksteelBattleaxe_Decimate>() || proj.type == ModContent.ProjectileType<DarkinScythe_ReapingSlash>() || proj.type == ModContent.ProjectileType<Severum_Slash>() || proj.type == ModContent.ProjectileType<AtlasGauntlets_Left>() || proj.type == ModContent.ProjectileType<AtlasGauntlets_Right>())
                 return true;
             else
                 return false;
