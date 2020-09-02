@@ -51,7 +51,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new ColdSteel(3);
+            return new ColdSteel(3, 400);
         }
     }
 }

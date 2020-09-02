@@ -46,7 +46,7 @@ namespace TerraLeague.Items.AdvItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new ColdSteel(2);
+            return new ColdSteel(2, 250);
         }
     }
 }

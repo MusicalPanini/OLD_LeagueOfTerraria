@@ -10,10 +10,11 @@ namespace TerraLeague.Items.CustomItems.Passives
     public class ColdSteel : Passive
     {
         int SlowDuration;
-
-        public ColdSteel(int slowDurationSeconds)
+        int radius;
+        public ColdSteel(int slowDurationSeconds, int Radius)
         {
             SlowDuration = slowDurationSeconds;
+            radius = Radius;
         }
 
         public override string Tooltip(Player player, ModItem modItem)
@@ -57,7 +58,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 for (int i = 0; i < Main.npc.Length; i++)
                 {
                     NPC npc = Main.npc[i];
-                    float distance = 700;
+                    float distance = radius;
                     if (!Main.npc[i].townNPC && Main.npc[i].active && !Main.npc[i].immortal)
                     {
                         Vector2 newMove = npc.Center - player.Center;
@@ -84,6 +85,8 @@ namespace TerraLeague.Items.CustomItems.Passives
                 dust = Dust.NewDustDirect(new Vector2(user.position.X, user.position.Y), user.width, user.height, 67, 0f, 0f, 100, default(Color), 1f);
                 dust.velocity *= 3f;
             }
+
+            TerraLeague.DustBorderRing(radius, user.MountedCenter, 67, default(Color), 2f);
         }
     }
 }

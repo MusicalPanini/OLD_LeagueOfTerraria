@@ -59,7 +59,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetSecondaryPassive()
         {
-            return new ColdSteel(3);
+            return new ColdSteel(3, 350);
         }
     }
 }
