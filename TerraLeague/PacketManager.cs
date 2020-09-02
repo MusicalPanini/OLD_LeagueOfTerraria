@@ -477,7 +477,7 @@ namespace TerraLeague
             }
             else
             {
-                Main.player[fromWho].GetModPlayer<PLAYERGLOBAL>().ShatterEffect(Main.npc[target]);
+                Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ShatterEffect(Main.npc[target]);
             }
         }
     }
