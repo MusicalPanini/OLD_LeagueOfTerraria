@@ -58,7 +58,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
+            Main.PlaySound(new LegacySoundStyle(2, 29), Main.LocalPlayer.MountedCenter);
 
             TerraLeague.DustRing(261, player, new Color(0, 0, 255, 0));
         }
