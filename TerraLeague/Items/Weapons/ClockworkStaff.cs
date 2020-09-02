@@ -60,8 +60,9 @@ namespace TerraLeague.Items.Weapons
 
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             if (type == AbilityType.E)
-                return (int)(item.damage * 0.5);
+                return (int)(item.damage * 0.4 * modPlayer.healPowerLastStep);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -72,7 +73,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
             {
                 if (dam == DamageType.SUM)
-                    return 100;
+                    return (int)(60 * modPlayer.healPowerLastStep);
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -80,7 +81,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetBaseManaCost(AbilityType type)
         {
             if (type == AbilityType.E)
-                return 50;
+                return 75;
             else
                 return base.GetBaseManaCost(type);
         }
@@ -130,7 +131,7 @@ namespace TerraLeague.Items.Weapons
                             Player targetPlayer = Main.player[i];
                             if (targetPlayer.active)
                             {
-                                if (targetPlayer.Distance(player.MountedCenter) <= 300)
+                                if (player.Distance(targetPlayer.MountedCenter) <= 300 && targetPlayer.active && i != player.whoAmI)
                                 {
                                     player.GetModPlayer<PLAYERGLOBAL>().SendBuffPacket(BuffType<CommandProtect>(), duration, i, -1, player.whoAmI);
                                     player.GetModPlayer<PLAYERGLOBAL>().SendShieldPacket(shield, i, ShieldType.Basic, duration, -1, player.whoAmI, new Color(102, 243, 255));
