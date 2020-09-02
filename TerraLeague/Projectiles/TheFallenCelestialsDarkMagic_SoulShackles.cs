@@ -56,8 +56,6 @@ namespace TerraLeague.Projectiles
                     Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.Bottom.Y - npc.height / 4f), npc.width, npc.height / 4, 248, 0, -2, 0, new Color(159, 0, 255), 1.5f);
                     dust.noGravity = true;
 
-                    npc.AddBuff(BuffType<Slowed>(), 2);
-
                     if (projectile.timeLeft == 1)
                     {
                         projectile.friendly = true;
@@ -119,6 +117,7 @@ namespace TerraLeague.Projectiles
             {
                 projectile.ai[1] = 1;
                 projectile.friendly = false;
+                target.AddBuff(BuffType<Slowed>(), 180);
             }
             else
             {
