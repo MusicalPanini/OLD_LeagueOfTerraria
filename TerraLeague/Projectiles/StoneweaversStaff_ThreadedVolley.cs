@@ -63,9 +63,7 @@ namespace TerraLeague.Projectiles
                     projectile.velocity = new Vector2(0, -20).RotatedBy(projectile.rotation);
                     projectile.friendly = true;
                     projectile.tileCollide = true;
-                    SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound), projectile.Center);
-                    if (sound != null)
-                        sound.Pitch = -1;
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 19, -1f);
                 }
             }
             else

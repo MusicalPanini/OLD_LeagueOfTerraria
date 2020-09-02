@@ -48,9 +48,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.timeLeft == 90)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 89).WithPitchVariance(-0.2f), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -1f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 89, -1f);
 
                 projectile.position.Y += projectile.height;
                 projectile.velocity.Y = -projectile.height/8;

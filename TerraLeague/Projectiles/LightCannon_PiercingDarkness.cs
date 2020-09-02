@@ -101,9 +101,7 @@ namespace TerraLeague.Projectiles
                     projectile.extraUpdates = 16;
                     //projectile.velocity = new Vector2(10, 0).RotatedBy(projectile.rotation);
 
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 72, Terraria.Audio.SoundType.Sound), projectile.Center);
-                    if (sound != null)
-                        sound.Pitch = -1f;
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 72, -1f);
 
                     if (projectile.owner == Main.LocalPlayer.whoAmI)
                         player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)projectile.ai[0];

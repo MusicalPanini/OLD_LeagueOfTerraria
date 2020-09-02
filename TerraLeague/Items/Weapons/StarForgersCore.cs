@@ -203,9 +203,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                var efx = Main.PlaySound(new LegacySoundStyle(2, 45), player.Center);
-                if (efx != null)
-                    efx.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 45, -0.5f);
             }
         }
     }

@@ -32,10 +32,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.timeLeft == 180)
             {
-                
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 12), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -0.25f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 12, -0.25f);
             }
 
             Lighting.AddLight(projectile.position, Color.White.ToVector3());

@@ -67,16 +67,19 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 Main.PlaySound(new LegacySoundStyle(2, 71).WithPitchVariance(-0.2f), player.Center);
                 TerraLeague.DustRing(261, player, new Color(255, 170, 0, 0));
+                TerraLeague.DustBorderRing(200, player.MountedCenter, 261, new Color(255, 170, 0, 0), 2);
             }
             else if (type == 2)
             {
                 Main.PlaySound(new LegacySoundStyle(2, 71).WithPitchVariance(-0.2f), player.Center);
                 TerraLeague.DustRing(261, player, new Color(255, 170, 0, 0));
+                TerraLeague.DustBorderRing(200, player.MountedCenter, 261, new Color(255, 170, 0, 0), 2);
             }
             else
             {
                 Main.PlaySound(new LegacySoundStyle(2, 71).WithPitchVariance(-0.2f), player.Center);
                 TerraLeague.DustRing(261, player, new Color(255, 255, 0, 0));
+                TerraLeague.DustBorderRing(200, player.MountedCenter, 261, new Color(255, 255, 0, 0), 2);
             }
 
         }

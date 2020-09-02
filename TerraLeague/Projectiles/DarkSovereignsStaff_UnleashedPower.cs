@@ -60,9 +60,7 @@ namespace TerraLeague.Projectiles
                 projectile.velocity = new Vector2(12, 0).RotatedBy(projectile.AngleTo(target.Center));
                 projectile.extraUpdates = 1;
                 Main.PlaySound(SoundID.Item1, projectile.Center);
-                var sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 45), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = 0f;
+                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 45), projectile.Center);
             }
             if ((int)projectile.localAI[1] == 1)
             {

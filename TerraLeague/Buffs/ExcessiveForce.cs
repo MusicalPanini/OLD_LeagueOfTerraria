@@ -18,7 +18,6 @@ namespace TerraLeague.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            modPlayer.meleeModifer += 3;
             modPlayer.excessiveForce = true;
         }
 

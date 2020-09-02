@@ -236,9 +236,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
             {
                 Main.PlaySound(SoundID.NPCDeath1, player.MountedCenter);
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 71).WithPitchVariance(-0.2f), player.Center);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 71, -0.5f);
 
                 for (int i = 0; i < 10; i++)
                 {

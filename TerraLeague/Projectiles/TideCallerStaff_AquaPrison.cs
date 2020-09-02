@@ -70,7 +70,8 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/Sploosh").WithVolume(.7f), projectile.position);
+            if (Main.netMode != NetmodeID.Server)
+                Main.PlaySound(mod.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/Sploosh").WithVolume(.7f), projectile.position);
 
             for (int i = 0; i < 30; i++)
             {

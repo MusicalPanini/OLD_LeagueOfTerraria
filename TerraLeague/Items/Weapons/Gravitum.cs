@@ -125,15 +125,7 @@ namespace TerraLeague.Items.Weapons
                     return false;
                 }
 
-                for (int i = 0; i < Main.npc.Length - 1; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    if (npc.HasBuff(BuffType<GravitumMark>()) && npc.active && !npc.immortal)
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 999999, BuffType<GravitumMark>());
             }
             return base.CanCurrentlyBeCast(player, type);
         }
@@ -146,13 +138,15 @@ namespace TerraLeague.Items.Weapons
                 {
                     player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo -= 10;
                     player.CheckMana(GetBaseManaCost(type), true);
-                    for (int i = 0; i < Main.npc.Length - 1; i++)
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 999999, true);
+
+                    for (int i = 0; i < npcs.Count; i++)
                     {
-                        NPC npc = Main.npc[i];
-                        if (npc.HasBuff(BuffType<GravitumMark>()) && npc.active && !npc.immortal)
+                        NPC npc = Main.npc[npcs[i]];
+                        if (npc.HasBuff(BuffType<GravitumMark>()))
                         {
-                            Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ProjectileType<Gravitum_BindingEclipse>(), GetAbilityBaseDamage(player, type), 0, player.whoAmI, i);
                             SetCooldowns(player, type);
+                            Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ProjectileType<Projectiles.Gravitum_BindingEclipse>(), GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.MAG), 0, player.whoAmI, npcs[i]);
                         }
                     }
                 }
@@ -201,9 +195,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (Main.mouseLeftRelease)
                 {
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(12, 0), player.Center);
-                    if (sound != null)
-                        sound.Pitch = -0.5f;
+                    TerraLeague.PlaySoundWithPitch(player.MountedCenter, 12, 0, -0.5f);
                     CombatText.NewText(player.Hitbox, new Color(200, 37, 255), "NO AMMO");
                 }
                 return false;
@@ -251,9 +243,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 13), player.Center);
-                if (sound != null)
-                    sound.Pitch = 1f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 13, -1f);
             }
         }
     }

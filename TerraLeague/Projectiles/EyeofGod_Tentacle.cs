@@ -65,7 +65,6 @@ namespace TerraLeague.Projectiles
                     {
                         if (npc.Hitbox.Intersects(new Rectangle((int)projectile.Left.X - 128, (int)projectile.Top.Y + 32, projectile.width + 272, projectile.height)))
                         {
-
                             int direction = npc.Center.X > projectile.Center.X ? 1 : -1;
 
                             projectile.ai[1] = projectile.timeLeft;

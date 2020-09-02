@@ -183,9 +183,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 13), player.Center);
-                if (sound != null)
-                    sound.Pitch = 1f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 13, 1f);
             }
         }
     }

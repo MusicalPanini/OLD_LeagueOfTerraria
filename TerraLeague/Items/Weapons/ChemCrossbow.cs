@@ -125,20 +125,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
-                for (int i = 0; i < Main.npc.Length - 1; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    float distance = 700;
-                    if (player.Distance(Main.npc[i].Center) < distance)
-                    {
-                        if (npc.HasBuff(BuffType<DeadlyVenom>()) && npc.active && !npc.immortal)
-                        {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
+                return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 700, BuffType<DeadlyVenom>());
             }
 
             return base.CanCurrentlyBeCast(player, type);
@@ -167,18 +154,15 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type)))
                 {
                     player.CheckMana(GetBaseManaCost(type), true);
-                    for (int i = 0; i < Main.npc.Length - 1; i++)
-                    {
-                        NPC npc = Main.npc[i];
-                        float distance = 700;
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 700, true);
 
-                        if (player.Distance(Main.npc[i].Center) < distance)
+                    for (int i = 0; i < npcs.Count; i++)
+                    {
+                        NPC npc = Main.npc[npcs[i]];
+                        if (npc.HasBuff(BuffType<DeadlyVenom>()))
                         {
-                            if (npc.HasBuff(BuffType<DeadlyVenom>()) && npc.active && !npc.immortal)
-                            {
-                                Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Projectiles.ChemCrossbow_Contaminate>(), GetAbilityBaseDamage(player, type), 0, player.whoAmI, i);
-                                SetCooldowns(player, type);
-                            }
+                            SetCooldowns(player, type);
+                            Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Projectiles.ChemCrossbow_Contaminate>(), GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.E, DamageType.RNG) + GetAbilityScalingDamage(player, AbilityType.E, DamageType.MAG), 0, player.whoAmI, npcs[i]);
                         }
                     }
                 }

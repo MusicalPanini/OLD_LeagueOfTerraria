@@ -68,9 +68,7 @@ namespace TerraLeague.Projectiles
             {
                 Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 8, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f);
             }
-            SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 4, Terraria.Audio.SoundType.Sound), projectile.position);
-            if (sound != null)
-                sound.Pitch = -0.5f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 4, -0.5f);
             return true;
         }
     }

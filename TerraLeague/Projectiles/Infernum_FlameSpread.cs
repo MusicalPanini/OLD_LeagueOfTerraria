@@ -35,9 +35,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.timeLeft == 60)
             {
-                var sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 45), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = 0.5f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, 0.5f);
             }
 
             if (Main.rand.Next(0, 1) == 0)

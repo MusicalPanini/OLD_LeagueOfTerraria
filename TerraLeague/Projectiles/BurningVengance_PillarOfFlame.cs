@@ -36,10 +36,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.soundDelay == 0)
             {
-                SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 34, Terraria.Audio.SoundType.Sound), projectile.position);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
-
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 34, -0.5f);
                 projectile.soundDelay = 48;
             }
 

@@ -78,9 +78,8 @@ namespace TerraLeague.Projectiles
             projectile.friendly = true;
 
             TerraLeague.DustRing(67, projectile, default(Color));
-            SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 82));
-            if (sound != null)
-                sound.Pitch = -0.7f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
+
             base.Kill(timeLeft);
         }
 

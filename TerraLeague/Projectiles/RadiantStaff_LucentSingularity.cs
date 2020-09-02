@@ -89,37 +89,18 @@ namespace TerraLeague.Projectiles
                 if (projectile.soundDelay == 0)
                 {
                     projectile.soundDelay = 25;
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance efx = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 15), projectile.Center);
-                    if (efx != null)
-                        efx.Pitch = 0.5f - (projectile.timeLeft/300f);
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f - (projectile.timeLeft / 300f));
                 }
 
                 Dust dust = Dust.NewDustDirect(projectile.Center - (Vector2.One*8), 16, 16, 228, 0, 0, 0, default(Color), 1.5f);
-                dust.velocity *= 1.25f;
-                int displacement = Main.rand.Next(24);
+                dust.velocity *= 0;
+                dust.noGravity = true;
 
-                for (int i = 0; i < 18; i++)
-                {
-                    Vector2 pos = new Vector2(128, 0).RotatedBy(MathHelper.ToRadians((20 * i) + displacement)) + projectile.Center;
-
-                    Dust dustR = Dust.NewDustPerfect(pos, 246, Vector2.Zero, 0, default(Color), 1);
-                    dust.velocity *= 0;
-                    dust.noGravity = true;
-                }
+                TerraLeague.DustBorderRing(projectile.width / 2, projectile.Center, 246, default(Color), 1);
 
                 if (projectile.timeLeft % 15 == 0)
                 {
-                    for (int i = 0; i < Main.maxNPCs; i++)
-                    {
-                        NPC npc = Main.npc[i];
-                        if (!npc.friendly && !npc.immortal && !npc.townNPC && npc.active && npc.CanBeChasedBy())
-                        {
-                            if (npc.Hitbox.Intersects(projectile.Hitbox))
-                            {
-                                npc.AddBuff(BuffType<Buffs.Slowed>(), 15);
-                            }
-                        }
-                    }
+                    TerraLeague.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2f, BuffType<Buffs.Slowed>(), 15, true);
                 }
             }
 
@@ -137,9 +118,7 @@ namespace TerraLeague.Projectiles
             projectile.friendly = true;
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 20), projectile.position);
 
-            Microsoft.Xna.Framework.Audio.SoundEffectInstance efx = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 15), projectile.position);
-            if (efx != null)
-                efx.Pitch = 0.5f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f);
 
             TerraLeague.DustRing(246, projectile, default(Color));
 
@@ -157,6 +136,14 @@ namespace TerraLeague.Projectiles
             projectile.height = 256;
             projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (projectile.friendly)
+                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+            else
+                return false;
         }
     }
 }

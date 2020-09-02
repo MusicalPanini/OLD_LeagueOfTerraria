@@ -42,9 +42,8 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             TerraLeague.DustRing(112, projectile, default(Color));
-            SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 82));
-            if (sound != null)
-                sound.Pitch = -0.7f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
+
             base.Kill(timeLeft);
         }
     }

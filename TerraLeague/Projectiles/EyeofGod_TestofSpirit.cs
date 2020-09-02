@@ -91,10 +91,7 @@ namespace TerraLeague.Projectiles
             {
                 if ((int)projectile.ai[0] == 2f)
                 {
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 73), player.Center);
-                    if (sound != null)
-                        sound.Pitch = 0.5f;
-
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 73, 0.5f);
                     projectile.ai[0] = 1f;
                 }
 

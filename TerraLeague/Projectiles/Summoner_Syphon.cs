@@ -37,9 +37,7 @@ namespace TerraLeague.Projectiles
         {
             if(projectile.timeLeft == 305)
             {
-                SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(3, 54), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 54, -0.5f);
             }
 
             if (projectile.timeLeft == 301)

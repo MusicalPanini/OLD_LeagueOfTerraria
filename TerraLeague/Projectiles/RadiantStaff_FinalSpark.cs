@@ -59,9 +59,7 @@ namespace TerraLeague.Projectiles
                 if (projectile.timeLeft == 1000)
                 {
                     projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
-                    SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 13, Terraria.Audio.SoundType.Sound), projectile.Center);
-                    if (sound != null)
-                        sound.Pitch = -1f;
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 13, -1f);
                 }
 
                 projectile.velocity = Vector2.Zero;
@@ -73,9 +71,7 @@ namespace TerraLeague.Projectiles
                     projectile.velocity = new Vector2(0, -10).RotatedBy(projectile.rotation);
                     projectile.friendly = true;
                     projectile.extraUpdates = 40;
-                    SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 72, Terraria.Audio.SoundType.Sound), projectile.Center);
-                    if (sound != null)
-                        sound.Pitch = -1f;
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 72, -1f);
                 }
             }
 

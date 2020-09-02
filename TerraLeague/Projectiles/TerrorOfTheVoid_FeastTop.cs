@@ -42,9 +42,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.timeLeft == 100)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 8).WithPitchVariance(0.8f), player.MountedCenter);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 3, 8, -0.5f);
             }
 
             projectile.scale = 3 + 2 * (int)projectile.ai[0];
@@ -66,9 +64,7 @@ namespace TerraLeague.Projectiles
                     projectile.timeLeft = 48;
                     projectile.extraUpdates = 1;
                     projectile.ai[1] = 1;
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(3, 30).WithPitchVariance(-0.2f), player.MountedCenter);
-                    if (sound != null)
-                        sound.Pitch = -1f;
+                    TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 3, 30, -1f);
                 }
                 else
                 {

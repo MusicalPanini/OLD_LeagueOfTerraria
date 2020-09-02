@@ -74,9 +74,7 @@ namespace TerraLeague.Projectiles
                 Items.Weapons.NezuksGauntlet gaunt = new Items.Weapons.NezuksGauntlet();
                 modPlayer.magicFlatDamage += (int)(player.HeldItem.damage + gaunt.GetAbilityScalingDamage(player, AbilityType.W, DamageType.RNG) + gaunt.GetAbilityScalingDamage(player, AbilityType.W, DamageType.MAG));
 
-                SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 12), target.position);
-                if (sound != null)
-                    sound.Pitch = 0.5f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 12, 0.5f);
 
                 projectile.magic = true;
                 player.ManaEffect(40);

@@ -195,9 +195,7 @@ namespace TerraLeague.Items.Weapons
             {
                 if (Main.mouseLeftRelease)
                 {
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(12, 0), player.Center);
-                    if (sound != null)
-                        sound.Pitch = -0.5f;
+                    TerraLeague.PlaySoundWithPitch(player.MountedCenter, 12, 0, -0.5f);
                     CombatText.NewText(player.Hitbox, new Color(141, 252, 245), "NO AMMO");
                 }
                 return false;
@@ -244,9 +242,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 75), player.Center);
-                if (sound != null)
-                    sound.Pitch = -1f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 75, -1f);
             }
         }
     }

@@ -192,9 +192,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                var sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 95), player.MountedCenter);
-                if (sound != null)
-                    sound.Pitch = -1;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 95, -1f);
             }
         }
 

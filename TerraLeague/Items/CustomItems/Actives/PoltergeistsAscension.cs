@@ -46,9 +46,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void Efx(Player user)
         {
-            SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 117), user.Center);
-            if (sound != null)
-                sound.Pitch = 0.5f;
+            TerraLeague.PlaySoundWithPitch(user.MountedCenter, 2, 117, 0.5f);
         }
     }
 }

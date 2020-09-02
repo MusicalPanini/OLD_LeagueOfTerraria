@@ -55,20 +55,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
 
-                for (int i = 0; i < Main.npc.Length; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    float distance = radius;
-                    if (!Main.npc[i].townNPC && Main.npc[i].active && !Main.npc[i].immortal)
-                    {
-                        Vector2 newMove = npc.Center - player.Center;
-                        float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                        if (player.Distance(npc.Center) < distance)
-                        {
-                            npc.AddBuff(BuffType<Buffs.Slowed>(), SlowDuration * 60);
-                        }
-                    }
-                }
+                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, radius, BuffType<Buffs.Slowed>(), SlowDuration * 60, true);
             }
         }
 

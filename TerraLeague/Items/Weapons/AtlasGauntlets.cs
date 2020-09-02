@@ -177,10 +177,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(42, 24), player.Center);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
-
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 42, 24, -0.5f);
                 for (int j = 0; j < 10; j++)
                 {
                     Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Fire, 0, -10);

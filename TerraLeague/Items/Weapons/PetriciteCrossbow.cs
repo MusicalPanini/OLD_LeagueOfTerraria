@@ -166,10 +166,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                var sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 4), player.MountedCenter);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
-
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 4, -0.5f);
                 TerraLeague.DustRing(133, player, Color.White);
             }
         }

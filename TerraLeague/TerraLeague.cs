@@ -20,6 +20,8 @@ using Terraria.Graphics.Shaders;
 using TerraLeague.Backgrounds;
 using Terraria.GameContent.Shaders;
 using TerraLeague.Shaders;
+using Terraria.Audio;
+using Microsoft.Xna.Framework.Audio;
 
 namespace TerraLeague
 {
@@ -509,10 +511,10 @@ namespace TerraLeague
 
         internal static void DustBorderRing(int radius, Vector2 center, int dustType, Color color, float scale, bool noLight = true)
         {
-            float dis = Main.rand.NextFloat(MathHelper.TwoPi);
-            for (int i = 0; i < radius / 5; i++)
+            float dis = Main.rand.Next(360 / (radius / 5));
+            for (int i = 0; i < radius / 5 + 1; i++)
             {
-                Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f))) + dis) + center;
+                Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f)) + dis)) + center;
 
                 Dust dustR = Dust.NewDustPerfect(pos, dustType, Vector2.Zero, 0, color, scale);
                 dustR.noGravity = true;
@@ -874,6 +876,292 @@ namespace TerraLeague
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns if 2 points are within a specified range of eachother
+        /// </summary>
+        /// <param name="startingPoint"></param>
+        /// <param name="targetPoint"></param>
+        /// <param name="Range"></param>
+        /// <returns></returns>
+        public static bool IsPointWithinRange(Vector2 startingPoint, Vector2 targetPoint, float range)
+        {
+            return Vector2.Distance(startingPoint, targetPoint) <= range;
+        }
+
+        /// <summary>
+        /// Returns if a hitbox intersects with the range
+        /// </summary>
+        /// <param name="startingPoint"></param>
+        /// <param name="hitbox"></param>
+        /// <param name="Range"></param>
+        /// <returns></returns>
+        public static bool IsHitboxWithinRange(Vector2 startingPoint, Rectangle hitbox, float range)
+        {
+            if (IsPointWithinRange(hitbox.TopLeft(), startingPoint, range))
+            {
+                return true;
+            }
+            else if (IsPointWithinRange(hitbox.TopRight(), startingPoint, range))
+            {
+                return true;
+            }
+            else if (IsPointWithinRange(hitbox.BottomLeft(), startingPoint, range))
+            {
+                return true;
+            }
+            else if (IsPointWithinRange(hitbox.BottomRight(), startingPoint, range))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all NPCs array positions within a circular area
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <param name="includeSmallCreatures"></param>
+        /// <param name="includeTownNPCs"></param>
+        /// <param name="includeImmortal"></param>
+        /// <returns></returns>
+        public static List<int> GetAllNPCsInRange(Vector2 center, float radius, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        {
+            List<int> npcsInRange = new List<int>();
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active)
+                {
+                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    {
+                        if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
+                        {
+                            if (!includeImmortal && !npc.immortal || includeImmortal)
+                            {
+                                if (IsHitboxWithinRange(center, npc.Hitbox, radius))
+                                {
+                                    npcsInRange.Add(i);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return npcsInRange;
+        }
+
+        /// <summary>
+        /// Gives all NPCs withing a circular area a buff
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <param name="buff"></param>
+        /// <param name="buffDuration"></param>
+        /// <param name="includeSmallCreatures"></param>
+        /// <param name="includeTownNPCs"></param>
+        /// <param name="includeImmortal"></param>
+        public static void GiveNPCsInRangeABuff(Vector2 center, float radius, int buff, int buffDuration, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        {
+            List<int> npcs = GetAllNPCsInRange(center, radius, includeSmallCreatures, includeTownNPCs, includeImmortal);
+
+            for (int i = 0; i < npcs.Count; i++)
+            {
+                Main.npc[npcs[i]].AddBuff(buff, buffDuration);
+            }
+        }
+
+        /// <summary>
+        /// Returns if there is at least 1 NPC in range (Can check if it has a buff too)
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <param name="hasBuffType"></param>
+        /// <returns></returns>
+        public static bool IsThereAnNPCInRange(Vector2 center, float radius, int hasBuffType = -1)
+        {
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && !npc.immortal)
+                {
+                    if (IsHitboxWithinRange(center, npc.Hitbox, radius))
+                    {
+                        if (hasBuffType != -1)
+                        {
+                            if (npc.HasBuff(hasBuffType))
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the closests NPC to a point
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="doNotInclude"></param>
+        /// <param name="includeSmallCreatures"></param>
+        /// <param name="includeTownNPCs"></param>
+        /// <param name="includeImmortal"></param>
+        /// <returns></returns>
+        public static int GetClosestNPC(Vector2 position, float maxDistance, int doNotInclude = -1, int prioritiseNPC = -1, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        {
+            int currentChoice = -1;
+            float range = maxDistance;
+
+            if (prioritiseNPC != -1)
+            {
+                NPC npc = Main.npc[prioritiseNPC];
+                if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                {
+                    return prioritiseNPC;
+                }
+            }
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && npc.whoAmI != doNotInclude)
+                {
+                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    {
+                        if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
+                        {
+                            if (!includeImmortal && !npc.immortal || includeImmortal)
+                            {
+                                if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                                {
+                                    currentChoice = i;
+                                    range = Vector2.Distance(position, npc.Center);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return currentChoice;
+        }
+
+        /// <summary>
+        /// Gets the closests NPC to a point not including the given array
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="doNotInclude"></param>
+        /// <param name="includeSmallCreatures"></param>
+        /// <param name="includeTownNPCs"></param>
+        /// <param name="includeImmortal"></param>
+        /// <returns></returns>
+        public static int GetClosestNPC(Vector2 position, float maxDistance, int[] doNotInclude, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        {
+            int currentChoice = -1;
+            float range = maxDistance;
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && !doNotInclude.Contains(npc.whoAmI))
+                {
+                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    {
+                        if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
+                        {
+                            if (!includeImmortal && !npc.immortal || includeImmortal)
+                            {
+                                if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                                {
+                                    currentChoice = i;
+                                    range = Vector2.Distance(position, npc.Center);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return currentChoice;
+        }
+
+        public static int GetClosestNPC(Vector2 position, float maxDistance, Vector2 collisionPosition, int collitionWidth, int collitionHeight, int doNotInclude = -1, int prioritiseNPC = -1, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        {
+            int currentChoice = -1;
+            float range = maxDistance;
+
+            if (prioritiseNPC != -1)
+            {
+                NPC npc = Main.npc[prioritiseNPC];
+                if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                {
+                    if (Collision.CanHitLine(collisionPosition, collitionWidth, collitionHeight, npc.position, npc.width, npc.height))
+                    {
+                        return prioritiseNPC;
+                    }
+                }
+            }
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (npc.active && i != doNotInclude)
+                {
+                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    {
+                        if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
+                        {
+                            if (!includeImmortal && !npc.immortal || includeImmortal)
+                            {
+                                if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                                {
+                                    if (Collision.CanHitLine(collisionPosition, collitionWidth, collitionHeight, npc.position, npc.width, npc.height))
+                                    {
+                                        currentChoice = i;
+                                        range = Vector2.Distance(position, npc.Center);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return currentChoice;
+        }
+
+        /// <summary>
+        /// Plays a sound of specific pitch and returns the created instance
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="soundID"></param>
+        /// <param name="style"></param>
+        /// <param name="pitch"></param>
+        public static SoundEffectInstance PlaySoundWithPitch(Vector2 position, int soundID, int style, float pitch)
+        {
+            if (pitch > 1)
+                pitch = 1;
+            else if (pitch < -1)
+                pitch = -1;
+
+            var sound = Main.PlaySound(new LegacySoundStyle(soundID, style), position);
+            if (sound != null)
+                sound.Pitch = pitch;
+
+            return sound;
         }
     }
 }

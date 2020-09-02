@@ -160,9 +160,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 9), player.Center);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 9, -0.5f);
 
                 for (int j = 0; j < 10; j++)
                 {
@@ -175,9 +173,7 @@ namespace TerraLeague.Items.Weapons
             }
             else if (type == AbilityType.W)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 37), player.Center);
-                if (sound != null)
-                    sound.Pitch = -1f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 37, -1f);
 
                 int radius = 100;
                 for (int i = 0; i < radius / 5; i++)

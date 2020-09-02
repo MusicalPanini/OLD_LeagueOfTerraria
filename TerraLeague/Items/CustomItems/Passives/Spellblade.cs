@@ -62,18 +62,16 @@ namespace TerraLeague.Items.CustomItems.Passives
                 }
                 if (modPlayer.icyZone)
                 {
-                    for (int i = 0; i < Main.npc.Length; i++)
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 120 + 2 * (player.statDefense + modPlayer.armor), true);
+
+                    for (int i = 0; i < npcs.Count; i++)
                     {
-                        NPC DamTarget = Main.npc[i];
+                        NPC npc = Main.npc[npcs[i]];
 
-                        float damtoX = DamTarget.position.X + (float)DamTarget.width * 0.5f - player.Center.X;
-                        float damtoY = DamTarget.position.Y + (float)DamTarget.height * 0.5f - player.Center.Y;
-                        float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
-
-                        if (distance < 120 + 2*(player.statDefense + modPlayer.armor) && !DamTarget.townNPC && DamTarget.lifeMax > 5 && DamTarget.whoAmI != target.whoAmI)
+                        if (i != target.whoAmI)
                         {
-                            DamTarget.AddBuff(BuffType<Slowed>(), 300);
-                            player.ApplyDamageToNPC(DamTarget, player.statDefense + modPlayer.armor, 0, 0, false);
+                            npc.AddBuff(BuffType<Slowed>(), 300);
+                            player.ApplyDamageToNPC(npc, player.statDefense + modPlayer.armor, 0, 0, false);
                         }
                     }
 

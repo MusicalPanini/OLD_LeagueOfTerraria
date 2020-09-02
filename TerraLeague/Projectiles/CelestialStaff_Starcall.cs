@@ -78,9 +78,7 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 3), projectile.position);
-            Microsoft.Xna.Framework.Audio.SoundEffectInstance efx = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 4), projectile.position);
-            if (efx != null)
-                efx.Pitch = -1f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 4, -1f);
 
             Dust dust;
             for (int i = 0; i < 40; i++)

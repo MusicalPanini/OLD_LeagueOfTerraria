@@ -44,7 +44,7 @@ namespace TerraLeague.Projectiles
 
             if ((int)projectile.ai[0] == -1)
             {
-                projectile.ai[0] = FindTarget();
+                projectile.ai[0] = TerraLeague.GetClosestNPC(projectile.Center, 700, projectile.position, 24, 24, -1, Main.player[projectile.owner].MinionAttackTargetNPC);
             }
 
             if ((int)projectile.ai[0] != -1)
@@ -70,36 +70,6 @@ namespace TerraLeague.Projectiles
                 }
 
             }
-        }
-
-        public int FindTarget()
-        {
-            float range = 700;
-            int currentTarget = -1;
-
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC npc = Main.npc[i];
-
-                if (npc.active)
-                {
-                    if (npc.lifeMax != 5 && !npc.friendly && !npc.townNPC && !npc.immortal)
-                    {
-                        float dist = npc.Distance(projectile.Center);
-                        if (npc.Distance(projectile.Center) <= range)
-                        {
-                            range = dist;
-
-                            if (Collision.CanHitLine(projectile.position, 24, 24, npc.position, npc.width, npc.height))
-                            {
-                                currentTarget = i;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return currentTarget;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

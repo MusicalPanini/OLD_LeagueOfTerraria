@@ -45,6 +45,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
                 modPlayer.nightStalker = false;
+                player.ClearBuff(BuffType<Buffs.NightStalker>());
             }
 
             base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
@@ -60,6 +61,8 @@ namespace TerraLeague.Items.CustomItems.Passives
                 Efx(player, target);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                modPlayer.nightStalker = false;
+                player.ClearBuff(BuffType<Buffs.NightStalker>());
             }
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
@@ -71,28 +74,13 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (!modPlayer.nightStalker)
             {
-                bool Prox = false;
-                for (int i = 0; i < Main.npc.Length; i++)
-                {
-                    NPC checkTarget = Main.npc[i];
+                bool Prox = TerraLeague.IsThereAnNPCInRange(player.MountedCenter, proximity * 16);
 
-                    float checkX = checkTarget.position.X + (float)checkTarget.width * 0.5f - player.Center.X;
-                    float checkY = checkTarget.position.Y + (float)checkTarget.height * 0.5f - player.Center.Y;
-                    float distance = (float)System.Math.Sqrt((double)(checkX * checkX + checkY * checkY));
-
-                    if (distance < proximity * 16 && !checkTarget.friendly && checkTarget.life > 5 && !checkTarget.immortal)
-                    {
-                        Prox = true;
-                        break;
-                    }
-                }
                 if (!Prox || player.invis)
                 {
                     AddStat(player, modItem, 100, 2);
                 }
             }
-
-
 
             if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 100)
             {

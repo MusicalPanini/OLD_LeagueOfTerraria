@@ -32,20 +32,9 @@ namespace TerraLeague.Projectiles
 
             if (projectile.alpha >= 60)
             {
-                Rectangle area = new Rectangle((int)projectile.Center.X - 45, (int)projectile.Center.Y - 45, projectile.width + 90, projectile.height + 90);
-
-                for (int i = 0; i < Main.npc.Length; i++)
+                if (TerraLeague.IsThereAnNPCInRange(projectile.Center, 90))
                 {
-                    NPC npc = Main.npc[i];
-
-                    if (!npc.townNPC && npc.active)
-                    {
-                        if (npc.Hitbox.Intersects(area))
-                        {
-                            Prime();
-                            break;
-                        }
-                    }
+                    Prime();
                 }
             }
 
@@ -72,9 +61,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            var efx = Main.PlaySound(new LegacySoundStyle(2, 102), projectile.position);
-            if (efx != null)
-                efx.Pitch = -1;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 102, -1f);
 
             Dust dust;
             for (int i = 0; i < 50; i++)

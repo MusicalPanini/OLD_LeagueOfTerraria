@@ -24,7 +24,6 @@ namespace TerraLeague.Projectiles
             projectile.alpha = 255;
             projectile.scale = 1f;
             projectile.timeLeft = 60;
-            projectile.melee = true;
             projectile.extraUpdates = 4;
             //projectile.usesLocalNPCImmunity = true;
             //projectile.localNPCHitCooldown = -1;

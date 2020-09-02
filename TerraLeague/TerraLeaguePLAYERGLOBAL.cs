@@ -1327,10 +1327,13 @@ namespace TerraLeague
                 if (requiemChannelTime == 1 && player == Main.LocalPlayer)
                 {
                     int deathTomeDamage = player.inventory.Where(x => x.type == ItemType<DeathsingerTome>()).First().damage;
-                    for (int i = 0; i < Main.npc.Length; i++)
+
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.Center, 999999, true);
+
+                    for (int i = 0; i < npcs.Count; i++)
                     {
-                        if (!Main.npc[i].townNPC && !Main.npc[i].immortal && Main.npc[i].type != NPCID.DD2EterniaCrystal && Main.npc[i].active)
-                            Projectile.NewProjectile(new Vector2(Main.npc[i].Center.X, Main.npc[i].Center.Y - 500), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, i);
+                        NPC npc = Main.npc[npcs[i]];
+                        Projectile.NewProjectile(new Vector2(npc.Center.X, npc.Center.Y - 500), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, npc.whoAmI);
                     }
                 }
             }
@@ -1491,9 +1494,7 @@ namespace TerraLeague
                 }
                 else if (prophetSet)
                 {
-                    SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 103), player.MountedCenter);
-                    if (sound != null)
-                        sound.Pitch = -0.25f;
+                    TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 103, -0.25f);
 
                     for (int i = 0; i < player.maxMinions; i++)
                     {
@@ -2201,50 +2202,43 @@ namespace TerraLeague
                 {
                     int shotsfired = 0;
 
-                    for (int i = 0; i < 200; i++)
+                    int target1 = TerraLeague.GetClosestNPC(player.Center, 520, target.whoAmI);
+                    int target2 = -1;
+                    if (target1 != -1)
                     {
-                        NPC projTarget = Main.npc[i];
-
-                        //Getting the shooting trajectory
-                        float shootToX = projTarget.position.X + (float)projTarget.width * 0.5f - player.Center.X;
-                        float shootToY = projTarget.position.Y + (float)projTarget.height * 0.5f - player.Center.Y;
-                        float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
-
-                        //If the distance between the projectile and the live target is active
-                        if (distance < 520f && !projTarget.friendly && projTarget.active && projTarget.whoAmI != target.whoAmI && projTarget.lifeMax > 5 && !projTarget.dontTakeDamage && !projTarget.immortal)  //distance < 520 this is the projectile1 distance from the target if the tarhet is in that range the this projectile1 will shot the projectile2
-                        {
-                            //Dividing the factor of 2f which is the desired velocity by distance
-                            distance = 0.5f / distance;
-
-                            //Multiplying the shoot trajectory with distance times a multiplier if you so choose to
-                            shootToX *= distance * 4;
-                            shootToY *= distance * 4;
-
-                            if (windsFury)
-                            {
-                                Projectile.NewProjectile(player.Center.X, player.Center.Y, shootToX, shootToY, ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, projTarget.whoAmI);
-                            }
-                            else
-                            {
-                                Vector2 vel = new Vector2(shootToX, shootToY);
-                                vel.Normalize();
-
-                                /// Deuplicates the projectile and fires 2
-                                Projectile newProj = Projectile.NewProjectileDirect(player.Center, vel * proj.velocity.Length(), proj.type, (int)(damage * 0.4f), 0, player.whoAmI);
-                                //newProj.tileCollide = false;
-                                newProj.ranged = false;
-                            }
-
-                            Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 24);
-                            shotsfired++;
-                        }
-                        if (shotsfired >= 2)
-                            break;
+                        target2 = TerraLeague.GetClosestNPC(player.Center, 520, new int[] { target.whoAmI, target1 });
                     }
 
-                    if (shotsfired != 0)
-                        windsFuryCooldown = (int)(15 / rangedAttackSpeed);
+                    if (windsFury)
+                    {
+                        if (target1 != -1)
+                        {
+                            Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target1].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target1);
+                            if (target2 != -1)
+                            {
+                                Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target2].Center, 4), ProjectileType<Item_RunaansShot>(), (int)(damage * 0.4f), 0, player.whoAmI, target2);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (target1 != -1)
+                        {
+                            Projectile newProj = Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target1].Center, 10), proj.type, (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
+                            newProj.ranged = false;
+                            if (target2 != -1)
+                            {
+                                newProj = Projectile.NewProjectileDirect(player.MountedCenter, TerraLeague.CalcVelocityToPoint(player.MountedCenter, Main.npc[target2].Center, 10), proj.type, (int)(damage * 0.4f), 0, player.whoAmI, target.whoAmI);
+                                newProj.ranged = false;
+                            }
+                        }
+                    }
 
+                    Main.PlaySound(SoundID.Item, (int)player.position.X, (int)player.position.Y, 24);
+                    shotsfired++;
+
+                    if (target1 != -1)
+                        windsFuryCooldown = (int)(15 / rangedAttackSpeed);
                 }
 
                 // Lifesteal calculation
@@ -2344,6 +2338,9 @@ namespace TerraLeague
                 }
             }
 
+            if (excessiveForce)
+                meleeModifer += 3;
+
             // +-+-+-+-+FINALIZED DAMAGE MODIFIERS+-+-+-+-+
 
             player.armorPenetration += meleeArmorPen;
@@ -2359,83 +2356,44 @@ namespace TerraLeague
 
             // +-+-+-+-+FINALIZED DAMAGE+-+-+-+-+
 
-            if (ravenous)
+            if ((ravenous || titanic || tiamat) && cleaveCooldown == 0)
             {
-                if (cleaveCooldown == 0)
+                int cleaveDamage = 0;
+                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 200, true);
+
+                if (ravenous)
                 {
                     Cleave.Efx(player.whoAmI, 2);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2, player.whoAmI);
-                    int dam = (int)(MEL * 50/100f);
-
-                    damage += dam;
-
-                    for (int i = 0; i < Main.npc.Length; i++)
-                    {
-                        NPC DamTarget = Main.npc[i];
-
-                        float damtoX = DamTarget.position.X + (float)DamTarget.width * 0.5f - player.Center.X;
-                        float damtoY = DamTarget.position.Y + (float)DamTarget.height * 0.5f - player.Center.Y;
-                        float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
-                        int heals = 0;
-                        if (distance < 200 && DamTarget != target && !DamTarget.townNPC && DamTarget.active)
-                        {
-                            player.ApplyDamageToNPC(DamTarget, dam, 0, 0, crit);
-                            if (!DamTarget.immortal)
-                                heals += (int)((dam - (DamTarget.defense * 0.5)) * 0.05 );
-                        }
-                        lifeStealCharge += heals;
-                    }
+                    cleaveDamage = (int)(MEL * 50 / 100f);
                     cleaveCooldown = 45;
                 }
-            }
-            else if (titanic)
-            {
-                if (cleaveCooldown == 0)
+                else if (titanic)
                 {
                     Cleave.Efx(player.whoAmI, 1);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1, player.whoAmI);
-                    int dam = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
-
-                    damage += dam;
-
-                    for (int i = 0; i < Main.npc.Length; i++)
-                    {
-                        NPC DamTarget = Main.npc[i];
-
-                        float damtoX = DamTarget.position.X + (float)DamTarget.width * 0.5f - player.Center.X;
-                        float damtoY = DamTarget.position.Y + (float)DamTarget.height * 0.5f - player.Center.Y;
-                        float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
-
-                        if (distance < 200 && DamTarget != target && !DamTarget.townNPC)
-                        {
-                            player.ApplyDamageToNPC(DamTarget, dam, 0, 0, crit);
-                        }
-                    }
+                    cleaveDamage = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
                     cleaveCooldown = 45;
                 }
-            }
-            else if (tiamat)
-            {
-                if (cleaveCooldown == 0)
+                else if (tiamat)
                 {
                     Cleave.Efx(player.whoAmI, 0);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0, player.whoAmI);
-
-                    for (int i = 0; i < Main.npc.Length; i++)
-                    {
-                        NPC DamTarget = Main.npc[i];
-
-                        float damtoX = DamTarget.position.X + (float)DamTarget.width * 0.5f - player.Center.X;
-                        float damtoY = DamTarget.position.Y + (float)DamTarget.height * 0.5f - player.Center.Y;
-                        float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
-
-                        if (distance < 150 && DamTarget != target && !DamTarget.townNPC)
-                        {
-                            player.ApplyDamageToNPC(DamTarget, (int)(MEL * 30 / 100f), 0, 0, crit);
-                        }
-                    }
+                    cleaveDamage = (int)(MEL * 40 / 100f);
                     cleaveCooldown = 60;
                 }
+
+                for (int i = 0; i < npcs.Count; i++)
+                {
+                    NPC npc = Main.npc[npcs[i]];
+                    if (player.CanHit(npc))
+                    {
+                        player.ApplyDamageToNPC(npc, cleaveDamage, 0, 0, crit);
+                        if (ravenous)
+                            lifeToHeal += (int)((cleaveDamage - (npc.defense * 0.5)) * 0.05);
+                    }
+                }
+                damage += cleaveDamage;
             }
 
             if (flameHarbinger)
@@ -2446,7 +2404,6 @@ namespace TerraLeague
             {
                 player.ClearBuff(BuffType<ExcessiveForce>());
                 excessiveForce = false;
-
                 float angle = player.AngleTo(Main.MouseWorld);
                 for (int i = 0; i < 12; i++)
                 {
@@ -3718,9 +3675,7 @@ namespace TerraLeague
         /// <param name="target"></param>
         public void ShatterEffect(NPC target)
         {
-            SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 27), target.position);
-            if (sound != null)
-                sound.Pitch = -0.5f;
+            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 27, -0.5f);
             for (int i = 0; i < 20; i++)
             {
                 Dust dustIndex = Dust.NewDustDirect(target.position, target.width, target.height, 80, 0, -2, 0, default(Color), 1.5f);

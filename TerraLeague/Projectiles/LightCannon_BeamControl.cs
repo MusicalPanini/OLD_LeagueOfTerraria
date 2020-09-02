@@ -92,9 +92,7 @@ namespace TerraLeague.Projectiles
 
                 Projectile.NewProjectileDirect(projectile.Center, new Vector2(10, 0).RotatedBy(rot), ProjectileType<LightCannon_Beam>(), projectile.damage, projectile.knockBack, projectile.owner);
 
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 72, Terraria.Audio.SoundType.Sound), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -1f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 72, -1f);
             }
             base.Kill(timeLeft);
         }

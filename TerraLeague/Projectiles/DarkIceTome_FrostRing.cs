@@ -49,9 +49,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound));
-            if (sound != null)
-                sound.Pitch = -0.7f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
 
             for (int i = 0; i < 50; i++)
             {
@@ -88,6 +86,11 @@ namespace TerraLeague.Projectiles
             projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
 
             base.Kill(timeLeft);
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width/2);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

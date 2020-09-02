@@ -70,13 +70,8 @@ namespace TerraLeague.Projectiles
             Projectile.NewProjectile(projectile.position, projectile.oldVelocity.RotatedBy(MathHelper.ToRadians(90)), ProjectileType<EyeOfTheVoid_PlasmaSplit>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[0]);
             Projectile.NewProjectile(projectile.position, projectile.oldVelocity.RotatedBy(MathHelper.ToRadians(-90)), ProjectileType<EyeOfTheVoid_PlasmaSplit>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[0]);
 
-            var efx = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 45), projectile.Center);
-            if (efx != null)
-                efx.Pitch = 0.25f;
-
-            efx = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 91), projectile.Center);
-            if (efx != null)
-                efx.Pitch = 0.5f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, 0.25f);
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 91, 0.5f);
 
             for (int i = 0; i < 10; i++)
             {

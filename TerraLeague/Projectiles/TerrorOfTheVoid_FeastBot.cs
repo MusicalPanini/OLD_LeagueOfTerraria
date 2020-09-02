@@ -57,13 +57,8 @@ namespace TerraLeague.Projectiles
                     projectile.timeLeft = 48;
                     projectile.extraUpdates = 1;
                     projectile.ai[1] = 1;
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 6).WithPitchVariance(-0.2f), Main.player[projectile.owner].MountedCenter);
-                    if (sound != null)
-                        sound.Pitch = -0.7f;
-
-                    sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 1).WithPitchVariance(-0.2f), Main.player[projectile.owner].MountedCenter);
-                    if (sound != null)
-                        sound.Pitch = -0.3f;
+                    TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 3, 6, -0.2f);
+                    TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 2, 1, -0.3f);
                 }
                 else
                 {

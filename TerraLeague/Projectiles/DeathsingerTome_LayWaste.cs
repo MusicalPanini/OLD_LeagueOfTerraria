@@ -68,9 +68,7 @@ namespace TerraLeague.Projectiles
                 projectile.friendly = true;
                 projectile.frame++;
                 projectile.alpha = 20;
-                SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 54).WithPitchVariance(1f), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -0.6f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 54, -0.6f);
 
                 for (int i = 0; i < 15; i++)
                 {
@@ -83,7 +81,6 @@ namespace TerraLeague.Projectiles
                 for (int i = 0; i < 200; i++)
                 {
                     NPC npc = Main.npc[i];
-
                     if (projectile.Hitbox.Intersects(npc.Hitbox) && npc.active && !npc.townNPC)
                     {
                         totalHit++;

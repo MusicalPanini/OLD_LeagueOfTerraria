@@ -32,12 +32,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-
             if (projectile.timeLeft == 300)
             {
-                SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 45, Terraria.Audio.SoundType.Sound), projectile.position);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
             }
 
             if (projectile.ai[0] != -2)
@@ -119,9 +116,7 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 45, Terraria.Audio.SoundType.Sound), projectile.position);
-            if (sound != null)
-                sound.Pitch = -0.5f;
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
             Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode.WithVolume(1f), projectile.position);
 
             Dust dust;

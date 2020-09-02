@@ -38,11 +38,9 @@ namespace TerraLeague.Projectiles
             {
                 projectile.soundDelay = 20 + Main.rand.Next(40);
 
-                SoundEffectInstance sound = Main.PlaySound(SoundID.Item9, projectile.Center);
+                SoundEffectInstance sound = TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 2, 9, -1f);
                 if (sound != null)
                 {
-                    sound.Pitch = -1;
-
                     if (sound.Volume * 3 > 1)
                         sound.Volume = 1;
                     else
@@ -79,6 +77,8 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(new LegacySoundStyle(2, 89), projectile.position);
+            TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 2, 89, -1f);
+
             SoundEffectInstance sound = Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.Center);
             if (sound != null)
             {

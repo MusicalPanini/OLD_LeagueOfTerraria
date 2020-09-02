@@ -36,14 +36,8 @@ namespace TerraLeague.Projectiles
         {
             if ((int)projectile.ai[0] >= 0)
             {
-                SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -0.7f;
-
-                sound = Main.PlaySound(new LegacySoundStyle(2, 45, Terraria.Audio.SoundType.Sound), Main.player[(int)projectile.ai[0]].Center);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
-
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
                 projectile.ai[0] = -1;
             }
 
@@ -59,17 +53,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.timeLeft % 15 == 0)
             {
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    if (!npc.friendly && !npc.immortal && !npc.townNPC && npc.active && npc.CanBeChasedBy())
-                    {
-                        if (npc.Hitbox.Intersects(projectile.Hitbox))
-                        {
-                            npc.AddBuff(BuffType<Buffs.Slowed>(), 15);
-                        }
-                    }
-                }
+                TerraLeague.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2, BuffType<Buffs.Slowed>(), 15);
             }
 
             AnimateProjectile();
@@ -78,7 +62,9 @@ namespace TerraLeague.Projectiles
         public override bool? CanHitNPC(NPC target)
         {
             if (target.GetGlobalNPC<NPCsGLOBAL>().harbingersInferno)
-                return base.CanHitNPC(target);
+            {
+                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2f);
+            }
             else
                 return false;
         }

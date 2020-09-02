@@ -48,18 +48,15 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            for (int i = 0; i < Main.npc.Length - 1; i++)
-            {
-                NPC npc = Main.npc[i];
-                float distance = 700;
+            var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 700, true);
 
-                if (player.Distance(Main.npc[i].Center) < distance && npc.active && !npc.immortal)
+            for (int i = 0; i < npcs.Count; i++)
+            {
+                NPC npc = Main.npc[npcs[i]];
+                if (npc.GetGlobalNPC<NPCsGLOBAL>().pox)
                 {
-                    if (npc.GetGlobalNPC<NPCsGLOBAL>().pox)
-                    {
-                        modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
-                        Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Item_DiseaseHarvest>(), stackDamage + (int)(magicScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG/100d), 0, player.whoAmI, i, manaRestore);
-                    }
+                    modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                    Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Item_DiseaseHarvest>(), stackDamage + (int)(magicScaling * player.GetModPlayer<PLAYERGLOBAL>().MAG / 100d), 0, player.whoAmI, i, manaRestore);
                 }
             }
         }

@@ -146,7 +146,7 @@ namespace TerraLeague.Projectiles.Minions
                     }
                 }
             }
-            //!/ Main.NewText("<Fox> Target is still null...");
+
             if (target == null)
             {
                 float maxChase = targetRange;

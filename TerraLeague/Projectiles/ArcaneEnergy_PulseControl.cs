@@ -41,9 +41,7 @@ namespace TerraLeague.Projectiles
             if (projectile.soundDelay == 0 && projectile.localAI[0] < 180)
             {
                 projectile.soundDelay = 30;
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 15), projectile.position);
-                if (sound != null)
-                    sound.Pitch = -0.5f + projectile.localAI[0]/360f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 15, -0.5f + projectile.localAI[0] / 360f);
             }
 
             if (player.channel)
@@ -88,12 +86,8 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
 
             float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
-
             Projectile.NewProjectileDirect(projectile.Center, new Vector2(10, 0).RotatedBy(rot), ModContent.ProjectileType<ArcaneEnergy_Pulse>(), (int)(projectile.damage * (1 + projectile.localAI[0]/180f)), projectile.knockBack, projectile.owner, projectile.localAI[0]);
-
-            Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(3, 53), projectile.position);
-            if (sound != null)
-                sound.Pitch -= 0.5f;
+            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 3, 53, -0.5f);
 
             base.Kill(timeLeft);
         }

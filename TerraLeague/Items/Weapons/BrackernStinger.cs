@@ -172,9 +172,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 27), player.MountedCenter);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 27, -0.5f);
             }
             base.Efx(player, type);
         }

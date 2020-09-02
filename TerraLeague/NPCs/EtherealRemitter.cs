@@ -54,35 +54,33 @@ namespace TerraLeague.NPCs
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    for (int i = 0; i < Main.npc.Length; i++)
+                    var npcs = TerraLeague.GetAllNPCsInRange(npc.Center, effectRadius);
+
+                    for (int i = 0; i < npcs.Count; i++)
                     {
-                        NPC healTarget = Main.npc[i];
+                        NPC healTarget = Main.npc[npcs[i]];
 
-                        if (healTarget.active && !healTarget.immortal && !healTarget.friendly && !healTarget.townNPC && healTarget.lifeMax > 5)
+                        if (i != npc.whoAmI)
                         {
-                            if (npc.Distance(healTarget.Center) < effectRadius && healTarget.active && i != npc.whoAmI)
+                            int heal = (int)((healTarget.lifeMax - healTarget.life) * 0.3);
+
+                            if (heal == 0 && healTarget.lifeMax != healTarget.life)
+                                heal = 1;
+
+                            if (heal > 0)
                             {
-                                int heal = (int)((healTarget.lifeMax - healTarget.life) * 0.3);
+                                healTarget.life += heal;
+                                if (healTarget.life > healTarget.lifeMax)
+                                    healTarget.life = healTarget.lifeMax;
+                                healTarget.netUpdate = true;
 
-                                if (heal == 0 && healTarget.lifeMax != healTarget.life)
-                                    heal = 1;
-
-
-                                if (heal > 0)
+                                if (Main.netMode == NetmodeID.Server)
                                 {
-                                    healTarget.life += heal;
-                                    if (healTarget.life > healTarget.lifeMax)
-                                        healTarget.life = healTarget.lifeMax;
-                                    healTarget.netUpdate = true;
-
-                                    if (Main.netMode == NetmodeID.Server)
-                                    {
-                                        NetMessage.SendData(MessageID.CombatTextInt, -1, -1, null, (int)Color.DarkGreen.PackedValue, healTarget.position.X, healTarget.position.Y, (float)heal, 0, 0, 0);
-                                    }
-                                    else
-                                    {
-                                        CombatText.NewText(healTarget.Hitbox, Color.DarkGreen, heal);
-                                    }
+                                    NetMessage.SendData(MessageID.CombatTextInt, -1, -1, null, (int)Color.DarkGreen.PackedValue, healTarget.position.X, healTarget.position.Y, (float)heal, 0, 0, 0);
+                                }
+                                else
+                                {
+                                    CombatText.NewText(healTarget.Hitbox, Color.DarkGreen, heal);
                                 }
                             }
                         }
@@ -90,16 +88,7 @@ namespace TerraLeague.NPCs
                 }
 
                 TerraLeague.DustRing(261, npc, new Color(0, 255, 0, 0));
-                //Main.PlaySound(new LegacySoundStyle(2, 29), user.Center);
-
-
-                for (int i = 0; i < effectRadius / 5; i++)
-                {
-                    Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + npc.Center;
-
-                    Dust dustR = Dust.NewDustPerfect(pos, 267, Vector2.Zero, 0, new Color(0, 255, 0, 0), 2);
-                    dustR.noGravity = true;
-                }
+                TerraLeague.DustBorderRing(effectRadius, npc.Center, 267, new Color(0, 255, 0, 0), 2);
 
                 npc.ai[3] = 0;
             }

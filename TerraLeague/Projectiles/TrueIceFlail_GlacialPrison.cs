@@ -70,9 +70,7 @@ namespace TerraLeague.Projectiles
             if (Main.netMode != NetmodeID.Server)
             {
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 27), projectile.position);
-                SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 14), projectile.position);
-                if (sound != null)
-                    sound.Pitch = 1;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 14, 1f);
             }
             if (Main.LocalPlayer.whoAmI == projectile.owner)
             {

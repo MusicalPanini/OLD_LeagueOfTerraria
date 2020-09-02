@@ -30,23 +30,18 @@ namespace TerraLeague.Buffs
 
             if (player.buffTime[buffIndex] % 10 == 0 && Main.LocalPlayer.whoAmI == player.whoAmI)
             {
-                for (int i = 0; i < Main.maxNPCs; i++)
+                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 300, true);
+
+                for (int i = 0; i < npcs.Count; i++)
                 {
-                    NPC npc = Main.npc[i];
+                    NPC npc = Main.npc[npcs[i]];
 
-                    if (!npc.friendly && !npc.immortal && !npc.townNPC && npc.active && npc.CanBeChasedBy())
-                    {
-                        float distance = player.Distance(npc.Center);
-                        if (distance < 300)
-                        {
-                            float X = Main.rand.NextFloat(npc.Left.X - (npc.width / 2), npc.Right.X + (npc.width / 2));
-                            float Y = Main.rand.NextFloat(npc.Top.Y - (npc.height / 2), npc.Bottom.Y + (npc.height / 2));
-                            Vector2 pos = new Vector2(X, Y);
-                            Vector2 vel = (npc.Center - pos).SafeNormalize(Vector2.One);
+                    float X = Main.rand.NextFloat(npc.Left.X - (npc.width / 2), npc.Right.X + (npc.width / 2));
+                    float Y = Main.rand.NextFloat(npc.Top.Y - (npc.height / 2), npc.Bottom.Y + (npc.height / 2));
+                    Vector2 pos = new Vector2(X, Y);
+                    Vector2 vel = (npc.Center - pos).SafeNormalize(Vector2.One);
 
-                            Projectile.NewProjectileDirect(pos, vel, ModContent.ProjectileType<Projectiles.Severum_Onslaught>(), damage, 0, player.whoAmI, npc.whoAmI);
-                        }
-                    }
+                    Projectile.NewProjectileDirect(pos, vel, ModContent.ProjectileType<Projectiles.Severum_Onslaught>(), damage, 0, player.whoAmI, npc.whoAmI);
                 }
             }
 

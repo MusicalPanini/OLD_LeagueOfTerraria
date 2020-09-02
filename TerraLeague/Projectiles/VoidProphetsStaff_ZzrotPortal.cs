@@ -48,9 +48,8 @@ namespace TerraLeague.Projectiles
 
             if (projectile.ai[0] >= 60 * 6)
             {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 103), projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -0.25f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 103, -0.25f);
+
 
                 for (int i = 0; i < Main.player[projectile.owner].maxMinions + 2; i++)
                 {

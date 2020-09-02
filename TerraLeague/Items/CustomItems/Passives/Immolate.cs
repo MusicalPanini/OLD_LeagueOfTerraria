@@ -40,22 +40,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (Main.time % 240 == 0)
             {
-                for (int i = 0; i < Main.npc.Length; i++)
-                {
-                    NPC DamTarget = Main.npc[i];
-
-                    float damtoX = DamTarget.position.X + (float)DamTarget.width * 0.5f - player.Center.X;
-                    float damtoY = DamTarget.position.Y + (float)DamTarget.height * 0.5f - player.Center.Y;
-                    float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
-
-                    if (distance < effectRadius && !DamTarget.townNPC && DamTarget.lifeMax > 5 && !DamTarget.immortal)
-                    {
-                        if (Main.netMode == NetmodeID.MultiplayerClient)
-                            DamTarget.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendAddBuff(-1, player.whoAmI, (weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240, i);
-
-                        DamTarget.AddBuff((weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240);
-                    }
-                }
+                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, (weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240, true);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)

@@ -67,26 +67,16 @@ namespace TerraLeague.Projectiles
                             dust.noGravity = true;
                         }
 
-                        Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(3, 54, Terraria.Audio.SoundType.Sound), projectile.Center);
+                        TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 54, -0.5f);
+                        var sound = TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 4, -1f);
                         if (sound != null)
-                            sound.Pitch = -0.5f;
-
-                        sound = Main.PlaySound(new LegacySoundStyle(3, 4, Terraria.Audio.SoundType.Sound), projectile.position);
-                        if (sound != null)
-                        {
-                            sound.Pitch = -1f;
                             sound.Volume = sound.Volume / 3f;
-                        }
                     }
 
                     if (projectile.soundDelay == 0)
                     {
                         projectile.soundDelay = 25;
-                        Microsoft.Xna.Framework.Audio.SoundEffectInstance efx = Main.PlaySound(new LegacySoundStyle(2, 15), projectile.Center);
-                        if (efx != null)
-                        {
-                            efx.Pitch = 0.5f - (projectile.timeLeft / 180f);
-                        }
+                        TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 15, 0.5f - (projectile.timeLeft / 180f));
                     }
                 }
                 else

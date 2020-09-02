@@ -159,28 +159,12 @@ namespace TerraLeague.Projectiles
         {
             projectile.netUpdate = true;
 
-            NPC closest = null;
-            float cDistance = 99999;
-            for (int i = 0; i < 200; i++)
-            {
-                NPC target = Main.npc[i];
-                if (!target.townNPC && !HaveHit.Contains(target.whoAmI) && !target.dontTakeDamage)
-                {
-                    float shootToX = target.Center.X - projectile.Center.X;
-                    float shootToY = target.Center.Y - projectile.Center.Y;
-                    float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+            int npc = TerraLeague.GetClosestNPC(projectile.Center, 480, HaveHit);
 
-                    if (distance < 480f && !target.friendly && target.active && distance < cDistance)
-                    {
-                        closest = target;
-                        cDistance = distance;
-                    }
-                }
-            }
-            if (closest != null)
+            if (npc != -1)
             {
-                closest.immune[projectile.owner] = 0;
-                return closest.whoAmI;
+                Main.npc[npc].immune[projectile.owner] = 0;
+                return npc;
             }
             else
             {

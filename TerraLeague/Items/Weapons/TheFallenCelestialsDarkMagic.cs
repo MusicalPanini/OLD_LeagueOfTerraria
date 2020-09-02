@@ -138,18 +138,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.R)
             {
-                for (int i = 0; i < Main.npc.Length; i++)
-                {
-                    NPC target = Main.npc[i];
-                    if (!target.townNPC && !target.immortal && target.active)
-                    {
-                        if (player.Distance(target.Center) <= range)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
+                return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, range);
             }
 
             return base.CanCurrentlyBeCast(player, type);
@@ -175,26 +164,22 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
+                    Vector2 position = player.MountedCenter;
+                    Vector2 velocity = Vector2.Zero;
+                    int projType = ProjectileType<TheFallenCelestialsDarkMagic_SoulShackles>();
+                    int knockback = 0;
+                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
+
                     DoEfx(player, type);
-                    for (int i = 0; i < Main.npc.Length; i++)
+                    player.CheckMana(GetBaseManaCost(type), true);
+
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, range, true);
+
+                    for (int i = 0; i < npcs.Count; i++)
                     {
-                        NPC target = Main.npc[i];
-                        if (!target.townNPC && !target.immortal && target.active)
-                        {
-                            if (player.Distance(target.Center) <= range)
-                            {
-                                Vector2 position = player.MountedCenter;
-                                Vector2 velocity = Vector2.Zero;
-                                int projType = ProjectileType<TheFallenCelestialsDarkMagic_SoulShackles>();
-                                int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
-                                int knockback = 0;
-
-                                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, i);
-                            }
-                        }
+                        SetCooldowns(player, type);
+                        Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, npcs[i]);
                     }
-
-                    SetCooldowns(player, type);
                 }
             }
             else
@@ -249,9 +234,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void Efx(Player player, AbilityType type)
         {
-            SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(3, 54, Terraria.Audio.SoundType.Sound), player.Center);
-            if (sound != null)
-                sound.Pitch = -0.2f;
+            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 3, 54, -0.2f);
 
             for (int i = 0; i < 40; i++)
             {

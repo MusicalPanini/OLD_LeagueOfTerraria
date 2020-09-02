@@ -65,10 +65,7 @@ namespace TerraLeague.Projectiles
             if (framecount2 >= 30)
             {
                 framecount2 = 0;
-               
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(3, 53), projectile.position); ;
-                if (sound != null)
-                    sound.Pitch = 0.25f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 53, 0.25f);
             }
         }
     }

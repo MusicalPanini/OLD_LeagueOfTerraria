@@ -34,9 +34,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.timeLeft == 14)
             {
-                var sound = Main.PlaySound(SoundID.Item1, projectile.Center);
-                if (sound != null)
-                    sound.Pitch = -1f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 1, -1);
             }
 
             if (projectile.timeLeft > 3)

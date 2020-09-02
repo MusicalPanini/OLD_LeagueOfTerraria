@@ -25,29 +25,20 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-                base.UpdateAccessory(player, modItem);
+            base.UpdateAccessory(player, modItem);
         }
 
         public override void PostPlayerUpdate(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            int npcCount = 0;
-            for (int i = 0; i < Main.npc.Length; i++)
+            var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 500);
+            if (npcs.Count >= enemies)
             {
-                NPC target = Main.npc[i];
-
-                if (player.Distance(target.Center) < 700 && target.active && !target.townNPC && target.lifeMax > 5 && !target.immortal)
-                    npcCount++;
-                if (npcCount >= enemies)
-                {
-                    player.AddBuff(BuffType<StonePlating>(), 5);
-                    modPlayer.armor += armorResist;
-                    modPlayer.resist += armorResist;
-                    break;
-                }
+                player.AddBuff(BuffType<StonePlating>(), 5);
+                modPlayer.armor += armorResist;
+                modPlayer.resist += armorResist;
             }
-
             base.PostPlayerUpdate(player, modItem);
         }
     }

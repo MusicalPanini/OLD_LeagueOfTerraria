@@ -34,6 +34,8 @@ namespace TerraLeague.Projectiles
             projectile.scale = 1;
             projectile.alpha = 180;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 20;
         }
 
         public override void AI()
@@ -67,20 +69,19 @@ namespace TerraLeague.Projectiles
 
         public void AnimateProjectile()
         {
-            projectile.friendly = false;
             projectile.frameCounter++;
-            framecount2++;
             if (projectile.frameCounter >= 5)
             {
                 projectile.frame++;
                 projectile.frame %= 4; 
                 projectile.frameCounter = 0;
             }
-            if (framecount2 >= 20)
-            {
-                projectile.friendly = true;
-                framecount2 = 0;
-            }
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+
+            return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
         }
     }
 }

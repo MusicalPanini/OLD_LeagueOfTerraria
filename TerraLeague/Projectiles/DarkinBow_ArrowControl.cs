@@ -84,9 +84,7 @@ namespace TerraLeague.Projectiles
 
             Projectile.NewProjectileDirect(projectile.Center, new Vector2(6 + (10 * projectile.localAI[0] / 90f), 0).RotatedBy(rot), (int)projectile.ai[0], projectile.damage * (int)(1 + projectile.localAI[0] / 30f), projectile.knockBack, projectile.owner, projectile.localAI[0] / 180f);
 
-            Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(SoundID.Item5, player.Center);
-            if (sound != null)
-                sound.Pitch = 0 - (projectile.localAI[0] / 90f);
+            TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 5, 0 - (projectile.localAI[0] / 90f));
 
             base.Kill(timeLeft);
         }

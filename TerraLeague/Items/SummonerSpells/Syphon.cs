@@ -54,19 +54,12 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override void DoEffect(Player player, int spellSlot)
         {
-            for (int i = 0; i < Main.npc.Length; i++)
+            var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 600);
+
+            for (int i = 0; i < npcs.Count; i++)
             {
-                float distance = 700;
-                if (!Main.npc[i].townNPC && Main.npc[i].active && !Main.npc[i].immortal && !Main.npc[i].dontTakeDamage)
-                {
-                    Vector2 newMove = Main.npc[i].Center - player.Center;
-                    float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                    if (player.Distance(Main.npc[i].Center) < distance)
-                    {
-                        Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, i);
-                        SetCooldowns(player, spellSlot);
-                    }
-                }
+                Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, i);
+                SetCooldowns(player, spellSlot);
             }
         }
     }

@@ -49,9 +49,7 @@ namespace TerraLeague.Projectiles
                     projectile.velocity = new Vector2(-10 * (int)projectile.ai[0], -10);
                     projectile.extraUpdates = 7;
                     projectile.ai[1] = 1;
-                    Microsoft.Xna.Framework.Audio.SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 71).WithPitchVariance(-0.2f), projectile.Center);
-                    if (sound != null)
-                        sound.Pitch = -0.5f;
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 71, -0.5f);
                 }
 
                 projectile.alpha -= 15;

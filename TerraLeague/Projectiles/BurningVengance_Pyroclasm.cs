@@ -44,9 +44,7 @@ namespace TerraLeague.Projectiles
             {
                 if (projectile.timeLeft == 314)
                 {
-                    SoundEffectInstance sound = Main.PlaySound(new LegacySoundStyle(2, 45, Terraria.Audio.SoundType.Sound), projectile.Center);
-                    if (sound != null)
-                        sound.Pitch = -0.5f;
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 4534, -0.5f);
                 }
 
                 projectile.friendly = false;
@@ -197,28 +195,12 @@ namespace TerraLeague.Projectiles
         {
             projectile.netUpdate = true;
 
-            NPC closest = null;
-            float cDistance = 99999;
-            for (int i = 0; i < 200; i++)
-            {
-                NPC target = Main.npc[i];
-                if (!target.dontTakeDamage && target.active && target.whoAmI != projectile.ai[0])
-                {
-                    float shootToX = target.Center.X - projectile.Center.X;
-                    float shootToY = target.Center.Y - projectile.Center.Y;
-                    float distance = (float)System.Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
+            int npc = TerraLeague.GetClosestNPC(projectile.Center, 600, (int)projectile.ai[0]);
 
-                    if (distance < 600f && !target.friendly && target.active && distance < cDistance && !target.immortal)
-                    {
-                        closest = target;
-                        cDistance = distance;
-                    }
-                }
-            }
-            if (closest != null)
+            if (npc != -1)
             {
-                closest.immune[projectile.owner] = 0;
-                return closest.whoAmI;
+                Main.npc[npc].immune[projectile.owner] = 0;
+                return npc;
             }
             else
             {
@@ -230,9 +212,7 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.penetrate == 0)
             {
-                SoundEffectInstance sound = Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 45, Terraria.Audio.SoundType.Sound), projectile.position);
-                if (sound != null)
-                    sound.Pitch = -0.5f;
+                TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
             }
 
             base.Kill(timeLeft);
