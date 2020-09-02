@@ -73,5 +73,12 @@ namespace TerraLeague.Projectiles
             width = height = 10; 
             return true;
         }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (!Main.player[projectile.owner].CanHit(target))
+                return false;
+            return base.CanHitNPC(target);
+        }
     }
 }
