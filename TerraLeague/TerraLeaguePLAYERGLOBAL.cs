@@ -3621,6 +3621,11 @@ namespace TerraLeague
             manaRegen = (int)(manaRegen * trueModifier);
             //if (player.manaRegen < 2)
             //    player.manaRegen = 2;
+
+            // Out of combat regen
+            if (CombatTimer >= 240)
+                manaRegen *= 2;
+
             if (manaRegenTimer == 60 && player.statMana < player.statManaMax2)
                 player.statMana += manaRegen;
 
