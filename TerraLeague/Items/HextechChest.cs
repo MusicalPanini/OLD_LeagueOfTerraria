@@ -45,15 +45,15 @@ namespace TerraLeague.Items
             Main.LocalPlayer.ConsumeItem(ItemType<HextechKey>());
 
             // Money
-            if (Main.rand.Next(2) == 0)
+            if (Main.rand.NextFloat() <= 0.5f)
             {
-                player.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(1, 8));
+                player.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(3, 10));
                 hasDroppedSomething = true;
             }
 
-            // Ores
-            if (Main.rand.Next(2) == 0)
-            {
+			// Ores
+			if (Main.rand.NextFloat() <= 0.75f)
+			{
                 // Sunstone, Brass, Petricite | 3
                 int upperLimit = 2;
 
@@ -115,23 +115,23 @@ namespace TerraLeague.Items
                 hasDroppedSomething = true;
             }
 
-            // Chest
-            if (Main.rand.Next(10) == 0)
-            {
+			// Chest
+			if (Main.rand.NextFloat() <= 0.1f)
+			{
                 player.QuickSpawnItem(ItemType<HextechKey>());
                 player.QuickSpawnItem(ItemType<HextechChest>());
             }
 
-			if (Main.rand.Next(20) == 0)
+			if (Main.rand.NextFloat() <= 0.1f)
 			{
-				if (Main.rand.Next(3) == 0)
+				if (Main.rand.NextFloat() <= 0.666f)
 				{
-					List<int> items = new List<int>() { ItemType<Accessories.FlashofBrilliance>(), };
-					player.QuickSpawnItem(items[Main.rand.Next(items.Count)]);
+					player.QuickSpawnItem(ItemType<HexCrystal>());
 				}
 				else
 				{
-					player.QuickSpawnItem(ItemType<HexCrystal>());
+					List<int> items = new List<int>() { ItemType<Accessories.FlashofBrilliance>(), };
+					player.QuickSpawnItem(items[Main.rand.Next(items.Count)]);
 				}
 				hasDroppedSomething = true;
 			}
