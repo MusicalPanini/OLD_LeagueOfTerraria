@@ -35,6 +35,8 @@ namespace TerraLeague.Items.CompleteItems
             player.magicDamage += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 5;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
+            player.buffImmune[BuffID.Slow] = true;
+            player.buffImmune[BuffID.Chilled] = true;
         }
 
         public override void AddRecipes()
