@@ -991,7 +991,7 @@ namespace TerraLeague.NPCs
                         (npc.width / 128f) + (CausticStacks >= 5 ? (timeLeft > 210 ? ((timeLeft - 210) / 30f) : 0f) : 0.25f),
                         SpriteEffects.None,
                         0f
-                    );
+                    ); ;
                 }
             }
 
@@ -1168,6 +1168,17 @@ namespace TerraLeague.NPCs
             {
                 Main.player[attacker].ApplyDamageToNPC(Main.npc[vesselTarget], (int)(damage * 0.5), 0, 0, crit);
             }
+        }
+
+        public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            if (CausticWounds)
+            {
+                position = new Vector2(position.X, (npc.position.Y + npc.height * 1.25f) + (50 * ((npc.width / 128f) + 0.25f) ));
+                return true;
+            }
+
+            return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
         }
     }
 }
