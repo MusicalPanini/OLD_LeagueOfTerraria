@@ -52,8 +52,8 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.R)
             {
-                return "Become invulnerable and infest a marked enemy for 4 seconds ripping yourself from them" +
-                "\nAfter 1 second, you can recast to eject from the enemy early";
+                return "Become invulnerable and infest a marked enemy for 4 seconds" +
+                "\nAfter 1 second, you can recast to rip yourself from them dealing damage";
             }
             else if (type == AbilityType.Q)
             {
