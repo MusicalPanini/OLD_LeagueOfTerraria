@@ -176,7 +176,7 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<ArcaneEnergy_PulseControl>();
             item.useTurn = true;
             item.noUseGraphic = true;
-            item.mana = 20;
+            item.mana = 40;
             item.autoReuse = false;
             item.channel = true;
             item.noMelee = true;
