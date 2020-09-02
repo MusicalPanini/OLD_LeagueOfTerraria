@@ -102,6 +102,7 @@ namespace TerraLeague
         public const byte Biome = 10;
         public const byte NPCRetarget = 11;
         public const byte Shatter = 12;
+        public const byte CausticWounds = 13;
 
         public const byte Stoneplate = 50;
         #endregion
@@ -146,6 +147,9 @@ namespace TerraLeague
                     break;
                 case (Shatter):
                     ReceiveShatterEFX(reader, fromWho);
+                    break;
+                case (CausticWounds):
+                    ReceiveCausticEFX(reader, fromWho);
                     break;
             }
         }
@@ -477,7 +481,31 @@ namespace TerraLeague
             }
             else
             {
-                Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ShatterEffect(Main.npc[target]);
+                Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().CausticWoundsEffect(Main.npc[target]);
+            }
+        }
+
+        public void SendCausticEFX(int toWho, int fromWho, int target)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(CausticWounds, fromWho);
+                packet.Write(target);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Caustic", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveCausticEFX(BinaryReader reader, int fromWho)
+        {
+            int target = reader.ReadInt32();
+            TerraLeague.Log("[DEBUG] - Received Caustic", new Color(80, 80, 0));
+            if (Main.netMode == NetmodeID.Server)
+            {
+                SendCausticEFX(-1, fromWho, target);
+            }
+            else
+            {
+                Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().CausticWoundsEffect(Main.npc[target]);
             }
         }
     }

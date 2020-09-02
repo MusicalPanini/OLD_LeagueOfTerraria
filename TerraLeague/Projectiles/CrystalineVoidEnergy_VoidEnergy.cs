@@ -68,6 +68,11 @@ namespace TerraLeague.Projectiles
 
                 projectile.netUpdate = true;
                 projectile.ai[0] = 1;
+
+                modPlayer.CausticWoundsEffect(target);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    modPlayer.PacketHandler.SendCausticEFX(-1, projectile.owner, target.whoAmI);
+
             }
             if (stacks > 5)
             {
@@ -82,16 +87,6 @@ namespace TerraLeague.Projectiles
 
         public override void Kill(int timeLeft)
         {
-            if (projectile.ai[0] == 1)
-            {
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 122), projectile.Center);
-                for (int i = 0; i < 8; i++)
-                {
-                    Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
-
-                }
-            }
-
             base.Kill(timeLeft);
         }
 

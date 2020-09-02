@@ -3730,6 +3730,15 @@ namespace TerraLeague
                 PacketHandler.SendShatterEFX(-1, player.whoAmI, target.whoAmI);
         }
 
+        public void CausticWoundsEffect(NPC target)
+        {
+            Main.PlaySound(new LegacySoundStyle(2, 122), target.Center);
+            for (int i = 0; i < 8; i++)
+            {
+                Dust dust = Dust.NewDustDirect(target.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
+            }
+        }
+
         public void SetTempUseItem(int itemToUse)
         {
             oldUsedInventorySlot = player.selectedItem;
