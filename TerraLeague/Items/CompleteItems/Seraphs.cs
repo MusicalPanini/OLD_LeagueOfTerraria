@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Seraph's Embrase");
-            Tooltip.SetDefault("6% increased magic damage" +
+            Tooltip.SetDefault("6% increased magic and minion damage" +
                 "\nIncreases maximum mana by 100" +
                 "\nAbility cooldown reduced by 10%" +
                 "\nCan only have one AWE item equiped at a time");
@@ -55,6 +55,7 @@ namespace TerraLeague.Items.CompleteItems
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             player.magicDamage += 0.06f;
+            modPlayer.TrueMinionDamage += 0.06;
             modPlayer.Cdr -= 0.1;
             player.statManaMax2 += 100;
 

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Archangel's Staff");
-            Tooltip.SetDefault("6% increased magic damage" +
+            Tooltip.SetDefault("6% increased magic and minion damage" +
                 "\nIncreases maximum mana by 25" +
                 "\nAbility cooldown reduced by 10%" +
                 "\nIf MANA CHARGE is fully stacked, this will upgrade into Seraph's Embrase" +
@@ -48,6 +48,7 @@ namespace TerraLeague.Items.CompleteItems
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             player.magicDamage += 0.06f;
+            modPlayer.TrueMinionDamage += 0.06;
             modPlayer.Cdr -= 0.1;
             player.statManaMax2 += 25;
             modPlayer.manaCharge = true;

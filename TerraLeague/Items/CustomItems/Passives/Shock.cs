@@ -23,7 +23,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: SHOCK -] [c/99e6ff:Melee damage will consume " + percentManaUsage + "% of your current mana and deal " + percentManaDamage + "% of your current mana as additional damage]" +
+            return "[c/0099cc:Passive: SHOCK -] [c/99e6ff:Melee and ranged damage will consume " + percentManaUsage + "% of your current mana and deal " + percentManaDamage + "% of your current mana as additional damage]" +
                 "\n[c/0099cc:This effect is dissable while below 20% max mana]";
         }
 
@@ -46,12 +46,13 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void NPCHitWithProjectile(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection, ref int OnHitDamage, Player player, ModItem modItem)
         {
-            if (proj.melee) /*&& !TerraLeague.DoNotCountRangedDamage(proj)*/
+            if (proj.melee || proj.ranged) /*&& !TerraLeague.DoNotCountRangedDamage(proj)*/
             {
                 if (player.statManaMax2 / 5 < player.statMana)
                 {
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                     modPlayer.meleeFlatDamage += (int)(player.statMana * percentManaDamage * 0.01);
+                    modPlayer.rangedFlatDamage += (int)(player.statMana * percentManaDamage * 0.01);
                     player.CheckMana((int)(player.statMana * percentManaUsage * 0.01), true);
                 }
             }

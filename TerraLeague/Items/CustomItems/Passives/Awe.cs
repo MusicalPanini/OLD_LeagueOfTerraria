@@ -24,7 +24,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 text += "\n[c/99e6ff:Gain 1% melee and ranged damage per " + manaToADConversion + " max mana]";
 
             if (manaToAPConversion > 0)
-                text += "\n[c/99e6ff:Gain 1% magic damage per " + manaToAPConversion + " max mana]";
+                text += "\n[c/99e6ff:Gain 1% magic and minion damage per " + manaToAPConversion + " max mana]";
 
             return text;
         }
@@ -41,7 +41,10 @@ namespace TerraLeague.Items.CustomItems.Passives
             }
 
             if (manaToAPConversion > 0)
+            {
                 player.magicDamage += (player.statManaMax2 / manaToAPConversion) * 0.01f;
+                player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += (player.statManaMax2 / manaToAPConversion) * 0.01f;
+            }
 
             base.UpdateAccessory(player, modItem);
         }
