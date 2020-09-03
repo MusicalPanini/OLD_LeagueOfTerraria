@@ -75,7 +75,7 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddIngredient(ItemType<CelestialBar>(), 10);
             recipe.AddIngredient(ItemID.Sapphire, 1);
             recipe.AddIngredient(ItemID.ManaCrystal, 2);
-            recipe.AddIngredient(ItemID.SoulofMight, 10);
+            recipe.AddIngredient(ItemID.SoulofFright, 10);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
