@@ -13,7 +13,6 @@ namespace TerraLeague.Projectiles
 {
     class DeathsingerTome_Defile : ModProjectile
     {
-        int framecount2 = 29;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Defile");
