@@ -141,8 +141,8 @@ namespace TerraLeague.Projectiles
                 TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 12, 0.5f);
 
                 projectile.magic = true;
-                player.ManaEffect(40);
-                player.statMana += 40;
+                player.ManaEffect(100);
+                player.statMana += 100;
             }
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

@@ -51,7 +51,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.W)
             {
                 return "Fire a ring of magic that applies 'Essence Flux'" +
-                "\nHitting a Flux'd enemy with an attack from the gauntlet, causes them to take addtional damage and restores 40 mana";
+                "\nHitting a Flux'd enemy with an attack from the gauntlet causes them to take addtional damage and restores 100 mana";
             }
             else if (type == AbilityType.E)
             {
@@ -216,8 +216,8 @@ namespace TerraLeague.Items.Weapons
             item.noUseGraphic = true;
             item.width = 32;
             item.height = 34;
-            item.useTime = 40;
-            item.useAnimation = 40;
+            item.useTime = 20;
+            item.useAnimation = 20;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 4f;
             item.value = 55000;
@@ -229,6 +229,8 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            item.useTime = 20;
+            item.useAnimation = 20;
             return true;
         }
 
