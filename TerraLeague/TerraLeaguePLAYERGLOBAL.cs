@@ -1332,7 +1332,7 @@ namespace TerraLeague
                 {
                     int deathTomeDamage = player.inventory.Where(x => x.type == ItemType<DeathsingerTome>()).First().damage;
 
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.Center, 999999, true);
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.Center, 999999, true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {
@@ -2363,7 +2363,7 @@ namespace TerraLeague
             if ((ravenous || titanic || tiamat) && cleaveCooldown == 0)
             {
                 int cleaveDamage = 0;
-                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 200, true);
+                var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 200, true, true);
 
                 if (ravenous)
                 {
@@ -2393,7 +2393,7 @@ namespace TerraLeague
                     if (player.CanHit(npc))
                     {
                         player.ApplyDamageToNPC(npc, cleaveDamage, 0, 0, crit);
-                        if (ravenous)
+                        if (ravenous && npc.type != NPCID.TargetDummy)
                             lifeToHeal += (int)((cleaveDamage - (npc.defense * 0.5)) * 0.05);
                     }
                 }

@@ -159,7 +159,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.netUpdate = true;
 
-            int npc = TerraLeague.GetClosestNPC(projectile.Center, 480, HaveHit);
+            int npc = TerraLeague.GetClosestNPC(projectile.Center, 480, HaveHit, false, true);
 
             if (npc != -1)
             {

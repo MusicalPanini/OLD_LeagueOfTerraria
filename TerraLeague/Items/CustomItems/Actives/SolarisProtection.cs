@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/ff4d4d:Active: SOLARI'S PROTECTION -] [c/ff8080:Give all players in a large area around you a sheild]" +
+            return "[c/ff4d4d:Active: SOLARI'S PROTECTION -] [c/ff8080:Give nearby allies a sheild]" +
                 "\n[c/ff8080:Shield size is " + percentLifeShield + "% of your max life (" + (int)(modPlayer.maxLifeLastStep * percentLifeShield * 0.01 * modPlayer.healPower) + ")]" +
                 "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
         }
@@ -50,15 +50,12 @@ namespace TerraLeague.Items.CustomItems.Actives
                 {
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
 
-                    for (int i = 0; i < Main.player.Length; i++)
-                    {
-                        Player healTarget = Main.player[i];
+                    var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
 
-                        if (player.Distance(healTarget.Center) < effectRadius && healTarget.active && i != player.whoAmI)
-                        {
-                            modPlayer.SendShieldPacket(shieldAmount, i, ShieldType.Basic, shieldDuration * 60, -1, player.whoAmI, new Color(224, 113, 0));
-                            modPlayer.SendBuffPacket(BuffType<SolarisBlessing>(), shieldDuration * 60, i, -1, player.whoAmI);
-                        }
+                    for (int i = 0; i < players.Count; i++)
+                    {
+                        modPlayer.SendShieldPacket(shieldAmount, players[i], ShieldType.Basic, shieldDuration * 60, -1, player.whoAmI, new Color(224, 113, 0));
+                        modPlayer.SendBuffPacket(BuffType<SolarisBlessing>(), shieldDuration * 60, players[i], -1, player.whoAmI);
                     }
                 }
             }
@@ -74,14 +71,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             TerraLeague.DustRing(261, user, new Color(255, 106, 0, 0));
             Main.PlaySound(new LegacySoundStyle(2, 28).WithPitchVariance(-0.3f), user.Center);
-
-            for (int i = 0; i < effectRadius / 5; i++)
-            {
-                Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + user.Center;
-
-                Dust dustR = Dust.NewDustPerfect(pos, 267, Vector2.Zero, 0, new Color(255, 106, 0, 0), 2);
-                dustR.noGravity = true;
-            }
+            TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 267, new Color(255, 106, 0, 0), 2);
         }
     }
 }

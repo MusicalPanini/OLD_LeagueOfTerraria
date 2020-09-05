@@ -13,6 +13,8 @@ namespace TerraLeague.Items.SummonerSpells
 {
     public class ClarityRune : SummonerSpell
     {
+        static int effectRadius = 700;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Clarity Rune");
@@ -35,26 +37,24 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Fully restore yours and all near by players mana";
+            return "Fully restore yours and all nearby allies mana";
         }
 
         public override void DoEffect(Player player, int spellSlot)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
+            // For Server
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                for (int k = 0; k < 200; k++)
+                var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
+
+                for (int i = 0; i < players.Count; i++)
                 {
-                    if (Main.player[k].active)
-                    {
-                        if (player.Distance(Main.player[k].Center) < 700 && k != player.whoAmI)
-                        {
-                            modPlayer.SendManaPacket(Main.player[k].statManaMax2, k, -1, player.whoAmI);
-                            PacketHandler.SendClarity(-1, player.whoAmI, k);
-                            Efx(Main.player[k]);
-                        }
-                    }
+                    Player target = Main.player[players[i]];
+                    modPlayer.SendManaPacket(target.statManaMax2, target.whoAmI, -1, player.whoAmI);
+                    PacketHandler.SendClarity(-1, player.whoAmI, target.whoAmI);
+                    Efx(target);
                 }
             }
 
@@ -69,12 +69,8 @@ namespace TerraLeague.Items.SummonerSpells
         static public void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
-
-            for (int j = 0; j < 18; j++)
-            {
-                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 0, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));
-                dust.noGravity = true;
-            }
+            TerraLeague.DustRing(261, player, new Color(0, 0, 255, 0));
+            TerraLeague.DustBorderRing(effectRadius, player.MountedCenter, 261, new Color(0, 0, 255, 0), 2);
         }
     }
 }

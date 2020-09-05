@@ -30,7 +30,7 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Give all players vision of treasure, traps, and NPC's for 5 seconds";
+            return "Give all allies vision of treasure, traps, and NPC's for 5 seconds";
         }
 
         public override void DoEffect(Player player, int spellSlot)
@@ -39,17 +39,17 @@ namespace TerraLeague.Items.SummonerSpells
             Efx(player);
             player.AddBuff(BuffType<Buffs.Clairvoyance>(), 300);
 
+            // For Server
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                for (int i = 0; i < Main.player.Length; i++)
+                var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 999999, player.whoAmI, player.team);
+
+                for (int i = 0; i < players.Count; i++)
                 {
-                    Player target = Main.player[i];
-                    if (target.active)
-                    {
-                        Efx(target);
-                        PacketHandler.SendClairvoyance(-1, player.whoAmI, i);
-                        modPlayer.SendBuffPacket(BuffType<Buffs.Clairvoyance>(), 300, i, -1, player.whoAmI);
-                    }
+                    Player target = Main.player[players[i]];
+                    Efx(target);
+                    PacketHandler.SendClairvoyance(-1, player.whoAmI, target.whoAmI);
+                    modPlayer.SendBuffPacket(BuffType<Buffs.Clairvoyance>(), 300, target.whoAmI, -1, player.whoAmI);
                 }
             }
 

@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: THE VOW -] [c/99e6ff:Periodically Grant near by allies 'Iron Skin']";
+            return "[c/0099cc:Passive: THE VOW -] [c/99e6ff:Periodically Grant nearby allies 'Iron Skin']";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -35,26 +35,31 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public void DoThing(Player player, ModItem modItem)
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (Main.time % 240 == 180)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-                if (Main.time % 180 == 0)
+
+                Efx(player);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    for (int i = 0; i < Main.player.Length; i++)
+                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+
+                    var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
+
+                    for (int i = 0; i < players.Count; i++)
                     {
-                        Player DefTarget = Main.player[i];
-
-                        float damtoX = DefTarget.position.X + (float)DefTarget.width * 0.5f - player.Center.X;
-                        float damtoY = DefTarget.position.Y + (float)DefTarget.height * 0.5f - player.Center.Y;
-                        float distance = (float)System.Math.Sqrt((double)(damtoX * damtoX + damtoY * damtoY));
-
-                        if (distance < effectRadius && i != player.whoAmI && DefTarget.active)
-                        {
-                            modPlayer.SendBuffPacket(BuffID.Ironskin, 180, i, -1, player.whoAmI);
-                        }
+                        modPlayer.SendBuffPacket(BuffID.Ironskin, 240, players[i], -1, player.whoAmI);
                     }
                 }
             }
+        }
+
+        public override void Efx(Player user)
+        {
+            TerraLeague.DustRing(261, user, new Color(150, 150, 150, 0));
+            TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 263, new Color(150, 150, 150, 0), 2);
+
+            base.Efx(user);
         }
     }
 }

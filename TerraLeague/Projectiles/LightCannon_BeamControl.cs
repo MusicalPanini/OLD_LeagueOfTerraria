@@ -86,11 +86,14 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.ai[0] != 0)
             {
-                Player player = Main.player[projectile.owner];
+                if (projectile.owner == Main.LocalPlayer.whoAmI)
+                {
+                    Player player = Main.player[projectile.owner];
 
-                float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
+                    float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
 
-                Projectile.NewProjectileDirect(projectile.Center, new Vector2(10, 0).RotatedBy(rot), ProjectileType<LightCannon_Beam>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    Projectile.NewProjectileDirect(projectile.Center, new Vector2(10, 0).RotatedBy(rot), ProjectileType<LightCannon_Beam>(), projectile.damage, projectile.knockBack, projectile.owner);
+                }
 
                 TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 72, -1f);
             }

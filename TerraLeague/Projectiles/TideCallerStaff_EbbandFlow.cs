@@ -103,25 +103,11 @@ namespace TerraLeague.Projectiles
                     }
                     Vector2 move = Vector2.Zero;
                     float distance = 1000;
-                    bool target = false;
-                    for (int k = 0; k < 200; k++)
-                    {
-                        Player player = Main.player[k];
+                    int targetPlayer = TerraLeague.GetClosestPlayer(projectile.Center, distance, -1, Main.player[projectile.owner].team);
 
-                        if (player.active)
-                        {
-                            Vector2 newMove = player.Center - projectile.Center;
-                            float distanceTo = (float)Math.Sqrt(newMove.X * newMove.X + newMove.Y * newMove.Y);
-                            if (distanceTo < distance)
-                            {
-                                move = newMove;
-                                distance = distanceTo;
-                                target = true;
-                            }
-                        }
-                    }
-                    if (target)
+                    if (targetPlayer != -1)
                     {
+                        Vector2 newMove = Main.player[targetPlayer].MountedCenter - projectile.Center;
                         AdjustMagnitude(ref move);
                         projectile.velocity = (10 * projectile.velocity + move) / 11f;
                         AdjustMagnitude(ref projectile.velocity);

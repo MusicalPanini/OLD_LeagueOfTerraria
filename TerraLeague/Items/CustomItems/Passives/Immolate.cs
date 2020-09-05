@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (Main.time % 240 == 0)
             {
-                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, (weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240, true);
+                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, (weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240, true, true);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)

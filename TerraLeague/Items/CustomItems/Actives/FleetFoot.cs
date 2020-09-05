@@ -22,7 +22,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/ff4d4d:Active: FLEET FOOT -] [c/ff8080:Give all players in a large area around you a speed boost]" +
+            return "[c/ff4d4d:Active: FLEET FOOT -] [c/ff8080:Give all nearby allies a speed boost for " + effectDuration + " seconds]" +
                 "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
         }
 
@@ -45,15 +45,12 @@ namespace TerraLeague.Items.CustomItems.Actives
                 {
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
 
-                    for (int i = 0; i < Main.player.Length; i++)
-                    {
-                        Player healTarget = Main.player[i];
-                        int distance = effectRadius;
+                    var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
 
-                        if (player.Distance(healTarget.Center) < distance && healTarget.active && i != player.whoAmI)
-                        {
-                            modPlayer.SendBuffPacket(BuffType<Buffs.FleetFoot>(), effectDuration * 60, i, -1, player.whoAmI);
-                        }
+                    for (int i = 0; i < players.Count; i++)
+                    {
+                        Player healTarget = Main.player[players[i]];
+                        modPlayer.SendBuffPacket(BuffType<Buffs.FleetFoot>(), effectDuration * 60, healTarget.whoAmI, -1, player.whoAmI);
                     }
                 }
             }
@@ -69,14 +66,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             TerraLeague.DustRing(261, user, new Color(255, 255, 0, 0));
             Main.PlaySound(new LegacySoundStyle(2, 29), user.Center);
-
-            for (int i = 0; i < effectRadius / 5; i++)
-            {
-                Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + user.Center;
-
-                Dust dustR = Dust.NewDustPerfect(pos, 267, Vector2.Zero, 0, new Color(255, 255, 0, 0), 2);
-                dustR.noGravity = true;
-            }
+            TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 267, new Color(255, 255, 0, 0), 2);
         }
     }
 }

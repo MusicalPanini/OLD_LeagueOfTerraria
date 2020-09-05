@@ -173,7 +173,7 @@ namespace TerraLeague.Items.Weapons
                     DoEfx(player, type);
                     player.CheckMana(GetBaseManaCost(type), true);
 
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, range, true);
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, range, true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {

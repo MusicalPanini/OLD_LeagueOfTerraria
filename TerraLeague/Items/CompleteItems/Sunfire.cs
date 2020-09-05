@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
 
             if (!hideVisual)
-                player.AddBuff(BuffType<Buffs.Immolate>(), 2);
+                player.GetModPlayer<PLAYERGLOBAL>().immolate = true;
 
             player.buffImmune[BuffID.Bleeding] = true;
             player.buffImmune[BuffID.Poisoned] = true;

@@ -13,6 +13,8 @@ namespace TerraLeague.Items.SummonerSpells
 {
     public class HealRune : SummonerSpell
     {
+        static int effectRadius = 700;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Heal Rune");
@@ -35,7 +37,8 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Heal you self and a near by player for " + GetPercentScalingAmount() + "% of your max life" +
+            return "Heal you self and a nearby ally for " + GetPercentScalingAmount() + "% of your max life" +
+                "Can target an ally to prioritize who gets healed" +
                 "\nYou both gain 'Swiftness'";
         }
 
@@ -51,34 +54,22 @@ namespace TerraLeague.Items.SummonerSpells
             modPlayer.lifeToHeal += (int)((player.statLifeMax2 * GetPercentScalingAmount() * 0.01) * modPlayer.healPower);
             player.AddBuff(BuffID.Swiftness, 360);
 
-            int target = -1;
-            float distance = 700f;
-            for (int k = 0; k < 200; k++)
+            // For Server
+            if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                if (Main.player[k].active && k != player.whoAmI)
+                int healTarget = TerraLeague.GetClosestPlayer(player.MountedCenter, effectRadius, player.whoAmI, player.team, TerraLeague.PlayerMouseIsHovering(30, player.whoAmI, player.team));
+
+                if (healTarget != -1)
                 {
-                    float distanceCheck = player.Distance(Main.player[k].Center);
-
-                    if (distanceCheck < distance)
-                    {
-                        distance = distanceCheck;
-                        target = k;
-                    }
+                    modPlayer.SendHealPacket((int)((player.statLifeMax2 * GetPercentScalingAmount() * 0.01) * modPlayer.healPower), healTarget, -1, player.whoAmI);
+                    modPlayer.SendBuffPacket(BuffID.Swiftness, 360, healTarget, -1, player.whoAmI);
+                    PacketHandler.SendHeal(-1, player.whoAmI, player.whoAmI, healTarget);
+                    Efx(Main.player[healTarget], false);
                 }
-            }
-
-            if (target != -1 && Main.netMode == NetmodeID.MultiplayerClient && Main.player[target].active)
-            {
-                modPlayer.SendHealPacket((int)((Main.player[target].statLifeMax2 * GetPercentScalingAmount() * 0.01) * modPlayer.healPower), target, -1, player.whoAmI);
-                modPlayer.SendBuffPacket(BuffID.Swiftness, 360, target, -1, player.whoAmI);
-                PacketHandler.SendHeal(-1, player.whoAmI, player.whoAmI, target);
-                Efx(Main.player[target], false);
-                
             }
 
             Efx(player);
             PacketHandler.SendHeal(-1, player.whoAmI, player.whoAmI, player.whoAmI);
-            
 
             SetCooldowns(player, spellSlot);
         }
@@ -94,7 +85,6 @@ namespace TerraLeague.Items.SummonerSpells
             if (playSound)
             {
                 Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
-
             }
         }
     }

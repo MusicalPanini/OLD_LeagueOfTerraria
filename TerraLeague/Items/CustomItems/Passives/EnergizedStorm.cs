@@ -8,7 +8,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "\n[c/0099cc:Passive: STORM -] [c/99e6ff:Enhances the bonus effects of ENERGIZED and applies 'Slowed']";
+            return "[c/0099cc:Passive: STORM -] [c/99e6ff:Enhances the bonus effects of ENERGIZED and applies 'Slowed']";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

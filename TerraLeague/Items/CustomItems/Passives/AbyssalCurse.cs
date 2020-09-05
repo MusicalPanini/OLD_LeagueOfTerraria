@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (Main.time % 240 == 120)
             {
-                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, BuffType<Buffs.AbyssalCurse>(), 240, true);
+                TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, BuffType<Buffs.AbyssalCurse>(), 240, true, true);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)

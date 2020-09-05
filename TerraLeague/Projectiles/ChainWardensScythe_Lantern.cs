@@ -57,20 +57,17 @@ namespace TerraLeague.Projectiles
 
                     if (Main.LocalPlayer.whoAmI == player.whoAmI)
                     {
-                        for (int i = 0; i < Main.player.Length; i++)
-                        {
-                            Player healTarget = Main.player[i];
+                        var players = TerraLeague.GetAllPlayersInRange(projectile.Center, effectRadius, -1, player.team);
 
-                            if (projectile.Distance(healTarget.Center) < effectRadius && healTarget.active)
+                        for (int i = 0; i < players.Count; i++)
+                        {
+                            if (i == projectile.owner)
                             {
-                                if (i == projectile.owner)
-                                {
-                                    modPlayer.AddShield(shieldAmount, 240, Color.SeaGreen, ShieldType.Basic);
-                                }
-                                else if (Main.netMode == NetmodeID.MultiplayerClient)
-                                {
-                                    modPlayer.SendShieldPacket(shieldAmount, i, ShieldType.Basic, 240, -1, player.whoAmI, Color.SeaGreen);
-                                }
+                                modPlayer.AddShield(shieldAmount, 240, Color.SeaGreen, ShieldType.Basic);
+                            }
+                            else if (Main.netMode == NetmodeID.MultiplayerClient)
+                            {
+                                modPlayer.SendShieldPacket(shieldAmount, i, ShieldType.Basic, 240, -1, player.whoAmI, Color.SeaGreen);
                             }
                         }
                     }
@@ -80,7 +77,7 @@ namespace TerraLeague.Projectiles
                 {
                     for (int i = 0; i < Main.player.Length; i++)
                     {
-                        if (projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != projectile.owner)
+                        if (projectile.Hitbox.Intersects(Main.player[i].Hitbox) && i != projectile.owner && player.team == Main.player[i].team)
                         {
                             Main.player[i].Teleport(player.position);
                             projectile.Kill();

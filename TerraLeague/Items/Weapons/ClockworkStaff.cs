@@ -120,23 +120,20 @@ namespace TerraLeague.Items.Weapons
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
                     DoEfx(player, type);
-
                     player.AddBuff(BuffType<CommandProtect>(), duration);
                     player.GetModPlayer<PLAYERGLOBAL>().AddShield(shield, duration, new Color(102, 243, 255), ShieldType.Basic);
 
-                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    // For Server
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
-                        for (int i = 0; i < Main.maxPlayers; i++)
+                        PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+                        var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 300, player.whoAmI, player.team);
+
+                        for (int i = 0; i < players.Count; i++)
                         {
-                            Player targetPlayer = Main.player[i];
-                            if (targetPlayer.active)
-                            {
-                                if (player.Distance(targetPlayer.MountedCenter) <= 300 && targetPlayer.active && i != player.whoAmI)
-                                {
-                                    player.GetModPlayer<PLAYERGLOBAL>().SendBuffPacket(BuffType<CommandProtect>(), duration, i, -1, player.whoAmI);
-                                    player.GetModPlayer<PLAYERGLOBAL>().SendShieldPacket(shield, i, ShieldType.Basic, duration, -1, player.whoAmI, new Color(102, 243, 255));
-                                }
-                            }
+                            modPlayer.SendShieldPacket(shield, players[i], ShieldType.Basic, duration, -1, player.whoAmI, new Color(102, 243, 255));
+                            modPlayer.SendBuffPacket(BuffType<CommandProtect>(), duration, players[i], -1, player.whoAmI);
                         }
                     }
 

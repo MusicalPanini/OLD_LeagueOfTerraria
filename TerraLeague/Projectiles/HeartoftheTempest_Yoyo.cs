@@ -45,20 +45,22 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (hits < 3)
+            if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                hits++;
-
-                if (hits >= 3)
+                if (hits < 3)
                 {
-                    Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>(), damage, 0, projectile.owner, projectile.whoAmI);
+                    hits++;
+
+                    if (hits >= 3)
+                    {
+                        Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>(), damage, 0, projectile.owner, projectile.whoAmI);
+                    }
+                }
+                else if (Main.player[projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>()] == 0 && hits >= 3)
+                {
+                    hits = 1;
                 }
             }
-            else if (Main.player[projectile.owner].ownedProjectileCounts[ModContent.ProjectileType<HeartoftheTempest_SlicingMaelstrom>()] == 0 && hits >= 3)
-            {
-                hits = 1;
-            }
-
             base.OnHitNPC(target, damage, knockback, crit);
         }
 

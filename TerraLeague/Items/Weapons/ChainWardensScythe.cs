@@ -45,8 +45,8 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return "Throw a lantern at the target location and shield all near by players." +
-                    "Ally may also grab the lantern and be brought to your location.";
+                return "Throw a lantern at the target location and shield all allies near it." +
+                    "An ally may also grab the lantern and be brought to your location.";
             }
             else
             {

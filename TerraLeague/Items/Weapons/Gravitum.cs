@@ -138,7 +138,7 @@ namespace TerraLeague.Items.Weapons
                 {
                     player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo -= 10;
                     player.CheckMana(GetBaseManaCost(type), true);
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 999999, true);
+                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 999999, true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {

@@ -63,21 +63,18 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(0,-2) + projectile.BottomLeft, projectile.width, 3, 133);
+                Dust dust = Dust.NewDustDirect(new Vector2(0, -2) + projectile.BottomLeft, projectile.width, 3, 133);
                 dust.noGravity = true;
                 dust.velocity.X *= 2;
                 dust.velocity.Y = 0;
                 dust.scale = 0.8f;
             }
 
-            for (int i = 0; i < Main.player.Length; i++)
+            var players = TerraLeague.GetAllPlayersInRange(projectile.Center, 500, -1, Main.player[projectile.owner].team);
+            for (int i = 0; i < players.Count; i++)
             {
-                Player target = Main.player[i];
-
-                if (projectile.Distance(target.Center) < 500 && target.active)
-                {
-                    target.AddBuff(BuffType<ForDemacia>(), 2);
-                }
+                Player target = Main.player[players[i]];
+                target.AddBuff(BuffType<ForDemacia>(), 2);
             }
 
             AnimateProjectile();

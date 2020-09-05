@@ -610,20 +610,11 @@ namespace TerraLeague
         /// </summary>
         /// <param name="mouseLength">Width and height of the mouse hitbox</param>
         /// <returns></returns>
-        internal static int PlayerMouseIsHovering(int mouseLength = 30)
+        internal static int PlayerMouseIsHovering(int mouseLength = 30, int doNotInclude = -1, int isOnTeam = -1, bool canBeDead = false)
         {
-            for (int i = 0; i < Main.player.Length; i++)
-            {
-                if (Main.player[i].active)
-                {
-                    if (Main.player[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - mouseLength/2, (int)Main.MouseWorld.Y - mouseLength/2, mouseLength, mouseLength)))
-                    {
-                        return i;
-                    }
-                }
-            }
+            int target = TerraLeague.GetClosestPlayer(Main.MouseWorld, mouseLength / 2, doNotInclude, isOnTeam, -1, canBeDead);
 
-            return -1;
+            return target;
         }
 
         /// <summary>
@@ -930,7 +921,7 @@ namespace TerraLeague
         /// <param name="includeTownNPCs"></param>
         /// <param name="includeImmortal"></param>
         /// <returns></returns>
-        public static List<int> GetAllNPCsInRange(Vector2 center, float radius, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        public static List<int> GetAllNPCsInRange(Vector2 center, float radius, bool includeSmallCreatures = false, bool includeTargetDummy = false, bool includeTownNPCs = false, bool includeImmortal = false)
         {
             List<int> npcsInRange = new List<int>();
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -938,7 +929,14 @@ namespace TerraLeague
                 NPC npc = Main.npc[i];
                 if (npc.active)
                 {
-                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    if (npc.type == NPCID.TargetDummy && includeTargetDummy)
+                    {
+                        if (IsHitboxWithinRange(center, npc.Hitbox, radius))
+                        {
+                            npcsInRange.Add(i);
+                        }
+                    }
+                    else if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
                     {
                         if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
                         {
@@ -958,6 +956,90 @@ namespace TerraLeague
         }
 
         /// <summary>
+        /// Get a list of all players within a set range
+        /// </summary>
+        /// <param name="center"></param>
+        /// <param name="radius"></param>
+        /// <param name="doNotInclude"></param>
+        /// <param name="isOnTeam"></param>
+        /// <param name="canBeDead"></param>
+        /// <returns></returns>
+        public static List<int> GetAllPlayersInRange(Vector2 center, float radius, int doNotInclude = -1, int isOnTeam = -1, bool canBeDead = false)
+        {
+            List<int> playersInRange = new List<int>();
+            for (int i = 0; i < Main.maxPlayers; i++)
+            {
+                Player player = Main.player[i];
+                if (i != doNotInclude)
+                {
+                    if (player.active)
+                    {
+                        if (!player.dead && !canBeDead || canBeDead)
+                        {
+                            if (player.team == isOnTeam && isOnTeam != -1 || isOnTeam == -1)
+                            {
+                                if (IsHitboxWithinRange(center, player.Hitbox, radius))
+                                {
+                                    playersInRange.Add(i);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return playersInRange;
+        }
+
+        /// <summary>
+        /// Get the closest Player within a set range
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="maxDistance"></param>
+        /// <param name="doNotInclude"></param>
+        /// <param name="isOnTeam"></param>
+        /// <param name="canBeDead"></param>
+        /// <returns></returns>
+        public static int GetClosestPlayer(Vector2 position, float maxDistance, int doNotInclude = -1, int isOnTeam = -1, int prioritisePlayer = -1, bool canBeDead = false)
+        {
+            int currentChoice = -1;
+            float range = maxDistance;
+
+            if (prioritisePlayer != -1)
+            {
+                Player player = Main.player[prioritisePlayer];
+                if (IsHitboxWithinRange(position, player.Hitbox, range))
+                {
+                    return currentChoice;
+                }
+            }
+
+            for (int i = 0; i < Main.maxPlayers; i++)
+            {
+                Player player = Main.player[i];
+                if (i != doNotInclude)
+                {
+                    if (player.active)
+                    {
+                        if (!player.dead && !canBeDead || canBeDead)
+                        {
+                            if (player.team == isOnTeam && isOnTeam != -1 || isOnTeam == -1)
+                            {
+                                if (IsHitboxWithinRange(position, player.Hitbox, range))
+                                {
+                                    currentChoice = 1;
+                                    range = Vector2.Distance(position, player.Center);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return currentChoice;
+        }
+
+        /// <summary>
         /// Gives all NPCs withing a circular area a buff
         /// </summary>
         /// <param name="center"></param>
@@ -967,9 +1049,9 @@ namespace TerraLeague
         /// <param name="includeSmallCreatures"></param>
         /// <param name="includeTownNPCs"></param>
         /// <param name="includeImmortal"></param>
-        public static void GiveNPCsInRangeABuff(Vector2 center, float radius, int buff, int buffDuration, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        public static void GiveNPCsInRangeABuff(Vector2 center, float radius, int buff, int buffDuration, bool includeSmallCreatures = false, bool includeTargetDummy = false, bool includeTownNPCs = false, bool includeImmortal = false)
         {
-            List<int> npcs = GetAllNPCsInRange(center, radius, includeSmallCreatures, includeTownNPCs, includeImmortal);
+            List<int> npcs = GetAllNPCsInRange(center, radius, includeSmallCreatures, includeTargetDummy, includeTownNPCs, includeImmortal);
 
             for (int i = 0; i < npcs.Count; i++)
             {
@@ -1020,7 +1102,7 @@ namespace TerraLeague
         /// <param name="includeTownNPCs"></param>
         /// <param name="includeImmortal"></param>
         /// <returns></returns>
-        public static int GetClosestNPC(Vector2 position, float maxDistance, int doNotInclude = -1, int prioritiseNPC = -1, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        public static int GetClosestNPC(Vector2 position, float maxDistance, int doNotInclude = -1, int prioritiseNPC = -1, bool includeSmallCreatures = false, bool includeTargetDummy = false, bool includeTownNPCs = false, bool includeImmortal = false)
         {
             int currentChoice = -1;
             float range = maxDistance;
@@ -1037,9 +1119,18 @@ namespace TerraLeague
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
+                
                 if (npc.active && npc.whoAmI != doNotInclude)
                 {
-                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    if (npc.type == NPCID.TargetDummy && includeTargetDummy)
+                    {
+                        if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                        {
+                            currentChoice = i;
+                            range = Vector2.Distance(position, npc.Center);
+                        }
+                    }
+                    else if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
                     {
                         if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
                         {
@@ -1068,7 +1159,7 @@ namespace TerraLeague
         /// <param name="includeTownNPCs"></param>
         /// <param name="includeImmortal"></param>
         /// <returns></returns>
-        public static int GetClosestNPC(Vector2 position, float maxDistance, int[] doNotInclude, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        public static int GetClosestNPC(Vector2 position, float maxDistance, int[] doNotInclude, bool includeSmallCreatures = false, bool includeTargetDummy = false, bool includeTownNPCs = false, bool includeImmortal = false)
         {
             int currentChoice = -1;
             float range = maxDistance;
@@ -1078,7 +1169,15 @@ namespace TerraLeague
                 NPC npc = Main.npc[i];
                 if (npc.active && !doNotInclude.Contains(npc.whoAmI))
                 {
-                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    if (npc.type == NPCID.TargetDummy && includeTargetDummy)
+                    {
+                        if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                        {
+                            currentChoice = i;
+                            range = Vector2.Distance(position, npc.Center);
+                        }
+                    }
+                    else if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
                     {
                         if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
                         {
@@ -1098,7 +1197,7 @@ namespace TerraLeague
             return currentChoice;
         }
 
-        public static int GetClosestNPC(Vector2 position, float maxDistance, Vector2 collisionPosition, int collitionWidth, int collitionHeight, int doNotInclude = -1, int prioritiseNPC = -1, bool includeSmallCreatures = false, bool includeTownNPCs = false, bool includeImmortal = false)
+        public static int GetClosestNPC(Vector2 position, float maxDistance, Vector2 collisionPosition, int collitionWidth, int collitionHeight, int doNotInclude = -1, int prioritiseNPC = -1, bool includeSmallCreatures = false, bool includeTargetDummy = false, bool includeTownNPCs = false, bool includeImmortal = false)
         {
             int currentChoice = -1;
             float range = maxDistance;
@@ -1120,7 +1219,18 @@ namespace TerraLeague
                 NPC npc = Main.npc[i];
                 if (npc.active && i != doNotInclude)
                 {
-                    if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
+                    if (npc.type == NPCID.TargetDummy && includeTargetDummy)
+                    {
+                        if (IsHitboxWithinRange(position, npc.Hitbox, range))
+                        {
+                            if (Collision.CanHitLine(collisionPosition, collitionWidth, collitionHeight, npc.position, npc.width, npc.height))
+                            {
+                                currentChoice = i;
+                                range = Vector2.Distance(position, npc.Center);
+                            }
+                        }
+                    }
+                    else if (!includeTownNPCs && !npc.townNPC || includeTownNPCs)
                     {
                         if (!includeSmallCreatures && npc.lifeMax > 5 || includeSmallCreatures)
                         {

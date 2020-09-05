@@ -53,7 +53,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.timeLeft % 15 == 0)
             {
-                TerraLeague.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2, BuffType<Buffs.Slowed>(), 15);
+                TerraLeague.GiveNPCsInRangeABuff(projectile.Center, projectile.width / 2, BuffType<Buffs.Slowed>(), 15, true, true);
             }
 
             AnimateProjectile();

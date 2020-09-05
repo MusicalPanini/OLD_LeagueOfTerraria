@@ -70,7 +70,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.R)
             {
-                return "Heal all players, wherever they are." +
+                return "Heal all allies, wherever they are." +
                     "\nHealing is increased by 50% if target is below 40% life.";
             }
             else if (type == AbilityType.Q)
@@ -158,21 +158,17 @@ namespace TerraLeague.Items.Weapons
                 {
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-                    for (int i = 0; i < Main.player.Length; i++)
-                    {
-                        if (Main.player[i].active && i != player.whoAmI)
-                        {
-                            if (player.whoAmI == Main.myPlayer)
-                            {
-                                PLAYERGLOBAL modPlayerTarget = Main.player[i].GetModPlayer<PLAYERGLOBAL>();
+                    if (modPlayer.GetRealHeathWithoutShield(false) < modPlayer.GetRealHeathWithoutShield(true) * 0.4)
+                        modPlayer.lifeToHeal += (int)((GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG)) * 1.5);
+                    else
+                        modPlayer.lifeToHeal += GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
 
-                                if (modPlayerTarget.GetRealHeathWithoutShield(false) < modPlayerTarget.GetRealHeathWithoutShield(true) * 0.4)
-                                    modPlayer.SendHealPacket((int)((GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG)) * 1.5), i, -1, player.whoAmI);
-                                else
-                                    modPlayer.SendHealPacket(GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG), i, -1, player.whoAmI);
-                            }
-                        }
-                        else if (Main.player[i].active)
+                    // For Server
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 999999, player.whoAmI, player.team);
+
+                        for (int i = 0; i < players.Count; i++)
                         {
                             if (modPlayer.GetRealHeathWithoutShield(false) < modPlayer.GetRealHeathWithoutShield(true) * 0.4)
                                 modPlayer.lifeToHeal += (int)((GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG)) * 1.5);
@@ -268,19 +264,19 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.R)
             {
-                for (int i = 0; i < Main.player.Length; i++)
+                var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 999999, -1, player.team);
+
+                for (int i = 0; i < players.Count; i++)
                 {
-                    if (Main.player[i].active)
+                    Player targetPlayer = Main.player[players[i]];
+                    for (int j = 0; j < 18; j++)
                     {
-                        for (int j = 0; j < 18; j++)
-                        {
-                            Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)Main.player[i].position.X - 8, (int)Main.player[i].position.X + 8), Main.player[i].position.Y + 16), Main.player[i].width, Main.player[i].height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 0, 0), Main.rand.Next(2, 6));
-                            dust.noGravity = true;
-                        }
+                        Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)targetPlayer.position.X - 8, (int)targetPlayer.position.X + 8), targetPlayer.position.Y + 16), targetPlayer.width, targetPlayer.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 0, 0), Main.rand.Next(2, 6));
+                        dust.noGravity = true;
                     }
                 }
 
-                Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f));
+                Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.MountedCenter);
             }
         }
     }

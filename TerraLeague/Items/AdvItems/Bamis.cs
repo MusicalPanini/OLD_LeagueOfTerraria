@@ -30,7 +30,7 @@ namespace TerraLeague.Items.AdvItems
         {
             player.statLifeMax2 += 20;
             if (!hideVisual)
-                player.AddBuff(BuffType<Buffs.Immolate>(), 2);
+                player.GetModPlayer<PLAYERGLOBAL>().immolate = true;
         }
 
         public override void AddRecipes()
