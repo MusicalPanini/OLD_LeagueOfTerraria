@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += 0.15f;
-            player.maxMinions += 1;
+            player.maxTurrets += 1;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 6;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
             player.lifeRegen += 2;
