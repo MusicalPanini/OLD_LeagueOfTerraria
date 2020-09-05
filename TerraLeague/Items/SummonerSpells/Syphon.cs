@@ -58,7 +58,7 @@ namespace TerraLeague.Items.SummonerSpells
 
             for (int i = 0; i < npcs.Count; i++)
             {
-                Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, i);
+                Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, npcs[i]);
                 SetCooldowns(player, spellSlot);
             }
         }
