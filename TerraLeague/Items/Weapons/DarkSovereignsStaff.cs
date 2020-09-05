@@ -59,7 +59,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.R)
-                return (int)(1.5 * item.damage);
+                return (int)(2.5f * item.damage);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -70,7 +70,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
             {
                 if (dam == DamageType.SUM)
-                    return 45;
+                    return 100;
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -141,7 +141,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 34;
+            item.damage = 24;
             item.summon = true;
             item.mana = 20;
             item.width = 48;
@@ -164,6 +164,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            item.damage = 24;
             position = Main.MouseWorld;
 
             if (player.altFunctionUse != 2)
