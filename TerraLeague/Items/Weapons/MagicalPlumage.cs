@@ -19,7 +19,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "";
+            return "Uses Razor Feathers as ammo";
         }
 
         public override string GetQuote()
@@ -47,7 +47,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.W)
             {
-                return "Gain 25% movement speed and ranged rate of fire";
+                return "Gain 25% movement speed and ranged attack speed for 5 seconds";
             }
             else
             {
