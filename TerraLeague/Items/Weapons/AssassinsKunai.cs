@@ -118,7 +118,7 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 50;
+            item.damage = 36;
             item.width = 18;
             item.height = 36;
             item.magic = true;
@@ -140,6 +140,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
+            item.damage = 36;
             return base.CanUseItem(player);
         }
 
