@@ -690,64 +690,7 @@ namespace TerraLeague
         public override void ResetEffects()
         {
             ResetShieldStuff();
-
-            #region Custom Stats
-            TrueMinionDamage = 0;
-            consumeAmmo = 0;
-            rangedAttackSpeed = 1;
-            Cdr = 1;
-            healPower = 1;
-            armor = 0;
-            resist = 0;
-            manaRegenModifer = 1;
-            manaRegen = 1;
-            extraSumCDR = 0;
-
-            if (lifeStealMagic == 0 && lifeStealMelee == 0 && lifeStealRange == 0 && lifeStealMinion == 0)
-                lifeStealCharge = 0;
-
-            lifeStealMelee = 0;
-            lifeStealRange = 0;
-            lifeStealMagic = 0;
-            lifeStealMinion = 0;
-            damageTakenModifier = 1;
-            healthModifier = 1;
-
-            BonusMEL = 0;
-            BonusRNG = 0;
-            BonusMAG = 0;
-            BonusSUM = 0;
-
-            // Flat Bonus Damage
-            meleeFlatDamage = 0;
-            rangedFlatDamage = 0;
-            magicFlatDamage = 0;
-            minionFlatDamage = 0;
-
-            // Damage Modifiers
-            meleeModifer = 1;
-            rangedModifer = 1;
-            magicModifer = 1;
-            minionModifer = 1;
-
-            // Armor Pen
-            meleeArmorPen = 0;
-            rangedArmorPen = 0;
-            magicArmorPen = 0;
-            minionArmorPen = 0;
-
-            // On Hit Damage
-            meleeOnHit = 0;
-            rangedOnHit = 0;
-            magicOnHit = 0;
-            minionOnHit = 0;
-
-            // Stat Scaling
-            meleeStatScaling = 1;
-            rangedStatScaling = 1;
-            magicStatScaling = 1;
-            minionStatScaling = 1;
-            #endregion
+            ResetCustomStats();
 
             #region Buffs
             bioBarrage = false;
@@ -918,8 +861,69 @@ namespace TerraLeague
             }
         }
 
+        public void ResetCustomStats()
+        {
+            TrueMinionDamage = 0;
+            consumeAmmo = 0;
+            rangedAttackSpeed = 1;
+            Cdr = 1;
+            healPower = 1;
+            armor = 0;
+            resist = 0;
+            manaRegenModifer = 1;
+            manaRegen = 1;
+            extraSumCDR = 0;
+
+            if (lifeStealMagic == 0 && lifeStealMelee == 0 && lifeStealRange == 0 && lifeStealMinion == 0)
+                lifeStealCharge = 0;
+
+            lifeStealMelee = 0;
+            lifeStealRange = 0;
+            lifeStealMagic = 0;
+            lifeStealMinion = 0;
+            damageTakenModifier = 1;
+            healthModifier = 1;
+
+            BonusMEL = 0;
+            BonusRNG = 0;
+            BonusMAG = 0;
+            BonusSUM = 0;
+
+            // Flat Bonus Damage
+            meleeFlatDamage = 0;
+            rangedFlatDamage = 0;
+            magicFlatDamage = 0;
+            minionFlatDamage = 0;
+
+            // Damage Modifiers
+            meleeModifer = 1;
+            rangedModifer = 1;
+            magicModifer = 1;
+            minionModifer = 1;
+
+            // Armor Pen
+            meleeArmorPen = 0;
+            rangedArmorPen = 0;
+            magicArmorPen = 0;
+            minionArmorPen = 0;
+
+            // On Hit Damage
+            meleeOnHit = 0;
+            rangedOnHit = 0;
+            magicOnHit = 0;
+            minionOnHit = 0;
+
+            // Stat Scaling
+            meleeStatScaling = 1;
+            rangedStatScaling = 1;
+            magicStatScaling = 1;
+            minionStatScaling = 1;
+        }
+
         public override void UpdateDead()
         {
+            ResetCustomStats();
+
             lifeStealCharge = 0;
             requiem = false;
             requiemChannel = false;
