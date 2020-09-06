@@ -50,7 +50,7 @@ namespace TerraLeague.Projectiles
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 8, 226, 0, 0, 0, default(Color), 0.5f);
             }
 
-            if (Main.mouseLeftRelease && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0)
+            if (Main.mouseLeftRelease && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
             {
                 projectile.alpha += 20;
                 if (projectile.alpha > 250)

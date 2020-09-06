@@ -43,7 +43,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (Main.mouseLeftRelease && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0)
+            if (Main.mouseLeftRelease && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
             {
                 projectile.alpha += 20;
                 if (projectile.alpha > 250)
