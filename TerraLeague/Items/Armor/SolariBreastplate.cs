@@ -45,7 +45,7 @@ namespace TerraLeague.Items.Armor
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<CelestialBar>(), 14);
-            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 2);
+            recipe.AddIngredient(ItemType<FragmentOfTheAspect>(), 1);
             recipe.AddIngredient(ItemID.LunarTabletFragment, 8);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);

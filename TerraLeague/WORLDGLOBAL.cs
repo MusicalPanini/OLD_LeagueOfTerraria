@@ -505,8 +505,8 @@ namespace TerraLeague
             {
                 if (Main.dayTime)
                 {
-                    float num139 = (float)(Main.maxTilesX / 4200f);
-                    if ((float)Main.rand.Next(/*8000*/16000) < 10f * num139)
+                    //float num139 = (float)(Main.maxTilesX / 4200f);
+                    if (Main.time == 27000) //(float)Main.rand.Next(/*8000*/16000) < 10f * num139)
                     {
                         int num140 = Main.rand.Next(Main.maxTilesX - 50) + 100;
                         num140 *= 16;
