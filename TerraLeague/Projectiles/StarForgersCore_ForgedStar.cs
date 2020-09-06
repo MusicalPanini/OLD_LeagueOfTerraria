@@ -96,6 +96,8 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
+            target.AddBuff(Terraria.ID.BuffID.Daybreak, 120);
+
             int count = Main.player[projectile.owner].ownedProjectileCounts[projectile.type];
             damage = (int)(damage * (1 + ((count - 1) * 0.1)));
 
