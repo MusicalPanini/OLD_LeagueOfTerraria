@@ -204,7 +204,6 @@ namespace TerraLeague.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<HarmonicBar>(), 16);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 16);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
