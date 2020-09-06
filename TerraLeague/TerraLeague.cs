@@ -27,16 +27,35 @@ namespace TerraLeague
 {
     public class TerraLeague : Mod
     {
-        internal static string MELColor;
-        internal static string RNGColor;
-        internal static string MAGColor;
-        internal static string SUMColor;
+        internal static string MELColor = "FFA500";
+        internal static string RNGColor = "20B2AA";
+        internal static string MAGColor = "8E70DB";
+        internal static string SUMColor = "87CEEB";
+
+        internal static string DEFColor = "A0A0A0";
+        internal static string ARMORColor = "FFFF00";
+        internal static string RESISTColor = "B0C4DE";
+        internal static string HEALColor = "008000";
+        internal static string CDRColor = "FFFFFF";
+        internal static string RNGATSColor = "808080";
+        internal static string MANAREDUCTColor = "4169E1";
+
+        internal static string TooltipHeadingColor = "0099cc";
+
+        internal static string PassiveMainColor = "0099cc";
+        internal static string PassiveSecondaryColor = "99e6ff";
+        internal static string PassiveSubColor = "007399";
+
+        internal static string ActiveMainColor = "ff4d4d";
+        internal static string ActiveSecondaryColor = "ff8080";
+        internal static string ActiveSubColor = "cc0000";
 
         internal static TerraLeague instance;
         internal StatUI statUI;
         internal ItemUI itemUI;
         internal AbilityUI abilityUI;
         internal HealthbarUI healthbarUI;
+        internal ToolTipUI tooltipUI;
         internal bool canLog = false;
         internal bool debugMode = false;
         internal bool disableModUI = false;
@@ -45,6 +64,7 @@ namespace TerraLeague
         private UserInterface userInterface2;
         private UserInterface userInterface3;
         public UserInterface HealthbarInterface;
+        public UserInterface tooltipInterface;
         public static ModHotKey ToggleStats;
         public static ModHotKey Item1;
         public static ModHotKey Item2;
@@ -236,6 +256,11 @@ namespace TerraLeague
                 healthbarUI = new HealthbarUI();
                 HealthbarUI.visible = true;
                 HealthbarInterface.SetState(healthbarUI);
+
+                tooltipInterface = new UserInterface();
+                tooltipUI = new ToolTipUI();
+                //ToolTipUI.visible = true;
+                tooltipInterface.SetState(tooltipUI);
             }
 
             Main.instance.GUIBarsDraw();
@@ -265,10 +290,26 @@ namespace TerraLeague
             EAbility = null;
             RAbility = null;
             Trinket = null;
+
             MELColor = null;
             RNGColor = null;
             MAGColor = null;
             SUMColor = null;
+            DEFColor = null;
+            ARMORColor = null;
+            RESISTColor = null;
+            HEALColor = null;
+            CDRColor = null;
+            RNGATSColor = null;
+            MANAREDUCTColor = null;
+            TooltipHeadingColor = null;
+            PassiveMainColor = null;
+            PassiveSecondaryColor = null;
+            PassiveSubColor = null;
+            ActiveMainColor = null;
+            ActiveSecondaryColor = null;
+            ActiveSubColor = null;
+
             StopHealthandManaText = false;
             base.Unload();
         }
@@ -302,6 +343,18 @@ namespace TerraLeague
                     {
                         HealthbarInterface.Update(Main._drawInterfaceGameTime);
                         healthbarUI.Draw(Main.spriteBatch);
+                    }
+                    return true;
+                },
+                InterfaceScaleType.UI));
+
+                layers.Insert(resourseBar, new LegacyGameInterfaceLayer("TerraLeague: Resource Bar",
+                delegate
+                {
+                    if (HealthbarUI.visible)
+                    {
+                        tooltipInterface.Update(Main._drawInterfaceGameTime);
+                        tooltipUI.Draw(Main.spriteBatch);
                     }
                     return true;
                 },
@@ -1292,6 +1345,84 @@ namespace TerraLeague
                 sound.Pitch = pitch;
 
             return sound;
+        }
+
+        public static string CreateColorString(string hexValue, string text)
+        {
+            var splitText = text.Split('\n');
+            string rejoinedText = "";
+            for (int i = 0; i < splitText.Length; i++)
+            {
+                if (i != 0)
+                    rejoinedText += "\n";
+                rejoinedText += "[c/" + hexValue + ":" + splitText[i] + "]";
+            }
+
+            return rejoinedText;
+        }
+
+        public static string CreateColorString(Color color, string text)
+        {
+            var splitText = text.Split('\n');
+            string rejoinedText = "";
+            for (int i = 0; i < splitText.Length; i++)
+            {
+                if (i != 0)
+                    rejoinedText += "\n";
+                rejoinedText += "[c/" + color.Hex3() + ":" + splitText[i] + "]";
+            }
+
+            return rejoinedText;
+        }
+
+        public static string CreateScalingTooltip(DamageType type, int valueToScale, int percentScaling)
+        {
+            string text = "";
+            switch (type)
+            {
+                case DamageType.MEL:
+                    text += "[c/" + MELColor + ":";
+                    break;
+                case DamageType.RNG:
+                    text += "[c/" + RNGColor + ":";
+                    break;
+                case DamageType.MAG:
+                    text += "[c/" + MAGColor + ":";
+                    break;
+                case DamageType.SUM:
+                    text += "[c/" + SUMColor + ":";
+                    break;
+                default:
+                    break;
+            }
+
+            if (ItemUI.extraStats)
+            {
+                switch (type)
+                {
+                    case DamageType.MEL:
+                        text += percentScaling + "% MEL(";
+                        break;
+                    case DamageType.RNG:
+                        text += percentScaling + "% RNG(";
+                        break;
+                    case DamageType.MAG:
+                        text += percentScaling + "% MAG(";
+                        break;
+                    case DamageType.SUM:
+                        text += percentScaling + "% SUM(";
+                        break;
+                    default:
+                        break;
+                }
+                text += (int)(valueToScale * percentScaling * 0.01) + ")]";
+            }
+            else
+            {
+                text += (int)(valueToScale * percentScaling * 0.01) + "]";
+            }
+
+            return text;
         }
     }
 }

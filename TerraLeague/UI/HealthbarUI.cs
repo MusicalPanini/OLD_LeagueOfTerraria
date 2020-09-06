@@ -20,6 +20,16 @@ namespace TerraLeague.UI
         ResourceBar mana;
         Texture2D _backgroundTexture;
 
+        public static Color RedHealthColor = new Color(164, 55, 65);
+        public static Color OrangeHealthColor = new Color(211, 113, 48);
+        public static Color BonusHealthColor = new Color(100, 35, 40);
+
+        public static Color BasicShieldColor = new Color(230, 230, 230);
+        public static Color MagicShieldColor = new Color(172, 122, 219);
+        public static Color PhysicalShieldColor = new Color(219, 190, 118);
+
+        public static Color ManaColor = new Color(46, 67, 114);
+
         public override void OnInitialize()
         {
             if (_backgroundTexture == null)
@@ -196,7 +206,10 @@ namespace TerraLeague.UI
 
     class ResourceBar : UIElement
     {
+        private UIBar barBackground;
         private UIInnerBar currentBar;
+        private UIInnerBar lifeFruitBar;
+        private UIInnerBar bonusHealthBar;
         private UIInnerBar shieldBar;
         private UIInnerBar magicShieldBar;
         private UIInnerBar physShieldBar;
@@ -205,6 +218,8 @@ namespace TerraLeague.UI
         private ResourceBarMode stat;
         private float width;
         private float height;
+
+        private UIImage[] markers;
         
 
         public override void OnInitialize()
@@ -212,7 +227,7 @@ namespace TerraLeague.UI
             Height.Set(height, 0f);
             Width.Set(width, 0f);
 
-            UIBar barBackground = new UIBar();
+            barBackground = new UIBar();
             barBackground.Left.Set(0f, 0f);
             barBackground.Top.Set(0f, 0f);
             barBackground.backgroundColor = Color.White;
@@ -229,7 +244,23 @@ namespace TerraLeague.UI
             switch (stat)
             {
                 case ResourceBarMode.HP:
-                    currentBar.backgroundColor = new Color(164, 55, 65); 
+                    currentBar.backgroundColor = HealthbarUI.RedHealthColor;
+
+                    lifeFruitBar = new UIInnerBar();
+                    lifeFruitBar.SetPadding(0);
+                    lifeFruitBar.Left.Set(8f, 0f);
+                    lifeFruitBar.Top.Set(2f, 0f);
+                    lifeFruitBar.Width.Set(width, 0f);
+                    lifeFruitBar.Height.Set(height - 4, 0f);
+                    lifeFruitBar.backgroundColor = HealthbarUI.OrangeHealthColor;
+
+                    bonusHealthBar = new UIInnerBar();
+                    bonusHealthBar.SetPadding(0);
+                    bonusHealthBar.Left.Set(8f, 0f);
+                    bonusHealthBar.Top.Set(2f, 0f);
+                    bonusHealthBar.Width.Set(width, 0f);
+                    bonusHealthBar.Height.Set(height - 4, 0f);
+                    bonusHealthBar.backgroundColor = HealthbarUI.BonusHealthColor;
 
                     shieldBar = new UIInnerBar(); 
                     shieldBar.SetPadding(0);
@@ -237,7 +268,7 @@ namespace TerraLeague.UI
                     shieldBar.Top.Set(2f, 0f);
                     shieldBar.Width.Set(width, 0f);
                     shieldBar.Height.Set(height - 4, 0f);
-                    shieldBar.backgroundColor = new Color(230, 230, 230);
+                    shieldBar.backgroundColor = HealthbarUI.BasicShieldColor;
 
                     magicShieldBar = new UIInnerBar();
                     magicShieldBar.SetPadding(0);
@@ -245,7 +276,7 @@ namespace TerraLeague.UI
                     magicShieldBar.Top.Set(2f, 0f);
                     magicShieldBar.Width.Set(width, 0f);
                     magicShieldBar.Height.Set(height -4, 0f);
-                    magicShieldBar.backgroundColor = new Color(172, 122, 219);
+                    magicShieldBar.backgroundColor = HealthbarUI.MagicShieldColor;
 
                     physShieldBar = new UIInnerBar();
                     physShieldBar.SetPadding(0);
@@ -253,15 +284,35 @@ namespace TerraLeague.UI
                     physShieldBar.Top.Set(2f, 0f);
                     physShieldBar.Width.Set(width, 0f);
                     physShieldBar.Height.Set(height -4, 0f);
-                    physShieldBar.backgroundColor = new Color(219, 190, 118);
+                    physShieldBar.backgroundColor = HealthbarUI.PhysicalShieldColor;
 
+                    barBackground.Append(lifeFruitBar);
+                    barBackground.Append(bonusHealthBar);
                     barBackground.Append(shieldBar);
                     barBackground.Append(magicShieldBar);
                     barBackground.Append(physShieldBar);
+                    barBackground.Append(currentBar);
+
+                    markers = new UIImage[40];
+                    for (int i = 0; i < markers.Length; i++)
+                    {
+                        markers[i] = new UIImage(TerraLeague.instance.GetTexture("UI/BarMarker"));
+                        barBackground.Append(markers[i]);
+                        markers[i].Top.Set(2, 0);
+                    }
+
                     break;
 
                 case ResourceBarMode.MANA:
-                    currentBar.backgroundColor = new Color(46, 67, 114); 
+                    currentBar.backgroundColor = HealthbarUI.ManaColor;
+                    barBackground.Append(currentBar);
+                    markers = new UIImage[400/20];
+                    for (int i = 0; i < markers.Length; i++)
+                    {
+                        markers[i] = new UIImage(TerraLeague.instance.GetTexture("UI/BarMarker"));
+                        barBackground.Append(markers[i]);
+                        markers[i].Top.Set(2, 0);
+                    }
                     break;
                 default:
                     break;
@@ -279,7 +330,6 @@ namespace TerraLeague.UI
             regen.Left.Set(width / 2 - 26, 0);
 
 
-            barBackground.Append(currentBar);
             barBackground.Append(text);
             barBackground.Append(regen);
             base.Append(barBackground);
@@ -299,14 +349,35 @@ namespace TerraLeague.UI
             regen.Top.Set((Height.Pixels / 2 - text.MinHeight.Pixels / 2 + 3), 0f);
             regen.Left.Set(Width.Pixels / 2 - 26, 0);
             float quotient = 1;
-
             switch (stat)
             {
                 case ResourceBarMode.HP:
+                    float orangeLifeQuotent;
+                    float redLifeQuotent;
+                    float bonusLifeQuotent;
+
+                    int markerCount = player.statLifeMax2/50;
+                    int markerEffectiveHealth = 50 * markerCount;
+                    float markerQuotent = markerEffectiveHealth / (player.statLifeMax2 * 1f);
+                    for (int i = 0; i < markers.Length; i++)
+                    {
+                        float gap = (464 * markerQuotent) / markerCount;
+
+                        markers[i].Left.Set(7 + gap + (gap * i), 0);
+                        markers[i].ImageScale = (i >= markerCount ? 0 : 1);
+                    }
 
                     if (player.statLife > modPlayer.GetRealHeathWithoutShield(true))
                     {
                         quotient = (float)modPlayer.GetRealHeathWithoutShield() / (float)player.statLife;
+
+                        int bonusLife = modPlayer.GetRealHeathWithoutShield(true) - (int)(player.statLifeMax * modPlayer.healthModifier);
+                        int orangeLife = player.statLifeMax > 400 ? 5 * (player.statLifeMax - 400) : 0;
+                        int redLife = player.statLifeMax - orangeLife;
+
+                        bonusLifeQuotent = bonusLife / (modPlayer.GetRealHeathWithoutShield(true) * 1f);
+                        orangeLifeQuotent = (int)(orangeLife * modPlayer.healthModifier) / (modPlayer.GetRealHeathWithoutShield(true) * 1f);
+                        redLifeQuotent = (int)(redLife * modPlayer.healthModifier) / (modPlayer.GetRealHeathWithoutShield(true) * 1f);
 
                         shieldBar.Width.Set((width - 16) * (float)(modPlayer.NormalShield) / (float)player.statLife, 0);
                         physShieldBar.Width.Set((width - 16) * (float)(modPlayer.PhysicalShield) / (float)player.statLife, 0);
@@ -316,17 +387,75 @@ namespace TerraLeague.UI
                     {
                         quotient = (float)modPlayer.GetRealHeathWithoutShield() / (float)modPlayer.GetRealHeathWithoutShield(true);
 
+                        int bonusLife = modPlayer.GetRealHeathWithoutShield(true) - (int)(player.statLifeMax * modPlayer.healthModifier);
+                        int orangeLife = (int)((player.statLifeMax > 400 ? 5 * (player.statLifeMax - 400) : 0) * modPlayer.healthModifier);
+                        int redLife = (int)(player.statLifeMax * modPlayer.healthModifier) - orangeLife;
+
+                        int missingLife = modPlayer.GetRealHeathWithoutShield(true) - modPlayer.GetRealHeathWithoutShield();
+
+                        if (bonusLife < missingLife)
+                        {
+                            missingLife -= bonusLife;
+                            bonusLife = 0;
+
+                            if (redLife < missingLife)
+                            {
+                                missingLife -= redLife;
+                                redLife = 0;
+
+                                if (orangeLife < missingLife)
+                                    orangeLife = 0;
+                                else
+                                    orangeLife -= missingLife;
+                            }
+                            else
+                            {
+                                redLife -= missingLife;
+                            }
+                        }
+                        else
+                        {
+                            bonusLife -= missingLife;
+                        }
+                        
+
+                        bonusLifeQuotent = bonusLife / (modPlayer.GetRealHeathWithoutShield() * 1f);
+                        orangeLifeQuotent = orangeLife / (modPlayer.GetRealHeathWithoutShield() * 1f);
+                        redLifeQuotent = redLife / (modPlayer.GetRealHeathWithoutShield() * 1f);
+
                         shieldBar.Width.Set((width - 16) * (float)(modPlayer.NormalShield) / (float)modPlayer.GetRealHeathWithoutShield(true), 0);
                         physShieldBar.Width.Set((width - 16) * (float)(modPlayer.PhysicalShield) / (float)modPlayer.GetRealHeathWithoutShield(true), 0);
                         magicShieldBar.Width.Set((width - 16) * (float)(modPlayer.MagicShield) / (float)modPlayer.GetRealHeathWithoutShield(true), 0);
                     }
-                    currentBar.Width.Set(quotient * (width - 16), 0f);
-                    shieldBar.Left.Set(currentBar.Left.Pixels + currentBar.Width.Pixels,0);
+
+                    float nonShieldBarWidth = quotient * (width - 16);
+
+                    lifeFruitBar.Left.Set(8, 0);
+                    lifeFruitBar.Width.Set(nonShieldBarWidth * orangeLifeQuotent, 0f);
+
+                    currentBar.Left.Set(lifeFruitBar.Left.Pixels + lifeFruitBar.Width.Pixels, 0);
+                    currentBar.Width.Set(nonShieldBarWidth * redLifeQuotent, 0f);
+
+                    bonusHealthBar.Left.Set(currentBar.Left.Pixels + currentBar.Width.Pixels, 0);
+                    bonusHealthBar.Width.Set(nonShieldBarWidth * bonusLifeQuotent, 0f);
+
+                    shieldBar.Left.Set(bonusHealthBar.Left.Pixels + bonusHealthBar.Width.Pixels,0);
                     physShieldBar.Left.Set(shieldBar.Left.Pixels + shieldBar.Width.Pixels, 0);
                     magicShieldBar.Left.Set(physShieldBar.Left.Pixels + physShieldBar.Width.Pixels, 0);
                     break;
 
                 case ResourceBarMode.MANA:
+
+                    int manaMarkerCount = player.statManaMax2 / 50;
+                    int markerEffectiveMana = 50 * manaMarkerCount;
+                    float manaMarkerQuotent = markerEffectiveMana / (player.statManaMax2 * 1f);
+                    for (int i = 0; i < markers.Length; i++)
+                    {
+                        float gap = (464 * manaMarkerQuotent) / manaMarkerCount;
+
+                        markers[i].Left.Set(7 + gap + (gap * i), 0);
+                        markers[i].ImageScale = (i >= manaMarkerCount ? 0 : 1);
+                    }
 
                     if (player.statMana >= player.statManaMax2)
                         quotient = 1;
@@ -514,6 +643,38 @@ namespace TerraLeague.UI
                 default:
                     break;
             }
+
+            if (IsMouseHovering)
+            {
+                string tooltip = "";
+                if (stat == ResourceBarMode.HP)
+                {
+                    int orangeLife = player.statLifeMax > 400 ? 5 * (player.statLifeMax - 400) : 0;
+                    int redLife = player.statLifeMax - orangeLife;
+
+                    tooltip += TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, "Health Bar");
+                    tooltip += "\nMax life consists of:";
+                    if (redLife > 0)
+                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.RedHealthColor, "Heart Crystals - " + redLife);
+                    if (orangeLife > 0)
+                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.OrangeHealthColor, "Life Fruit - " + orangeLife);
+                    if (player.statLifeMax2 > 0)
+                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.BonusHealthColor, "Bonus Health - " + (player.statLifeMax2 - player.statLifeMax));
+
+                    TerraLeague.instance.tooltipUI.DrawText(tooltip.Split('\n'));
+                }
+                else if (stat == ResourceBarMode.MANA)
+                {
+                    tooltip += TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, "Mana Bar");
+                    tooltip += "\nMax mana consists of:";
+                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.ManaColor, "Mana Crystals - " + player.statManaMax);
+                    if (player.statManaMax2 > 0)
+                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.ManaColor, "Bonus Mana - " + (player.statManaMax2 - player.statManaMax));
+
+                    TerraLeague.instance.tooltipUI.DrawText(tooltip.Split('\n'));
+                }
+            }
+
             base.Update(gameTime);
         }
     }
@@ -523,7 +684,6 @@ namespace TerraLeague.UI
         private int buffNumber;
         private UIBuffImage buffImage;
         private UIText bufftime;
-        private UIBuffText buffText;
         bool rightMouseDownLastStep = false;
 
         public UIBuff(int buffNum)
@@ -548,11 +708,8 @@ namespace TerraLeague.UI
             buffImage.Width.Set(16, 0);
             buffImage.Height.Set(16, 0);
 
-            buffText = new UIBuffText("");
-
             base.Append(buffImage);
             base.Append(bufftime);
-            base.Append(buffText);
             base.OnInitialize();
         }
 
@@ -569,42 +726,40 @@ namespace TerraLeague.UI
             else
             {
                 if (Main.LocalPlayer.buffTime[buffNumber] / 60 > 60)
-                {
                     bufftime.SetText(((Main.LocalPlayer.buffTime[buffNumber] / 60) / 60).ToString() + "m");
-                }
                 else
-                {
                     bufftime.SetText((Main.LocalPlayer.buffTime[buffNumber] / 60).ToString() + "s");
-                }
             }
             
             if (IsMouseHovering)
             {
-                string color = "0099cc";
-
-                string buffDescription = "[c/"+ color + ":" + Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber]) + "]" +
+                string buffDescription = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
                     "\n" + Lang.GetBuffDescription(Main.LocalPlayer.buffType[buffNumber]);
 
 
                 if (Main.LocalPlayer.buffType[buffNumber] == Terraria.ID.BuffID.MonsterBanner)
                 {
                     string name1 = "";
+                    string name2 = "";
 
                     for (int i = 0; i < Main.LocalPlayer.NPCBannerBuff.Count(); i++)
                     {
                         if (Item.BannerToNPC(i) != 0 && Main.player[Main.myPlayer].NPCBannerBuff[i])
                         {
                             if (name1 == "")
-                                name1 = Lang.GetNPCNameValue(Item.BannerToNPC(i));
+                                name1 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                            else if (name2 == "")
+                                name2 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
                             else
                             {
-                                string name2 = Lang.GetNPCNameValue(Item.BannerToNPC(i));
+                                string name3 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
 
                                 int spaces = 18 - name1.Length;
 
-                                buffDescription += "\n" + name1 + ", " + name2;
+                                buffDescription += "\n" + name1 + " ~ " + name2 + " ~ " + name3;
 
                                 name1 = "";
+                                name2 = "";
                             }
                         }
                     }
@@ -617,38 +772,16 @@ namespace TerraLeague.UI
                     buffDescription += (int)(Main.LocalPlayer.manaSickReduction * 100) + "%";
                 }
 
-                buffText.SetText(buffDescription);
+                //buffText.SetText(buffDescription);
 
                 if (Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber]) != "")
-                {
-                    buffText.Left.Set(-Left.Pixels + Main.screenWidth/2 - 250, 0);
-
-                    int count = buffText.Text.Split('\n').Length;
-
-                    buffText.Top.Set(-28*count, 0);
-                }
-                else
-                {
-                    buffText.SetText("");
-                }
+                    TerraLeague.instance.tooltipUI.DrawText(buffDescription.Split('\n'));
 
                 
                 if (rightMouseDownLastStep && !Main.mouseRight && !Main.debuff[Main.LocalPlayer.buffType[buffNumber]])
-                {
                     Main.LocalPlayer.ClearBuff(Main.LocalPlayer.buffType[buffNumber]);
-                }
-                if (Main.mouseRight)
-                {
-                    rightMouseDownLastStep = true;
-                }
-                else
-                {
-                    rightMouseDownLastStep = false;
-                }
-            }
-            else
-            {
-                buffText.SetText("");
+                    
+                rightMouseDownLastStep = Main.mouseRight;
             }
 
             Recalculate();
@@ -689,19 +822,6 @@ namespace TerraLeague.UI
         }
 
         
-    }
-
-    class UIBuffText : UIText
-    {
-        public UIBuffText(string text, float textScale = 1, bool large = false) : base(text, textScale, large)
-        {
-            Width.Set(500, 0);
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
     }
 
     internal enum ResourceBarMode

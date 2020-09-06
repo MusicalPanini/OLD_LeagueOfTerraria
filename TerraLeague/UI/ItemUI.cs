@@ -91,7 +91,6 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(width, 0f);
             Height.Set(height, 0f);
-            //BackgroundColor = color;
             if (_backgroundTexture == null)
                 _backgroundTexture = TerraLeague.instance.GetTexture("UI/SummonerBackground");
 
@@ -130,7 +129,6 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(dimentions, 0f);
             Height.Set(dimentions, 0f);
-            //BackgroundColor = new Color(35, 100, 80);
             if (_backgroundTexture == null)
                 _backgroundTexture = TerraLeague.instance.GetTexture("UI/AbilityBorder");
 
@@ -196,20 +194,11 @@ namespace TerraLeague.UI
 
             if (IsMouseHovering)
             {
-                string text = "[c/0099cc:" + spell.GetSpellName() + "]\n";
-                text += spell.GetTooltip();
+                string text = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, spell.GetSpellName());
+                text += "\n" + spell.GetTooltip();
                 text += "\n" + spell.GetCooldown() + " second cooldown";
 
-                toolTip.SetText(text);
-
-                toolTip.Left.Set((-(Main.screenWidth - 316) - (slotNum == 1 ? 5 : 52)) + (Main.screenWidth/2 - 288), 0);
-
-                int count = toolTip.Text.Split('\n').Length;
-                toolTip.Top.Set((-28 * count) - 90, 0);
-            }
-            else
-            {
-                toolTip.SetText("");
+                TerraLeague.instance.tooltipUI.DrawText(text.Split('\n'));
             }
 
             sumImage.Recalculate();
@@ -247,7 +236,6 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(width, 0f);
             Height.Set(height, 0f);
-            //BackgroundColor = color;
 
             if (_backgroundTexture == null)
                 _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBackground");
@@ -289,7 +277,6 @@ namespace TerraLeague.UI
         UIImage itemImage;
         UIText itemStat;
         UIText itemKey;
-        UIToolTip toolTip;
         int slotNum;
 
         public UIItemSlot(int SlotNum, int left, int top, int dimentions)
@@ -302,7 +289,6 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(dimentions, 0f);
             Height.Set(dimentions, 0f);
-            //BackgroundColor = new Color(35, 100, 80);
 
             itemImage = new UIImage(placeholderArt);
             itemImage.Width.Pixels = Width.Pixels;
@@ -320,13 +306,6 @@ namespace TerraLeague.UI
             itemKey.Left.Pixels = 2;
             itemKey.Top.Pixels = -2;
             Append(itemKey);
-
-            if (slotNum > 3)
-                toolTip = new UIToolTip((slotNum - 4) * -47, -47, Main.LocalPlayer.armor[slotNum + 2].type);
-            else
-                toolTip = new UIToolTip((slotNum -1) * -47, 0, Main.LocalPlayer.armor[slotNum + 2].type);
-
-            Append(toolTip);
         }
 
         public override void Update(GameTime gameTime)
@@ -399,22 +378,82 @@ namespace TerraLeague.UI
                 itemImage.ImageScale = 0;
             }
 
-
             if (IsMouseHovering)
             {
                 if (Lang.GetItemName(Main.LocalPlayer.armor[slotNum + 2].type).ToString() != "")
                 {
-                    toolTip.itemType = Main.LocalPlayer.armor[slotNum + 2].type;
-                    toolTip.drawText = true;
+                    ModItem modItem = Main.LocalPlayer.armor[slotNum + 2].modItem;
+
+                    string[] activeTip;
+                    string[] primPassiveTip;
+                    string[] secPassiveTip;
+                    System.Collections.Generic.List<string> activePassiveTooltips = new System.Collections.Generic.List<string>();
+
+                    for (int i = 3; i < 9; i++)
+                    {
+                        if (Main.LocalPlayer.armor[i].type == modItem.item.type)
+                        {
+                            modItem = Main.LocalPlayer.armor[i].modItem;
+                            break;
+                        }
+                    }
+
+                    legItem = modItem as LeagueItem;
+
+
+                    if (legItem != null)
+                    {
+                        int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, legItem);
+                        if (slot != -1)
+                        {
+                            if (legItem.GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
+                            {
+                                activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < activeTip.Length; i++)
+                                {
+                                    activePassiveTooltips.Add(activeTip[i]);
+                                }
+                            }
+                            if (legItem.GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                            {
+                                primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < primPassiveTip.Length; i++)
+                                {
+                                    activePassiveTooltips.Add(primPassiveTip[i]);
+                                }
+                            }
+                            if (legItem.GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
+                            {
+                                secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                for (int i = 0; i < secPassiveTip.Length; i++)
+                                {
+                                    activePassiveTooltips.Add(secPassiveTip[i]);
+                                }
+                            }
+                        }
+                    }
+
+                    string heading = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.item.type).Value);
+                    var itemsBaseTooltip = Lang.GetTooltip(modItem.item.type);
+
+                    string[] compiledTooltip = new string[ToolTipUI.MaxLines];
+                    compiledTooltip[0] = heading;
+
+                    for (int i = 0; i < itemsBaseTooltip.Lines; i++)
+                    {
+                        if (i + 1 > ToolTipUI.MaxLines)
+                            break;
+                        compiledTooltip[i + 1] = itemsBaseTooltip.GetLine(i);
+                    }
+                    for (int i = 0; i < activePassiveTooltips.Count; i++)
+                    {
+                        if (i + 1 + itemsBaseTooltip.Lines > ToolTipUI.MaxLines)
+                            break;
+                        compiledTooltip[i + 1 + itemsBaseTooltip.Lines] = activePassiveTooltips[i];
+                    }
+
+                    TerraLeague.instance.tooltipUI.DrawText(compiledTooltip);
                 }
-                else
-                {
-                    toolTip.drawText = false;
-                }
-            }
-            else
-            {
-                toolTip.drawText = false;
             }
             Recalculate();
             base.Update(gameTime);
@@ -455,141 +494,6 @@ namespace TerraLeague.UI
         }
     }
 
-    class UIToolTip : UIElement
-    {
-        public int itemType;
-        public bool drawText = false;
-        UIToolTipLine[] uiLines = new UIToolTipLine[16];
-
-        public UIToolTip(int left, int top, int type)
-        {
-            Left.Set(left, 0f);
-            Top.Set(top, 0f);
-            Width.Set(500, 0f);
-
-            for (int i = 0; i < uiLines.Length; i++)
-            {
-                uiLines[i] = new UIToolTipLine(0, -320 + (28 * i), i.ToString());
-                Append(uiLines[i]);
-            }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            if (drawText)
-            {
-                try
-                {
-                    ModItem modItem = null;
-                    LeagueItem legItem;
-                    string[] activeTip;
-                    string[] primPassiveTip;
-                    string[] secPassiveTip;
-                    int lines = 0;
-                    System.Collections.Generic.List<string> extraLines = new System.Collections.Generic.List<string>();
-
-                    for (int i = 3; i < 9; i++)
-                    {
-                        if (Main.LocalPlayer.armor[i].type == itemType)
-                        {
-                            modItem = Main.LocalPlayer.armor[i].modItem;
-                            break;
-                        }
-                    }
-
-                    legItem = modItem as LeagueItem;
-
-
-                    if (legItem != null)
-                    {
-                        int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, legItem);
-                        if (slot != -1)
-                        {
-                            if (legItem.GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
-                            {
-                                activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                for (int i = 0; i < activeTip.Length; i++)
-                                {
-                                    extraLines.Add(activeTip[i]);
-                                }
-                            }
-                            if (legItem.GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                            {
-                                primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                for (int i = 0; i < primPassiveTip.Length; i++)
-                                {
-                                    extraLines.Add(primPassiveTip[i]);
-                                }
-                            }
-                            if (legItem.GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
-                            {
-                                secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                for (int i = 0; i < secPassiveTip.Length; i++)
-                                {
-                                    extraLines.Add(secPassiveTip[i]);
-                                }
-                            }
-                        }
-                    }
-
-                    lines += Lang.GetTooltip(itemType).Lines;
-                    Height.Set(28 * lines, 0);
-
-                    string name = "[c/0099cc:" + Lang.GetItemName(itemType) + "]";
-                    var poop = Lang.GetTooltip(itemType);
-
-                    for (int i = 0; i < uiLines.Length; i++)
-                    {
-                        if (i >= uiLines.Length - (lines + extraLines.Count + 1))
-                        {
-                            if (uiLines.Length - (lines + extraLines.Count + 1) == i)
-                                uiLines[i].SetText(name);
-                            else if (uiLines.Length - extraLines.Count > i)
-                                uiLines[i].SetText(Lang.GetTooltip(itemType).GetLine(i - (uiLines.Length - (extraLines.Count + lines))));
-                            else
-                                uiLines[i].SetText(extraLines[i - (uiLines.Length - extraLines.Count)]);
-                        }
-                        else
-                        {
-                            uiLines[i].SetText("");
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    for (int i = 0; i < uiLines.Length; i++)
-                    {
-                        uiLines[i].SetText("");
-                    }
-                }
-                
-            }
-            else
-            {
-                for (int i = 0; i < uiLines.Length; i++)
-                {
-                    uiLines[i].SetText("");
-                    uiLines[i].Left.Set(-(Main.screenWidth - 174) + (Main.screenWidth/2 - 250), 0);
-                    uiLines[i].Top.Set(-320 + (28 * i) - 172, 0);
-                }
-            }
-
-            Recalculate();
-        }
-    }
-
-    class UIToolTipLine : UIText
-    {
-        public UIToolTipLine(int left, int top, string text, float textScale = 1, bool large = false) : base(text, textScale, large)
-        {
-            SetText(text,textScale, large);
-            Left.Set(left, 0f);
-            Top.Set(top, 0f);
-            Width.Set(500, 0f);
-            Height.Set(28, 0);
-        }
-    }
-
     class UIStatPanel : UIState
     {
         public bool extraStats = false;
@@ -617,7 +521,6 @@ namespace TerraLeague.UI
             Top.Set(top, 0f);
             Width.Set(width, 0f);
             Height.Set(height, 0f);
-            //BackgroundColor = color;
             if (_backgroundTexture == null)
                 _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundSmall");
 
@@ -706,14 +609,14 @@ namespace TerraLeague.UI
 
             if (extraStats)
             {
-                    _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundLarge");
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundLarge");
 
                 Height.Set(90, 0f);
                 GetStats(true);
             }
             else
             {
-                    _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundSmall");
+                _backgroundTexture = TerraLeague.instance.GetTexture("UI/StatsBackgroundSmall");
 
                 Height.Set(58, 0f);
                 GetStats();
@@ -724,22 +627,24 @@ namespace TerraLeague.UI
 
             if (armorStats.IsMouseHovering)
             {
-                text = "[c/FFFF00:Armor]" +
+                text = TerraLeague.CreateColorString(TerraLeague.ARMORColor, "Armor") +
                     "\nReduces damage from contact by " + (Main.expertMode ? "0.75" : "0.5") + " damage per point" +
-                    "\nFrom Armor: " + modPlayer.armorLastStep +
-                    "\nFrom Defence: " + modPlayer.defenceLastStep;
+                    "\nCurrent Armor consists of" +
+                    "\n" + TerraLeague.CreateColorString(TerraLeague.ARMORColor, "From Armor increases: " + modPlayer.armorLastStep) +
+                    "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
             }
             else if (resistStats.IsMouseHovering)
             {
-                text = "[c/B0C4DE:Resist]" +
+                text = TerraLeague.CreateColorString(TerraLeague.RESISTColor, "Resist") +
                     "\nReduces damage from projectiles by " + (Main.expertMode ? "0.75" : "0.5") + " damage per point" +
-                    "\nFrom Resist: " + modPlayer.resist +
-                    "\nFrom Defence: " + modPlayer.defenceLastStep;
+                    "\nCurrent Resist consists of" +
+                    "\n" + TerraLeague.CreateColorString(TerraLeague.RESISTColor, "From Resist increases: " + modPlayer.resistLastStep) +
+                    "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
             }
             else if (meleeStats.IsMouseHovering)
             {
-                text = "[c/FFA500:Melee Damage]" +
-                    "\nUsed for Abilities and Items scaling damage." +
+                text = TerraLeague.CreateColorString(TerraLeague.MELColor, "Melee Damage") + 
+                    "\nUsed for Abilities and Items scaling damage. Gain a flat amount that increases throughout the game plus 1.5 per 1% melee damage" +
                     "\nMelee Weapons Deal " + (int)(modPlayer.meleeDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.meleeFlatDamage +
                     "\nCrit Chance: +" + (modPlayer.player.meleeCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
@@ -749,8 +654,8 @@ namespace TerraLeague.UI
             }
             else if (rangedStats.IsMouseHovering)
             {
-                text = "[c/20B2AA:Ranged Damage]" +
-                    "\nUsed for Abilities and Items scaling damage." +
+                text = TerraLeague.CreateColorString(TerraLeague.RNGColor, "Ranged Damage") +
+                    "\nUsed for Abilities and Items scaling damage. Gain 2 per 1% ranged damage" +
                     "\nRanged Weapons Deal " + (int)(modPlayer.rangedDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.rangedFlatDamage +
                     "\nCrit Chance: +" + (modPlayer.player.rangedCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
@@ -760,8 +665,8 @@ namespace TerraLeague.UI
             }
             else if (magicStats.IsMouseHovering)
             {
-                text = "[c/8E70DB:Magic Damage]" +
-                    "\nUsed for Abilities and Items scaling damage." +
+                text = TerraLeague.CreateColorString(TerraLeague.MAGColor, "Magic Damage") +
+                    "\nUsed for Abilities and Items scaling damage. Gain 2.5 per 1% magic damage" +
                     "\nMagic Weapons Deal " + (int)(modPlayer.magicDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.magicFlatDamage +
                     "\nCrit Chance: +" + (modPlayer.player.magicCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
@@ -771,8 +676,8 @@ namespace TerraLeague.UI
             }
             else if (summonStats.IsMouseHovering)
             {
-                text = "[c/87CEEB:Summon Damage]" +
-                    "\nUsed for Abilities and Items scaling damage." +
+                text = TerraLeague.CreateColorString(TerraLeague.SUMColor, "Summon Damage") +
+                    "\nUsed for Abilities and Items scaling damage. Gain 1.75 per 1% minion damage" +
                     "\nSummoner Weapons Deal " + (int)(modPlayer.minionDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.minionFlatDamage +
                     "\nLife Steal: " + (int)(modPlayer.lifeStealMinion * 100) + "%" +
@@ -783,32 +688,27 @@ namespace TerraLeague.UI
             }
             else if (CDRStats.IsMouseHovering)
             {
-                text = "[c/FFFFFF:Cooldown Reduction]" +
+                text = TerraLeague.CreateColorString(TerraLeague.CDRColor, "Cooldown Reduction") +
                     "\nThe percentage reduction for abilities and summoner spells (Max 40%)";
             }
             else if (ammoStats.IsMouseHovering)
             {
-                text = "[c/808080:Ranged Attack Speed]" +
+                text = TerraLeague.CreateColorString(TerraLeague.RNGATSColor, "Ranged Attack Speed") +
                     "\nThe percent increase in ranged weapons attack speed";
             }
             else if (healStats.IsMouseHovering)
             {
-                text = "[c/008000:Healing Power]" +
-                    "\nThe percent increase in all your healing";
+                text = TerraLeague.CreateColorString(TerraLeague.HEALColor, "Heal Power") +
+                    "\nThe percent increase in all your outgoing healing and shielding";
             }
             else if (manaStats.IsMouseHovering)
             {
-                text = "[c/4169E1:Mana Cost Reduction]" +
+                text = TerraLeague.CreateColorString(TerraLeague.MANAREDUCTColor, "Mana Cost Reduction") +
                     "\nThe percent reduction of all mana costs";
             }
 
-
-            int count = text.Split('\n').Length;
-
-            tooltip.Top.Set((Main.screenHeight - 171 - Top.Pixels) - (28 * count), 0);
-            tooltip.Left.Set(Main.screenWidth / 2 - 250 - Left.Pixels, 0);
-            tooltip.SetText(text);
-            Recalculate();
+            if (text != "")
+                TerraLeague.instance.tooltipUI.DrawText(text.Split('\n'));
             base.Update(gameTime);
         }
 

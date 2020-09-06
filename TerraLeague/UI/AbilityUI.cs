@@ -25,7 +25,6 @@ namespace TerraLeague.UI
         AbilitySlotUI abilityPanel3;
         AbilitySlotUI abilityPanel4;
 
-        UIAbilityToolTip aToolTip;
         UIText toolTip = new UIText("", 1);
 
         public override void OnInitialize()
@@ -46,8 +45,6 @@ namespace TerraLeague.UI
             abilityPanel3 = new AbilitySlotUI(99, 5, abilityboxsize, AbilityType.E);
             abilityPanel4 = new AbilitySlotUI(146, 5, abilityboxsize, AbilityType.R);
 
-            aToolTip = new UIAbilityToolTip((int)(MainPanel.Width.Pixels / 2) - 250, (-28) - 72);
-
             toolTip.Left.Set(0, 0);
             toolTip.Top.Set(0, 0);
             toolTip.Width.Set(500, 0);
@@ -58,7 +55,6 @@ namespace TerraLeague.UI
             MainPanel.Append(abilityPanel3);
             MainPanel.Append(abilityPanel4);
             MainPanel.Append(toolTip);
-            MainPanel.Append(aToolTip);
 
             base.Append(MainPanel);
             Recalculate();
@@ -102,22 +98,14 @@ namespace TerraLeague.UI
         {
             if (item != null)
             {
-                string text = "[c/0099cc:" + item.GetAbilityName(type) + "]";
-                text += (item.GetDamageTooltip(Main.LocalPlayer, type) == "" ? "" : "\n" + item.GetDamageTooltip(Main.LocalPlayer, type));
-                text += "\n" + item.GetAbilityTooltip(type);
-                text += "\n" + item.GetCooldown(type) + " second cooldown";
+                List<string> tooltip = new List<string>();
+                tooltip.Add(TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, item.GetAbilityName(type)));
+                if (item.GetDamageTooltip(Main.LocalPlayer, type) != "")
+                    tooltip.AddRange(item.GetDamageTooltip(Main.LocalPlayer, type).Split('\n'));
+                tooltip.AddRange(item.GetAbilityTooltip(type).Split('\n'));
+                tooltip.Add(item.GetCooldown(type) + " second cooldown");
 
-                aToolTip.abilityTooltip = text;
-                aToolTip.drawText = true;
-
-                aToolTip.Left.Set((MainPanel.Width.Pixels / 2) - 250, 0);
-
-                int count = toolTip.Text.Split('\n').Length;
-                aToolTip.Top.Set((-28 * count) - 72, 0);
-            }
-            else
-            {
-                toolTip.SetText("");
+                TerraLeague.instance.tooltipUI.DrawText(tooltip.ToArray());
             }
         }
     }
@@ -315,84 +303,6 @@ namespace TerraLeague.UI
                 return true;
             else
                 return false;
-        }
-    }
-
-    class UIAbilityToolTip : UIElement
-    {
-        public bool drawText = false;
-        public string abilityTooltip = "";
-        UIAbilityToolTipLine[] uiLines = new UIAbilityToolTipLine[16];
-
-        public UIAbilityToolTip(int left, int top)
-        {
-            Left.Set(left, 0f);
-            Top.Set(top, 0f);
-            Width.Set(500, 0f);
-
-            for (int i = 0; i < uiLines.Length; i++)
-            {
-                uiLines[i] = new UIAbilityToolTipLine(0, -320 + (28 * i), i.ToString());
-                Append(uiLines[i]);
-            }
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            if (drawText)
-            {
-                try
-                {
-                    string[] toolTipLines;
-                    toolTipLines = abilityTooltip.Split('\n');
-                    Height.Set((28 * toolTipLines.Length), 0);
-                    Top.Set(-521, 0);
-
-                    for (int i = 0; i < uiLines.Length; i++)
-                    {
-                        if (i >= uiLines.Length - (toolTipLines.Length))
-                        {
-                            uiLines[i].SetText(toolTipLines[i - (uiLines.Length - toolTipLines.Length)] + "              ");
-                        }
-                        else
-                        {
-                            uiLines[i].SetText("");
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    for (int i = 0; i < uiLines.Length; i++)
-                    {
-                        uiLines[i].SetText("");
-                    }
-                }
-
-            }
-            else
-            {
-                for (int i = 0; i < uiLines.Length; i++)
-                {
-                    uiLines[i].SetText("");
-                    uiLines[i].Left.Set(0, 0);
-                    uiLines[i].Top.Set((28 * i), 0);
-                }
-            }
-
-            drawText = false;
-            Recalculate();
-        }
-    }
-
-    class UIAbilityToolTipLine : UIText
-    {
-        public UIAbilityToolTipLine(int left, int top, string text, float textScale = 1, bool large = false) : base(text, textScale, large)
-        {
-            SetText(text, textScale, large);
-            Left.Set(left, 0f);
-            Top.Set(top, 0f);
-            Width.Set(500, 0f);
-            Height.Set(28, 0);
         }
     }
 }
