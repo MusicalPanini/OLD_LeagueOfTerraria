@@ -202,7 +202,7 @@ namespace TerraLeague.Items.Weapons
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SpellTome, 1);
-            recipe.AddIngredient(ItemID.LivingFireBlock, 50);
+            recipe.AddIngredient(ItemID.LivingFireBlock, 20);
             recipe.AddIngredient(ItemID.SoulofFright, 10);
             recipe.AddTile(TileID.Bookcases);
             recipe.SetResult(this);
