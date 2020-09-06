@@ -46,6 +46,7 @@ namespace TerraLeague.Projectiles
             if (sentry == null)
             {
                 projectile.Kill();
+                return;
             }
 
             if (projectile.soundDelay == 0)
