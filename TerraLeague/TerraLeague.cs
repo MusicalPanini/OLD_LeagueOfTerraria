@@ -894,7 +894,15 @@ namespace TerraLeague
             {
                 return true;
             }
+            else if (IsPointWithinRange(hitbox.Right(), startingPoint, range))
+            {
+                return true;
+            }
             else if (IsPointWithinRange(hitbox.TopRight(), startingPoint, range))
+            {
+                return true;
+            }
+            else if (IsPointWithinRange(hitbox.Left(), startingPoint, range))
             {
                 return true;
             }
@@ -902,7 +910,19 @@ namespace TerraLeague
             {
                 return true;
             }
+            else if (IsPointWithinRange(hitbox.Top(), startingPoint, range))
+            {
+                return true;
+            }
             else if (IsPointWithinRange(hitbox.BottomRight(), startingPoint, range))
+            {
+                return true;
+            }
+            else if (IsPointWithinRange(hitbox.Bottom(), startingPoint, range))
+            {
+                return true;
+            }
+            else if (hitbox.Intersects(new Rectangle((int)startingPoint.X, (int)startingPoint.X, 1, 1)))
             {
                 return true;
             }
