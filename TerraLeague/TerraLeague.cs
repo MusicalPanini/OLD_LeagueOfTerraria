@@ -1027,7 +1027,7 @@ namespace TerraLeague
                             {
                                 if (IsHitboxWithinRange(position, player.Hitbox, range))
                                 {
-                                    currentChoice = 1;
+                                    currentChoice = i;
                                     range = Vector2.Distance(position, player.Center);
                                 }
                             }
