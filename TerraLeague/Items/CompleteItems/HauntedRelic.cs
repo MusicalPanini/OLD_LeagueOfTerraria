@@ -31,6 +31,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.maxMinions += 1;
+            player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
 
             base.UpdateAccessory(player, hideVisual);
