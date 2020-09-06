@@ -26,6 +26,15 @@ namespace TerraLeague.Projectiles
             }
         }
 
+        public override void SetDefaults(Projectile projectile)
+        {
+            int type = projectile.type;
+            if (type == 195 || type == 433 || type == 374 || type == 376 || type == 389 || type == 408 || type == 379 || type == 309 || type == 642 || type == 644 || type == 680 || type == 664 || type == 666 || type == 668 || type == 694 || type == 695 || type == 696)
+                projectile.minion = true;
+
+            base.SetDefaults(projectile);
+        }
+
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {
             PLAYERGLOBAL modPlayer = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
@@ -51,7 +60,7 @@ namespace TerraLeague.Projectiles
             {
                 crit = (Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().arcanePrecision && Main.rand.Next(0, 100) < ArcanePrecision.critChance);
             }
-            else if (projectile.minion && projectile.minionSlots > 0)
+            else if (projectile.minion)
             {
                 crit = (Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().haunted && Main.rand.Next(0, 100) < Haunted.critChance);
             }
