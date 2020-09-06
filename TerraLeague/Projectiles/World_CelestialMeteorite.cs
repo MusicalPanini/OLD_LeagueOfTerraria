@@ -93,7 +93,7 @@ namespace TerraLeague.Projectiles
             }
             TerraLeague.PlaySoundWithPitch(position, 2, 89, -1f);
             SoundEffectInstance sound = Main.PlaySound(SoundID.DD2_ExplosiveTrapExplode, position);
-            Main.NewText("A Celestial Comit has landed", new Color(0, 200, 255));
+            Main.NewText("A Celestial Comet has landed", new Color(0, 200, 255));
             if (sound != null)
             {
                 sound.Pitch = -1;
