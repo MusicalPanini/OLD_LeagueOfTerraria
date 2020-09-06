@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class StarfireSpellblades : AbilityItem
+    public class StarfireSpellbladesAscended : AbilityItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,9 +18,8 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "Gains attack speed and damage each half second in combat" +
-                "\nAfter 6 seconds, the sword will ascend and fire waves of starfire" +
-                "\nThe wave deals " + (int)(item.damage * 0.75) + " + [c/" + TerraLeague.MELColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL * 0.3) + "] + [c/" + TerraLeague.SUMColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM * 0.50) + "] ranged damage";
+            return "You have ascended" +
+                "\nFire a wave of starfire that deals " + (int)(item.damage * 0.75) + " + [c/" + TerraLeague.MELColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL * 0.3) + "] + [c/" + TerraLeague.SUMColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM * 0.50) + "] ranged damage";
         }
 
         public override string GetQuote()
@@ -140,68 +139,74 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 55;
+            item.damage = 110;
             item.width = 56;
             item.height = 56;       
             item.melee = true;
-            item.useTime = 24;
-            item.useAnimation = 24;
+            item.useTime = 36;
+            item.useAnimation = 18;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.knockBack = 6;
             item.value = 200000;
             item.rare = ItemRarityID.Yellow;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
+            item.shoot = ModContent.ProjectileType<StarfireSpellblades_Firewave>();
+            item.shootSpeed = 8;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
+            Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
+            damage = (int)(item.damage * 0.75) + (int)(player.GetModPlayer<PLAYERGLOBAL>().MEL * 0.3) + (int)(player.GetModPlayer<PLAYERGLOBAL>().SUM * 0.5);
+            int numberProjectiles = 24;
+            float startingAngle = 24;
+            for (int i = 0; i < numberProjectiles; i++)
+            {
+                Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedBy(MathHelper.ToRadians(startingAngle));
+                startingAngle -= 2f;
+                Projectile proj = Projectile.NewProjectileDirect(position, perturbedSpeed, type, damage, knockBack, player.whoAmI, i);
+            }
+
             return false;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
         {
-
+            target.AddBuff(BuffID.Daybreak, 60);
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
         {
-            mult = 1 + (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks * 0.2f);
-
             base.ModifyWeaponDamage(player, ref add, ref mult, ref flat);
         }
 
         public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-            if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks >= 6)
-            {
-
-                Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, 87,0,0,100,default(Color), 0.7f);
-                dust.noGravity = true;
-            }
-            else
-            {
-
-            }
-
+            Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, 87, 0, 0, 100, default(Color), 0.7f);
+            dust.noGravity = true;
             base.MeleeEffects(player, hitbox);
         }
 
         public override void UpdateInventory(Player player)
         {
-            if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks >= 6)
+            if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks != 6)
             {
                 byte prefix = item.prefix;
-                item.SetDefaults(ModContent.ItemType<StarfireSpellbladesAscended>());
+                item.SetDefaults(ModContent.ItemType<StarfireSpellblades>());
                 item.prefix = prefix;
             }
 
             base.UpdateInventory(player);
         }
 
-        public override float MeleeSpeedMultiplier(Player player)
+        public override void Update(ref float gravity, ref float maxFallSpeed)
         {
-            return base.MeleeSpeedMultiplier(player) + (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks * 0.05f);
+            byte prefix = item.prefix;
+            item.SetDefaults(ModContent.ItemType<StarfireSpellblades>());
+            item.prefix = prefix;
+
+            base.Update(ref gravity, ref maxFallSpeed);
         }
 
         public override void AddRecipes()

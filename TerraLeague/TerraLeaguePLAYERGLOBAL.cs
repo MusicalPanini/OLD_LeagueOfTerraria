@@ -1071,7 +1071,6 @@ namespace TerraLeague
                 clone.MagicShield = MagicShield;
                 clone.PhysicalShield = PhysicalShield;
                 clone.NormalShield = NormalShield;
-                clone.AscensionStacks = AscensionStacks;
                 clone.zoneBlackMist = zoneBlackMist;
                 clone.zoneSurfaceMarble = zoneSurfaceMarble;
             }
@@ -1106,11 +1105,6 @@ namespace TerraLeague
             if (oldClone.PhysicalShield != PhysicalShield)
             {
                 PacketHandler.SendShieldTotal(-1, player.whoAmI, player.whoAmI, PhysicalShield, 2);
-            }
-
-            if (oldClone.AscensionStacks != AscensionStacks)
-            {
-                PacketHandler.SendAscension(-1, player.whoAmI, player.whoAmI, AscensionStacks);
             }
 
             if (oldClone.zoneSurfaceMarble != zoneSurfaceMarble)
@@ -1597,7 +1591,7 @@ namespace TerraLeague
             }
 
             // Starfire Spellblade stack handler
-            if (CombatTimer >= 240 || player.HeldItem.type != ItemType<StarfireSpellblades>())
+            if (CombatTimer >= 240 /*|| player.HeldItem.type != ItemType<StarfireSpellblades>()*/)
             {
                 AscensionTimer = 0;
                 AscensionStacks = 0;
@@ -1605,7 +1599,7 @@ namespace TerraLeague
             if (CombatTimer < 240 && AscensionStacks < 6 && player.HeldItem.type == ItemType<StarfireSpellblades>())
             {
                 AscensionTimer++;
-                if (AscensionTimer >= 60)
+                if (AscensionTimer >= 30)
                 {
                     AscensionTimer = 0;
                     AscensionStacks++;
