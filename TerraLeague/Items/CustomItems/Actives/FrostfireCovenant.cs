@@ -22,11 +22,11 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/ff4d4d:Active: FROSTFIRE COVENANT -] [c/ff8080:Target an ally to channel the Harbinger of Fire through them for " + effectDuration +" seconds.]" +
-                "\n[c/ff8080:All their attacks will deal 40 On Hit damage and apply 'Harbingers Inferno']" +
-                "\n[c/ff8080:At the same time you channel the Harbinger of Frost for " + effectDuration + " seconds, slowing near by enemies in a Frost Storm around you.]" +
-                "\n[c/ff8080:Burnt enemies caught in the Frost Storm will take " + damage + " magic damage]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("FROSTFIRE COVENANT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Target an ally to channel the Harbinger of Fire through them for " + effectDuration + " seconds." +
+                "\nAll their attacks will deal 40 On Hit damage and apply 'Harbingers Inferno'" +
+                "\nAt the same time you channel the Harbinger of Frost for " + effectDuration + " seconds, slowing near by enemies in a Frost Storm around you." +
+                "\nBurnt enemies caught in the Frost Storm will take " + damage + " magic damage") +
+                "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

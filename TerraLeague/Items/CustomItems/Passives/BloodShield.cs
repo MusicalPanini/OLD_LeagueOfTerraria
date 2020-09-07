@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: BLOOD SHIELD -] [c/99e6ff:Life stealing will overheal, converting the heal into a shield (Max 200 shield)]";
+            return TooltipName("BLOOD SHIELD") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Life stealing will overheal, converting the heal into a shield (Max 200 shield)");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

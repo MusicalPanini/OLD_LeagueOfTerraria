@@ -14,8 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: MADNESS -] [c/99e6ff:Every second in combat will grant a stack]" +
-                "\n[c/99e6ff:Gain " + minionDamagePerStack + "% minion damage per stack up to " + minionDamagePerStack * 10 + "%]";
+            return TooltipName("MADNESS") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Every second in combat will grant a stack\nGain " + minionDamagePerStack + "% minion damage per stack up to " + minionDamagePerStack * 10 + "%");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

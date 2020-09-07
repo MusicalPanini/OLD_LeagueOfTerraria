@@ -23,7 +23,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: WIND'S FURY -] [c/99e6ff:Hitting a ranged attack will fire 2 projectiles at near by enemies dealing 40% of the original damage]";
+            return TooltipName("WIND'S FURY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Hitting a ranged attack will fire 2 projectiles at near by enemies\nThe projectiles deal 40% of the original damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

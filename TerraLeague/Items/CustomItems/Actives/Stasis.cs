@@ -24,13 +24,13 @@ namespace TerraLeague.Items.CustomItems.Actives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (stopWatch)
             {
-                return "[c/ff4d4d:Active: STASIS -] [c/ff8080:Render yourself frozen and invulnerable for " + duration + " seconds]" +
-                    "\n[c/cc0000:Can only be used once a day]";
+                return TooltipName("STASIS") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Render yourself frozen and invulnerable for " + duration + " seconds") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, "Can only be used once a day");
             }
             else
             {
-                return "[c/ff4d4d:Active: STASIS -] [c/ff8080:Render yourself frozen and invulnerable for " + duration + " seconds]" +
-                    "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+                return TooltipName("STASIS") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Render yourself frozen and invulnerable for " + duration + " seconds") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
             }
         }
 

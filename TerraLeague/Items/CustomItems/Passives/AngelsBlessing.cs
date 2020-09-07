@@ -23,14 +23,12 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/0099cc:Passive: ANGEL'S BLESSING -] [c/99e6ff:Upon taking fatal damage, heal for 50% of your max life]" +
-                 "\n[c/99e6ff:You will gain 'Cursed' for a short period after]" +
-                 "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("ANGEL'S BLESSING") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Upon taking fatal damage, heal for 50% of your max life\nYou will gain 'Cursed' for a short period after")
+                + "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
         {
-
             base.UpdateAccessory(player, modItem);
         }
 

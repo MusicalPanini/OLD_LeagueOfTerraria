@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/0099cc:Passive: SPECTRE'S REGENERATION -] [c/99e6ff:Gain 'Regeneration' for 4 seconds after taking damage]";
+            return TooltipName("SPECTRE'S REGENERATION") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 'Regeneration' for 4 seconds after taking damage");
         }
 
         public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)

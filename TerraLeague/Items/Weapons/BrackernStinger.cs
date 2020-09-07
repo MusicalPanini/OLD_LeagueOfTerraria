@@ -52,7 +52,7 @@ namespace TerraLeague.Items.Weapons
         public override int GetAbilityBaseDamage(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                return (int)((player.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep/10) * player.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep);
+                return (int)((player.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep/10));
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -68,7 +68,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
             if (type == AbilityType.W)
-                return GetAbilityBaseDamage(player, type) + " shielding";
+                return TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", GetAbilityBaseDamage(player, type), 100, true) + " shielding";
             else
                 return base.GetDamageTooltip(player, type);
         }
@@ -103,7 +103,7 @@ namespace TerraLeague.Items.Weapons
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
                     player.AddBuff(BuffID.Swiftness, 360);
-                    modPlayer.AddShield(GetAbilityBaseDamage(player, type), 360, new Color(181,77,177), ShieldType.Basic);
+                    modPlayer.AddShield((int)(GetAbilityBaseDamage(player, type) * modPlayer.healPowerLastStep), 360, new Color(181,77,177), ShieldType.Basic);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

@@ -20,7 +20,7 @@ namespace TerraLeague.Items.Weapons
         {
             return "Gains attack speed and damage each half second in combat" +
                 "\nAfter 6 seconds, the sword will ascend and fire waves of starfire" +
-                "\nThe wave deals " + (int)(item.damage * 0.75) + " + [c/" + TerraLeague.MELColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL * 0.3) + "] + [c/" + TerraLeague.SUMColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM * 0.50) + "] ranged damage";
+                "\nThe wave deals " + (int)(item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
         }
 
         public override string GetQuote()

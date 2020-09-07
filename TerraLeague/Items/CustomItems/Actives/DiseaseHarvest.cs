@@ -25,9 +25,9 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/ff4d4d:Active: DISEASE HARVEST -] [c/ff8080:Deal] " + stackDamage + " + [c/" + TerraLeague.MAGColor + ":" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG * magicScaling/100d) + "] [c/ff8080:magic damage per stack to near by enemies infected with 'Pox']" +
-                "\n[c/ff8080:Restore " + manaRestore + " mana for each stack harvested]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("DISEASE HARVEST") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Deal ") + stackDamage + " + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicScaling) + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage per stack to near by enemies infected with 'Pox'" +
+                "\nRestore " + manaRestore + " mana for each stack harvested")
+                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

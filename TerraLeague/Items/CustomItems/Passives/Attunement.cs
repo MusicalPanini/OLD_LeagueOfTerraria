@@ -21,9 +21,10 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/0099cc:Passive: ATTUNEMENT -] [c/99e6ff:Kills grant stacks up to " + maxStacks + "]" +
-                "\n[c/99e6ff:Gain " + magicPerStack + "% magic damage and " + armorPerStack + " armor per stack]" +
-                 "\n[c/007399:Lose all stacks on death]";
+            return TooltipName("ATTUNEMENT") +
+                TerraLeague.CreateColorString(PassiveSecondaryColor, "Kills grant stacks up to " + maxStacks +
+                "\nGain " + magicPerStack + "% magic damage and " + armorPerStack + " armor per stack") +
+                "\n" + TerraLeague.CreateColorString(PassiveSubColor, "Lose all stacks on death");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

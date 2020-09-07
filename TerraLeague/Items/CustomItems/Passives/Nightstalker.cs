@@ -20,8 +20,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: NIGHTSTALKER -] [c/99e6ff:If there are no enemies within " + proximity + " blocks of you, gain 'Night Stalker']" +
-                "\n[c/99e6ff:'Night Stalker' causes your next melee attack to deal " +  meleeDamageModifier * 100 + "% damage]";
+            return TooltipName("NIGHTSTALKER") + TerraLeague.CreateColorString(PassiveSecondaryColor, "If there are no enemies within " + proximity + " blocks of you, gain 'Night Stalker'\n'Night Stalker' causes your next melee attack to deal " + meleeDamageModifier * 100 + "% damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

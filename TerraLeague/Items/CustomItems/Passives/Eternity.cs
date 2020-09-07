@@ -7,8 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: ETERNITY -] [c/99e6ff:Taking damage restores mana]" +
-                "\n[c/99e6ff:Using mana heals life]";
+            return TooltipName("ETERNITY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Taking damage restores mana\nUsing mana heals life");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

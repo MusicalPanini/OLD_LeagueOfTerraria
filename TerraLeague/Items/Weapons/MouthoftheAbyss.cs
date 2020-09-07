@@ -86,9 +86,11 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
+            TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, 5, false, "%");
+
             if (type == AbilityType.W)
-                return "4% + " + "[c/" + TerraLeague.MAGColor + ":" + 0.05 * player.GetModPlayer<PLAYERGLOBAL>().MAG  + "%] of targets max life On Hit" +
-                    "\nMax: 20 + " + "[c/" + TerraLeague.MAGColor + ":" + (int)(0.05 * player.GetModPlayer<PLAYERGLOBAL>().MAG * 10) + "] damage";
+                return "4% + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, 5, false, "%") + " of targets max life On Hit" +
+                    "\nMax: 20 + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, 50) + " damage";
             else
                 return base.GetDamageTooltip(player, type);
         }

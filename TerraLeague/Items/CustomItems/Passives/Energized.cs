@@ -27,8 +27,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            string charge = superCharge ? "\n[c/007399:Ranged attacks and melee swings will generate charge and moving will generate even more charge]" : "\n[c/007399:Moving, ranged attacks and melee swings will generate charge]";
-            return "[c/0099cc:Passive: ENERGIZED -] [c/99e6ff:At max charge your next melee or ranged attack will deal] " + baseDamage + " + [c/" + TerraLeague.RNGColor + ":" + (int)(modPlayer.RNG * rangedScaling / 100d) + "] [c/99e6ff:damage]" + charge;
+            string charge = superCharge ? "\nRanged attacks and melee swings will generate charge and moving will generate even more charge" : "\nMoving, ranged attacks and melee swings will generate charge";
+            return TooltipName("ENERGIZED") + TerraLeague.CreateColorString(PassiveSecondaryColor, "At max charge your next melee or ranged attack will deal ") + baseDamage + " + " + TerraLeague.CreateScalingTooltip(DamageType.RNG, modPlayer.RNG, rangedScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " damage" + charge);
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

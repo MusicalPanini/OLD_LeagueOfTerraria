@@ -21,8 +21,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/ff4d4d:Active: NIGHT'S VEIL -] [c/ff8080:Gain a " + (int)(shieldAmount * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep) + " Magic Shield for " + duration + " seconds]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("NIGHT'S VEIL") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Gain a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, shieldAmount, 100, true) + TerraLeague.CreateColorString(ActiveSecondaryColor, " Magic Shield for " + duration + " seconds") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

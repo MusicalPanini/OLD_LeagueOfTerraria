@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: EXECUTIONER -] [c/99e6ff:Melee and ranged attacks apply 'Greivous Wounds' for " + debuffDuration + " seconds]";
+            return TooltipName("EXECUTIONER") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee and ranged attacks apply 'Greivous Wounds' for " + debuffDuration + " seconds");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

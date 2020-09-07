@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: ICY -] [c/99e6ff:Melee and ranged damage will slow enemies for" + debuffDuration + " seconds]";
+            return TooltipName("ICY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee and ranged damage will slow enemies for" + debuffDuration + " seconds");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

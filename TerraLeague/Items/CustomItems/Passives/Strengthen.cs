@@ -19,9 +19,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/0099cc:Passive: STRENGTHEN -] [c/99e6ff:Kills grant stacks up to " + maxStacks + "]" +
-                "\n[c/99e6ff:Gain " + lifeperStack + " health per stack]" +
-                "\n[c/007399:Lose all stacks on death]";
+            return TooltipName("STRENGTHEN") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Kills grant stacks up to " + maxStacks + "\nGain " + lifeperStack + " health per stack")
+                + "\n" + TerraLeague.CreateColorString(PassiveSubColor, "Lose all stacks on death");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

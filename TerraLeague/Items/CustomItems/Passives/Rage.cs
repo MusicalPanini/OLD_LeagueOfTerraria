@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: RAGE -] [c/99e6ff:Melee attacks increased movement speed for " + duration + " seconds]";
+            return TooltipName("MANA CHARGE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee attacks increased movement speed for " + duration + " seconds");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

@@ -30,7 +30,7 @@ namespace TerraLeague
         internal static string MELColor = "FFA500";
         internal static string RNGColor = "20B2AA";
         internal static string MAGColor = "8E70DB";
-        internal static string SUMColor = "87CEEB";
+        internal static string SUMColor = "6495ed";//"87CEEB";
 
         internal static string DEFColor = "A0A0A0";
         internal static string ARMORColor = "FFFF00";
@@ -39,6 +39,7 @@ namespace TerraLeague
         internal static string CDRColor = "FFFFFF";
         internal static string RNGATSColor = "808080";
         internal static string MANAREDUCTColor = "4169E1";
+        internal static string MINIONMAXColor = "4682b4";
 
         internal static string TooltipHeadingColor = "0099cc";
 
@@ -1375,7 +1376,7 @@ namespace TerraLeague
             return rejoinedText;
         }
 
-        public static string CreateScalingTooltip(DamageType type, int valueToScale, int percentScaling)
+        public static string CreateScalingTooltip(DamageType type, int valueToScale, int percentScaling, bool affectedByHealPower = false, string extraText = "")
         {
             string text = "";
             switch (type)
@@ -1393,33 +1394,63 @@ namespace TerraLeague
                     text += "[c/" + SUMColor + ":";
                     break;
                 default:
+                    text += "[c/" + Color.White.Hex3() + ":";
                     break;
             }
-
+            int value = (int)(valueToScale * percentScaling * 0.01);
+            
             if (ItemUI.extraStats)
             {
                 switch (type)
                 {
                     case DamageType.MEL:
-                        text += percentScaling + "% MEL(";
+                        text += percentScaling + "% MEL(" + value + extraText + ")]";
                         break;
                     case DamageType.RNG:
-                        text += percentScaling + "% RNG(";
+                        text += percentScaling + "% RNG(" + value + extraText + ")]";
                         break;
                     case DamageType.MAG:
-                        text += percentScaling + "% MAG(";
+                        text += percentScaling + "% MAG(" + value + extraText + ")]";
                         break;
                     case DamageType.SUM:
-                        text += percentScaling + "% SUM(";
+                        text += percentScaling + "% SUM(" + value + extraText + ")]";
                         break;
                     default:
+                        text += value + extraText + "]";
                         break;
                 }
-                text += (int)(valueToScale * percentScaling * 0.01) + ")]";
+
+                if (affectedByHealPower)
+                    text += " + [c/" + HEALColor + ":HEAL(" + (((int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep)) - (value)) + ")]";
             }
             else
             {
-                text += (int)(valueToScale * percentScaling * 0.01) + "]";
+                if (affectedByHealPower)
+                    value = (int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep);
+                text += value + extraText +  "]";
+            }
+
+            return text;
+        }
+
+        public static string CreateScalingTooltip(string color, string valueName, int valueToScale, int percentScaling, bool affectedByHealPower = false, string extraText = "")
+        {
+            string text = "[c/" + color + ":";
+
+            int value = (int)(valueToScale * percentScaling * 0.01);
+            
+
+            if (ItemUI.extraStats)
+            {
+                text += percentScaling + "% " + valueName + "(" + value + extraText + ")]";
+                if (affectedByHealPower)
+                    text += " + [c/" + HEALColor + ":HEAL(" + (((int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep)) - (value)) + ")]";
+            }
+            else
+            {
+                if (affectedByHealPower)
+                    value = (int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep);
+                text += value + extraText + "]";
             }
 
             return text;

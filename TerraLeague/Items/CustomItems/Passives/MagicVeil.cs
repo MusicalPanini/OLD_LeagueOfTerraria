@@ -18,8 +18,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/0099cc:Passive: MAGIC VEIL -] [c/99e6ff:Gain a shield that will protect from one projectile at full charge]" +
-                "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("MAGIC VEIL") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain a shield that will protect from one projectile at full charge") +
+                "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

@@ -18,6 +18,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
+            return TooltipName("VOID SHARPENED") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee attacks deal ") + baseDamage + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " On Hit damage");
+
             return "[c/0099cc:Passive: VOID SHARPENED -] [c/99e6ff:Melee attacks deal] " + baseDamage + " + [c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * minionScaling / 100d) + "] [c/99e6ff:On Hit damage]";
         }
 

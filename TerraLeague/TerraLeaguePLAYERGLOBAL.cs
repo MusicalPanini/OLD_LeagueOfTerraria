@@ -3797,7 +3797,8 @@ public enum DamageType
     MEL,
     RNG,
     MAG,
-    SUM
+    SUM,
+    NONE
 }
 
 public enum ShieldType

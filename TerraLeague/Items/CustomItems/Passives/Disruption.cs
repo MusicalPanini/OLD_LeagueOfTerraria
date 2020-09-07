@@ -9,7 +9,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: DISRUPTION -] [c/99e6ff:Reduces NPC spawnrate]";
+            return TooltipName("DISRUPTION") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Reduces NPC spawnrate");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

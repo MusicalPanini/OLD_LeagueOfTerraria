@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: CRITICAL EDGE -] [c/99e6ff:Ranged crits deal " + percentIncrease + "% more damage]";
+            return TooltipName("CRITICAL EDGE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Ranged crits deal " + percentIncrease + "% more damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

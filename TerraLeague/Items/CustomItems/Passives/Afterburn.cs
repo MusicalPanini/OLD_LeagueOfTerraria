@@ -22,11 +22,11 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/0099cc:Passive: AFTERBURN -] [c/99e6ff:Melee and ranged damage deal] " +
-                "[c/" + TerraLeague.MELColor + ":" + (int)(modPlayer.MEL * meleeScaling / 100d) + "] + " +
-                "[c/" + TerraLeague.RNGColor + ":" + (int)(modPlayer.RNG * rangedScaling / 100d) + "] + " +
-                "[c/" + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicScaling / 100d) + "] + " +
-                "[c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * minionScaling / 100d) + "] [c/99e6ff:On Hit damage]";
+            return TooltipName("Afterburn") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee and ranged damage deal ") +
+                TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, meleeScaling) + " + " +
+                TerraLeague.CreateScalingTooltip(DamageType.RNG, modPlayer.RNG, rangedScaling) + " + " +
+                TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicScaling) + " + " +
+                TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling) + " + " + TerraLeague.CreateColorString(PassiveSecondaryColor, "On Hit damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

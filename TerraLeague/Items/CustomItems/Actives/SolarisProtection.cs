@@ -28,9 +28,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/ff4d4d:Active: SOLARI'S PROTECTION -] [c/ff8080:Give nearby allies a sheild]" +
-                "\n[c/ff8080:Shield size is " + percentLifeShield + "% of your max life (" + (int)(modPlayer.maxLifeLastStep * percentLifeShield * 0.01 * modPlayer.healPower) + ")]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("SOLARI'S PROTECTION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give nearby allies a ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", modPlayer.maxLifeLastStep, percentLifeShield, true) + TerraLeague.CreateColorString(ActiveSecondaryColor, " Shield") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

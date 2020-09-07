@@ -16,8 +16,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: BLOOD POOL -] [c/99e6ff:Store 10% of magic and minion damage as charge up to " + BloodPoolMaxStack + "]" +
-                "\n[c/99e6ff:Healing an ally will consume the charge and heal that much extra]";
+            return TooltipName("BLOOD POOL") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Store 10% of magic and minion damage as charge up to " + BloodPoolMaxStack +
+                "\nHealing an ally will consume the charge and heal that much extra");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

@@ -26,34 +26,31 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            string text = "";
+            string text = TooltipName("LIFELINE");
 
             if (modItem.item.type == ItemType<Maw>())
             {
-                text = "[c/0099cc:Passive: LIFELINE -] [c/99e6ff:Negate the next projectile damage you take while below 30% life, and summon a 200 Magic Shield]" +
-                    "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]" +
-                    "\n[c/007399:Triggering LIFELINE grants LIFEGRIP]" +
-                    "\n[c/0099cc:Passive: LIFEGRIP -] [c/99e6ff:Grants 5% life steal, melee and ranged damage, and 5 resist]";
-
+                text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next projectile damage you take while below 30% life, and summon a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 200, 100, true) + TerraLeague.CreateColorString(PassiveSecondaryColor, " Magic Shield") +
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown\nTriggering LIFELINE grants LIFEGRIP") +
+                    "\n" + TooltipName("LIFEGRIP") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Grants 5% life steal, melee and ranged damage, and 5 resist");
             }
             else if (modItem.item.type == ItemType<Steraks>())
             {
-                text = "[c/0099cc:Passive: LIFELINE -] [c/99e6ff:Negate the next damage you take while below 30% life, and summon a 50% Max Life (" + modPlayer.GetRealHeathWithoutShield(true) / 2 + ") Shield]" +
-                    "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]" +
-                    "\n[c/007399:Triggering LIFELINE grants STERAK'S FURY]" +
-                    "\n[c/0099cc:Passive: STERAK'S FURY -] [c/99e6ff:Grants 20 defence and immunity to most debuffs]";
+                text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next damage you take while below 30% life, and summon a ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", modPlayer.GetRealHeathWithoutShield(true), 50, true) + TerraLeague.CreateColorString(PassiveSecondaryColor," Shield") +
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown\nTriggering LIFELINE grants STERAK'S FURY") +
+                    "\n" + TooltipName("STERAK'S FURY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Grants 20 defence and immunity to most debuffs");
 
             }
             else if (modItem.item.type == ItemType<Hexdrinker>())
             {
-                text = "[c/0099cc:Passive: LIFELINE -] [c/99e6ff:Negate the next projectile damage you take while below 30% life and summon an 80 Magic Shield]" +
-                     "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+                text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next projectile damage you take while below 30% life and summon a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 80, 100, true) + TerraLeague.CreateColorString(PassiveSecondaryColor, " Magic Shield") +
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
 
             }
             else if (modItem.item.type == ItemType<PhantomDancer>())
             {
-                text = "[c/0099cc:Passive: LIFELINE -] [c/99e6ff:Negate the next damage you take while below 30% life and summon a 100 Shield]" +
-                    "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+                text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next damage you take while below 30% life and summon a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 100, 100, true) + TerraLeague.CreateColorString(PassiveSecondaryColor, "Shield") +
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
             }
 
             return text;

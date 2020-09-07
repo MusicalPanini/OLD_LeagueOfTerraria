@@ -25,12 +25,12 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = "[c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, magicMinionScaling);
             else
-                scaleText = "[c/" + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
-            return "[c/ff4d4d:Active: LIGHTNING BOLT -] [c/ff8080:Deal] " + baseDamage + " + " + scaleText + " [c/ff8080:magic damage to an enemy and slow them at your cursor]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage Scales with either MAG or SUM]";
+            return TooltipName("FROST BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Target an enemy to deal ") + baseDamage + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed' to them")
+                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

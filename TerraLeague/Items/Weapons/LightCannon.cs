@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "Deals an additional [c/" + TerraLeague.RNGColor + ":" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG/2 + "] damage";
+            return "Deals an additional " + TerraLeague.CreateScalingTooltip(DamageType.RNG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG, 50) + " damage";
         }
 
         public override string GetQuote()

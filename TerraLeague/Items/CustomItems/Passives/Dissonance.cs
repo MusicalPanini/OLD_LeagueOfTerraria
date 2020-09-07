@@ -16,8 +16,8 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: DISSONANCE -] [c/99e6ff:Gain " + magicMinionDamage + "% magic and minion damage per " + perMana + " current mana]" +
-                "\n[c/007399:Disables HARMONY passive]";
+            return TooltipName("DISSONANCE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain " + magicMinionDamage + "% magic and minion damage per " + perMana + " current mana")
+                + "\n" + TerraLeague.CreateColorString(PassiveSubColor, "Disables HARMONY passive");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

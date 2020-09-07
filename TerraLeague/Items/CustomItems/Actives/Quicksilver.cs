@@ -21,8 +21,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/ff4d4d:Active: QUICKSILVER -] [c/ff8080:Become immune to most debuffs for " + effectDuration + " seconds]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("QUICKSILVER") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Become immune to most debuffs for " + effectDuration + " seconds") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

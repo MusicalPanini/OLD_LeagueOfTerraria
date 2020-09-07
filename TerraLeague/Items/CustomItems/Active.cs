@@ -10,9 +10,18 @@ namespace TerraLeague.Items.CustomItems
 {
     public abstract class Active
     {
+        public static string ActiveMainColor = "ff4d4d";
+        public static string ActiveSecondaryColor = "ff8080";
+        public static string ActiveSubColor = "cc0000";
+
         public abstract string Tooltip(Player player, LeagueItem modItem);
         internal ActivePacketHandler PacketHandler = new ActivePacketHandler(5);
         public abstract void DoActive(Player player, LeagueItem modItem);
+
+        public string TooltipName(string name)
+        {
+            return TerraLeague.CreateColorString(ActiveMainColor, "Active: " + name.ToUpper() + " - ");
+        }
 
         virtual public void PostPlayerUpdate(Player player, LeagueItem modItem)
         {

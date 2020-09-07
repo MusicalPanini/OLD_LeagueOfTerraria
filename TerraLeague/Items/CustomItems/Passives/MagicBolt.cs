@@ -26,12 +26,12 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = "[c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, magicMinionScaling);
             else
-                scaleText = "[c/" + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
-            return "[c/0099cc:Passive: MAGIC BOLT -] [c/99e6ff:Your next magic or minion attack will deal] " + extraDamage + " + " + scaleText + " [c/99e6ff:extra damage]" +
-                "\n[c/007399:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM]";
+            return TooltipName("MAGIC BOLT") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your next magic or minion attack will deal ") + extraDamage + " + " + scaleText + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra damage") +
+                "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with the highest of either MAG or SUM");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

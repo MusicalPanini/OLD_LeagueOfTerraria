@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: DETONATE -] [c/99e6ff:ENERGIZED will cause an explosion]";
+            return TooltipName("DETONATE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "ENERGIZED will cause an explosion");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

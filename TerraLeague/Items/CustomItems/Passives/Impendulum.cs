@@ -20,13 +20,11 @@ namespace TerraLeague.Items.CustomItems.Passives
             2,1,0,1,2,3,4,5,6,5,4,3,2,1,0,1,2,3,4,5,6,5,4,3,2
         };
         public static int GetHour { get { return (int)((1800 + (Main.time + (Main.dayTime ? 0 : 54000))) / 3600); } }
-        public static int GetStat { get { return stat[GetHour] } }
+        public static int GetStat { get { return stat[GetHour]; } }
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            int hour = (int)((1800 + (Main.time + (Main.dayTime ? 0 : 54000))) / 3600);
-            return "[c/0099cc:Passive: IMPENDULUM -] [c/99e6ff:Gain life, mana, magic and minion damage based on the time of day]" +
-                "\n[c/99e6ff:+" + GetStat * lifePerTime + " life and mana, +" + (int)(GetStat * magicMinionDamage) + "% magic and minion damage]";
+            return TooltipName("IMPENDULUM") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain life, mana, magic and minion damage based on the time of day\n" + GetStat * lifePerTime + " life and mana, +" + (int)(GetStat * magicMinionDamage) + "% magic and minion damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

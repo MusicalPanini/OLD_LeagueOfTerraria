@@ -18,13 +18,13 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            string text = "[c/0099cc:Passive: AWE -] [c/99e6ff:Reduced mana usage by " + manaReduction + "%]";
+            string text = TooltipName("AWE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Reduced mana usage by " + manaReduction + "%");
 
             if (manaToADConversion > 0)
-                text += "\n[c/99e6ff:Gain 1% melee and ranged damage per " + manaToADConversion + " max mana]";
+                text += "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 1% melee and ranged damage per " + manaToADConversion + " max mana");
 
             if (manaToAPConversion > 0)
-                text += "\n[c/99e6ff:Gain 1% magic and minion damage per " + manaToAPConversion + " max mana]";
+                text += "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 1% magic and minion damage per " + manaToAPConversion + " max mana");
 
             return text;
         }

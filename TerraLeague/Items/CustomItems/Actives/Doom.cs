@@ -22,9 +22,9 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/ff4d4d:Active: DOOM -] [c/ff8080:Target an enemy and deal " + percentMaxLife + "% of their max life as magic damage to it and all near by enemies (Max: " + damageCap + ")]" +
-                "\n[c/ff8080:All hit enemies will take 20% more magic damage for 4 seconds]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("DISEASE HARVEST") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Target an enemy and deal " + percentMaxLife + "% of their max life as magic damage to it and all near by enemies (Max: " + damageCap + ")" +
+                "\nAll hit enemies will take 20% more magic damage for 4 seconds")
+                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

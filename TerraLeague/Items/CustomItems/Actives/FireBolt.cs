@@ -27,12 +27,12 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = "[c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, magicMinionScaling);
             else
-                scaleText = "[c/" + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
-            return "[c/ff4d4d:Active: FIRE BOLT -] [c/ff8080:Launch yourself towards the curser, while firing 7 bolts in a cone and 1 from behined dealing] " + baseDamage + " + " + scaleText + " [c/ff8080:magic damage]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM]";
+            return TooltipName("FIRE BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Launch yourself towards the cursor, while firing 7 bolts in a cone and 1 backwards dealing ") + baseDamage + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage")
+                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

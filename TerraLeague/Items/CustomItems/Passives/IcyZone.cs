@@ -7,7 +7,10 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: ICY ZONE -] [c/99e6ff:Triggering SPELLBLADE will cause nearby enemies to take damage equal to you defence + armor and be slowed]";
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            return TooltipName("ICY ZONE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Triggering SPELLBLADE will cause nearby enemies to take ") + 
+                TerraLeague.CreateScalingTooltip(TerraLeague.ARMORColor, "ARM", modPlayer.defenceLastStep + modPlayer.armorLastStep, 100) +
+                TerraLeague.CreateColorString(PassiveSecondaryColor, " damage and apply 'Slowed'");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

@@ -11,7 +11,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: CURSED STRIKE -] [c/99e6ff:Magic attacks apply 'Greivous Wounds']";
+            return TooltipName("CURSED STRIKE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Magic attacks apply 'Greivous Wounds'");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

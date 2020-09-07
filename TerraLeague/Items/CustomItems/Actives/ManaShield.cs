@@ -26,8 +26,10 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return "[c/ff4d4d:Active: MANA SHIELD -] [c/ff8080:Consume " + percentMana + "% of your current mana to shield yourself for " + manaScaling + "% of that + " + baseShield + " for " + duration +  " seconds]" +
-                 "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("MANA SHIELD") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Consume ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, percentMana) 
+                + TerraLeague.CreateColorString(ActiveSecondaryColor, " mana\nGain a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseShield, 100, true) + " + " + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, (int)(percentMana * manaScaling * 0.01), true)
+                + TerraLeague.CreateColorString(ActiveSecondaryColor, " shield for " + duration + " seconds")
+                +"\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown"); ;
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

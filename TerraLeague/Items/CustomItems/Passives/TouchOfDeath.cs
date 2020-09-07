@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: TOUCH OF DEATH -] [c/99e6ff:Increases magic armor penetration by " + magicArmorPen + "]";
+            return TooltipName("TOUCH OF DEATH") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Increases magic armor penetration by " + magicArmorPen);
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

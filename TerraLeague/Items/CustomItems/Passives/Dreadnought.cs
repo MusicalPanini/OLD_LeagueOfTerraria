@@ -26,10 +26,9 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override string Tooltip(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            return "[c/007399:Moving will generate charge]" +
-                "\n[c/0099cc:Passive: DREADNOUGHT -] [c/99e6ff:Gain 0.25% movespeed per 1% charge.]" +
-                "\n[c/99e6ff:At full charge, deal additional damage equal to double your armor]";
+            return TerraLeague.CreateColorString(PassiveSubColor, "Moving will generate charge")
+                + "\n" + TooltipName("DREADNOUGHT") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 0.25% movespeed per 1% charge")
+                + "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "At full charge your next attack will deal ") + TerraLeague.CreateScalingTooltip(TerraLeague.ARMORColor, "ARM", modPlayer.armorLastStep + modPlayer.defenceLastStep, 200) + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

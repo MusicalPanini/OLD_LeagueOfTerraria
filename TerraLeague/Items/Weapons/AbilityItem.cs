@@ -74,14 +74,14 @@ namespace TerraLeague.Items.Weapons
                         "\n" + GetTooltip(AbilityType.R);
                 }
                 text += "\n[c/cc9900:'" + GetQuote() + "']";
-                
+
                 string[] lines = text.Split('\n');
                 tooltips.RemoveAt(pos);
 
 
                 for (int i = 1; i < lines.Count(); i++)
                 {
-                    tooltips.Insert(pos + i-1, new TooltipLine(TerraLeague.instance, "Tooltip" + (i-1), lines[i]));
+                    tooltips.Insert(pos + i - 1, new TooltipLine(TerraLeague.instance, "Tooltip" + (i - 1), lines[i]));
                 }
             }
 
@@ -201,7 +201,7 @@ namespace TerraLeague.Items.Weapons
                 else if (dam == DamageType.SUM)
                     return 0;
             }
-            else if(type == AbilityType.W)
+            else if (type == AbilityType.W)
             {
                 if (dam == DamageType.MEL)
                     return 0;
@@ -499,37 +499,45 @@ namespace TerraLeague.Items.Weapons
             string line = "";
             int Damage = GetAbilityScalingDamage(player, type, dam);
 
-            switch (dam)
+            if (UI.ItemUI.extraStats)
             {
-                case DamageType.MEL:
-                    line = "[c/" + TerraLeague.MELColor + ":" + Damage + "]";
-                    break;
-                case DamageType.RNG:
-                    line = "[c/" + TerraLeague.RNGColor + ":" + Damage + "]";
-                    break;
-                case DamageType.MAG:
-                    line = "[c/" + TerraLeague.MAGColor + ":" + Damage + "]";
-                    break;
-                case DamageType.SUM:
-                    line = "[c/" + TerraLeague.SUMColor + ":" + Damage + "]";
-                    break;
-                default:
-                    break;
-
-                //case DamageType.MEL:
-                //    line = "[c/" + TerraLeague.MELColor + ":" + Scaling + "% MEL(" + Damage + ")]";
-                //    break;
-                //case DamageType.RNG:
-                //    line = "[c/" + TerraLeague.RNGColor + ":" + Scaling + "% RNG(" + Damage + ")]";
-                //    break;
-                //case DamageType.MAG:
-                //    line = "[c/" + TerraLeague.MAGColor + ":" + Scaling + "% MAG(" + Damage + ")]";
-                //    break;
-                //case DamageType.SUM:
-                //    line = "[c/" + TerraLeague.SUMColor + ":" + Scaling + "% SUM(" + Damage + ")]";
-                //    break;
-                //default:
-                //    break;
+                switch (dam)
+                {
+                    case DamageType.MEL:
+                        line = "[c/" + TerraLeague.MELColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% MEL(" + Damage + ")]";
+                        break;
+                    case DamageType.RNG:
+                        line = "[c/" + TerraLeague.RNGColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% RNG(" + Damage + ")]";
+                        break;
+                    case DamageType.MAG:
+                        line = "[c/" + TerraLeague.MAGColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% MAG(" + Damage + ")]";
+                        break;
+                    case DamageType.SUM:
+                        line = "[c/" + TerraLeague.SUMColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% SUM(" + Damage + ")]";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (dam)
+                {
+                    case DamageType.MEL:
+                        line = "[c/" + TerraLeague.MELColor + ":" + Damage + "]";
+                        break;
+                    case DamageType.RNG:
+                        line = "[c/" + TerraLeague.RNGColor + ":" + Damage + "]";
+                        break;
+                    case DamageType.MAG:
+                        line = "[c/" + TerraLeague.MAGColor + ":" + Damage + "]";
+                        break;
+                    case DamageType.SUM:
+                        line = "[c/" + TerraLeague.SUMColor + ":" + Damage + "]";
+                        break;
+                    default:
+                        break;
+                }
             }
 
             return line;

@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: HAUNTED -] [c/99e6ff:Your minions have a " + critChance + "% chance to crit]";
+            return TooltipName("HAUNTED") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your minions have a " + critChance + "% chance to crit");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

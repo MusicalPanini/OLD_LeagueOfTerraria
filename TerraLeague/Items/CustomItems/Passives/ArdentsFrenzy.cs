@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: ARDENT'S FRENZY -] [c/99e6ff:Healing an ally will give you both 'Frenzy']";
+            return TooltipName("ARDENT'S FRENZY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Healing an ally will give you both 'Frenzy'");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

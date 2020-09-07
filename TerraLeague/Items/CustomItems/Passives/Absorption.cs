@@ -7,8 +7,8 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: ABSORPTION -] [c/99e6ff:Every second in combat will grant a stack up to 6]" +
-                "\n[c/99e6ff:Gain 1 resist per stack]";
+            return TooltipName("Absorbtion") + 
+                TerraLeague.CreateColorString(PassiveSecondaryColor, "Every second in combat will grant a stack up to 6\nGain 1 resist per stack");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

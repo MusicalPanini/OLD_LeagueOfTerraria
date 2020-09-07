@@ -27,12 +27,12 @@ namespace TerraLeague.Items.CustomItems.Actives
 
             string scaleText;
             if (modPlayer.SUM > modPlayer.MAG)
-                scaleText = "[c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, magicMinionScaling);
             else
-                scaleText = "[c/" + TerraLeague.MAGColor + ":" + (int)(modPlayer.MAG * magicMinionScaling / 100d) + "]";
+                scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
-            return "[c/ff4d4d:Active: FROST BOLT -] [c/ff8080:Fire 5 frost projectiles in a cone that deal] " + baseDamage + " + " + scaleText + " [c/ff4d4d:magic damage]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM]";
+            return TooltipName("FROST BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Fire 5 frost projectiles in a cone that deal ") + baseDamage + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage")
+                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

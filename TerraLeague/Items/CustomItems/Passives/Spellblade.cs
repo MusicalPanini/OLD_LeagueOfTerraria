@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: SPELLBLADE -] [c/99e6ff:After using an ability, your next melee attack will deal " + (damageModifier) * 100 + "% damage]";
+            return TooltipName("SPELLBLADE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "After using an ability, your next melee attack will deal " + (damageModifier) * 100 + "% damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

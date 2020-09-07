@@ -7,7 +7,9 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: RAW POWER -] [c/99e6ff:Increase magic damage by 1.1x]";
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            return TooltipName("RAW POWER") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 1.1x increased magic damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

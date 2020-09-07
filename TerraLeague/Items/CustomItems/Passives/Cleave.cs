@@ -23,14 +23,15 @@ namespace TerraLeague.Items.CustomItems.Passives
             string text = "";
 
             if (modItem.item.type == ItemType<RavenousHydra>())
-                text = "[c/99e6ff:deal] [c/" + TerraLeague.MELColor + ":" + (int)(modPlayer.MEL * baseMeleeDamage / 100d) + "] [c/99e6ff:melee damage to near by enemies]" +
-                    "\n[c/99e6ff:Heal for 10% of the damage]";
+                text = TerraLeague.CreateColorString(PassiveSecondaryColor, "deal ") + TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, baseMeleeDamage) + TerraLeague.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies\nHeal for 10% of the damage");
             else if (modItem.item.type == ItemType<TitanicHydra>())
-                text = "[c/99e6ff:deal] [c/" + TerraLeague.MELColor + ":" + (int)(modPlayer.MEL * baseMeleeDamage / 100d) + "] [c/99e6ff:+ 5% of Max Life (" + (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep * 0.05) + ") melee damage to near by enemies]";
+                text = TerraLeague.CreateColorString(PassiveSecondaryColor, "deal ") + TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, baseMeleeDamage) + " + "
+                     + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep, 5)
+                     + TerraLeague.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies");
             else
-                text = "[c/99e6ff:deal] [c/" + TerraLeague.MELColor + ":" + (int)(modPlayer.MEL * baseMeleeDamage / 100d) + "] [c/99e6ff:melee damage to near by enemies]";
+                text = TerraLeague.CreateColorString(PassiveSecondaryColor, "deal") + " " + TerraLeague.CreateScalingTooltip(DamageType.MEL, modPlayer.MEL, baseMeleeDamage) + TerraLeague.CreateColorString(PassiveSecondaryColor, " melee damage to near by enemies");
 
-            return "[c/0099cc:Passive: CLEAVE -] [c/99e6ff:Your melee attacks will periodically] " + text;
+            return TooltipName("CLEAVE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your melee attacks will periodically ") + text;
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

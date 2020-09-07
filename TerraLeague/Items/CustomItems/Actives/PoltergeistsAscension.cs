@@ -19,8 +19,8 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/ff4d4d:Active: POLTERGEIST'S ASCENSION -] [c/ff8080:Gain a burst of movement speed for " + effectDuration + " seconds]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("POLTERGEIST'S ASCENSION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Gain a burst of movement speed for " + effectDuration + " seconds") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

@@ -8,7 +8,14 @@ namespace TerraLeague.Items.CustomItems
     {
         public abstract string Tooltip(Player player, ModItem modItem);
         static internal PassivePacketHandler PacketHandler = new PassivePacketHandler(4);
-        
+        internal static string PassiveMainColor = "0099cc";
+        internal static string PassiveSecondaryColor = "99e6ff";
+        internal static string PassiveSubColor = "007399";
+
+        public string TooltipName(string name)
+        {
+            return TerraLeague.CreateColorString(PassiveMainColor, "Passive: " + name.ToUpper() + " - ");
+        }
 
         public virtual void UpdateAccessory(Player player, ModItem modItem)
         {

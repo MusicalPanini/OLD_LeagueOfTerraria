@@ -22,8 +22,9 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/ff4d4d:Active: FLEET FOOT -] [c/ff8080:Give all nearby allies a speed boost for " + effectDuration + " seconds]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+
+            return TooltipName("FLEET FOOT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give all nearby allies a speed boost for " + effectDuration + " seconds") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

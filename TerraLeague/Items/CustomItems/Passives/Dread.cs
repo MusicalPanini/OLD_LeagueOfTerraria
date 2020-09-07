@@ -18,9 +18,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return "[c/0099cc:Passive: DREAD -] [c/99e6ff:Kills grant stacks up to " + maxStacks + "]" +
-                "\n[c/99e6ff:Lose " + lostStacks + " stacks when enemies damage you]" +
-                "\n[c/0099cc:Passive: DO OR DIE -] [c/99e6ff:Gain " + magicMinionDamage + "% magic and minion damage per stack of DREAD]";
+            return TooltipName("DREAD") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Kills grant stacks up to " + maxStacks)
+                + "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "Lose " + lostStacks + " stacks when enemies damage you")
+                 + "\n" + TooltipName("DO OR DIE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain " + magicMinionDamage + "% magic and minion damage per stack of DREAD");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

@@ -24,10 +24,10 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            return "[c/ff4d4d:Active: VOID CALLER -] [c/ff8080:Summon a Zz'Rot portal at your cursor.]" +
-                "\n[c/ff8080:It ejects 3 + Max Minions (" + player.maxMinions + ") Zz'Rots every second for 5 seconds. The Zz'rots deal] " + baseDamage + " + [c/" + TerraLeague.SUMColor + ":" + (int)(modPlayer.SUM * sumScaling / 100d) + "] [c/ff8080:damage]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+            return TooltipName("VOID CALLER") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Summon a Zz'Rot portal at your cursor" +
+                "\nIt ejects ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 3, 100) + " + " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)modPlayer.maxMinionsLastStep, 100) +
+                TerraLeague.CreateColorString(ActiveSecondaryColor, " Zz'Rots every second for 5 seconds. The Zz'Rots deal ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseDamage, 100) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, sumScaling) +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)

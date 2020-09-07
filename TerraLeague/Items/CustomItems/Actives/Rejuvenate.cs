@@ -21,9 +21,24 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return "[c/ff4d4d:Active: REJUVINATE -] [c/ff8080:Heal nearby allies for " + (int)(baseHeal * (1+((Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep-1) * 2))) + " life]" +
-                "\n[c/ff8080:Heal Power is 2 times as effective for this heal]" +
-                "\n[c/cc0000:" + (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown]";
+
+            float modifiedhealPower = (float)(1 + ((Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep - 1) * 2));
+            string statis = "[c/" + Color.White.Hex3() + ":";
+
+            int value = (int)(baseHeal * modifiedhealPower);
+
+            if (UI.ItemUI.extraStats)
+            {
+                statis += value + "] + [c/" + TerraLeague.HEALColor + ":HEAL(" + (((int)(value * modifiedhealPower)) - (value)) + ")]";
+            }
+            else
+            {
+                value = (int)(value * modifiedhealPower);
+                statis += value + "]";
+            }
+
+            return TooltipName("REJUVINATE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Heal nearby allies for ") + statis + TerraLeague.CreateColorString(ActiveSecondaryColor, " life\nHeal Power is 2 times as effective for this heal") +
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
