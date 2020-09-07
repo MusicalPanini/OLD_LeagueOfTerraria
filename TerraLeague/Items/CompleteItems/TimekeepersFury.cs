@@ -56,17 +56,12 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Impendulum(1, 1);
+            return new Impendulum(2, 2);
         }
 
         public override Passive GetSecondaryPassive()
         {
-            int[] stat = new int[]
-            {
-                4,5,6,7,8,9,10,11,12,11,10,9,8,7,6,5,4,3,2,1,0,1,2,3
-            };
-
-            return new TouchOfDeath(stat[(int)((1800 + Main.time) / 3600)]);
+            return new TouchOfDeath(2 * Impendulum.GetStat);
         }
 
         public override string GetStatText()

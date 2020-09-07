@@ -57,7 +57,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Impendulum(2, 0.75);
+            return new Impendulum(4, 1.5);
         }
 
         public override Passive GetSecondaryPassive()

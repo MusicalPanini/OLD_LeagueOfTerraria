@@ -15,28 +15,29 @@ namespace TerraLeague.Items.CustomItems.Passives
             magicMinionDamage = magicMinionDamagePercentPer;
         }
 
-        int[] stat = new int[]
+        public static int[] stat = new int[]
         {
-            4,5,6,7,8,9,10,11,12,11,10,9,8,7,6,5,4,3,2,1,0,1,2,3
+            2,1,0,1,2,3,4,5,6,5,4,3,2,1,0,1,2,3,4,5,6,5,4,3,2
         };
-        int stat2 = 0;
+        public static int GetHour { get { return (int)((1800 + (Main.time + (Main.dayTime ? 0 : 54000))) / 3600); } }
+        public static int GetStat { get { return stat[GetHour] } }
 
         public override string Tooltip(Player player, ModItem modItem)
         {
+            int hour = (int)((1800 + (Main.time + (Main.dayTime ? 0 : 54000))) / 3600);
             return "[c/0099cc:Passive: IMPENDULUM -] [c/99e6ff:Gain life, mana, magic and minion damage based on the time of day]" +
-                "\n[c/99e6ff:+" + stat[(int)((1800 + Main.time) / 3600)] * lifePerTime + " life and mana, +" + (int)(stat[(int)((1800 + Main.time) / 3600)] * magicMinionDamage) + "% magic and minion damage]";
+                "\n[c/99e6ff:+" + GetStat * lifePerTime + " life and mana, +" + (int)(GetStat * magicMinionDamage) + "% magic and minion damage]";
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            stat2 = (int)((1800 + Main.time) / 3600);
-            modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = stat[stat2];
-            player.statLifeMax2 += lifePerTime * stat[stat2];
-            player.statManaMax2 += lifePerTime * stat[stat2];
-            player.magicDamage += (float)(magicMinionDamage * 0.01f * stat[stat2]);
-            modPlayer.TrueMinionDamage += magicMinionDamage * 0.01f * stat[stat2];
+            modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = GetStat;
+            player.statLifeMax2 += lifePerTime * GetStat;
+            player.statManaMax2 += lifePerTime * GetStat;
+            player.magicDamage += (float)(magicMinionDamage * 0.01f * GetStat);
+            modPlayer.TrueMinionDamage += magicMinionDamage * 0.01f * GetStat;
 
             base.UpdateAccessory(player, modItem);
         }
