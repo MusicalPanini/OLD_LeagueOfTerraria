@@ -37,7 +37,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             if (modItem.GetStatOnPlayer(player) <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-                int shieldAmount = (int)(modPlayer.GetRealHeathWithoutShield(true) * percentLifeShield * 0.01 * modPlayer.healPower);
+                int shieldAmount = modPlayer.ScaleValueWithHealPower(modPlayer.GetRealHeathWithoutShield(true) * percentLifeShield * 0.01f);
 
                 Efx(player);
                 player.AddBuff(BuffType<SolarisBlessing>(), shieldDuration * 60);

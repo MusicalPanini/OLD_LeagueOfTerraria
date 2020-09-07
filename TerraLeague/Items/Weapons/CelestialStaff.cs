@@ -88,7 +88,7 @@ namespace TerraLeague.Items.Weapons
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             if (type == AbilityType.R)
-                return (int)(item.damage * 3 * modPlayer.healPowerLastStep);
+                return (int)(item.damage * 3);
             else if (type == AbilityType.Q)
                 return (int)item.damage * 4;
             else
@@ -101,7 +101,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.R)
             {
                 if (dam == DamageType.MAG)
-                    return (int)(50 * modPlayer.healPowerLastStep);
+                    return (int)(50);
             }
             else if (type == AbilityType.Q)
             {
@@ -125,7 +125,7 @@ namespace TerraLeague.Items.Weapons
         {
 
             if (type == AbilityType.R)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " healing";
+                return TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player, type), 100, true) + " + " + GetScalingTooltip(player, type, DamageType.MAG, true) + " healing";
             else if (type == AbilityType.Q)
                 return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " magic damage";
             else
@@ -158,10 +158,10 @@ namespace TerraLeague.Items.Weapons
                 {
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
+                    int userHeal = modPlayer.ScaleValueWithHealPower(GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG));
                     if (modPlayer.GetRealHeathWithoutShield(false) < modPlayer.GetRealHeathWithoutShield(true) * 0.4)
-                        modPlayer.lifeToHeal += (int)((GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG)) * 1.5);
-                    else
-                        modPlayer.lifeToHeal += GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
+                        userHeal = (int)(userHeal * 1.5);
+                    modPlayer.lifeToHeal += userHeal;
 
                     // For Server
                     if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -170,10 +170,12 @@ namespace TerraLeague.Items.Weapons
 
                         for (int i = 0; i < players.Count; i++)
                         {
-                            if (modPlayer.GetRealHeathWithoutShield(false) < modPlayer.GetRealHeathWithoutShield(true) * 0.4)
-                                modPlayer.lifeToHeal += (int)((GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG)) * 1.5);
-                            else
-                                modPlayer.lifeToHeal += GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
+                            PLAYERGLOBAL targetModPlayer = Main.player[players[i]].GetModPlayer<PLAYERGLOBAL>();
+
+                            int Heal = modPlayer.ScaleValueWithHealPower(GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG));
+                            if (targetModPlayer.GetRealHeathWithoutShield(false) < targetModPlayer.GetRealHeathWithoutShield(true) * 0.4)
+                                Heal = (int)(Heal * 1.5);
+                            modPlayer.SendHealPacket(Heal, players[i], -1, player.whoAmI);
                         }
                     }
 
@@ -222,7 +224,7 @@ namespace TerraLeague.Items.Weapons
             TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt2 != null)
             {
-                tt2.text = System.Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep) + " magic healing";
+                tt2.text = System.Math.Round(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(item.damage, true) * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep) + " magic healing";
             }
 
             tooltips.FirstOrDefault(x => x.Name == "Knockback" && x.mod == "Terraria").text = "";
@@ -232,7 +234,7 @@ namespace TerraLeague.Items.Weapons
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
             player.statLife -= player.statLifeMax2 / 20;
-            damage = (int)(damage * player.GetModPlayer<PLAYERGLOBAL>().healPower);
+            damage = player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(damage);
             return true;
         }
 

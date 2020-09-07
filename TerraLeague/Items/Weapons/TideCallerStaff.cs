@@ -67,7 +67,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
                 return (int)(item.damage * 1.5);
             else if (type == AbilityType.W)
-                return (int)System.Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep * 1.5);
+                return (int)(item.damage * 1.5);
             else if (type == AbilityType.E)
                 return (int)(item.damage * 0.75);
             else
@@ -110,7 +110,7 @@ namespace TerraLeague.Items.Weapons
                 return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " magic damage";
             else if (type == AbilityType.W)
                 return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " magic damage" +
-                    "\n" + GetAbilityBaseDamage(player, AbilityType.E) + " + " + GetScalingTooltip(player, AbilityType.E, DamageType.MAG) + " healing";
+                    "\n" + TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player, AbilityType.E), 100, true) + " + " + GetScalingTooltip(player, AbilityType.E, DamageType.MAG, true) + " healing";
             else
                 return base.GetDamageTooltip(player, type);
         }
@@ -134,7 +134,7 @@ namespace TerraLeague.Items.Weapons
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16f);
                     int projType = ProjectileType<TideCallerStaff_AquaPrison>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
+                    int damage = player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG));
                     int knockback = 0;
 
                     SetAnimation(player, item.useTime, item.useAnimation, position + velocity);

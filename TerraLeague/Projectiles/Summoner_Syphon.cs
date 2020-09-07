@@ -96,7 +96,7 @@ namespace TerraLeague.Projectiles
 
                 if (projectile.Hitbox.Intersects(player.Hitbox))
                 {
-                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += (int)(10 * player.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep);
+                    player.GetModPlayer<PLAYERGLOBAL>().lifeToHeal += player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(10, true);
                     projectile.Kill();
                 }
             }

@@ -37,8 +37,8 @@ namespace TerraLeague.Items.SummonerSpells
         }
         public override string GetTooltip()
         {
-            return "Heal you self and a nearby ally for " + GetPercentScalingAmount() + "% of your max life" +
-                "Can target an ally to prioritize who gets healed" +
+            return "Heal you self and a nearby ally for " + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", Main.LocalPlayer.statManaMax2, 20, true) +
+                "\nCan target an ally to prioritize who gets healed" +
                 "\nYou both gain 'Swiftness'";
         }
 
@@ -50,8 +50,9 @@ namespace TerraLeague.Items.SummonerSpells
         public override void DoEffect(Player player, int spellSlot)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            int healValue = modPlayer.ScaleValueWithHealPower(player.statLifeMax2 * GetPercentScalingAmount() * 0.01f);
 
-            modPlayer.lifeToHeal += (int)((player.statLifeMax2 * GetPercentScalingAmount() * 0.01) * modPlayer.healPower);
+            modPlayer.lifeToHeal += healValue;
             player.AddBuff(BuffID.Swiftness, 360);
 
             // For Server
@@ -61,7 +62,7 @@ namespace TerraLeague.Items.SummonerSpells
 
                 if (healTarget != -1)
                 {
-                    modPlayer.SendHealPacket((int)((player.statLifeMax2 * GetPercentScalingAmount() * 0.01) * modPlayer.healPower), healTarget, -1, player.whoAmI);
+                    modPlayer.SendHealPacket(healValue, healTarget, -1, player.whoAmI);
                     modPlayer.SendBuffPacket(BuffID.Swiftness, 360, healTarget, -1, player.whoAmI);
                     PacketHandler.SendHeal(-1, player.whoAmI, player.whoAmI, healTarget);
                     Efx(Main.player[healTarget], false);

@@ -49,7 +49,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override string GetTooltip()
         {
-            return "You gain a shield that protects from " + (int)(GetShieldStat() * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep) + " damage for 10 seconds" +
+            return "You gain a shield that protects from " + TerraLeague.CreateScalingTooltip(DamageType.NONE, GetShieldStat(), 100, true) + " damage for 10 seconds" +
                 "\nShield strength scales through the game";
         }
 
@@ -58,7 +58,7 @@ namespace TerraLeague.Items.SummonerSpells
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             player.AddBuff(BuffType<Barrier>(), 600);
-            modPlayer.AddShieldAttachedToBuff((int)(GetShieldStat() * modPlayer.healPower), BuffType<Barrier>(), Color.Orange, ShieldType.Basic);
+            modPlayer.AddShieldAttachedToBuff(modPlayer.ScaleValueWithHealPower(GetShieldStat()), BuffType<Barrier>(), Color.Orange, ShieldType.Basic);
 
             Efx(player);
             PacketHandler.SendBarrier(-1, player.whoAmI, player.whoAmI);

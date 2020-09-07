@@ -62,7 +62,7 @@ namespace TerraLeague.Items.Weapons
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             if (type == AbilityType.E)
-                return (int)(item.damage * 0.4 * modPlayer.healPowerLastStep);
+                return (int)(item.damage * 0.4);
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -73,7 +73,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.E)
             {
                 if (dam == DamageType.SUM)
-                    return (int)(60 * modPlayer.healPowerLastStep);
+                    return (int)(60);
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -89,7 +89,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
             if (type == AbilityType.E)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.SUM) + " shielding";
+                return TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player, type), 100, true) + " + " + GetScalingTooltip(player, type, DamageType.SUM, true) + " shielding";
             else
                 return base.GetDamageTooltip(player, type);
         }
@@ -114,7 +114,9 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.E)
             {
-                int shield = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
+                PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+                int shield = modPlayer.ScaleValueWithHealPower(GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM));
                 int duration = 60 * 6;
 
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
@@ -126,8 +128,6 @@ namespace TerraLeague.Items.Weapons
                     // For Server
                     if (Main.netMode == NetmodeID.MultiplayerClient)
                     {
-                        PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
                         var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 300, player.whoAmI, player.team);
 
                         for (int i = 0; i < players.Count; i++)

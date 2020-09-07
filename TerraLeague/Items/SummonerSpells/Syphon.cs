@@ -48,7 +48,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override string GetTooltip()
         {
-            return "Damage all nearby enemies for " + GetDamageStat() + " and heal " + (int)(10 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep) + " life for each enemy hit" +
+            return "Damage all nearby enemies for " + GetDamageStat() + " and heal " + TerraLeague.CreateScalingTooltip(DamageType.NONE, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(10, true), 100, true) + " life for each enemy hit" +
                 "\nDamage scales thoughout the game";
         }
 

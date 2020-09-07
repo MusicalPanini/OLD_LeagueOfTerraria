@@ -1262,7 +1262,7 @@ namespace TerraLeague
                 if (lifeStealCharge > lifestealMax)
                     lifeStealCharge = lifestealMax;
 
-                int heal = (int)(lifeStealCharge * healPower);
+                int heal = ScaleValueWithHealPower((float)lifeStealCharge);
                 
                 if (bloodShield && GetRealHeathWithoutShield() >= GetRealHeathWithoutShield(true))
                 {
@@ -3744,6 +3744,14 @@ namespace TerraLeague
                     Main.PlaySound(chosenItem.UseSound, player.MountedCenter);
                 }
             }
+        }
+
+        public int ScaleValueWithHealPower(float value, bool useLastFrameValue = false)
+        {
+            if (useLastFrameValue)
+                return (int)(value * healPowerLastStep);
+            else
+                return (int)(value * healPower);
         }
     }
 }

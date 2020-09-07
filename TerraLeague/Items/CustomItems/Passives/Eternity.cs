@@ -25,7 +25,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if ((int)((modPlayer.manaLastStep - player.statMana) * 0.1) > 0 && modPlayer.manaLastStep <= player.statManaMax2)
                 {
-                    modPlayer.lifeToHeal += (int)(((modPlayer.manaLastStep - player.statMana) * 0.2) * modPlayer.healPower);
+                    modPlayer.lifeToHeal += modPlayer.ScaleValueWithHealPower((modPlayer.manaLastStep - player.statMana) * 0.2f);
                 }
             }
 

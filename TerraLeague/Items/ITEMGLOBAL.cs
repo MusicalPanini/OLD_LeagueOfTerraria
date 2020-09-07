@@ -298,7 +298,7 @@ namespace TerraLeague.Items
                 if (player.GetModPlayer<PLAYERGLOBAL>().hasSpiritualRestorationLastStep)
                     item.healLife = (int)(item.healLife * 1.3);
 
-                item.healLife = (int)(item.healLife * player.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep);
+                item.healLife = player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(item.healLife, true);
             }
 
             base.UpdateInventory(item, player);

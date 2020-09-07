@@ -494,51 +494,69 @@ namespace TerraLeague.Items.Weapons
         /// <param name="type"></param>
         /// <param name="dam"></param>
         /// <returns></returns>
-        protected string GetScalingTooltip(Player player, AbilityType type, DamageType dam)
+        protected string GetScalingTooltip(Player player, AbilityType type, DamageType dam, bool useHealpower = false, string extraText = "")
         {
             string line = "";
-            int Damage = GetAbilityScalingDamage(player, type, dam);
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (UI.ItemUI.extraStats)
+            switch (dam)
             {
-                switch (dam)
-                {
-                    case DamageType.MEL:
-                        line = "[c/" + TerraLeague.MELColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% MEL(" + Damage + ")]";
-                        break;
-                    case DamageType.RNG:
-                        line = "[c/" + TerraLeague.RNGColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% RNG(" + Damage + ")]";
-                        break;
-                    case DamageType.MAG:
-                        line = "[c/" + TerraLeague.MAGColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% MAG(" + Damage + ")]";
-                        break;
-                    case DamageType.SUM:
-                        line = "[c/" + TerraLeague.SUMColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% SUM(" + Damage + ")]";
-                        break;
-                    default:
-                        break;
-                }
+                case DamageType.MEL:
+                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.MEL, GetAbilityScalingAmount(player, type, dam), useHealpower, extraText);
+                    break;
+                case DamageType.RNG:
+                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.RNG, GetAbilityScalingAmount(player, type, dam), useHealpower, extraText);
+                    break;
+                case DamageType.MAG:
+                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.MAG, GetAbilityScalingAmount(player, type, dam), useHealpower, extraText);
+                    break;
+                case DamageType.SUM:
+                    line = TerraLeague.CreateScalingTooltip(dam, modPlayer.SUM, GetAbilityScalingAmount(player, type, dam), useHealpower, extraText);
+                    break;
+                default:
+                    break;
             }
-            else
-            {
-                switch (dam)
-                {
-                    case DamageType.MEL:
-                        line = "[c/" + TerraLeague.MELColor + ":" + Damage + "]";
-                        break;
-                    case DamageType.RNG:
-                        line = "[c/" + TerraLeague.RNGColor + ":" + Damage + "]";
-                        break;
-                    case DamageType.MAG:
-                        line = "[c/" + TerraLeague.MAGColor + ":" + Damage + "]";
-                        break;
-                    case DamageType.SUM:
-                        line = "[c/" + TerraLeague.SUMColor + ":" + Damage + "]";
-                        break;
-                    default:
-                        break;
-                }
-            }
+
+            //if (UI.ItemUI.extraStats)
+            //{
+            //    switch (dam)
+            //    {
+            //        case DamageType.MEL:
+            //            line = "[c/" + TerraLeague.MELColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% MEL(" + Damage + ")]";
+            //            break;
+            //        case DamageType.RNG:
+            //            line = "[c/" + TerraLeague.RNGColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% RNG(" + Damage + ")]";
+            //            break;
+            //        case DamageType.MAG:
+            //            line = "[c/" + TerraLeague.MAGColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% MAG(" + Damage + ")]";
+            //            break;
+            //        case DamageType.SUM:
+            //            line = "[c/" + TerraLeague.SUMColor + ":" + GetAbilityScalingAmount(player, type, dam) + "% SUM(" + Damage + ")]";
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+            //else
+            //{
+            //    switch (dam)
+            //    {
+            //        case DamageType.MEL:
+            //            line = "[c/" + TerraLeague.MELColor + ":" + Damage + "]";
+            //            break;
+            //        case DamageType.RNG:
+            //            line = "[c/" + TerraLeague.RNGColor + ":" + Damage + "]";
+            //            break;
+            //        case DamageType.MAG:
+            //            line = "[c/" + TerraLeague.MAGColor + ":" + Damage + "]";
+            //            break;
+            //        case DamageType.SUM:
+            //            line = "[c/" + TerraLeague.SUMColor + ":" + Damage + "]";
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
 
             return line;
         }

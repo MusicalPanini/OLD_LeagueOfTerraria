@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
                 if (projectile.timeLeft == 360)
                 {
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-                    int shieldAmount = (int)(projectile.damage * modPlayer.healPower);
+                    int shieldAmount = modPlayer.ScaleValueWithHealPower(projectile.damage);
 
                     for (int i = 0; i < effectRadius / 5; i++)
                     {

@@ -62,7 +62,6 @@ namespace TerraLeague.Projectiles
             {
                 if (projectile.friendly && projectile.ai[0] == 1)
                 {
-                    
                     if (projectile.localAI[0] == 0f)
                     {
                         AdjustMagnitude(ref projectile.velocity);
@@ -107,7 +106,7 @@ namespace TerraLeague.Projectiles
 
                     if (targetPlayer != -1)
                     {
-                        Vector2 newMove = Main.player[targetPlayer].MountedCenter - projectile.Center;
+                        move = Main.player[targetPlayer].MountedCenter - projectile.Center;
                         AdjustMagnitude(ref move);
                         projectile.velocity = (10 * projectile.velocity + move) / 11f;
                         AdjustMagnitude(ref projectile.velocity);

@@ -103,7 +103,7 @@ namespace TerraLeague.Items.Weapons
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
                     player.AddBuff(BuffID.Swiftness, 360);
-                    modPlayer.AddShield((int)(GetAbilityBaseDamage(player, type) * modPlayer.healPowerLastStep), 360, new Color(181,77,177), ShieldType.Basic);
+                    modPlayer.AddShield(player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(GetAbilityBaseDamage(player, type), true), 360, new Color(181,77,177), ShieldType.Basic);
                     DoEfx(player, type);
                     SetCooldowns(player, type);
                 }

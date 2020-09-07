@@ -180,7 +180,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (modPlayer.lifeLineCooldown <= 0)
                 {
-                    modPlayer.AddShieldAttachedToBuff((int)(modPlayer.GetRealHeathWithoutShield(true) / 2 * modPlayer.healPower), BuffType<Buffs.SteraksFury>(), new Color(114, 18, 111), ShieldType.Basic);
+                    modPlayer.AddShieldAttachedToBuff(modPlayer.ScaleValueWithHealPower(modPlayer.GetRealHeathWithoutShield(true) / 2), BuffType<Buffs.SteraksFury>(), new Color(114, 18, 111), ShieldType.Basic);
                     player.AddBuff(BuffType<Buffs.SteraksFury>(), 720);
                 }
             }
@@ -188,7 +188,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (modPlayer.lifeLineCooldown <= 0)
                 {
-                    modPlayer.AddShieldAttachedToBuff((int)(200 * modPlayer.healPower), BuffType<Buffs.LifeGrip>(), Color.Purple, ShieldType.Magic);
+                    modPlayer.AddShieldAttachedToBuff(modPlayer.ScaleValueWithHealPower(200), BuffType<Buffs.LifeGrip>(), Color.Purple, ShieldType.Magic);
                     player.AddBuff(BuffType<Buffs.LifeGrip>(), 720);
                 }
             }
@@ -196,14 +196,14 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 if (modPlayer.lifeLineCooldown <= 0)
                 {
-                    modPlayer.AddShield((int)(80 * modPlayer.healPower), 720, Color.Purple, ShieldType.Magic);
+                    modPlayer.AddShield(modPlayer.ScaleValueWithHealPower(80), 720, Color.Purple, ShieldType.Magic);
                 }
             }
             if (TerraLeague.FindAccessorySlotOnPlayer(player, GetInstance<PhantomDancer>()) != -1)
             {
                 if (modPlayer.lifeLineCooldown <= 0)
                 {
-                    modPlayer.AddShield((int)(100 * modPlayer.healPower), 720, new Color(108, 203, 185), ShieldType.Basic);
+                    modPlayer.AddShield(modPlayer.ScaleValueWithHealPower(100), 720, new Color(108, 203, 185), ShieldType.Basic);
                 }
             }
         }

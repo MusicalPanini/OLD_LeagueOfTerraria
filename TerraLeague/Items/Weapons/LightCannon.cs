@@ -59,7 +59,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
                 return (int)item.damage * 2;
             else if (type == AbilityType.W)
-                return (int)((item.damage/3) * modPlayer.healPowerLastStep);
+                return (int)((item.damage/3));
             else
                 return base.GetAbilityBaseDamage(player, type);
         }
@@ -75,9 +75,9 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.W)
             {
                 if (dam == DamageType.RNG)
-                    return (int)(40 * modPlayer.healPowerLastStep);
+                    return (int)(40);
                 else if (dam == DamageType.MAG)
-                    return (int)(25 * modPlayer.healPowerLastStep);
+                    return (int)(25);
             }
             return base.GetAbilityScalingAmount(player, type, dam);
         }
@@ -94,7 +94,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
                 return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.RNG) + " range damage" +
-                    "\n" + GetAbilityBaseDamage(player, AbilityType.W) + " + " + GetScalingTooltip(player, AbilityType.W, DamageType.RNG) + " + " + GetScalingTooltip(player, AbilityType.W, DamageType.MAG) + " healing";
+                    "\n" + TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player, AbilityType.W), 100, true) + " + " + GetScalingTooltip(player, AbilityType.W, DamageType.RNG, true) + " + " + GetScalingTooltip(player, AbilityType.W, DamageType.MAG, true) + " healing";
             else
                 return base.GetDamageTooltip(player, type);
         }
@@ -118,11 +118,12 @@ namespace TerraLeague.Items.Weapons
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
                 {
+                    PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
                     Vector2 position = player.MountedCenter;
                     Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
                     int projType = ProjectileType<LightCannon_PiercingDarkness>();
                     int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
-                    int healing = GetAbilityBaseDamage(player, AbilityType.W) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.RNG) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.MAG);
+                    int healing = modPlayer.ScaleValueWithHealPower(GetAbilityBaseDamage(player, AbilityType.W) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.RNG) + GetAbilityScalingDamage(player, AbilityType.W, DamageType.MAG));
                     int knockback = 0;
 
                     Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI, healing);

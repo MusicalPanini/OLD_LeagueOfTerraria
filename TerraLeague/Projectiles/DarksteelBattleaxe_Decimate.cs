@@ -93,7 +93,7 @@ namespace TerraLeague.Projectiles
         {
             PLAYERGLOBAL player = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
 
-            player.lifeToHeal += (int)(7 * player.healPower);
+            player.lifeToHeal += 7;
 
             int stacks = target.GetGlobalNPC<NPCsGLOBAL>().HemorrhageStacks;
 

@@ -1421,12 +1421,12 @@ namespace TerraLeague
                 }
 
                 if (affectedByHealPower)
-                    text += " + [c/" + HEALColor + ":HEAL(" + (((int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep)) - (value)) + ")]";
+                    text += " + [c/" + HEALColor + ":HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")]";
             }
             else
             {
                 if (affectedByHealPower)
-                    value = (int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep);
+                    value = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true);
                 text += value + extraText +  "]";
             }
 
@@ -1444,12 +1444,12 @@ namespace TerraLeague
             {
                 text += percentScaling + "% " + valueName + "(" + value + extraText + ")]";
                 if (affectedByHealPower)
-                    text += " + [c/" + HEALColor + ":HEAL(" + (((int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep)) - (value)) + ")]";
+                    text += " + [c/" + HEALColor + ":HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")]";
             }
             else
             {
                 if (affectedByHealPower)
-                    value = (int)(value * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep);
+                    value = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true);
                 text += value + extraText + "]";
             }
 

@@ -49,7 +49,7 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
             {
                 return "Prepare your axe then spin it with great speed" +
-                    "\nHeal " + (int)(7 * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep) + " per enemy hit";
+                    "\nHeal " + (int)(7) + " per enemy hit";
             }
             else
             {
