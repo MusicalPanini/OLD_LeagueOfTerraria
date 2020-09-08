@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             else
                 scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
-            return TooltipName("FROST BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Fire 5 frost projectiles in a cone that deal ") + baseDamage + " + " + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage")
+            return TooltipName("FROST BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Fire 10 frost projectiles in a cone that deal ") + baseDamage + " + " + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed'")
                 + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
@@ -41,20 +41,17 @@ namespace TerraLeague.Items.CustomItems.Actives
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 Vector2 position = player.Center;
-                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 20f);
-                int projType = ProjectileType<TrueIceBow_Volley>();
+                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 14f);
+                int projType = ProjectileType<Item_FrostBolt>();
                 int damage = baseDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 int knockback = 1;
-                int numberProjectiles = 5;
-                float startingAngle = 16;
+                int numberProjectiles = 10;
+                float startingAngle = 20;
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
                     Projectile proj = Projectile.NewProjectileDirect(position, perturbedSpeed, projType, damage, knockback, player.whoAmI);
-                    proj.ranged = false;
-                    proj.magic = true;
-                    proj.scale = 1.4f;
-                    startingAngle -= 8f;
+                    startingAngle -= 4f;
                 }
 
                 Efx(player);
@@ -74,6 +71,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override void Efx(Player user)
         {
             Main.PlaySound(new LegacySoundStyle(2, 11), user.Center);
+            TerraLeague.PlaySoundWithPitch(user.MountedCenter, 2, 28, -0f);
         }
     }
 }
