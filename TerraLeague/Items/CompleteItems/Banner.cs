@@ -64,7 +64,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Active GetActive()
         {
-            return new Rally(10, 50, 100);
+            return new Rally(3, 20, 100);
         }
 
         public override string GetStatText()
