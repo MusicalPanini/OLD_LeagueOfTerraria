@@ -41,7 +41,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 91)
+            if (projectile.soundDelay == 0)
             {
                 damage = (int)projectile.ai[0];
                 healing = (int)projectile.ai[1];
@@ -49,6 +49,7 @@ namespace TerraLeague.Projectiles
                 projectile.ai[0] = 0;
                 projectile.ai[1] = 0;
             }
+            projectile.soundDelay = 100;
 
             if (projectile.timeLeft == 90)
             {

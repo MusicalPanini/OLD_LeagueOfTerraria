@@ -33,13 +33,14 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             Dust dust;
-            if (projectile.timeLeft == 60)
+            if (projectile.soundDelay == 0)
             {
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14), projectile.Center);
                 dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default(Color), 1f);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
+            projectile.soundDelay = 100;
 
             dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Smoke, 0, 0, 0, default(Color), 2f);
             dust.noGravity = true;

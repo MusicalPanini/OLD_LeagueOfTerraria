@@ -36,7 +36,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 2000)
+            if (projectile.soundDelay == 0)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -44,6 +44,7 @@ namespace TerraLeague.Projectiles
                     dust.noGravity = true;
                 }
             }
+            projectile.soundDelay = 100;
 
             Player player = Main.player[projectile.owner];
 

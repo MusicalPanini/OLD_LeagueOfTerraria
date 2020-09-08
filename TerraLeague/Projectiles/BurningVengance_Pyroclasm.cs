@@ -44,7 +44,7 @@ namespace TerraLeague.Projectiles
             {
                 if (projectile.timeLeft == 314)
                 {
-                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 4534, -0.5f);
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 45, -0.5f);
                 }
 
                 projectile.friendly = false;

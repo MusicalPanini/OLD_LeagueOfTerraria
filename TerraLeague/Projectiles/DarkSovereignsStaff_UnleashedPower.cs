@@ -36,7 +36,7 @@ namespace TerraLeague.Projectiles
         {
             NPC target = Main.npc[(int)projectile.ai[0]];
 
-            if (projectile.timeLeft == 999)
+            if (projectile.soundDelay == 0)
             {
                 totalProj = Main.player[projectile.owner].ownedProjectileCounts[projectile.type];
                 for (int i = 0; i < 10; i++)
@@ -46,6 +46,7 @@ namespace TerraLeague.Projectiles
                     dust.noLight = true;
                 }
             }
+            projectile.soundDelay = 100;
 
             if (!target.active)
             {

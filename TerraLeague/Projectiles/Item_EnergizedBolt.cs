@@ -61,7 +61,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 302)
+            if (projectile.soundDelay == 0)
             {
                 if ((int)projectile.ai[1] == 1)
                 {
@@ -70,6 +70,7 @@ namespace TerraLeague.Projectiles
                     projectile.penetrate = 9;
                 }
             }
+            projectile.soundDelay = 100;
 
             if (projectile.timeLeft == 300)
             {

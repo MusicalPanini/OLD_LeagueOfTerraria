@@ -31,8 +31,10 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 360)
+            if (projectile.soundDelay == 0)
                 Main.PlaySound(mod.GetLegacySoundSlot(Terraria.ModLoader.SoundType.Custom, "Sounds/Custom/WhisperShot"), projectile.position);
+            projectile.soundDelay = 100;
+
             Lighting.AddLight(projectile.Left, 1f, 0.5f, 0.01f);
 
             Dust dust = Dust.NewDustPerfect(projectile.Center, 75, Vector2.Zero, 0, new Color(255, 0, 0));

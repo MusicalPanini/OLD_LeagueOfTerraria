@@ -32,10 +32,11 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 14)
+            if (projectile.soundDelay == 0)
             {
                 TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 1, -1);
             }
+            projectile.soundDelay = 100;
 
             if (projectile.timeLeft > 3)
             {

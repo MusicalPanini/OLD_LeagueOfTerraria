@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
             Vector2 targetPosition = GetTarget();
 
-            if (projectile.timeLeft == 1000)
+            if (projectile.soundDelay == 0)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -48,6 +48,7 @@ namespace TerraLeague.Projectiles
                     dust.velocity *= 1.5f;
                 }
             }
+            projectile.soundDelay = 100;
 
             if (projectile.Distance(player.Center) > 1500)
             {

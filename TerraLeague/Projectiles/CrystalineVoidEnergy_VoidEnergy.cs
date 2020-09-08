@@ -42,7 +42,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            
+            projectile.netUpdate = true;
 
             base.OnHitNPC(target, damage, knockback, crit);
         }

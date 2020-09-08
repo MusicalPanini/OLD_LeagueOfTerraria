@@ -36,7 +36,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 3600)
+            if (projectile.soundDelay == 0)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -44,6 +44,7 @@ namespace TerraLeague.Projectiles
                     dust.noGravity = true;
                 }
             }
+            projectile.soundDelay = 100;
 
             if (Main.rand.Next(3) == 0)
             {

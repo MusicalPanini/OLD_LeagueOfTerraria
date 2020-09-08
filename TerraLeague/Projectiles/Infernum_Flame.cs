@@ -29,8 +29,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 75 && (int)projectile.ai[1] == 1)
+            if (projectile.soundDelay == 0 && (int)projectile.ai[1] == 1)
                 projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            projectile.soundDelay = 100;
 
             if (Main.rand.Next(0, 1) == 0)
             {

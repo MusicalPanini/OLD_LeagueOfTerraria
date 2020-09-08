@@ -35,11 +35,12 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 900)
+            if (projectile.soundDelay == 0)
             {
                 projectile.timeLeft = (int)projectile.ai[0];
                 projectile.extraUpdates = (int)projectile.ai[0] - 1;
             }
+            projectile.soundDelay = 1000;
 
             Lighting.AddLight(projectile.Left, 0.09f, 0.40f, 0.60f);
 

@@ -28,10 +28,11 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 185)
+            if (projectile.soundDelay == 0)
             {
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 95), projectile.Center);
+                Main.PlaySound(new LegacySoundStyle(2, 95), projectile.Center);
             }
+            projectile.soundDelay = 100;
 
             projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X) + 1.57f;
 

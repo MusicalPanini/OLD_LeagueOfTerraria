@@ -34,12 +34,13 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if(projectile.timeLeft == 301)
+            if(projectile.soundDelay == 0)
             {
                 Main.PlaySound(new LegacySoundStyle(2, 88), projectile.Center);
                 if (projectile.owner == Main.LocalPlayer.whoAmI)
                     projectile.netUpdate = true;
             }
+            projectile.soundDelay = 100;
 
             if (!Main.npc[(int)projectile.ai[0]].active)
             {

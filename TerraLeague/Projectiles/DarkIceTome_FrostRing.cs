@@ -29,8 +29,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 300)
+            if (projectile.soundDelay == 0)
                 Prime();
+            projectile.soundDelay = 100;
             base.AI();
         }
 

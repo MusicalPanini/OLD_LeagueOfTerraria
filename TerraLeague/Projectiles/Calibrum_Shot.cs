@@ -32,17 +32,20 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.timeLeft < 896)
             {
-                Dust dust = Dust.NewDustPerfect(projectile.position, 111, Vector2.Zero, 0, default(Color), projectile.timeLeft <= 550 ? 1.5f : 1);
+                Dust dust = Dust.NewDustPerfect(projectile.position, 111, Vector2.Zero, 0, default(Color), projectile.timeLeft <= 575 ? 1.5f : 1);
                 dust.noGravity = true;
                 dust.alpha = 100;
             }
 
-            if (projectile.timeLeft == 550)
+            if (projectile.timeLeft == 575)
                 projectile.damage *= 2;
+
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().SyncProjectileKill(projectile);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
+            projectile.netUpdate = true;
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -59,7 +62,6 @@ namespace TerraLeague.Projectiles
                 for (int i = 0; i < 8; i++)
                 {
                     Dust dust = Dust.NewDustDirect(projectile.position, 8, 8, 112, 0, 0, 0, new Color(59, 0, 255), 1f);
-
                 }
             }
 

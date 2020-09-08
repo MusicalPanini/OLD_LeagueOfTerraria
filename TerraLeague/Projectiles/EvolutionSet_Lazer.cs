@@ -35,10 +35,11 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 100 && (int)projectile.ai[0] == 0)
+            if (projectile.soundDelay == 0 && (int)projectile.ai[0] == 0)
             {
                 Main.PlaySound(new LegacySoundStyle(2, 15));
             }
+            projectile.soundDelay = 100;
 
             for (int i = 0; i < 4; i++)
             {

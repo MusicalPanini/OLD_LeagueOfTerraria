@@ -89,5 +89,20 @@ namespace TerraLeague.Projectiles
             else
                 return base.CanHitPlayer(projectile, target);
         }
+
+        public void SyncProjectileKill(Projectile projectile)
+        {
+            if (Main.LocalPlayer.whoAmI != projectile.whoAmI)
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
+                {
+                    if (projectile.modProjectile.CanHitNPC(Main.npc[i]) != false)
+                    {
+                        if (projectile.Hitbox.Intersects(Main.npc[i].Hitbox))
+                            projectile.Kill();
+                    }
+                }
+            }
+        }
     }
 }

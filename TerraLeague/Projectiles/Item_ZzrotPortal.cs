@@ -30,7 +30,7 @@ namespace TerraLeague.Projectiles
         {
             Lighting.AddLight(projectile.Center, 0.60f, 0f, 0.60f);
 
-            if (projectile.timeLeft == 60 * 5 + 5)
+            if (projectile.soundDelay == 0)
             {
                 for (int i = 0; i < 20; i++)
                 {
@@ -43,6 +43,7 @@ namespace TerraLeague.Projectiles
                     dust.velocity.Y -= 3;
                 }
             }
+            projectile.soundDelay = 100;
 
             if (projectile.ai[1] >= 60)
             {

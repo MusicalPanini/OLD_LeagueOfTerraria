@@ -41,13 +41,14 @@ namespace TerraLeague.Projectiles
             //player.itemTime = 10;
             //player.noItems = true;
 
-            if (projectile.timeLeft == 71)
+            if (projectile.soundDelay == 0)
             {
                 if (projectile.ai[0] == 1)
                     projectile.rotation = -MathHelper.PiOver2;
                 else
                     projectile.rotation = MathHelper.PiOver2;
             }
+            projectile.soundDelay = 100;
 
             if (projectile.timeLeft == 26)
             {

@@ -37,9 +37,6 @@ namespace TerraLeague.Projectiles
             else if (projectile.velocity.X < -12)
                 projectile.velocity.X = -12;
 
-            if (projectile.timeLeft == 600)
-                Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound), projectile.position);
-
             Lighting.AddLight(projectile.position, 0f, 0f, 0.5f);
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 211);
             dust.alpha = 0;

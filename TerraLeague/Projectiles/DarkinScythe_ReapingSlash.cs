@@ -37,13 +37,15 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
             player.GetModPlayer<PLAYERGLOBAL>().invincible = true;
 
-            if (projectile.timeLeft == 26)
+            if (projectile.soundDelay == 0)
             {
                 player.ChangeDir(player.velocity.X > 0 ? 1 : -1);
                 projectile.spriteDirection = player.direction;
 
                 TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 71, -1f);
             }
+            projectile.soundDelay = 100;
+
             player.direction = projectile.spriteDirection;
 
             if (projectile.timeLeft <= 26)

@@ -35,8 +35,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 600)
-                projectile.rotation = Main.rand.Next(0, 360);
+            if (projectile.soundDelay == 0)
+                projectile.rotation = Main.rand.NextFloat(0, 6.282f);
+            projectile.soundDelay = 100;
 
             Lighting.AddLight(projectile.position, 1f * lightIntencity, 0.5f * lightIntencity, 0.9f * lightIntencity);
             Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * lightIntencity)), new Color(255,50,255));

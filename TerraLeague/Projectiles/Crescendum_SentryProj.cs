@@ -34,7 +34,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 1000)
+            if (projectile.soundDelay == 0)
             {
                 sentry = Main.projectile.FirstOrDefault(x => x.owner == projectile.owner && x.type == ModContent.ProjectileType<Crescendum_Sentry>());
                 if (sentry == null)
@@ -42,6 +42,7 @@ namespace TerraLeague.Projectiles
                     projectile.Kill();
                 }
             }
+            projectile.soundDelay = 100;
 
             if (sentry == null)
             {

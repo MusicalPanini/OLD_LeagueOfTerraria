@@ -32,11 +32,6 @@ namespace TerraLeague.Projectiles
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
-        public virtual string GetName()
-        {
-            return "Echo";
-        }
-
         public override void AI()
         {
             if ((int)projectile.ai[0] == -1)
@@ -51,7 +46,6 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-
                 projectile.friendly = true;
 
                 if (projectile.localAI[0] == 0f)

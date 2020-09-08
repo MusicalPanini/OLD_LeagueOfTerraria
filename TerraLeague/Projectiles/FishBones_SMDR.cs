@@ -37,8 +37,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 1200)
+            if (projectile.soundDelay == 0)
                 baseDamage = projectile.damage;
+            projectile.soundDelay = 100;
 
             Lighting.AddLight(projectile.Center, 1f, 0.34f, 0.9f);
             projectile.damage = (int)(baseDamage * (projectile.velocity.Length() / 25));

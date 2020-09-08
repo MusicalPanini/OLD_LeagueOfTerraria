@@ -35,8 +35,9 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.timeLeft == 1200)
+            if (projectile.soundDelay == 0)
                 Main.PlaySound(SoundID.Item5, projectile.Center);
+            projectile.soundDelay = 100;
 
             Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 67, 0f, 0f, 100, default(Color));
             dust.noGravity = true;
