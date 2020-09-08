@@ -59,7 +59,7 @@ namespace TerraLeague
         internal ToolTipUI tooltipUI;
         internal bool canLog = false;
         internal bool debugMode = false;
-        internal bool disableModUI = false;
+        public static bool disableModResourceBar = false;
         internal int SumCurrencyID;
         private UserInterface userInterface1;
         private UserInterface userInterface2;
@@ -79,7 +79,9 @@ namespace TerraLeague
         public static ModHotKey WAbility;
         public static ModHotKey EAbility;
         public static ModHotKey RAbility;
-        public static ModHotKey Trinket;
+
+        public static float fogIntensity;
+        //public static ModHotKey Trinket;
         public static PlayerLayer ShieldEffect;
         private static Dictionary<string, string> Keys;
 
@@ -178,7 +180,7 @@ namespace TerraLeague
             WAbility = RegisterHotKey("Ability 2", "X");
             EAbility = RegisterHotKey("Ability 3", "C");
             RAbility = RegisterHotKey("Ability 4", "V");
-            Trinket = RegisterHotKey("Trinket", "R");
+            //Trinket = RegisterHotKey("Trinket", "R");
             SumCurrencyID = CustomCurrencyManager.RegisterCurrency(new SummonerCurrency(ModContent.ItemType<VialofTrueMagic>(), 999L));
 
             ShieldEffect = new PlayerLayer("TerraLeague", "ShieldEffect", PlayerLayer.MiscEffectsBack, delegate (PlayerDrawInfo drawInfo)
@@ -226,7 +228,26 @@ namespace TerraLeague
             MELColor = "FFA500";
             RNGColor = "20B2AA";
             MAGColor = "8E70DB";
-            SUMColor = "87CEEB";
+            SUMColor = "6495ed";//"87CEEB";
+
+            DEFColor = "A0A0A0";
+            ARMORColor = "FFFF00";
+            RESISTColor = "B0C4DE";
+            HEALColor = "008000";
+            CDRColor = "FFFFFF";
+            RNGATSColor = "808080";
+            MANAREDUCTColor = "4169E1";
+            MINIONMAXColor = "4682b4";
+
+            TooltipHeadingColor = "0099cc";
+
+            PassiveMainColor = "0099cc";
+            PassiveSecondaryColor = "99e6ff";
+            PassiveSubColor = "007399";
+
+            ActiveMainColor = "ff4d4d";
+            ActiveSecondaryColor = "ff8080";
+            ActiveSubColor = "cc0000";
 
             if (!Main.dedServ)
             {
@@ -290,7 +311,7 @@ namespace TerraLeague
             WAbility = null;
             EAbility = null;
             RAbility = null;
-            Trinket = null;
+            //Trinket = null;
 
             MELColor = null;
             RNGColor = null;
@@ -303,6 +324,7 @@ namespace TerraLeague
             CDRColor = null;
             RNGATSColor = null;
             MANAREDUCTColor = null;
+            MINIONMAXColor = null;
             TooltipHeadingColor = null;
             PassiveMainColor = null;
             PassiveSecondaryColor = null;
@@ -327,9 +349,10 @@ namespace TerraLeague
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
         {
-            if (!disableModUI)
+            int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+
+            if (disableModResourceBar)
             {
-                int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
                 if (resourseBar < 0)
                     resourseBar = 7;
                 else
@@ -360,52 +383,52 @@ namespace TerraLeague
                     return true;
                 },
                 InterfaceScaleType.UI));
-
-                int inventoryLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-                if (inventoryLayer < 0)
-                    inventoryLayer = 4;
-
-                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
-                "TerraLeague: Stat Hud",
-                delegate
-                {
-                    if (StatUI.visible < 0)
-                    {
-                        userInterface1.Update(Main._drawInterfaceGameTime);
-                        statUI.Draw(Main.spriteBatch);
-                    }
-                    return true;
-                },
-                InterfaceScaleType.UI));
-
-                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
-                "TerraLeague: Item Hud",
-                delegate
-                {
-                    if (ItemUI.visible)
-                    {
-                        userInterface2.Update(Main._drawInterfaceGameTime);
-                        itemUI.Draw(Main.spriteBatch);
-                    }
-                    return true;
-                },
-                InterfaceScaleType.UI));
-
-                layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
-                "TerraLeague: Ability Hud",
-                delegate
-                {
-                    if (AbilityUI.visible)
-                    {
-                        userInterface3.Update(Main._drawInterfaceGameTime);
-                        abilityUI.Draw(Main.spriteBatch);
-                    }
-                    return true;
-                },
-                InterfaceScaleType.UI));
-
-                //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
             }
+
+            int inventoryLayer = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+            if (inventoryLayer < 0)
+                inventoryLayer = 4;
+
+            layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+            "TerraLeague: Stat Hud",
+            delegate
+            {
+                if (StatUI.visible < 0)
+                {
+                    userInterface1.Update(Main._drawInterfaceGameTime);
+                    statUI.Draw(Main.spriteBatch);
+                }
+                return true;
+            },
+            InterfaceScaleType.UI));
+
+            layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+            "TerraLeague: Item Hud",
+            delegate
+            {
+                if (ItemUI.visible)
+                {
+                    userInterface2.Update(Main._drawInterfaceGameTime);
+                    itemUI.Draw(Main.spriteBatch);
+                }
+                return true;
+            },
+            InterfaceScaleType.UI));
+
+            layers.Insert(resourseBar, new LegacyGameInterfaceLayer(
+            "TerraLeague: Ability Hud",
+            delegate
+            {
+                if (AbilityUI.visible)
+                {
+                    userInterface3.Update(Main._drawInterfaceGameTime);
+                    abilityUI.Draw(Main.spriteBatch);
+                }
+                return true;
+            },
+            InterfaceScaleType.UI));
+
+            //layers.RemoveAll(layer => layer.Name.Equals("Vanilla: Interface Logic 2"));
         }
 
         public override void UpdateMusic(ref int music, ref MusicPriority priority)

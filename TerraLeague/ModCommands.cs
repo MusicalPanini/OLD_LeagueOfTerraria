@@ -103,43 +103,6 @@ namespace TerraLeague
         }
     }
 
-    public class DisableModdedUICommand : ModCommand
-    {
-        public override CommandType Type
-        {
-            get { return CommandType.Chat; }
-        }
-
-        public override string Command
-        {
-            get { return "toggleModUI"; }
-        }
-
-        public override string Usage
-        {
-            get { return "/toggleModUI"; }
-        }
-
-        public override string Description
-        {
-            get { return "Toggles between using Vanilla UI or League of Terraria's custom UI "; }
-        }
-
-        public override void Action(CommandCaller caller, string input, string[] args)
-        {
-            if (TerraLeague.instance.disableModUI)
-            {
-                TerraLeague.instance.disableModUI = false;
-                Main.NewText("Mod UI Enabled");
-            }
-            else
-            {
-                TerraLeague.instance.disableModUI = true;
-                Main.NewText("Mod UI Disabled");
-            }
-        }
-    }
-
     public class StartHarrowing : ModCommand
     {
         public override CommandType Type

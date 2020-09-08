@@ -41,19 +41,17 @@ namespace TerraLeague.Shaders
             else
                 quotient = 1;
 
-
             if (_passName == "FilterSandstormForeground")
             {
-                base.UseOpacity(0.2f * quotient);
-                base.UseIntensity(3.5f * quotient);
+                base.UseOpacity(0.2f * quotient * TerraLeague.fogIntensity);
+                base.UseIntensity(3.5f * quotient * TerraLeague.fogIntensity);
             }
             else
             {
-                base.UseIntensity(5f * quotient);
-                base.UseOpacity(1f * quotient);
+                base.UseIntensity(5 * quotient * TerraLeague.fogIntensity);
+                base.UseOpacity(1 * quotient * TerraLeague.fogIntensity);
             }
         }
-
         public override void Apply()
         {
             base.UseTargetPosition(this._texturePosition);

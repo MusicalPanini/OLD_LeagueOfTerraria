@@ -206,6 +206,8 @@ namespace TerraLeague.UI
 
     class ResourceBar : UIElement
     {
+        public static int healthBarDividerDistance = 50;
+        public static int manaBarDividerDistance = 50;
         private UIBar barBackground;
         private UIInnerBar currentBar;
         private UIInnerBar lifeFruitBar;
@@ -293,26 +295,14 @@ namespace TerraLeague.UI
                     barBackground.Append(physShieldBar);
                     barBackground.Append(currentBar);
 
-                    markers = new UIImage[40];
-                    for (int i = 0; i < markers.Length; i++)
-                    {
-                        markers[i] = new UIImage(TerraLeague.instance.GetTexture("UI/BarMarker"));
-                        barBackground.Append(markers[i]);
-                        markers[i].Top.Set(2, 0);
-                    }
+                    markers = InitaliseMarkers(2000/healthBarDividerDistance);
 
                     break;
 
                 case ResourceBarMode.MANA:
                     currentBar.backgroundColor = HealthbarUI.ManaColor;
                     barBackground.Append(currentBar);
-                    markers = new UIImage[400/20];
-                    for (int i = 0; i < markers.Length; i++)
-                    {
-                        markers[i] = new UIImage(TerraLeague.instance.GetTexture("UI/BarMarker"));
-                        barBackground.Append(markers[i]);
-                        markers[i].Top.Set(2, 0);
-                    }
+                    markers = InitaliseMarkers(1000/manaBarDividerDistance);
                     break;
                 default:
                     break;
@@ -356,8 +346,8 @@ namespace TerraLeague.UI
                     float redLifeQuotent;
                     float bonusLifeQuotent;
 
-                    int markerCount = player.statLifeMax2/50;
-                    int markerEffectiveHealth = 50 * markerCount;
+                    int markerCount = player.statLifeMax2 / healthBarDividerDistance;
+                    int markerEffectiveHealth = healthBarDividerDistance * markerCount;
                     float markerQuotent = markerEffectiveHealth / (player.statLifeMax2 * 1f);
                     for (int i = 0; i < markers.Length; i++)
                     {
@@ -446,8 +436,8 @@ namespace TerraLeague.UI
 
                 case ResourceBarMode.MANA:
 
-                    int manaMarkerCount = player.statManaMax2 / 50;
-                    int markerEffectiveMana = 50 * manaMarkerCount;
+                    int manaMarkerCount = player.statManaMax2 / manaBarDividerDistance;
+                    int markerEffectiveMana = manaBarDividerDistance * manaMarkerCount;
                     float manaMarkerQuotent = markerEffectiveMana / (player.statManaMax2 * 1f);
                     for (int i = 0; i < markers.Length; i++)
                     {
@@ -676,6 +666,18 @@ namespace TerraLeague.UI
             }
 
             base.Update(gameTime);
+        }
+
+        UIImage[] InitaliseMarkers(int length)
+        {
+            markers = new UIImage[length];
+            for (int i = 0; i < markers.Length; i++)
+            {
+                markers[i] = new UIImage(TerraLeague.instance.GetTexture("UI/BarMarker"));
+                barBackground.Append(markers[i]);
+                markers[i].Top.Set(2, 0);
+            }
+            return markers;
         }
     }
 

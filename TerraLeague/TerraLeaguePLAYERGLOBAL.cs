@@ -1969,7 +1969,8 @@ namespace TerraLeague
         public override void UpdateBiomeVisuals()
         {
             //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
-            player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
+            //if (TerraLeague.DrawBlackMistFog)
+                player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
             base.UpdateBiomeVisuals();
         }
 
