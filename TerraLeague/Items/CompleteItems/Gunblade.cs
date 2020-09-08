@@ -61,7 +61,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Active GetActive()
         {
-            return new LightningBolt(250, 50, 75);
+            return new LightningBolt(250, 50, 30);
         }
 
         public override string GetStatText()
