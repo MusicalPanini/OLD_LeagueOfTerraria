@@ -42,14 +42,12 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-            Console.WriteLine(projectile.extraUpdates = 1);
             target.AddBuff(BuffType<Slowed>(), 120);
             base.OnHitPlayer(target, damage, crit);
         }
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Console.WriteLine(projectile.extraUpdates = 1);
             target.AddBuff(BuffType<Slowed>(), 120);
 
             base.OnHitNPC(target, damage, knockback, false);
