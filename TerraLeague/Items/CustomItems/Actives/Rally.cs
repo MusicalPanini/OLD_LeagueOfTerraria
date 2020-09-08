@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -52,12 +54,12 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         override public void Efx(Player user)
         {
-            //Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.3f), user.Center);
-            //for (int j = 0; j < 18; j++)
-            //{
-            //    int num2 = Dust.NewDust(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(255, 255, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));
-            //    Main.dust[num2].noGravity = true;
-            //}
+            TerraLeague.PlaySoundWithPitch(user.Center, 2, 117, -1f);
+            for (int j = 0; j < 18; j++)
+            {
+                int num2 = Dust.NewDust(user.position, user.width, user.height, 218, 0, -Main.rand.NextFloat(3, 5), 0, new Color(255, 0, 0),Main.rand.NextFloat(2, 3));
+                Main.dust[num2].noGravity = true;
+            }
         }
     }
 }
