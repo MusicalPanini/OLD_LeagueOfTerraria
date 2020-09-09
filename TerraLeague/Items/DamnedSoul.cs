@@ -23,6 +23,7 @@ namespace TerraLeague.Items
             item.height = 16;
             item.uniqueStack = false;
             item.rare = ItemRarityID.Green;
+            item.value = Item.buyPrice(0, 0, 0, 20);
         }
 
         public override void PostUpdate()

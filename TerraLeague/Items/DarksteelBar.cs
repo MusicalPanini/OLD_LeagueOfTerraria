@@ -1,4 +1,5 @@
 ﻿using TerraLeague.Items.Placeable;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -19,7 +20,7 @@ namespace TerraLeague.Items
             item.width = 30;
             item.height = 24;
             item.rare = ItemRarityID.Green;
-            item.value = 20000;
+            item.value = Item.buyPrice(0, 1, 50, 0);
             item.uniqueStack = false;
             item.createTile = TileType<Tiles.DarksteelBarTile>();
             item.useTurn = true;

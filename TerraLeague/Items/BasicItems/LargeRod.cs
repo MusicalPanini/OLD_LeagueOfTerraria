@@ -19,7 +19,7 @@ namespace TerraLeague.Items.BasicItems
         {
             item.width = 32;
             item.height = 32;
-            item.value = 15000;
+            item.value = Item.buyPrice(0, 5, 0, 0);
             item.rare = ItemRarityID.Green;
             item.accessory = true;
             item.material = true;

@@ -22,7 +22,7 @@ namespace TerraLeague.Items.AdvItems
         {
             item.width = 32;
             item.height = 32;
-            item.value = 250000;
+            item.value = Item.buyPrice(0, 25, 0, 0);
             item.rare = ItemRarityID.Yellow;
             item.accessory = true;
         }

@@ -1,5 +1,6 @@
 ﻿using TerraLeague.Items.PetrifiedWood;
 using TerraLeague.Items.Placeable;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -21,7 +22,7 @@ namespace TerraLeague.Items
             item.height = 24;
             item.uniqueStack = false;
             item.rare = ItemRarityID.Blue;
-            item.value = 10000;
+            item.value = Item.buyPrice(0, 0, 15, 0);
             item.createTile = TileType<Tiles.PetriciteBarTile>();
             item.useTurn = true;
             item.autoReuse = true;

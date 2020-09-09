@@ -1,5 +1,6 @@
 ﻿using TerraLeague.Items.Placeable;
 using TerraLeague.Tiles;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -20,7 +21,7 @@ namespace TerraLeague.Items
             item.width = 30;
             item.height = 24;
             item.rare = ItemRarityID.Orange;
-            item.value = 30000;
+            item.value = Item.buyPrice(0, 2, 0, 0);
             item.uniqueStack = false;
             item.createTile = TileType<CelestialBarTile>();
             item.useTurn = true;

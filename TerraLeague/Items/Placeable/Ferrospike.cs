@@ -1,4 +1,5 @@
 ﻿using TerraLeague.Tiles;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -14,7 +15,7 @@ namespace TerraLeague.Items.Placeable
 
         public override void SetDefaults()
         {
-            item.value = 3500;
+            item.value = Item.buyPrice(0, 0, 50, 0);
             item.rare = ItemRarityID.Green;
             item.width = 16;
             item.height = 16;

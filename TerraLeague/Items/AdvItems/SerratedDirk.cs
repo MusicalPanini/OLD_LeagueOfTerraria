@@ -12,7 +12,6 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Serrated Dirk");
             Tooltip.SetDefault("5% increased melee and ranged damage" +
-                "\nAbility cooldown reduced by 10%" +
                 "\nIncreases armor penetration by 5");
         }
 
@@ -20,7 +19,7 @@ namespace TerraLeague.Items.AdvItems
         {
             item.width = 32;
             item.height = 32;
-            item.value = 60000;
+            item.value = Item.buyPrice(0, 15, 0, 0);
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
         }
@@ -29,7 +28,6 @@ namespace TerraLeague.Items.AdvItems
             player.meleeDamage += 0.05f;
             player.rangedDamage += 0.05f;
             player.armorPenetration += 5;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
         }
 
         public override void AddRecipes()

@@ -21,7 +21,7 @@ namespace TerraLeague.Items
             item.width = 26;
             item.height = 16;
             item.rare = ItemRarityID.Green;
-            item.value = 5000;
+            item.value = Item.buyPrice(0, 0, 90, 0);
             item.uniqueStack = false;
         }
 

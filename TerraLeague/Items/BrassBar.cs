@@ -21,7 +21,7 @@ namespace TerraLeague.Items
             item.width = 30;
             item.height = 24;
             item.rare = ItemRarityID.Blue;
-            item.value = 1500;
+            item.value = Item.buyPrice(0, 0, 30, 0);
             item.uniqueStack = false;
             item.createTile = TileType<Tiles.BrassBarTile>();
             item.useTurn = true;

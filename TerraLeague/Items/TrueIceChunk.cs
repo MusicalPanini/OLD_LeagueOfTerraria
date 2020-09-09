@@ -20,7 +20,7 @@ namespace TerraLeague.Items
             item.width = 24;
             item.height = 22;
             item.rare = ItemRarityID.Green;
-            item.value = 1000;
+            item.value = Item.buyPrice(0, 0, 7, 50);
         }
 
         public override void AddRecipes()

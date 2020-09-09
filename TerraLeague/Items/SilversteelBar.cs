@@ -23,7 +23,7 @@ namespace TerraLeague.Items
             item.width = 30;
             item.height = 24;
             item.rare = ItemRarityID.Green;
-            item.value = 20000;
+            item.value = Item.buyPrice(0, 2, 75, 0);
             item.uniqueStack = false;
             item.createTile = TileType<SilversteelBarTile>();
             item.useTurn = true;

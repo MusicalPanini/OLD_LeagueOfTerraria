@@ -22,7 +22,7 @@ namespace TerraLeague.Items
             item.height = 24;
             item.uniqueStack = false;
             item.rare = ItemRarityID.Lime;
-            item.value = 50000;
+            item.value = Item.buyPrice(0, 5, 0, 0);
             item.createTile = TileType<Tiles.VoidBarTile>();
             item.useTurn = true;
             item.autoReuse = true;
