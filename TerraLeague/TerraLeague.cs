@@ -59,7 +59,8 @@ namespace TerraLeague
         internal ToolTipUI tooltipUI;
         internal bool canLog = false;
         internal bool debugMode = false;
-        public static bool disableModResourceBar = false;
+        public static bool UseModResourceBar = false;
+        public static bool UseCustomManaRegen = false;
         internal int SumCurrencyID;
         private UserInterface userInterface1;
         private UserInterface userInterface2;
@@ -351,7 +352,7 @@ namespace TerraLeague
         {
             int resourseBar = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
 
-            if (disableModResourceBar)
+            if (UseModResourceBar)
             {
                 if (resourseBar < 0)
                     resourseBar = 7;

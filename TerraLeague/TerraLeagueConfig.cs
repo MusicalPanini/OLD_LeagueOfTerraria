@@ -40,15 +40,18 @@ namespace TerraLeague
         [Label("How much mana per marker on the mana bar")]
         public int manaBarDividerSpacing;
 
-        //[DefaultValue(true)]
-        //[Label("Toggle the mods custom resource bars")]
-        //public bool useModdedHealthBar;
+        [DefaultValue(true)]
+        [BackgroundColor(51, 150, 183)]
+        [Label("Use mana regen overhaul")]
+        [Tooltip("WARNING: The mod was not built around the vanilla system")]
+        public bool UseCustomManaRegen;
 
         [DefaultValue(true)]
         [BackgroundColor(19, 122, 113)]
         [Slider]
-        [Label("Toggle the custom resource bar")]
-        public bool disableModResourceBar;
+        [Label("Use the custom resource bar")]
+        [Tooltip("WARNING: You wont be able to clearly see shield values with this off")]
+        public bool UseModResourceBar;
 
         [DefaultValue(1)]
         [Range(0, 1)]
@@ -57,12 +60,15 @@ namespace TerraLeague
         [Label("Set the intensity of the Black Mist effect")]
         public float drawMist;
 
+        
+
         public override void OnChanged()
         {
             UI.ResourceBar.healthBarDividerDistance = healthBarDividerSpacing;
             UI.ResourceBar.manaBarDividerDistance = manaBarDividerSpacing;
             TerraLeague.fogIntensity = drawMist;
-            TerraLeague.disableModResourceBar = disableModResourceBar;
+            TerraLeague.UseModResourceBar = UseModResourceBar;
+            TerraLeague.UseCustomManaRegen = UseCustomManaRegen;
 
             base.OnChanged();
         }

@@ -627,7 +627,10 @@ namespace TerraLeague.UI
 
                 case ResourceBarMode.MANA:
                     text.SetText("" + player.statMana + " / " + player.statManaMax2); //Set Mana
-                    regen.SetText(modPlayer.manaRegen + "/s", 0.6f, false);
+                    if (TerraLeague.UseCustomManaRegen)
+                        regen.SetText(modPlayer.manaRegen + "/s", 0.6f, false);
+                    else
+                        regen.SetText("", 0.6f, false);
                     break;
 
                 default:

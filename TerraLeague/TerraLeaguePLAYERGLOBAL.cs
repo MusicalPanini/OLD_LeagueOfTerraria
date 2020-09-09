@@ -3083,7 +3083,7 @@ namespace TerraLeague
                     Main.spriteBatch.Draw
                        (
                            texture,
-                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath && player.lavaMax == player.lavaTime ? 32 : 40) - 21), 64, 16),
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath && player.lavaMax == player.lavaTime && TerraLeague.UseModResourceBar ? 32 : 40) - 21), 64, 16),
                            new Rectangle(0, frame * 16, 64, 16),
                            Color.White,
                            0,
@@ -3559,36 +3559,39 @@ namespace TerraLeague
         /// </summary>
         public void LinearManaRegen()
         {
-            // Nebular Armor Thingys
-            if (player.nebulaLevelMana > 0)
-                player.nebulaManaCounter = 0;
+            if (TerraLeague.UseCustomManaRegen)
+            {
+                // Nebular Armor Thingys
+                if (player.nebulaLevelMana > 0)
+                    player.nebulaManaCounter = 0;
 
 
-            if (player.manaRegenBuff)
-                manaRegen += 5;
-            if (player.HasBuff(BuffID.StarInBottle))
-                player.manaRegenBonus += 25;
+                if (player.manaRegenBuff)
+                    manaRegen += 5;
+                if (player.HasBuff(BuffID.StarInBottle))
+                    player.manaRegenBonus += 25;
 
-            player.manaRegenDelay = 90000;
-            manaRegen += player.statManaMax2 / 75;
-            //player.manaRegen = (int)(player.manaRegen * manaRegenModifer * (1 + (player.manaRegenBonus / 25.0)) * (1 + player.nebulaLevelMana));
+                player.manaRegenDelay = 90000;
+                manaRegen += player.statManaMax2 / 75;
+                //player.manaRegen = (int)(player.manaRegen * manaRegenModifer * (1 + (player.manaRegenBonus / 25.0)) * (1 + player.nebulaLevelMana));
 
-            double trueModifier = manaRegenModifer + (player.manaRegenBonus / 50.0) + player.nebulaLevelMana;
-            manaRegen = (int)(manaRegen * trueModifier);
-            //if (player.manaRegen < 2)
-            //    player.manaRegen = 2;
+                double trueModifier = manaRegenModifer + (player.manaRegenBonus / 50.0) + player.nebulaLevelMana;
+                manaRegen = (int)(manaRegen * trueModifier);
+                //if (player.manaRegen < 2)
+                //    player.manaRegen = 2;
 
-            // Out of combat regen
-            if (CombatTimer >= 240)
-                manaRegen *= 2;
+                // Out of combat regen
+                if (CombatTimer >= 240)
+                    manaRegen *= 2;
 
-            if (manaRegenTimer == 60 && player.statMana < player.statManaMax2)
-                player.statMana += manaRegen;
+                if (manaRegenTimer == 60 && player.statMana < player.statManaMax2)
+                    player.statMana += manaRegen;
 
-            if (manaRegenTimer == 60)
-                manaRegenTimer = 0;
-            else
-                manaRegenTimer++;
+                if (manaRegenTimer == 60)
+                    manaRegenTimer = 0;
+                else
+                    manaRegenTimer++;
+            }
         }
 
         /// <summary>
