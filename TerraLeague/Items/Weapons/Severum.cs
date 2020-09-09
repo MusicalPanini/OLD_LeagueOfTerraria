@@ -179,6 +179,7 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<Severum_Slash>();
             item.UseSound = null;
             item.autoReuse = true;
+            item.noMelee = true;
         }
 
         public override bool CanUseItem(Player player)
