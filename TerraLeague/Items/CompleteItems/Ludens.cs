@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Luden's Echo");
-            Tooltip.SetDefault("9% increased magic damage" +
+            Tooltip.SetDefault("6% increased magic damage" +
                 "\nIncreases maximum mana by 20" +
                 "\nAbility cooldown reduced by 10%");
         }
@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.09f;
+            player.magicDamage += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
             player.statManaMax2 += 20;
 

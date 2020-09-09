@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bloodletter's Veil");
-            Tooltip.SetDefault("6% increased magic and minion damage" +
+            Tooltip.SetDefault("5% increased magic and minion damage" +
                 "\nIncreases maximum life by 20");
         }
 
@@ -37,9 +37,9 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.06f;
+            player.magicDamage += 0.05f;
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05f;
         }
 
         public override void AddRecipes()

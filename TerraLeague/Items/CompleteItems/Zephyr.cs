@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Zephyr");
-            Tooltip.SetDefault("5% increased melee and ranged damage" +
+            Tooltip.SetDefault("4% increased melee and ranged damage" +
                 "\n5% increased melee and ranged attack speed" +
                 "\n10% increased movement speed" +
                 "\nAbility cooldown reduced by 10%" +
@@ -31,8 +31,8 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.meleeDamage += 0.04f;
+            player.rangedDamage += 0.04f;
             player.moveSpeed += 0.1f;
             player.meleeSpeed += 0.05f;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.05;

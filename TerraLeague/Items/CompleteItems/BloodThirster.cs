@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Bloodthirster");
-            Tooltip.SetDefault("7% increased ranged damage" +
+            Tooltip.SetDefault("6% increased ranged damage" +
                 "\n6% ranged life steal" +
                 "\n30% decreased maximum life" +
                 "\n30% increased damage taken");
@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.rangedDamage += 0.07f;
+            player.rangedDamage += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.06;
             player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.3;
             player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.3;

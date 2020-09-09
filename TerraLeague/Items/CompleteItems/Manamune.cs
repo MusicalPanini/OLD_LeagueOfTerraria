@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Manamune");
-            Tooltip.SetDefault("6% increased melee and ranged damage" +
+            Tooltip.SetDefault("5% increased melee and ranged damage" +
                 "\nIncreases maximum mana by 25" +
                 "\nIf MANA CHARGE is fully stacked, this will upgrade into Muramana" +
                 "\nCan only have one AWE item equiped at a time");
@@ -50,8 +50,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.meleeDamage += 0.06f;
-            player.rangedDamage += 0.06f;
+            player.meleeDamage += 0.05f;
+            player.rangedDamage += 0.05f;
             player.statManaMax2 += 25;
             modPlayer.manaCharge = true;
 

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Guardian Angel");
-            Tooltip.SetDefault("10% increased melee and ranged damage" +
+            Tooltip.SetDefault("6% increased melee and ranged damage" +
                 "\nIncreases armor by 4" +
                 "\nNegates fall damage");
         }
@@ -37,8 +37,8 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.noFallDmg = true;
-            player.meleeDamage += 0.1f;
-            player.rangedDamage += 0.1f;
+            player.meleeDamage += 0.06f;
+            player.rangedDamage += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 4;
         }
 

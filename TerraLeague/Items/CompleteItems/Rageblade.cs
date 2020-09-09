@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Guinsoo's Rageblade");
-            Tooltip.SetDefault("6% increased damage" +
+            Tooltip.SetDefault("5% increased damage" +
                 "\n12% increased melee and ranged attack speed");
         }
 
@@ -28,10 +28,10 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.06f;
-            player.rangedDamage += 0.06f;
-            player.magicDamage += 0.06f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
+            player.meleeDamage += 0.05f;
+            player.rangedDamage += 0.05f;
+            player.magicDamage += 0.05f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
             player.meleeSpeed += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.06;
 

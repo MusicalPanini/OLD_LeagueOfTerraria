@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Tiamat");
-            Tooltip.SetDefault("5% increased melee damage" +
+            Tooltip.SetDefault("3% increased melee damage" +
                 "\nIncreases life regeneration by 2");
         }
 
@@ -27,7 +27,7 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.05f;
+            player.meleeDamage += 0.03f;
             player.lifeRegen += 2;
 
             base.UpdateAccessory(player, hideVisual);

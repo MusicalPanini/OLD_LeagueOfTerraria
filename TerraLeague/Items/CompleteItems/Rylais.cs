@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rylai's Crystal Scepter");
-            Tooltip.SetDefault("9% increased magic damage" +
+            Tooltip.SetDefault("5% increased magic damage" +
                 "\nIncreases health by 30");
         }
 
@@ -27,7 +27,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.09f;
+            player.magicDamage += 0.05f;
             player.statLifeMax2 += 30;
         }
 

@@ -12,7 +12,7 @@ namespace TerraLeague.Items.BasicItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Needlessly Large Rod");
-            Tooltip.SetDefault("5% increased magic and minion damage");
+            Tooltip.SetDefault("4% increased magic and minion damage");
         }
 
         public override void SetDefaults()
@@ -27,8 +27,8 @@ namespace TerraLeague.Items.BasicItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
+            player.magicDamage += 0.04f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
         }
 
         public override void AddRecipes()

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Morellonomicon");
-            Tooltip.SetDefault("8% increased magic damage" +
+            Tooltip.SetDefault("5% increased magic damage" +
                 "\nIncreases health by 20");
         }
 
@@ -28,7 +28,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.08f;
+            player.magicDamage += 0.05f;
             player.statLifeMax2 += 20;
 
             base.UpdateAccessory(player, hideVisual);

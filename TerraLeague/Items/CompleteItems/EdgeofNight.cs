@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Edge of Night");
-            Tooltip.SetDefault("6% increased melee damage" +
+            Tooltip.SetDefault("5% increased melee damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases melee armor penetration by 7");
         }
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.06f;
+            player.meleeDamage += 0.05f;
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
         }

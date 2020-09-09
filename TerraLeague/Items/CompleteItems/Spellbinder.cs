@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Spellbinder");
-            Tooltip.SetDefault("6% minion damage" +
+            Tooltip.SetDefault("5% minion damage" +
                 "\n10% increased movement speed");
         }
 
@@ -37,7 +37,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05f;
             player.moveSpeed += 0.1f;
         }
 

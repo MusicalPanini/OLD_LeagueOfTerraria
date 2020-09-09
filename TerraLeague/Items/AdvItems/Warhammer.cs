@@ -11,7 +11,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Caulfield's Warhammer");
-            Tooltip.SetDefault("5% increased melee and ranged damage" +
+            Tooltip.SetDefault("4% increased melee and ranged damage" +
                 "\nAbility cooldown reduced by 10%");
         }
 
@@ -25,8 +25,8 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.meleeDamage += 0.04f;
+            player.rangedDamage += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
         }
 

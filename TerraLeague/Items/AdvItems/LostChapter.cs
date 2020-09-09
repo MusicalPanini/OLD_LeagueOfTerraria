@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lost Chapter");
-            Tooltip.SetDefault("4% increased magic and minion damage" +
+            Tooltip.SetDefault("3% increased magic and minion damage" +
                 "\nIncreases maximum mana by 20");
         }
 
@@ -29,8 +29,8 @@ namespace TerraLeague.Items.AdvItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
+            player.magicDamage += 0.03f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.03;
             player.statManaMax2 += 20;
 
             base.UpdateAccessory(player, hideVisual);

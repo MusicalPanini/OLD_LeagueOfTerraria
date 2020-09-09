@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Rod of Ages");
-            Tooltip.SetDefault("5% increased magic and minion damage" +
+            Tooltip.SetDefault("3% increased magic and minion damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases maximum mana by 20");
         }
@@ -34,8 +34,8 @@ namespace TerraLeague.Items.CompleteItems
             
             player.statLifeMax2 += 20;
             player.statManaMax2 += 20;
-            player.magicDamage += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
+            player.magicDamage += 0.03f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.03;
 
             base.UpdateAccessory(player, hideVisual);
         }
@@ -57,7 +57,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Impendulum(4, 1.5);
+            return new Impendulum(4, 1);
         }
 
         public override Passive GetSecondaryPassive()

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Pox Arcana");
-            Tooltip.SetDefault("6% increased magic and minion damage" +
+            Tooltip.SetDefault("4% increased magic and minion damage" +
                 "\nIncreases mana regeneration by 60%" +
                 "\nAbility cooldown reduced by 10%");
         }
@@ -39,8 +39,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.06f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
+            player.magicDamage += 0.04f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
         }

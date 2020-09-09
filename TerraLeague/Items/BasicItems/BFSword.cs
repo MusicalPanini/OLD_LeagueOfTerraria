@@ -11,7 +11,7 @@ namespace TerraLeague.Items.BasicItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("B.F.Sword");
-            Tooltip.SetDefault("5% increased melee and ranged damage");
+            Tooltip.SetDefault("4% increased melee and ranged damage");
         }
 
         public override void SetDefaults()
@@ -26,8 +26,8 @@ namespace TerraLeague.Items.BasicItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.meleeDamage += 0.04f;
+            player.rangedDamage += 0.04f;
         }
 
         public override void AddRecipes()

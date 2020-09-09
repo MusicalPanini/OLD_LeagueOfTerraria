@@ -11,7 +11,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Vampiric Scepter");
-            Tooltip.SetDefault("4% increased melee and ranged damage" +
+            Tooltip.SetDefault("3% increased melee and ranged damage" +
                 "\n4% melee and ranged life steal" +
                 "\n10% decreased maximum life" +
                 "\n10% increased damage taken");
@@ -30,8 +30,8 @@ namespace TerraLeague.Items.AdvItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.02f;
-            player.rangedDamage += 0.02f;
+            player.meleeDamage += 0.03f;
+            player.rangedDamage += 0.03f;
 
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.04;
             player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.04;

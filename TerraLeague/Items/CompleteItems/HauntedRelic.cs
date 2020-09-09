@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Haunted Relic");
-            Tooltip.SetDefault("5% increased minion damage" +
+            Tooltip.SetDefault("6% increased minion damage" +
                 "\nIncreases health by 20" +
                 "\nIncreases your max number of minions");
         }
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.maxMinions += 1;
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
 
             base.UpdateAccessory(player, hideVisual);
         }

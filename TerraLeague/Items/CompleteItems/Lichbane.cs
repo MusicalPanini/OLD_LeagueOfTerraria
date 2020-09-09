@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Lich Bane");
-            Tooltip.SetDefault("12% increased minion damage" +
+            Tooltip.SetDefault("15% increased minion damage" +
                 "\n7% increased movement speed" +
                 "\nAbility cooldown reduced by 10%" +
                 "\nIncreases maximum mana by 30" +
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.12;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.15;
             player.moveSpeed += 0.07f;
             player.statManaMax2 += 30;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;

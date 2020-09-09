@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Titanic Hydra");
-            Tooltip.SetDefault("10% increased melee damage" +
+            Tooltip.SetDefault("7% increased melee damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases life regeneration by 30%" +
                 "\nCan only have one Hydra item equiped at a time");
@@ -41,7 +41,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.1f;
+            player.meleeDamage += 0.07f;
             player.lifeRegen += 2;
             player.statLifeMax2 += 20;
 

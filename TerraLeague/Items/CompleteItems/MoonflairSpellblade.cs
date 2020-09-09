@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Moonflair Spellblade");
-            Tooltip.SetDefault("6% increased magic and minion damage" +
+            Tooltip.SetDefault("4% increased magic and minion damage" +
                 "\nIncreases armor by 5" +
                 "\nIncreases resist by 4" +
                 "\nImmunity to Slow and Chilled");
@@ -31,8 +31,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.06f;
-            player.magicDamage += 0.06f;
+            player.magicDamage += 0.04f;
+            player.magicDamage += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 5;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.buffImmune[BuffID.Slow] = true;

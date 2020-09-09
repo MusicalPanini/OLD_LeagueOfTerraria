@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ardent Censer");
-            Tooltip.SetDefault("8% increased magic and minion damage" +
+            Tooltip.SetDefault("6% increased magic and minion damage" +
                 "\n8% increased movement speed" +
                 "\nIncreases mana regeneration by 20%" +
                 "\n8% increased healing power" +
@@ -33,8 +33,8 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.08;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.2;
-            player.magicDamage += 0.08f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;
+            player.magicDamage += 0.06f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
             player.moveSpeed += 0.08f;
 
             base.UpdateAccessory(player, hideVisual);

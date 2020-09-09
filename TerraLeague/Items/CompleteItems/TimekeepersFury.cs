@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Timekeeper's Wrath");
-            Tooltip.SetDefault("5% increased magic and minion damage" +
+            Tooltip.SetDefault("3% increased magic and minion damage" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases maximum mana by 20" +
                 "\n[c/007399:TOUCH OF DEATH's magic pen is based on IMPENDULUM]");
@@ -34,8 +34,8 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.statLifeMax2 += 20;
             player.statManaMax2 += 20;
-            player.magicDamage += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.05;
+            player.magicDamage += 0.03f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.03;
 
             base.UpdateAccessory(player, hideVisual);
         }
@@ -45,7 +45,7 @@ namespace TerraLeague.Items.CompleteItems
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<Orb>(), 1);
             recipe.AddIngredient(ItemType<BlastingWand>(), 1);
-            recipe.AddRecipeGroup("TerraLeague:EvilPartGroup", 10);
+            recipe.AddIngredient(ItemType<SapphireCrystal>(), 1);
             recipe.AddIngredient(ItemID.SoulofLight, 6);
             recipe.AddIngredient(ItemID.SoulofNight, 6);
             recipe.AddIngredient(ItemID.SoulofMight, 4);
@@ -56,7 +56,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Impendulum(2, 2);
+            return new Impendulum(2, 1.5);
         }
 
         public override Passive GetSecondaryPassive()

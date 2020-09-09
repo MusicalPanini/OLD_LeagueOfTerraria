@@ -13,7 +13,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Void Staff");
-            Tooltip.SetDefault("10% increased magic damage");
+            Tooltip.SetDefault("15% increased magic damage");
         }
 
         public override void SetDefaults()
@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.1f;
+            player.magicDamage += 0.15f;
         }
 
         public override void AddRecipes()

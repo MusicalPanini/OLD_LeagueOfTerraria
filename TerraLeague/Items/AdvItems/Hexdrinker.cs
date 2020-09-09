@@ -27,9 +27,9 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.07f;
-            player.rangedDamage += 0.07f;
-            player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
+            player.meleeDamage += 0.03f;
+            player.rangedDamage += 0.03f;
+            player.GetModPlayer<PLAYERGLOBAL>().resist += 3;
             base.UpdateAccessory(player, hideVisual);
 
         }

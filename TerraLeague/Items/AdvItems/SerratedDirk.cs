@@ -11,7 +11,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Serrated Dirk");
-            Tooltip.SetDefault("5% increased melee and ranged damage" +
+            Tooltip.SetDefault("3% increased melee and ranged damage" +
                 "\nIncreases armor penetration by 5");
         }
 
@@ -25,8 +25,8 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.05f;
-            player.rangedDamage += 0.05f;
+            player.meleeDamage += 0.03f;
+            player.rangedDamage += 0.03f;
             player.armorPenetration += 5;
         }
 

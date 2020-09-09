@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Banshee's Veil");
-            Tooltip.SetDefault("8% increased magic and minion damage" +
+            Tooltip.SetDefault("6% increased magic and minion damage" +
                 "\nIncreases resist by 4" +
                 "\nAbility cooldown reduced by 10% " +
                 "\nImmunity to Silence and Curse");
@@ -38,8 +38,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.magicDamage += 0.08f;
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;
+            player.magicDamage += 0.06f;
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             

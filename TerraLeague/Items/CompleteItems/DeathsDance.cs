@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Death's Dance");
-            Tooltip.SetDefault("10% increased melee and ranged damage" +
+            Tooltip.SetDefault("7% increased melee and ranged damage" +
                 "\nAbility cooldown reduced by 10%");
         }
 
@@ -29,8 +29,8 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.meleeDamage += 0.1f;
-            player.rangedDamage += 0.1f;
+            player.meleeDamage += 0.07f;
+            player.rangedDamage += 0.07f;
             player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
             base.UpdateAccessory(player, hideVisual);
         }
