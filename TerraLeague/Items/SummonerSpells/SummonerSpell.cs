@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace TerraLeague.Items.SummonerSpells
             {
                 int pos = tooltips.IndexOf(tt);
 
-                string text = "Left or Right click to replace your Left or Right Summoner Spell" +
+                string text = TerraLeague.CreateColorString(TerraLeague.PassiveSubColor, "Left or Right click to replace your Left or Right Summoner Spell") +
                     "\nEffect: "+ GetTooltip() +
                     "\n" + GetCooldown() + " second cooldown";
                 TooltipLine tip = new TooltipLine(TerraLeague.instance, "Tooltip0", text);
