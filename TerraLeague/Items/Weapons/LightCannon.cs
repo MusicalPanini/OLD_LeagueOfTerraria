@@ -93,7 +93,7 @@ namespace TerraLeague.Items.Weapons
         public override string GetDamageTooltip(Player player, AbilityType type)
         {
             if (type == AbilityType.Q)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.RNG) + " range damage" +
+                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.RNG) + " ranged damage" +
                     "\n" + TerraLeague.CreateScalingTooltip(DamageType.NONE, GetAbilityBaseDamage(player, AbilityType.W), 100, true) + " + " + GetScalingTooltip(player, AbilityType.W, DamageType.RNG, true) + " + " + GetScalingTooltip(player, AbilityType.W, DamageType.MAG, true) + " healing";
             else
                 return base.GetDamageTooltip(player, type);
