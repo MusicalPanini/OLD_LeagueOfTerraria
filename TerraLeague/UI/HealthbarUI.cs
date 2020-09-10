@@ -652,7 +652,7 @@ namespace TerraLeague.UI
                     if (orangeLife > 0)
                         tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.OrangeHealthColor, "Life Fruit - " + orangeLife);
                     if (player.statLifeMax2 > 0)
-                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.BonusHealthColor, "Bonus Health - " + (player.statLifeMax2 - player.statLifeMax));
+                        tooltip += "\n" + TerraLeague.CreateColorString(HealthbarUI.BonusHealthColor, "Bonus Health - " + (modPlayer.GetRealHeathWithoutShield(true) - player.statLifeMax));
 
                     TerraLeague.instance.tooltipUI.DrawText(tooltip.Split('\n'));
                 }
