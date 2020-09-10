@@ -648,7 +648,7 @@ namespace TerraLeague.UI
                     "\nMelee Weapons Deal " + (int)(modPlayer.meleeDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.meleeFlatDamage +
                     "\nCrit Chance: +" + (modPlayer.player.meleeCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealMelee * 100) + "%" +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealMelee) +
                     "\nFlat On Hit: " + modPlayer.meleeOnHit +
                     "\nArmor Penetration: " + (modPlayer.meleeArmorPen + modPlayer.player.armorPenetration);
             }
@@ -659,7 +659,7 @@ namespace TerraLeague.UI
                     "\nRanged Weapons Deal " + (int)(modPlayer.rangedDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.rangedFlatDamage +
                     "\nCrit Chance: +" + (modPlayer.player.rangedCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealRange * 100) + "%" +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealRange) +
                     "\nFlat On Hit: " + modPlayer.rangedOnHit +
                     "\nArmor Penetration: " + (modPlayer.rangedArmorPen + modPlayer.player.armorPenetration);
             }
@@ -670,7 +670,7 @@ namespace TerraLeague.UI
                     "\nMagic Weapons Deal " + (int)(modPlayer.magicDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.magicFlatDamage +
                     "\nCrit Chance: +" + (modPlayer.player.magicCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealMagic * 100) + "%" +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealMagic) +
                     "\nFlat On Hit: " + modPlayer.magicOnHit +
                     "\nArmor Penetration: " + (modPlayer.magicArmorPen + modPlayer.player.armorPenetration);
             }
@@ -680,7 +680,7 @@ namespace TerraLeague.UI
                     "\nUsed for Abilities and Items scaling damage. Gain 1.75 per 1% minion damage" +
                     "\nSummoner Weapons Deal " + (int)(modPlayer.minionDamageLastStep * 100) + "% damage." +
                     "\nExtra Damage: +" + modPlayer.minionFlatDamage +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealMinion * 100) + "%" +
+                    "\nLife Steal: " + (int)(modPlayer.lifeStealMinion) +
                     "\nFlat On Hit: " + modPlayer.meleeOnHit +
                     "\nArmor Penetration: " + (modPlayer.minionArmorPen + modPlayer.player.armorPenetration) +
                     "\nMinions: " + (modPlayer.player.maxMinions) +

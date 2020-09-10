@@ -10,7 +10,7 @@ namespace TerraLeague.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Grievous Wounds");
-            Description.SetDefault("Your lifesteal is less effective");
+            Description.SetDefault("You cannot life steal");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;

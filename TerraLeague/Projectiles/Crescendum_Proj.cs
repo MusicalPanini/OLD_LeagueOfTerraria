@@ -109,7 +109,7 @@ namespace TerraLeague.Projectiles
                     }
                 }
             }
-            projectile.rotation += 0.6f * (float)projectile.direction;
+            projectile.rotation += -0.6f;//* (float)projectile.direction;
 
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 91, 0, 0, 0, default(Color), 0.5f);
             dust.noGravity = true;

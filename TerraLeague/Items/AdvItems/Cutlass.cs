@@ -14,9 +14,9 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Bilgewater Cutlass");
             Tooltip.SetDefault("4% increased melee and ranged damage" +
-                "\n4% melee and ranged life steal" +
+                "\n+1 melee and ranged life steal" /*+
                 "\n10% decreased maximum life" +
-                "\n10% increased damage taken");
+                "\n10% increased damage taken"*/);
         }
         
         public override void SetDefaults()
@@ -40,8 +40,8 @@ namespace TerraLeague.Items.AdvItems
         {
             player.meleeDamage += 0.04f;
             player.rangedDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.04;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.04;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;
         }
 
         public override void AddRecipes()

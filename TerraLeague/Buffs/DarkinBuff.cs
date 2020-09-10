@@ -18,7 +18,7 @@ namespace TerraLeague.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 3;
 
             player.wingTimeMax = 120;
             player.wings = 36;

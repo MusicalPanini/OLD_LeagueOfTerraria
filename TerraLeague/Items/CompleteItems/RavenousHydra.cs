@@ -16,9 +16,9 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Ravenous Hydra");
             Tooltip.SetDefault("7% increased melee damage" +
                 "\nIncreases life regeneration by 2" +
-                "\n5% melee life steal" +
-                "\n12% reduced maximum life" +
-                "\n12% increased damage taken" +
+                "\n+1 melee life steal" +
+                //"\n12% reduced maximum life" +
+                //"\n12% increased damage taken" +
                 "\nCan only have one Hydra item equiped at a time");
         }
 
@@ -45,9 +45,9 @@ namespace TerraLeague.Items.CompleteItems
             player.meleeDamage += 0.07f;
             player.lifeRegen += 2;
 
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.05;
-            player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.12;
-            player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.12;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;// 0.05;
+           // player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.12;
+           // player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.12;
 
             base.UpdateAccessory(player, hideVisual);
         }

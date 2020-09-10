@@ -186,10 +186,11 @@ namespace TerraLeague.NPCs
                             "\nResist decreases projectile damage.";
                         break;
                     case 3:
-                        text = "Lifesteal can be very powerful, but it has its drawbacks. In most cases it will reduces your max life and increase the damage you take." +
-                            "\nUpon taking damage, you will be afflicted with 'Grevious Wounds'. This debuff will negate your lifesteal." +
-                            "\nProjectiles that pierce or chase down their target also have their lifesteal reduced." +
-                            "\nYou cannot lifesteal more than " + PLAYERGLOBAL.lifestealMax + " life per attack";
+                        //text = "Lifesteal can be very powerful, but it has its drawbacks. In most cases it will reduces your max life and increase the damage you take." +
+                        //    "\nUpon taking damage, you will be afflicted with 'Grevious Wounds'. This debuff will negate your lifesteal." +
+                        //    "\nProjectiles that pierce or chase down their target also have their lifesteal reduced." +
+                        //    "\nYou cannot lifesteal more than " + PLAYERGLOBAL.lifestealMax + " life per attack";
+                        text = "When you take damage, you will be afflicted with 'Grevious Wounds'. This debuff will negate your life steal.";
                         break;
                     case 4:
                         text = "On Hit Damage is an additional proc of damage that follows a different rule set." +

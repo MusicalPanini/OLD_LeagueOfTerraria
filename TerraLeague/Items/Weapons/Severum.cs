@@ -20,7 +20,7 @@ namespace TerraLeague.Items.Weapons
         {
             return "User 2% Severum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
-                "\nYour attacks lifesteal";
+                "\n+2 melee life steal while attacking";
         }
 
         public override string GetQuote()
@@ -52,7 +52,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                return "Rapidly attack all nearby enemies, lifestealing on hit";
+                return "Rapidly attack all nearby enemies, gaining 2 life per hit";
             }
             else if (type == AbilityType.W)
             {

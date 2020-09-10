@@ -16,9 +16,9 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Mercurial Scimitar");
             Tooltip.SetDefault("5% increased ranged damage" +
                 "\nIncreases resist by 5" +
-                "\n4% ranged life steal" +
+                "\n+1 ranged life steal"/* +
                 "\n10% decreased maximum life" +
-                "\n10% increased damage taken");
+                "\n10% increased damage taken"*/);
         }
 
         public override void SetDefaults()
@@ -32,10 +32,10 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.rangedDamage += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.04;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;//0.04;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
-            player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.1;
-            player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier -= 0.1;
+            //player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.1;
+            //player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier -= 0.1;
         }
 
         public override void AddRecipes()

@@ -58,7 +58,8 @@ namespace TerraLeague.Projectiles
         {
             projectile.ai[1] = 1;
             projectile.penetrate = 2;
-            Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal += 1;
+            Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 2;
+            //Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal += 1;
             //Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileID.VampireHeal, 0, 0, projectile.owner, projectile.owner, 1);
             projectile.friendly = false;
             base.OnHitNPC(target, damage, knockback, crit);

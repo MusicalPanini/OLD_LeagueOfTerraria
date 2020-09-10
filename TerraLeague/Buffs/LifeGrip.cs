@@ -40,10 +40,10 @@ namespace TerraLeague.Buffs
             }
             player.meleeDamage += 0.05f;
             player.rangedDamage += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMagic += 0.05f;
-            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMinion += 0.05f;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealRange += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMagic += 1;
+            player.GetModPlayer<PLAYERGLOBAL>().lifeStealMinion += 1;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
 
         }

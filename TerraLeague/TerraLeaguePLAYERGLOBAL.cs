@@ -1763,14 +1763,21 @@ namespace TerraLeague
 
                 if (cauterizedDamage < 6)
                 {
-                    player.Hurt(ded, cauterizedDamage + (int)(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
+                    player.statLife -= (cauterizedDamage * 2) / 3;
+                    CombatText.NewText(player.Hitbox, Color.DarkRed, (cauterizedDamage * 2) / 3, false, true);
+                    //player.Hurt(ded, cauterizedDamage + (int)(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
                     cauterizedDamage = 0;
                 }
                 else
                 {
-                    player.Hurt(ded, (cauterizedDamage / 3) + (int)(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
+                    player.statLife -= (cauterizedDamage * 2) / 3;
+                    CombatText.NewText(player.Hitbox, Color.DarkRed, (cauterizedDamage * 2) / 3, false, true);
                     cauterizedDamage = (cauterizedDamage * 2) / 3;
+                    //player.Hurt(ded, (cauterizedDamage / 3) + (int)(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), 0, false, true, false, 0);
                 }
+
+                if (GetRealHeathWithoutShield() <= 0)
+                    player.KillMe(ded, 0, 1, false);
             }
 
             // Healing handler
@@ -2244,28 +2251,28 @@ namespace TerraLeague
                 double LifeCharge = 0;
                 if (lifeStealMelee > 0 && proj.melee)
                 {
-                    LifeCharge += lifeStealMelee * (damage - (target.defense * 0.5));
+                    LifeCharge += lifeStealMelee; //* (damage - (target.defense * 0.5));
                 }
                 if (lifeStealRange > 0 && proj.ranged)
                 {
-                    LifeCharge += lifeStealRange * (damage - (target.defense * 0.5));
+                    LifeCharge += lifeStealRange;// * (damage - (target.defense * 0.5));
                 }
                 if (lifeStealMagic > 0 && proj.magic)
                 {
-                    LifeCharge += lifeStealMagic * (damage - (target.defense * 0.5));
+                    LifeCharge += lifeStealMagic;// * (damage - (target.defense * 0.5));
                 }
                 if (lifeStealMinion > 0 && TerraLeague.IsMinionDamage(proj))
                 {
-                    LifeCharge += lifeStealMinion * (damage - (target.defense * 0.5));
+                    LifeCharge += lifeStealMinion;// * (damage - (target.defense * 0.5));
                 }
 
                 // Modify lifesteal
                 if (LifeCharge > 0 && !target.immortal)
                 {
-                    if (ProjectileID.Sets.Homing[proj.type])
-                        LifeCharge /= 3;
-                    if (proj.penetrate != 1)
-                        LifeCharge /= 3;
+                    //if (ProjectileID.Sets.Homing[proj.type])
+                    //    LifeCharge /= 3;
+                    //if (proj.penetrate != 1)
+                    //    LifeCharge /= 3;
                     if (grievousWounds)
                         LifeCharge = 0;
                     lifeStealCharge += LifeCharge;
@@ -2414,7 +2421,7 @@ namespace TerraLeague
             // Lifesteal calculation
             if (lifeStealMelee > 0 && !target.immortal)
             {
-                double LifeCharge = lifeStealMelee * (damage - (target.defense * 0.5));
+                double LifeCharge = lifeStealMelee;// * (damage - (target.defense * 0.5));
 
                 if (grievousWounds)
                     LifeCharge = 0;
@@ -2725,8 +2732,8 @@ namespace TerraLeague
         /// <param name="crit"></param>
         public void OnHitByEnemy(NPC npc, ref int damage, bool crit)
         {
-            if (GetTotalShield() <= 0)
-                player.AddBuff(BuffType<GrievousWounds>(), 120); // 2 seconds
+            //if (GetTotalShield() <= 0)
+                player.AddBuff(BuffType<GrievousWounds>(), 180); // 3 seconds
             CombatTimer = 0;
         }
 

@@ -56,7 +56,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override Passive GetPrimaryPassive()
         {
-            return new Omniheal(4);
+            return new Omniheal(2); // 4
         }
 
         public override Active GetActive()

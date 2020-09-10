@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 88, 0, 0, 0, default(Color), 2.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.1f;
-
+                dust.velocity += projectile.velocity;
                 Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 88, 0, 0, 0, default(Color), 0.75f);
             }
         }

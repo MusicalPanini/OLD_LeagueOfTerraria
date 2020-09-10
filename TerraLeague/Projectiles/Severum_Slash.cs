@@ -34,6 +34,7 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             Player player = Main.player[projectile.owner];
+            Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeStealMelee += 2;
 
             if (player.GetModPlayer<PLAYERGLOBAL>().severumAmmo < 2)
             {
@@ -107,7 +108,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal++;
+            //Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().lifeToHeal++;
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
