@@ -11,6 +11,7 @@ using TerraLeague.Items.BasicItems;
 using TerraLeague.Items.SummonerSpells;
 using TerraLeague.Projectiles;
 using TerraLeague.Tiles;
+using TerraLeague.Walls;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
@@ -31,17 +32,36 @@ namespace TerraLeague
         public static bool TargonOreSpawned = false;
         public static bool ManaOreSpawned = false;
         public static bool VoidOreSpawned = false;
+        public static bool TargonUnlocked = false;
         public static bool CelestialMeteorCanSpawn = false;
         public static int marbleBlocks = 0;
+        public static int targonMarker = 0;
         public int startingFrames = 0;
+
+        public static int TargonCenterX = 0;
+        public static int TargonWidthFromCenter = 0;
 
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
+            //int TerrainIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Rock Layer Caves"));
+            int TerrainIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Mount Caves"));
+            if (TerrainIndex != -1)
+            {
+                tasks.Insert(TerrainIndex + 1, new PassLegacy("MountTargon", GenerateMountTargon));
+            }
+
+            int JungleIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle"));
+            if (TerrainIndex != -1)
+            {
+                tasks.Insert(JungleIndex + 1, new PassLegacy("ConvertTargon", ConvertMountTargon));
+            }
+
             int ShinyIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             if (ShinyIndex != -1)
             {
                 tasks.Insert(ShinyIndex + 1, new PassLegacy("Ferrospike", GenerateFerrospike));
+                tasks.Insert(ShinyIndex + 1, new PassLegacy("TargonGranite", ConvertOreToTargon));
             }
 
             int MarbleIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Marble"));
@@ -247,6 +267,174 @@ namespace TerraLeague
             }
         }
 
+        private void GenerateMountTargon(GenerationProgress progress)
+        {
+            Vector2 leftBottom = Vector2.Zero;
+            Vector2 rightBottom = Vector2.Zero;
+
+            progress.Message = "Reaching the heavens";
+            progress.Value += 0.01f;
+            int xCord = Main.rand.Next(2) == 0 ? Main.rand.Next(600, Main.maxTilesX/3) : Main.rand.Next((Main.maxTilesX * 2) / 3, Main.maxTilesX - 600);
+            int distanceFromGroundToSky = 75; // k
+            int displacementFromTop = 50;
+            for (int i = 0; i < Main.maxTilesY; i++)
+            {
+                if (Main.tile[xCord, i].active())
+                {
+                    distanceFromGroundToSky = i - 20;
+                    break;
+                }
+            }
+
+            int width = Main.maxTilesX / 21; // w
+            float height = (float)Math.Pow(distanceFromGroundToSky, (1d / -width)); // h;
+
+            float baseNoise = 0.3f * (width + height)/2f; // N
+            float steepness = 0.005f * (width + height) / 2f; // s
+
+            int CenterHieght = (int)(Math.Pow(height, (steepness * Math.Abs(0)) - width) + CreateNoise(0, width, baseNoise));
+            int YPeak = CenterHieght + displacementFromTop;
+
+            for (int X = -width * 2 / 3; X < width * 2 / 3; X++)
+            {
+                float modifideNoise = (float)Math.Pow(baseNoise, -Math.Abs(X/(width*3f)) * Main.rand.NextFloat(5, 10) + 0.9); // n
+
+                int mountStart = (int)(-Math.Pow(height, (steepness * Math.Abs(X)) - width) + CreateNoise(X, width, modifideNoise)) + YPeak; // y
+
+                for (int Y = 50; Y < (int)Main.worldSurface; Y++)
+                {
+                    if (Y >= mountStart)
+                    {
+                        Main.tile[xCord + X, Y].type = (ushort)TileID.Dirt;
+                        //Main.tile[xCord + X, Y].wall = (ushort)WallID.StoneSlab;
+                        Main.tile[xCord + X, Y].active(true);
+                        Main.tile[xCord + X, Y].slope(0);
+                    }
+                }
+            }
+
+            for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
+            {
+                if (Main.tile[xCord - width/2, y].active())
+                {
+                    leftBottom = new Vector2(xCord - (width * 0.5f), y);
+                    break;
+                }
+            }
+            for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
+            {
+                if (Main.tile[xCord + width/2, y].active())
+                {
+                    rightBottom = new Vector2(xCord + (width * 0.5f), y);
+                    break;
+                }
+            }
+
+            if (leftBottom != Vector2.Zero && rightBottom != Vector2.Zero)
+            {
+                Vector2 digVelocity = rightBottom - leftBottom; // Vector2.UnitX;
+                digVelocity = digVelocity.SafeNormalize(Vector2.UnitX) * 2;
+                WorldGen.digTunnel(leftBottom.X, leftBottom.Y, digVelocity.X, digVelocity.Y, width, 6);
+
+                digVelocity = leftBottom - rightBottom; // Vector2.UnitX;
+                digVelocity = digVelocity.SafeNormalize(Vector2.UnitX) * 2;
+
+                WorldGen.digTunnel(rightBottom.X, rightBottom.Y, digVelocity.X, digVelocity.Y, width, 6);
+            }
+
+            TargonCenterX = xCord;
+            TargonWidthFromCenter = width;
+        }
+
+        private void ConvertMountTargon(GenerationProgress progress)
+        {
+            progress.Message = "Blessing the earth";
+            progress.Value += 0.01f;
+
+            for (int x = TargonCenterX-TargonWidthFromCenter; x < TargonCenterX + TargonWidthFromCenter; x++)
+            {
+                for (int y = 0; y < (Main.worldSurface * 0.5) + 50; y++)
+                {
+                    Tile tile = Main.tile[x, y];
+
+                    if (y < (Main.worldSurface * 0.35) + 50)
+                    {
+                        if (y < (Main.worldSurface * 0.35))
+                        {
+                            if (tile.active())
+                            {
+                                Main.tile[x, y].type = (ushort)TileType<TargonStone>();
+                                if (Main.tile[x - 1, y].active() && Main.tile[x - 1, y - 1].active() && Main.tile[x, y - 1].active() && Main.tile[x + 1, y - 1].active() && Main.tile[x + 1, y].active() && Main.tile[x + 1, y + 1].active() && Main.tile[x, y + 1].active() && Main.tile[x - 1, y + 1].active())
+                                    Main.tile[x, y].wall = (ushort)WallType<TargonStoneWall>();
+                            }
+                        }
+                        else if (Main.rand.NextFloat() > (y - (Main.worldSurface * 0.35)) / 50f)
+                        {
+                            if (Main.tile[x, y].active())
+                            {
+                                Main.tile[x, y].type = (ushort)TileType<TargonStone>();
+                                if (Main.tile[x - 1, y].active() && Main.tile[x - 1, y - 1].active() && Main.tile[x, y - 1].active() && Main.tile[x + 1, y - 1].active() && Main.tile[x + 1, y].active() && Main.tile[x + 1, y + 1].active() && Main.tile[x, y + 1].active() && Main.tile[x - 1, y + 1].active())
+                                    Main.tile[x, y].wall = (ushort)WallType<TargonStoneWall>();
+                            }
+                        }
+                        else
+                        {
+                            if (Main.tile[x, y].active())
+                            {
+                                Main.tile[x, y].type = TileID.SnowBlock;
+                                if (Main.tile[x - 1, y].active() && Main.tile[x - 1, y - 1].active() && Main.tile[x, y - 1].active() && Main.tile[x + 1, y - 1].active() && Main.tile[x + 1, y].active() && Main.tile[x + 1, y + 1].active() && Main.tile[x, y + 1].active() && Main.tile[x - 1, y + 1].active())
+                                    Main.tile[x, y].wall = WallID.SnowWallUnsafe;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (y < (Main.worldSurface * 0.5))
+                        {
+                            if (Main.tile[x, y].active())
+                            {
+                                Main.tile[x, y].type = TileID.SnowBlock;
+                                if (Main.tile[x - 1, y].active() && Main.tile[x - 1, y - 1].active() && Main.tile[x, y - 1].active() && Main.tile[x + 1, y - 1].active() && Main.tile[x + 1, y].active() && Main.tile[x + 1, y + 1].active() && Main.tile[x, y + 1].active() && Main.tile[x - 1, y + 1].active())
+                                    Main.tile[x, y].wall = WallID.SnowWallUnsafe;
+                            }
+                        }
+                        else if (Main.rand.NextFloat() > (y - (Main.worldSurface * 0.5)) / 50f)
+                        {
+                            if (Main.tile[x, y].active())
+                            {
+                                Main.tile[x, y].type = TileID.SnowBlock;
+                                if (Main.tile[x - 1, y].active() && Main.tile[x - 1, y - 1].active() && Main.tile[x, y - 1].active() && Main.tile[x + 1, y - 1].active() && Main.tile[x + 1, y].active() && Main.tile[x + 1, y + 1].active() && Main.tile[x, y + 1].active() && Main.tile[x - 1, y + 1].active())
+                                    Main.tile[x, y].wall = WallID.SnowWallUnsafe;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ConvertOreToTargon(GenerationProgress progress)
+        {
+            progress.Message = "Blessing the ore";
+            progress.Value += 0.01f;
+
+            for (int x = TargonCenterX - TargonWidthFromCenter; x < TargonCenterX + TargonWidthFromCenter; x++)
+            {
+                for (int y = 0; y < (Main.worldSurface); y++)
+                {
+                    Tile tile = Main.tile[x, y];
+                    if (tile.type == TileID.Silver || tile.type == TileID.Tungsten || tile.type == TileID.Gold || tile.type == TileID.Platinum)
+                    {
+                        Main.tile[x, y].type = (ushort)TileType<TargonGranite>();
+                    }
+                }
+            }
+        }
+
+        float CreateNoise(int x, int width, float noise)
+        {
+            return (float)(Math.Sin(x * (1 - (Math.Abs(x) / (2 * width)))) * (noise - ((noise * Math.Abs(x)) / (width * 2))));
+        }
+
         public override void PostWorldGen()
         {
             // Place some items in Wood Chests
@@ -352,26 +540,36 @@ namespace TerraLeague
         public override TagCompound Save()
         {
             var OreSpawned = new List<string>();
-            if (NPC.downedBoss1) OreSpawned.Add("TargonOreSpawned");
+            if (Main.hardMode) OreSpawned.Add("TargonOreSpawned");
             if (NPC.downedBoss2) OreSpawned.Add("ManaOreSpawned");
             if (NPC.downedBoss3) OreSpawned.Add("VoidOreSpawned");
             if (NPC.downedGolemBoss) OreSpawned.Add("CelestialMeteorCanSpawn");
+            if (NPC.downedBoss1) OreSpawned.Add("TargonUnlockedSpawned");
 
             return new TagCompound {
                 {"OreSpawned", OreSpawned},
-                {"BlackMistEvent", BlackMistEvent}
+                {"BlackMistEvent", BlackMistEvent},
+                {"TargonXCord", TargonCenterX},
+                {"TargonWidth", TargonWidthFromCenter }
             };
         }
 
         public override void Load(TagCompound tag)
         {
+
             var OreSpawned = tag.GetList<string>("OreSpawned");
             TargonOreSpawned = OreSpawned.Contains("TargonOreSpawned");
             ManaOreSpawned = OreSpawned.Contains("ManaOreSpawned");
             VoidOreSpawned = OreSpawned.Contains("VoidOreSpawned");
             CelestialMeteorCanSpawn = OreSpawned.Contains("CelestialMeteorCanSpawn");
+            TargonUnlocked = OreSpawned.Contains("TargonUnlockedSpawned");
 
             BlackMistEvent = tag.GetBool("BlackMistEvent");
+            TargonCenterX = tag.GetInt("TargonXCord");
+            TargonWidthFromCenter = tag.GetInt("TargonWidth");
+
+            if (TargonCenterX != 0)
+                NPC.NewNPC(TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
         }
 
         public override void NetSend(BinaryWriter writer)
@@ -379,6 +577,8 @@ namespace TerraLeague
             var flags = new BitsByte();
             flags[0] = BlackMistEvent;
             writer.Write(flags);
+            writer.Write(TargonCenterX);
+            writer.Write(TargonWidthFromCenter);
             base.NetSend(writer);
         }
 
@@ -386,6 +586,8 @@ namespace TerraLeague
         {
             BitsByte flags = reader.ReadByte();
             BlackMistEvent = flags[0];
+            TargonCenterX = reader.ReadInt32();
+            TargonWidthFromCenter = reader.ReadInt32();
             base.NetReceive(reader);
         }
 
@@ -431,6 +633,25 @@ namespace TerraLeague
                 if (!TargonOreSpawned)
                 {
                     DropTargon();
+                }
+            }
+
+            if (NPC.downedBoss1)
+            {
+                if (!TargonUnlocked)
+                {
+                    if (TargonCenterX != 0)
+                    {
+                        TargonUnlocked = true;
+
+                        if (Main.netMode == NetmodeID.SinglePlayer)
+                            Main.NewText("You have attracted the attention of The Celestials. You can now scale Mount Targon without taking damage", 0, 200, 255);
+                        else if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You have attracted the attention of The Celestials. You can now scale Mount Targon without taking damage"), new Color(0, 200, 255), -1);
+                            NetMessage.SendData(MessageID.WorldData);
+                        }
+                    }
                 }
             }
 
@@ -492,10 +713,10 @@ namespace TerraLeague
                     CelestialMeteorCanSpawn = true;
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
-                        Main.NewText("While the Sun and Moon are one, the Aspects will rain gifts of power", 0, 0, 255);
+                        Main.NewText("While the Sun and Moon are one, The Celestials will rain gifts of power", 0, 200, 255);
                     else if (Main.netMode == NetmodeID.Server)
                     {
-                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("While the Sun and Moon are one, the Aspects will rain gifts of power"), new Color(0, 0, 255), -1);
+                        NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("While the Sun and Moon are one, The Celestials will rain gifts of power"), new Color(0, 200, 255), -1);
                         NetMessage.SendData(MessageID.WorldData);
                     }
                 }
@@ -786,11 +1007,11 @@ namespace TerraLeague
 
             if (Main.netMode == NetmodeID.SinglePlayer)
             {
-                Main.NewText("The Aspects are pleased. A gift has been droped from the heavens", 0, 200, 255); 
+                Main.NewText("The Celestials are pleased. You are now immune to Celesital Frostbite and a gift has been dropped from the heavens", 0, 200, 255); 
             }
             else if (Main.netMode == NetmodeID.Server)
             {
-                NetMessage.BroadcastChatMessage(NetworkText.FromKey("The Aspects are pleased. A gift has been droped from the heavens", new object[0]), new Color(0, 200, 255), -1);
+                NetMessage.BroadcastChatMessage(NetworkText.FromKey("The Celestials are pleased. You are now immune to Celesital Frostbite and a gift has been dropped from the heavens", new object[0]), new Color(0, 200, 255), -1);
                 NetMessage.SendData(MessageID.WorldData);
             }
             if (Main.netMode != NetmodeID.MultiplayerClient)

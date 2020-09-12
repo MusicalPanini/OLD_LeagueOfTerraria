@@ -6,16 +6,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Placeable
 {
-    class TargonGraniteBlock : ModItem
+    class TargonStoneBlock : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Celestial Silicate");
+            DisplayName.SetDefault("Targon Stone");
         }
 
         public override void SetDefaults()
         {
-            item.value = Item.buyPrice(0, 0, 50, 0);
             item.width = 16;
             item.height = 16;
             item.maxStack = 999;
@@ -25,7 +24,7 @@ namespace TerraLeague.Items.Placeable
             item.useTime = 10;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.consumable = true;
-            item.createTile = TileType<TargonGranite>();
+            item.createTile = TileType<TargonStone>();
         }
     }
 }

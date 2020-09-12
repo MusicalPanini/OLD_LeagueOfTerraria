@@ -63,6 +63,7 @@ namespace TerraLeague
         /// Is the player in the Black Mist
         /// </summary>
         internal bool zoneBlackMist = false;
+        internal bool zoneTargon = false;
         /// <summary>
         /// Has the player hit an enemy with current melee swing
         /// </summary>
@@ -472,7 +473,6 @@ namespace TerraLeague
         public double extraSumCDRLastStep = 0;
         public double maxMinionsLastStep = 0;
 
-
         // Summoner Spells
         public SummonerSpell[] sumSpells = new SummonerSpell[2] { GetInstance<GhostRune>(), GetInstance<BarrierRune>() };
         public int[] sumCooldowns = new int[2];
@@ -502,6 +502,9 @@ namespace TerraLeague
         public static int solariMaxCharge = 7200; // 4 minutes
         public bool solarStorm = false;
         public bool voidbornSet = false;
+
+        // Targon Peak Cooldown
+        public int blessingCooldown = 0;
 
         // Buffs
         public bool bioBarrage = false;
@@ -548,6 +551,7 @@ namespace TerraLeague
         public Vector2 hextechEvolutionAngle = Vector2.Zero;
         public bool immolate = false;
         public bool excessiveForce = false;
+        public bool celestialFrostbite = false;
 
 
         // Lifeline Garbage
@@ -733,6 +737,7 @@ namespace TerraLeague
             sunAmulet = false;
             immolate = false;
             excessiveForce = false;
+            celestialFrostbite = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1013,6 +1018,7 @@ namespace TerraLeague
                     {"manaChargeStacks", manaChargeStacks},
                     {"sumSpellOne", sumSpells[0].GetType().Name},
                     {"sumSpellTwo", sumSpells[1].GetType().Name},
+                    {"blessingCooldown", blessingCooldown},
                 };
 
                 
@@ -1027,6 +1033,7 @@ namespace TerraLeague
                 manaChargeStacks = tag.GetInt("manaChargeStacks");
                 initSum1 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellOne"));
                 initSum2 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellTwo"));
+                blessingCooldown = tag.GetInt("blessingCooldown");
 
                 mod.Logger.Debug("Completed Load with Sums " + initSum1 + " and " + initSum2);
             }
@@ -1045,6 +1052,21 @@ namespace TerraLeague
 
         public override void UpdateBiomes()
         {
+            zoneTargon = false;
+
+            if (NPC.CountNPCS(NPCType<TargonSigil>()) != 0)
+            {
+                NPC sigil = Main.npc.FirstOrDefault(x => x.type == NPCType<TargonSigil>());
+                if (sigil != null)
+                {
+                    zoneTargon = sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.3 * 16;
+                    if (sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.4 * 16 && !Main.hardMode)
+                    {
+                        player.AddBuff(BuffType<CelestialFrostbite>(), 2);
+                    }
+                }
+            }
+
             zoneSurfaceMarble = (WORLDGLOBAL.marbleBlocks > 300);
             if (zoneSurfaceMarble)
             {
@@ -1170,18 +1192,21 @@ namespace TerraLeague
         public override void UpdateLifeRegen()
         {
             UpdateStats();
-            if (warmogsHeart)
+            if (player.lifeRegen > 0)
             {
-                if (player.statLifeMax2 >= 600 && player.velocity == Vector2.Zero)
+                if (warmogsHeart)
                 {
-                    player.lifeRegen += 8;
-                    player.lifeRegenTime *= 2;
+                    if (player.statLifeMax2 >= 600 && player.velocity == Vector2.Zero)
+                    {
+                        player.lifeRegen += 8;
+                        player.lifeRegenTime *= 2;
+                    }
+                    else
+                        player.lifeRegen += 3;
                 }
-                else
-                    player.lifeRegen += 3;
+                if (spiritualRestur)
+                    player.lifeRegen = (int)(player.lifeRegen * 1.3);
             }
-            if (spiritualRestur)
-                player.lifeRegen = (int)(player.lifeRegen * 1.3);
 
             base.UpdateLifeRegen();
         }
@@ -1189,6 +1214,14 @@ namespace TerraLeague
         public override void UpdateBadLifeRegen()
         {
             base.UpdateBadLifeRegen();
+            if (celestialFrostbite && !NPC.downedBoss1)
+            {
+                player.lifeRegenTime = 0;
+                if (player.lifeRegen < 0)
+                    player.lifeRegen -= 20;
+                else
+                    player.lifeRegen = -20;
+            }
 
             if (invincible && player.lifeRegen < 0)
             {
@@ -1418,6 +1451,13 @@ namespace TerraLeague
             if (usetime == 0)
             {
                 hasHitMelee = false;
+            }
+
+            if (blessingCooldown > 0)
+                blessingCooldown--;
+            if (blessingCooldown == 1)
+            {
+                Main.NewText("Celestial voices call out to you. Another blessing is ready", 0, 0, 255);
             }
 
             if (sunAmulet)
@@ -1977,7 +2017,8 @@ namespace TerraLeague
         {
             //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
             //if (TerraLeague.DrawBlackMistFog)
-                player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
+            player.ManageSpecialBiomeVisuals("TerraLeague:Targon", zoneTargon, player.Center);
+            player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
             base.UpdateBiomeVisuals();
         }
 

@@ -7,10 +7,8 @@ using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
-    public class TargonGranite : ModTile
+    public class TargonStone : ModTile
     {
-        bool pulse = false;
-        float bLast = 0.3f;
         public override void SetDefaults()
         {
             Main.tileSolid[Type] = true;
@@ -20,34 +18,15 @@ namespace TerraLeague.Tiles
             Main.tileBlendAll[Type] = true;
 
             soundType = SoundID.Tink;
-            dustType = 172;
-            drop = ItemType<TargonGraniteBlock>(); 
+            dustType = 1;
+            drop = ItemType<TargonStoneBlock>(); 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Celsital Silicate");
-            AddMapEntry(new Color(0, 200, 255), name); 
+            AddMapEntry(new Color(172, 154, 138), name); 
             minPick = 100; 
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 0;
-            g = 0;
-            b = bLast;
-
-            if (pulse)
-            {
-                b += 0.000005f;
-            }
-            else
-            {
-                b -= 0.000005f;
-            }
-
-            if (b <= 0.1)
-                pulse = true;
-            else if (b >= 0.2)
-                pulse = false;
-            bLast = b;
         }
     }
 }

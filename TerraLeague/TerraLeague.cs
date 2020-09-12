@@ -260,6 +260,9 @@ namespace TerraLeague
                 Overlays.Scene["TerraLeague:TheBlackMist"] = new SimpleOverlay("Images/Misc/Perlin", new BlackMistShaderData("FilterSandstormBackground").UseColor(0,1,0).UseSecondaryColor(0,0,0).UseImage(GetTexture("Backgrounds/Fog"), 0, null).UseIntensity(5).UseOpacity(1f).UseImageScale(new Vector2(4, 4)), EffectPriority.High, RenderLayers.Landscape);
                 SkyManager.Instance["TerraLeague:TheBlackMist"] = new BlackMistSky();
 
+                Filters.Scene["TerraLeague:Targon"] = new Filter(new TargonShaderData("FilterMiniTower").UseColor(0.0f, 0.3f, 0.8f).UseOpacity(0.7f), EffectPriority.VeryHigh);
+                SkyManager.Instance["TerraLeague:Targon"] = new TargonSky();
+
                 userInterface1 = new UserInterface();
                 statUI = new StatUI();
                 StatUI.visible = 1;
