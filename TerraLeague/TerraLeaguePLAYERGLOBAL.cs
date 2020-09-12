@@ -552,7 +552,8 @@ namespace TerraLeague
         public bool immolate = false;
         public bool excessiveForce = false;
         public bool celestialFrostbite = false;
-
+        public bool chargerBlessing = false;
+        public bool scourgeBlessing = false;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -738,6 +739,8 @@ namespace TerraLeague
             immolate = false;
             excessiveForce = false;
             celestialFrostbite = false;
+            chargerBlessing = false;
+            scourgeBlessing = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -2241,6 +2244,8 @@ namespace TerraLeague
 
                 if (flameHarbinger)
                     target.AddBuff(BuffType<HarbingersInferno>(), 180);
+                if (scourgeBlessing)
+                    target.AddBuff(BuffID.ShadowFlame, 120);
                 if (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects)
                     FlashOfBrillianceEffect(player, damage, target);
 
@@ -2385,6 +2390,8 @@ namespace TerraLeague
                 }
             }
 
+            if (scourgeBlessing)
+                target.AddBuff(BuffID.ShadowFlame, 120);
             if (excessiveForce)
                 meleeModifer += 3;
 

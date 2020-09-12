@@ -12,6 +12,9 @@ namespace TerraLeague.NPCs
 {
     public class TargonSigil : ModNPC
     {
+        int rerolls = 3;
+        int currentBlessing = Main.rand.Next(0, 8);
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Targon's Peak");
@@ -42,6 +45,9 @@ namespace TerraLeague.NPCs
 
         public override void AI()
         {
+            if (Main.dayTime && Main.time == 0)
+                rerolls = 3;
+
             if (Main.rand.Next(20) == 0)
             {
                 Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 261, 0f, 0f, 150, new Color(0, 150, 255), 0.5f);
@@ -82,6 +88,8 @@ namespace TerraLeague.NPCs
 
         public override string GetChat()
         {
+            Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown = 0;
+            rerolls = 3;
             string text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
             if (!NPC.downedBoss1)
             {
@@ -92,7 +100,8 @@ namespace TerraLeague.NPCs
                 text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
                 if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
                 {
-                    return text += "\n\nThe whipsers offer you a blessing.";
+                    return text + "\n\nThe whipsers offer: The " + Lang.GetBuffName(GetBuffID())
+                    + "\n" + Lang.GetBuffDescription(GetBuffID());
                 }
                 else
                 {
@@ -106,67 +115,108 @@ namespace TerraLeague.NPCs
         {
             if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
             {
-                button = "Receive Blessing";
+                if (NPC.downedBoss1)
+                {
+                    button = "Receive Blessing";
+                    button2 = "Reroll Blessing (" + rerolls + " remaining)";
+                }
             }
             else
             {
-                button2 = "Time Remaining: " + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown % 216000 / 3600 + ":" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown % 3600 / 60;
+                string seconds = "" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown % 3600 / 60;
+                seconds = seconds.Length == 1 ? "0" + seconds : seconds;
+                button = "Time Remaining: " + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown / 3600 + ":" + seconds;
             }
         }
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
-            if (firstButton)
+            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
             {
-                shop = false;
-                string text;
-                int buffTime = 60 * 60 * 60; // Frames * seconds * minutes * gameDays
-                switch (Main.rand.Next(8))
+                if (firstButton)
                 {
-                    case 0:
-                        Main.LocalPlayer.AddBuff(BuffType<SunBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Golden Sister";
-                        break;
-                    case 1:
-                        Main.LocalPlayer.AddBuff(BuffType<MoonBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Silver Sister";
-                        break;
-                    case 2:
-                        Main.LocalPlayer.AddBuff(BuffType<StarBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Star Child";
-                        break;
-                    case 3:
-                        Main.LocalPlayer.AddBuff(BuffType<WarBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Warrior";
-                        break;
-                    case 4:
-                        Main.LocalPlayer.AddBuff(BuffType<ProtectorBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Protector";
-                        break;
-                    case 5:
-                        Main.LocalPlayer.AddBuff(BuffType<TwilightBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Trickster";
-                        break;
-                    case 6:
-                        Main.LocalPlayer.AddBuff(BuffType<TravelerBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Traveler";
-                        break;
-                    case 7:
-                        Main.LocalPlayer.AddBuff(BuffType<JudicatorBlessing>(), buffTime);
-                        text = "You gained the Blessing of The Judicator";
-                        break;
-                    default:
-                        text = "You gained nothing... h o w ?";
-                        break;
+                    shop = false;
+                    string text = "You gained the " + Lang.GetBuffName(GetBuffID());
+                    int buffTime = 60 * 60 * 60; // Frames * seconds * minutes * gameDays = 60 MINUTES
+                    Main.LocalPlayer.AddBuff(GetBuffID(), buffTime);
+                    TerraLeague.PlaySoundWithPitch(npc.Center, 2, 29, -1);
+                    Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown = 60 * 60 * 120;
+                    Main.npcChatText = text;
+                    GetRandomBlessing();
                 }
-                TerraLeague.PlaySoundWithPitch(npc.Center, 2, 29, -1);
-                Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown = 60 * 60 * 24 * 7;
-                Main.npcChatText = text;
+                else
+                {
+                    if (rerolls > 0)
+                    {
+                        GetRandomBlessing();
+                        rerolls--;
+                        Main.npcChatText = GetChat();
+                    }
+                    else
+                    {
+                        Main.npcChatText = GetChat() + "\n\nCome back tommorrow for more rerolls";
+                    }
+                }
             }
             else
             {
                 shop = false;
                 Main.npcChatText = GetChat();
+            }
+        }
+
+        int GetBuffID()
+        {
+            switch (currentBlessing)
+            {
+                case 0:
+                    return BuffType<SunBlessing>();
+                case 1:
+                    return BuffType<MoonBlessing>();
+                case 2:
+                    return BuffType<StarBlessing>();
+                case 3:
+                    return BuffType<WarBlessing>();
+                case 4:
+                    return BuffType<ProtectorBlessing>();
+                case 5:
+                    return BuffType<TwilightBlessing>();
+                case 6:
+                    return BuffType<TravelerBlessing>();
+                case 7:
+                    return BuffType<JudicatorBlessing>();
+                case 8:
+                    return BuffType<ChargerBlessing>();
+                case 9:
+                    return BuffType<DestroyerBlessing>();
+                case 10:
+                    return BuffType<GreatBeyondBlessing>();
+                case 11:
+                    return BuffType<ImmortalFireBlessing>();
+                case 12:
+                    return BuffType<MessengerBlessing>();
+                case 13:
+                    return BuffType<ScourgeBlessing>();
+                case 14:
+                    return BuffType<SerpentBlessing>();
+                case 15:
+                    return BuffType<WandererBlessing>();
+                default:
+                    return BuffType<SunBlessing>();
+            }
+        }
+
+        void GetRandomBlessing()
+        {
+            int newBuff = 0;
+            while (true)
+            {
+                newBuff = Main.rand.Next(0, 16);
+                if (newBuff != currentBlessing)
+                {
+                    currentBlessing = newBuff;
+                    break;
+                }
             }
         }
 
