@@ -645,10 +645,14 @@ namespace TerraLeague
                         TargonUnlocked = true;
 
                         if (Main.netMode == NetmodeID.SinglePlayer)
-                            Main.NewText("You have attracted the attention of The Celestials. You can now scale Mount Targon without taking damage", 0, 200, 255);
+                        {
+                            Main.NewText("You have attracted the attention of The Celestials.", 0, 200, 255);
+                            Main.NewText("You can now scale Mount Targon without taking damage!", 0, 200, 255);
+                        }
                         else if (Main.netMode == NetmodeID.Server)
                         {
-                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You have attracted the attention of The Celestials. You can now scale Mount Targon without taking damage"), new Color(0, 200, 255), -1);
+                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You have attracted the attention of The Celestials."), new Color(0, 200, 255), -1);
+                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You can now scale Mount Targon without taking damage!"), new Color(0, 200, 255), -1);
                             NetMessage.SendData(MessageID.WorldData);
                         }
                     }

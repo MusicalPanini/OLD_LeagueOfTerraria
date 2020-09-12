@@ -31,7 +31,8 @@ namespace TerraLeague.Items.CustomItems.Actives
             else
                 scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
-            return TooltipName("FIRE BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Launch yourself towards the cursor, while firing 7 bolts in a cone and 1 backwards dealing ") + baseDamage + " + " + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage")
+            return TooltipName("FIRE BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Launch yourself towards the cursor while firing 7 bolts in a cone and 1 backwards." +
+                "\nThe bolts deal ") + baseDamage + " + " + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage")
                 + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
