@@ -3403,7 +3403,7 @@ namespace TerraLeague
 
 
 
-            if (GetRealHeathWithoutShield() <= 0 && !player.dead && player.active && Main.LocalPlayer.whoAmI == player.whoAmI)
+            if (GetRealHeathWithoutShield() <= 0 && !player.dead && player.active && Main.LocalPlayer.whoAmI == player.whoAmI && GetTotalShield() > 0)
             {
                 var ded = new PlayerDeathReason();
                 ded.SourceCustomReason = "The shield around " + player.name + " couldn't save them";
