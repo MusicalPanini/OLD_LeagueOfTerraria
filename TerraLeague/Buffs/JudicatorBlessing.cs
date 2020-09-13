@@ -9,14 +9,14 @@ namespace TerraLeague.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Blessing of The Judicator");
-            Description.SetDefault("8 armor penetration");
+            Description.SetDefault("10 armor penetration");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = false;
             Main.persistentBuff[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.armorPenetration += 8;
+            player.armorPenetration += 10;
         }
 
         public override void Update(NPC npc, ref int buffIndex)
