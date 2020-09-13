@@ -9,7 +9,7 @@ namespace TerraLeague.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Blessing of The Scourge");
-            Description.SetDefault("You attacks will apply 'Shadowflame'");
+            Description.SetDefault("Your attacks will apply 'Shadowflame'");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = false;
             Main.persistentBuff[Type] = true;
