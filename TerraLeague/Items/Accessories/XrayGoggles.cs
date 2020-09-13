@@ -6,19 +6,19 @@ using Terraria.ModLoader;
 
 namespace TerraLeague.Items.Accessories
 {
-    public class FlashofBrilliance : ModItem
+    public class XrayGoggles : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flash of Brilliance");
-            Tooltip.SetDefault("Periodically when you deal damage, cast 1 - 3 random magic spells that deal 50 magic damage.");
+            DisplayName.SetDefault("X-ray Goggles");
+            Tooltip.SetDefault("Gain vision of Enemies and Traps");
             base.SetStaticDefaults();
         }
 
         public override void SetDefaults()
         {
-            item.width = 32;
-            item.height = 32;
+            item.width = 30;
+            item.height = 24;
             item.rare = ItemRarityID.Orange;
             item.value = Item.buyPrice(0, 18, 0, 0);
             item.accessory = true;
@@ -27,8 +27,8 @@ namespace TerraLeague.Items.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            modPlayer.flashofBrilliance = true;
+            player.dangerSense = true;
+            player.detectCreature = true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using IL.Terraria.Utilities;
 using System;
 using System.Collections.Generic;
+using TerraLeague.Items.Accessories;
 using TerraLeague.Items.Placeable;
 using Terraria;
 using Terraria.ID;
@@ -42,14 +43,7 @@ namespace TerraLeague.Items
         public override void RightClick(Player player)
         {
             bool hasDroppedSomething = false;
-            Main.LocalPlayer.ConsumeItem(ItemType<HextechKey>());
-
-            // Money
-            if (Main.rand.NextFloat() <= 0.5f)
-            {
-                player.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(3, 10));
-                hasDroppedSomething = true;
-            }
+            player.ConsumeItem(ItemType<HextechKey>());
 
 			// Ores
 			if (Main.rand.NextFloat() <= 0.75f)
@@ -130,7 +124,7 @@ namespace TerraLeague.Items
 				}
 				else
 				{
-					List<int> items = new List<int>() { ItemType<Accessories.FlashofBrilliance>(), };
+					List<int> items = new List<int>() { ItemType<FlashofBrilliance>(), ItemType<PulseBoots>(), ItemType<XrayGoggles>(), ItemType<ExtendoGloves>() };
 					player.QuickSpawnItem(items[Main.rand.Next(items.Count)]);
 				}
 				hasDroppedSomething = true;
@@ -138,11 +132,11 @@ namespace TerraLeague.Items
 
 			// Vanity
 			if (!hasDroppedSomething || Main.rand.Next(10) == 0)
-            {
-                if (Main.rand.Next(10) == 0)
-                {
+			{
+				if (Main.rand.Next(10) == 0)
+				{
 					switch (Main.rand.Next(1))
-                    {
+					{
 						case 0:
 							{
 								player.QuickSpawnItem(2856);
@@ -153,8 +147,8 @@ namespace TerraLeague.Items
 							break;
 					}
 				}
-                else
-                {
+				else
+				{
 					switch (Main.rand.Next(19))
 					{
 						case 0:
@@ -284,6 +278,10 @@ namespace TerraLeague.Items
 							}
 					}
 				}
+			}
+			else
+			{
+				player.QuickSpawnItem(ItemID.GoldCoin, Main.rand.Next(2, 6));
 			}
 
             base.RightClick(player);
