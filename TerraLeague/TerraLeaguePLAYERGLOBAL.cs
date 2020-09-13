@@ -1460,7 +1460,7 @@ namespace TerraLeague
                 blessingCooldown--;
             if (blessingCooldown == 1)
             {
-                Main.NewText("Celestial voices call out to you. Another blessing is ready", 0, 0, 255);
+                Main.NewText("Celestial voices call out to you. Another blessing is ready", 0, 200, 255);
             }
 
             if (sunAmulet)
