@@ -88,8 +88,6 @@ namespace TerraLeague.NPCs
 
         public override string GetChat()
         {
-            Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown = 0;
-            rerolls = 3;
             string text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
             if (!NPC.downedBoss1)
             {
