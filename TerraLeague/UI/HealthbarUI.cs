@@ -342,10 +342,6 @@ namespace TerraLeague.UI
             switch (stat)
             {
                 case ResourceBarMode.HP:
-                    float orangeLifeQuotent;
-                    float redLifeQuotent;
-                    float bonusLifeQuotent;
-
                     int markerCount = player.statLifeMax2 / healthBarDividerDistance;
                     int markerEffectiveHealth = healthBarDividerDistance * markerCount;
                     float markerQuotent = markerEffectiveHealth / (player.statLifeMax2 * 1f);
@@ -357,81 +353,64 @@ namespace TerraLeague.UI
                         markers[i].ImageScale = (i >= markerCount ? 0 : 1);
                     }
 
-                    if (player.statLife > modPlayer.GetRealHeathWithoutShield(true))
+                    int bonusLife = modPlayer.GetRealHeathWithoutShield(true) - (int)(player.statLifeMax);  // Max Bonus Life
+                    int orangeLife = player.statLifeMax > 400 ? 5 * (player.statLifeMax - 400) : 0;         // Max Life Fruit Life
+                    int redLife = player.statLifeMax - orangeLife;                                          // Max life Crystal Life
+
+                    int currentBonusLife = bonusLife; 
+                    int currentOrangeLife = orangeLife; 
+                    int currentRedLife = redLife;
+
+                    int missingLife = modPlayer.GetRealHeathWithoutShield(true) - modPlayer.GetRealHeathWithoutShield();
+                    if (bonusLife < missingLife)
                     {
-                        quotient = (float)modPlayer.GetRealHeathWithoutShield() / (float)player.statLife;
+                        missingLife -= bonusLife;
+                        currentBonusLife = 0;
 
-                        int bonusLife = modPlayer.GetRealHeathWithoutShield(true) - (int)(player.statLifeMax * modPlayer.healthModifier);
-                        int orangeLife = player.statLifeMax > 400 ? 5 * (player.statLifeMax - 400) : 0;
-                        int redLife = player.statLifeMax - orangeLife;
-
-                        bonusLifeQuotent = bonusLife / (modPlayer.GetRealHeathWithoutShield(true) * 1f);
-                        orangeLifeQuotent = (int)(orangeLife * modPlayer.healthModifier) / (modPlayer.GetRealHeathWithoutShield(true) * 1f);
-                        redLifeQuotent = (int)(redLife * modPlayer.healthModifier) / (modPlayer.GetRealHeathWithoutShield(true) * 1f);
-
-                        shieldBar.Width.Set((width - 16) * (float)(modPlayer.NormalShield) / (float)player.statLife, 0);
-                        physShieldBar.Width.Set((width - 16) * (float)(modPlayer.PhysicalShield) / (float)player.statLife, 0);
-                        magicShieldBar.Width.Set((width - 16) * (float)(modPlayer.MagicShield) / (float)player.statLife, 0);
-                    }
-                    else
-                    {
-                        quotient = (float)modPlayer.GetRealHeathWithoutShield() / (float)modPlayer.GetRealHeathWithoutShield(true);
-
-                        int bonusLife = modPlayer.GetRealHeathWithoutShield(true) - (int)(player.statLifeMax * modPlayer.healthModifier);
-                        int orangeLife = (int)((player.statLifeMax > 400 ? 5 * (player.statLifeMax - 400) : 0) * modPlayer.healthModifier);
-                        int redLife = (int)(player.statLifeMax * modPlayer.healthModifier) - orangeLife;
-
-                        int missingLife = modPlayer.GetRealHeathWithoutShield(true) - modPlayer.GetRealHeathWithoutShield();
-
-                        if (bonusLife < missingLife)
+                        if (redLife < missingLife)
                         {
-                            missingLife -= bonusLife;
-                            bonusLife = 0;
+                            missingLife -= redLife;
+                            currentRedLife = 0;
 
-                            if (redLife < missingLife)
-                            {
-                                missingLife -= redLife;
-                                redLife = 0;
-
-                                if (orangeLife < missingLife)
-                                    orangeLife = 0;
-                                else
-                                    orangeLife -= missingLife;
-                            }
+                            if (orangeLife < missingLife)
+                                currentOrangeLife = 0;
                             else
-                            {
-                                redLife -= missingLife;
-                            }
+                                currentOrangeLife -= missingLife;
                         }
                         else
                         {
-                            bonusLife -= missingLife;
+                            currentRedLife -= missingLife;
                         }
-                        
-
-                        bonusLifeQuotent = bonusLife / (modPlayer.GetRealHeathWithoutShield() * 1f);
-                        orangeLifeQuotent = orangeLife / (modPlayer.GetRealHeathWithoutShield() * 1f);
-                        redLifeQuotent = redLife / (modPlayer.GetRealHeathWithoutShield() * 1f);
-
-                        shieldBar.Width.Set((width - 16) * (float)(modPlayer.NormalShield) / (float)modPlayer.GetRealHeathWithoutShield(true), 0);
-                        physShieldBar.Width.Set((width - 16) * (float)(modPlayer.PhysicalShield) / (float)modPlayer.GetRealHeathWithoutShield(true), 0);
-                        magicShieldBar.Width.Set((width - 16) * (float)(modPlayer.MagicShield) / (float)modPlayer.GetRealHeathWithoutShield(true), 0);
+                    }
+                    else
+                    {
+                        currentBonusLife -= missingLife;
                     }
 
-                    float nonShieldBarWidth = quotient * (width - 16);
+                    float bonusQuotient = currentBonusLife / (float)player.statLifeMax2;
+                    float orangeQuotient = currentOrangeLife / (float)player.statLifeMax2;
+                    float redQuotient = currentRedLife / (float)player.statLifeMax2;
+                    float normalQuotient = modPlayer.NormalShield / (float)player.statLifeMax2;
+                    float physicalQuotient = modPlayer.PhysicalShield / (float)player.statLifeMax2;
+                    float magicQuotient = modPlayer.MagicShield / (float)player.statLifeMax2;
 
                     lifeFruitBar.Left.Set(8, 0);
-                    lifeFruitBar.Width.Set(nonShieldBarWidth * orangeLifeQuotent, 0f);
+                    lifeFruitBar.Width.Set((width - 16) * orangeQuotient, 0f);
 
                     currentBar.Left.Set(lifeFruitBar.Left.Pixels + lifeFruitBar.Width.Pixels, 0);
-                    currentBar.Width.Set(nonShieldBarWidth * redLifeQuotent, 0f);
+                    currentBar.Width.Set((width - 16) * redQuotient, 0f);
 
                     bonusHealthBar.Left.Set(currentBar.Left.Pixels + currentBar.Width.Pixels, 0);
-                    bonusHealthBar.Width.Set(nonShieldBarWidth * bonusLifeQuotent, 0f);
+                    bonusHealthBar.Width.Set((width - 16) * bonusQuotient, 0f);
 
                     shieldBar.Left.Set(bonusHealthBar.Left.Pixels + bonusHealthBar.Width.Pixels,0);
+                    shieldBar.Width.Set((width - 16) * normalQuotient, 0);
+
                     physShieldBar.Left.Set(shieldBar.Left.Pixels + shieldBar.Width.Pixels, 0);
+                    physShieldBar.Width.Set((width - 16) * physicalQuotient, 0);
+
                     magicShieldBar.Left.Set(physShieldBar.Left.Pixels + physShieldBar.Width.Pixels, 0);
+                    magicShieldBar.Width.Set((width - 16) * magicQuotient, 0);
                     break;
 
                 case ResourceBarMode.MANA:
