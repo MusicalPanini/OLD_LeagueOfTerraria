@@ -384,75 +384,94 @@ namespace TerraLeague.UI
                 {
                     ModItem modItem = Main.LocalPlayer.armor[slotNum + 2].modItem;
 
-                    string[] activeTip;
-                    string[] primPassiveTip;
-                    string[] secPassiveTip;
-                    System.Collections.Generic.List<string> activePassiveTooltips = new System.Collections.Generic.List<string>();
-
-                    for (int i = 3; i < 9; i++)
+                    if (modItem != null)
                     {
-                        if (Main.LocalPlayer.armor[i].type == modItem.item.type)
+                        string[] activeTip;
+                        string[] primPassiveTip;
+                        string[] secPassiveTip;
+                        System.Collections.Generic.List<string> activePassiveTooltips = new System.Collections.Generic.List<string>();
+
+                        for (int i = 3; i < 9; i++)
                         {
-                            modItem = Main.LocalPlayer.armor[i].modItem;
-                            break;
-                        }
-                    }
-
-                    legItem = modItem as LeagueItem;
-
-
-                    if (legItem != null)
-                    {
-                        int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, legItem);
-                        if (slot != -1)
-                        {
-                            if (legItem.GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
+                            if (Main.LocalPlayer.armor[i].type == modItem.item.type)
                             {
-                                activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                for (int i = 0; i < activeTip.Length; i++)
-                                {
-                                    activePassiveTooltips.Add(activeTip[i]);
-                                }
-                            }
-                            if (legItem.GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                            {
-                                primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                for (int i = 0; i < primPassiveTip.Length; i++)
-                                {
-                                    activePassiveTooltips.Add(primPassiveTip[i]);
-                                }
-                            }
-                            if (legItem.GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
-                            {
-                                secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                for (int i = 0; i < secPassiveTip.Length; i++)
-                                {
-                                    activePassiveTooltips.Add(secPassiveTip[i]);
-                                }
+                                modItem = Main.LocalPlayer.armor[i].modItem;
+                                break;
                             }
                         }
+
+                        legItem = modItem as LeagueItem;
+
+
+                        if (legItem != null)
+                        {
+                            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, legItem);
+                            if (slot != -1)
+                            {
+                                if (legItem.GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
+                                {
+                                    activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                    for (int i = 0; i < activeTip.Length; i++)
+                                    {
+                                        activePassiveTooltips.Add(activeTip[i]);
+                                    }
+                                }
+                                if (legItem.GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                                {
+                                    primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                    for (int i = 0; i < primPassiveTip.Length; i++)
+                                    {
+                                        activePassiveTooltips.Add(primPassiveTip[i]);
+                                    }
+                                }
+                                if (legItem.GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
+                                {
+                                    secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                    for (int i = 0; i < secPassiveTip.Length; i++)
+                                    {
+                                        activePassiveTooltips.Add(secPassiveTip[i]);
+                                    }
+                                }
+                            }
+                        }
+
+                        string heading = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.item.type).Value);
+                        var itemsBaseTooltip = Lang.GetTooltip(modItem.item.type);
+
+                        string[] compiledTooltip = new string[ToolTipUI.MaxLines];
+                        compiledTooltip[0] = heading;
+
+                        for (int i = 0; i < itemsBaseTooltip.Lines; i++)
+                        {
+                            if (i + 1 > ToolTipUI.MaxLines)
+                                break;
+                            compiledTooltip[i + 1] = itemsBaseTooltip.GetLine(i);
+                        }
+                        for (int i = 0; i < activePassiveTooltips.Count; i++)
+                        {
+                            if (i + 1 + itemsBaseTooltip.Lines > ToolTipUI.MaxLines)
+                                break;
+                            compiledTooltip[i + 1 + itemsBaseTooltip.Lines] = activePassiveTooltips[i];
+                        }
+
+                        TerraLeague.instance.tooltipUI.DrawText(compiledTooltip);
                     }
-
-                    string heading = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.item.type).Value);
-                    var itemsBaseTooltip = Lang.GetTooltip(modItem.item.type);
-
-                    string[] compiledTooltip = new string[ToolTipUI.MaxLines];
-                    compiledTooltip[0] = heading;
-
-                    for (int i = 0; i < itemsBaseTooltip.Lines; i++)
+                    else
                     {
-                        if (i + 1 > ToolTipUI.MaxLines)
-                            break;
-                        compiledTooltip[i + 1] = itemsBaseTooltip.GetLine(i);
-                    }
-                    for (int i = 0; i < activePassiveTooltips.Count; i++)
-                    {
-                        if (i + 1 + itemsBaseTooltip.Lines > ToolTipUI.MaxLines)
-                            break;
-                        compiledTooltip[i + 1 + itemsBaseTooltip.Lines] = activePassiveTooltips[i];
-                    }
+                        string heading = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(Main.LocalPlayer.armor[slotNum + 2].type).Value);
+                        var itemsBaseTooltip = Lang.GetTooltip(Main.LocalPlayer.armor[slotNum + 2].type);
 
-                    TerraLeague.instance.tooltipUI.DrawText(compiledTooltip);
+                        string[] compiledTooltip = new string[ToolTipUI.MaxLines];
+                        compiledTooltip[0] = heading;
+
+                        for (int i = 0; i < itemsBaseTooltip.Lines; i++)
+                        {
+                            if (i + 1 > ToolTipUI.MaxLines)
+                                break;
+                            compiledTooltip[i + 1] = itemsBaseTooltip.GetLine(i);
+                        }
+                        TerraLeague.instance.tooltipUI.DrawText(compiledTooltip);
+                    }
                 }
             }
             Recalculate();
