@@ -51,5 +51,10 @@ namespace TerraLeague.Projectiles
             Dust dust = Dust.NewDustPerfect(projectile.Center, 226, null, 0, default(Color), 2);
             dust.noGravity = true;
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

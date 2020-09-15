@@ -123,5 +123,10 @@ namespace TerraLeague.Projectiles
                 vector *= 12f / magnitude;
             }
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

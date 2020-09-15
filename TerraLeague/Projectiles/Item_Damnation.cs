@@ -87,5 +87,10 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

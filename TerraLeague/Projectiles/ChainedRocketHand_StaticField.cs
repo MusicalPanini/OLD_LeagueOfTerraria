@@ -107,5 +107,10 @@ namespace TerraLeague.Projectiles
         {
             return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

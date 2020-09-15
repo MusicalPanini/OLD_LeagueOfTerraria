@@ -42,9 +42,20 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             TerraLeague.DustRing(112, projectile, default(Color));
+            TerraLeague.DustBorderRing(256, projectile.Center, 112, default(Color), 2);
             TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 82, -0.7f);
 
             base.Kill(timeLeft);
+        }
+
+        public override bool? CanHitNPC(NPC target)
+        {
+            return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+        }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
         }
     }
 }

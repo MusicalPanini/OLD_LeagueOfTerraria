@@ -154,5 +154,10 @@ namespace TerraLeague.Projectiles
 
             base.Kill(timeLeft);
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

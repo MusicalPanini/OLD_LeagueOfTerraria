@@ -113,5 +113,10 @@ namespace TerraLeague.Projectiles
             else
                 return false;
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

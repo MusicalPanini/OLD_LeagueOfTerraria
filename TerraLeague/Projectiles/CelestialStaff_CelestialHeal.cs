@@ -55,5 +55,10 @@ namespace TerraLeague.Projectiles
             Main.PlaySound(SoundID.Item10, projectile.position);
             return true;
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

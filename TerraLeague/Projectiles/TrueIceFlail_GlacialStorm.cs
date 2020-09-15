@@ -94,5 +94,10 @@ namespace TerraLeague.Projectiles
             projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
             projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

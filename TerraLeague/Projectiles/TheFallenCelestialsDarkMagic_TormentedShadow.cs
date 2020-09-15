@@ -67,5 +67,10 @@ namespace TerraLeague.Projectiles
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

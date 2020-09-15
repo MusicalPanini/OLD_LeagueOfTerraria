@@ -90,5 +90,10 @@ namespace TerraLeague.Projectiles
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

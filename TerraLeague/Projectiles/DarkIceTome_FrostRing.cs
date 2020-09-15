@@ -114,5 +114,10 @@ namespace TerraLeague.Projectiles
             projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
             projectile.timeLeft = 2;
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

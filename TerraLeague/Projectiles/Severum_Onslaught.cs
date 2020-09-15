@@ -79,5 +79,10 @@ namespace TerraLeague.Projectiles
         {
             base.Kill(timeLeft);
         }
+
+        public override bool? CanCutTiles()
+        {
+            return projectile.friendly;
+        }
     }
 }

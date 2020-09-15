@@ -127,5 +127,10 @@ namespace TerraLeague.Projectiles
 
             projectile.Kill();
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

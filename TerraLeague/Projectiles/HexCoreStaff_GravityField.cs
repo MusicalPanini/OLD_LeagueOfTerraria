@@ -85,5 +85,10 @@ namespace TerraLeague.Projectiles
 
             base.ModifyDamageHitbox(ref hitbox);
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

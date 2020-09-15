@@ -86,5 +86,10 @@ namespace TerraLeague.Projectiles
                 framecount2 = 0;
             }
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }

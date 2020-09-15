@@ -72,6 +72,11 @@ namespace TerraLeague.Projectiles
             width = height = 10;
             return true;
         }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
     }
 }
 
