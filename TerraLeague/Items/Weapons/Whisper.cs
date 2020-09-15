@@ -50,7 +50,7 @@ namespace TerraLeague.Items.Weapons
         {
             if (type == AbilityType.Q)
             {
-                return "Launch a bouncing grenade that gains damage for each enemy it kills";
+                return "Launch a bouncing grenade that gains 44% more damage for each enemy it hits";
             }
             else
             {

@@ -11,8 +11,6 @@ namespace TerraLeague.Projectiles
     {
         int bounces = 4;
 
-        float lightIntencity = 0f;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dancing Grenade");
@@ -31,6 +29,7 @@ namespace TerraLeague.Projectiles
             projectile.ignoreWater = false;
             projectile.aiStyle = 0;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            projectile.netImportant = true;
         }
 
         public override void AI()
@@ -39,8 +38,8 @@ namespace TerraLeague.Projectiles
                 projectile.rotation = Main.rand.NextFloat(0, 6.282f);
             projectile.soundDelay = 100;
 
-            Lighting.AddLight(projectile.position, 1f * lightIntencity, 0.5f * lightIntencity, 0.9f * lightIntencity);
-            Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * lightIntencity)), new Color(255,50,255));
+            Lighting.AddLight(projectile.position, 1f * projectile.ai[0], 0.5f * projectile.ai[0], 0.9f * projectile.ai[0]);
+            Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustType<Smoke>(),0,0,(int)(255 - (255 * projectile.ai[0])), new Color(255,50,255));
 
             projectile.rotation += projectile.velocity.X * 0.05f;
 
@@ -58,18 +57,20 @@ namespace TerraLeague.Projectiles
         {
             if (target.statLife <= 0)
             {
-                lightIntencity += 0.3f;
-                projectile.damage = (int)(projectile.damage * 1.5f);
+                projectile.ai[0] += 0.3f;
+                projectile.damage = (int)(projectile.damage * 1.44f);
+                projectile.netUpdate = true;
             }
             base.OnHitPlayer(target, damage, crit);
         }
         
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (target.life <= 0)
+            //if (target.life <= 0)
             {
-                lightIntencity += 0.3f;
-                projectile.damage = (int)(projectile.damage * 1.5f);
+                projectile.ai[0] += 0.3f;
+                projectile.damage = (int)(projectile.damage * 1.44f);
+                projectile.netUpdate = true;
             }
             base.OnHitNPC(target, damage, knockback, crit);
         }
