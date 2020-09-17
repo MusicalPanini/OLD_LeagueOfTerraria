@@ -10,7 +10,6 @@ namespace TerraLeague.Items.Accessories
     {
         public override void SetStaticDefaults()
         {
-            Main.lightPet[item.type] = true;
             DisplayName.SetDefault("Eternal Flame");
             Tooltip.SetDefault("Emit small flames to light your way");
             base.SetStaticDefaults();
