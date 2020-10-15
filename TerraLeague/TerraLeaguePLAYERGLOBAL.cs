@@ -2440,7 +2440,7 @@ namespace TerraLeague
                 for (int i = 0; i < npcs.Count; i++)
                 {
                     NPC npc = Main.npc[npcs[i]];
-                    if (player.CanHit(npc))
+                    if (player.CanHit(npc) && npc.whoAmI != target.whoAmI)
                     {
                         player.ApplyDamageToNPC(npc, cleaveDamage, 0, 0, crit);
                         if (ravenous && npc.type != NPCID.TargetDummy)
