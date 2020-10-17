@@ -63,7 +63,8 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<CelestialStaff_StarcallRejuv>(), 0, 0, projectile.owner);
+            if (!target.immortal)
+                Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<CelestialStaff_StarcallRejuv>(), 0, 0, projectile.owner);
 
             base.OnHitNPC(target, damage, knockback, crit);
         }
