@@ -9,7 +9,7 @@ namespace TerraLeague.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Eternal Flame");
-            Description.SetDefault("You have a cool shield!");
+            Description.SetDefault("Emit etherial flames");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.lightPet[Type] = true;
