@@ -18,7 +18,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "User 2% Severum Ammo" +
+            return "Uses 2% Severum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
                 "\n+2 melee life steal while attacking";
         }
