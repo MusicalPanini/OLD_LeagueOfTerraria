@@ -477,11 +477,11 @@ namespace TerraLeague.NPCs
             }
             if (hemorrhage)
             {
-                npc.lifeRegen -= (int)(4 * HemorrhageStacks + 1);
+                npc.lifeRegen -= (int)(4 * (HemorrhageStacks + 1));
 
-                if (damage < 2)
+                if (damage < (HemorrhageStacks + 1))
                 {
-                    damage = 2;
+                    damage = (HemorrhageStacks + 1);
                 }
             }
             if (harbingersInferno)
