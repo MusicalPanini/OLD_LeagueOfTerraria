@@ -22,6 +22,11 @@ namespace TerraLeague.Items.Weapons
             return "Dead man walkin'";
         }
 
+        //public override string GetWeaponTooltip()
+        //{
+        //    return "Holds 2 shots before needing to reload";
+        //}
+
         public override string GetAbilityName(AbilityType type)
         {
             if (type == AbilityType.Q)
@@ -127,8 +132,8 @@ namespace TerraLeague.Items.Weapons
             item.ranged = true;
             item.width = 50;
             item.height = 24;
-            item.useAnimation = 60;
-            item.useTime = 60;
+            item.useAnimation = 23;
+            item.useTime = 23;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.noMelee = true;
             item.knockBack = 6;
@@ -143,6 +148,10 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            if (modPlayer.DestinyShotsLeft == 0)
+                return false;
             return base.CanUseItem(player);
         }
         
@@ -154,8 +163,20 @@ namespace TerraLeague.Items.Weapons
                 Vector2 perturbedSpeed = new Vector2(speedX, speedY).RotatedByRandom(MathHelper.ToRadians(12));
                 Projectile.NewProjectile(position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockBack, player.whoAmI);
             }
+            SetStatsPostShoot(player);
             return false;
 		}
+
+        public void SetStatsPostShoot(Player player)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            modPlayer.DestinyShotsLeft--;
+            if (modPlayer.DestinyShotsLeft == 0)
+                modPlayer.ReloadTimer = 75;
+            else
+                modPlayer.ReloadTimer = 150;
+        }
 
         public override Vector2? HoldoutOffset()
         {

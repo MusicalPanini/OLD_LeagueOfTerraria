@@ -584,6 +584,7 @@ namespace TerraLeague
 
         // Whisper Shots
         public int WhisperShotsLeft = 4;
+        public int DestinyShotsLeft = 2;
         public int ReloadTimer = 0;
 
         // Echoing Flames cooldowns
@@ -1654,7 +1655,10 @@ namespace TerraLeague
             {
                 ReloadTimer--;
                 if (ReloadTimer == 0)
+                {
                     WhisperShotsLeft = 4;
+                    DestinyShotsLeft = 2;
+                }
             }
 
             #region Echoing Flames Cooldown
@@ -3140,6 +3144,40 @@ namespace TerraLeague
                            texture,
                            new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath && player.lavaMax == player.lavaTime && TerraLeague.UseModResourceBar ? 32 : 40) - 21), 64, 16),
                            new Rectangle(0, frame * 16, 64, 16),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+                }
+            }
+
+            if (player.HeldItem.type == ItemType<BrassShotgun>() && Main.myPlayer == player.whoAmI)
+            {
+                Texture2D texture = null;
+                switch (DestinyShotsLeft)
+                {
+                    case 2:
+                        texture = mod.GetTexture("UI/ShotgunAmmo2");
+                        break;
+                    case 1:
+                        texture = mod.GetTexture("UI/ShotgunAmmo1");
+                        break;
+                    case 0:
+                        texture = mod.GetTexture("UI/ShotgunAmmoNone");
+                        break;
+                    default:
+                        break;
+                }
+
+                if (texture != null)
+                {
+                    Main.spriteBatch.Draw
+                       (
+                           texture,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath && player.lavaMax == player.lavaTime && TerraLeague.UseModResourceBar ? 32 : 40) - 21), 64, 16),
+                           new Rectangle(0, 0, 64, 16),
                            Color.White,
                            0,
                            Vector2.Zero,
