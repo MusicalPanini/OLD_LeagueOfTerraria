@@ -470,9 +470,9 @@ namespace TerraLeague.NPCs
             {
                 npc.lifeRegen -= (int)(2 * (DeadlyVenomStacks + 1));
 
-                if (damage < 2)
+                if (damage < (DeadlyVenomStacks + 1))
                 {
-                    damage = 2;
+                    damage = (DeadlyVenomStacks + 1);
                 }
             }
             if (hemorrhage)
