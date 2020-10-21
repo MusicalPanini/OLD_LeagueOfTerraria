@@ -86,6 +86,14 @@ namespace TerraLeague.Projectiles
             base.ModifyDamageHitbox(ref hitbox);
         }
 
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (projectile.friendly)
+                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+            else
+                return false;
+        }
+
         public override bool? CanCutTiles()
         {
             return false;
