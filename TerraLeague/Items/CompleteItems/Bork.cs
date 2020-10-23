@@ -32,6 +32,12 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 50, 0, 0);
             item.rare = ItemRarityID.Yellow;
             item.accessory = true;
+
+            Active = new Damnation(250, 60);
+            Passives = new Passive[]
+            {
+                 new SoulTaint(2, 20, 50)
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -43,13 +49,6 @@ namespace TerraLeague.Items.CompleteItems
             player.meleeSpeed += 0.12f;
             //player.GetModPlayer<PLAYERGLOBAL>().healthModifier -= 0.12;
             //player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier += 0.12;
-        }
-
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            if (slot >= 3 && slot <= 8)
-                player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot - 3] = (int)(60 * player.GetModPlayer<PLAYERGLOBAL>().Cdr * 60);
-            return true;
         }
 
         public override void AddRecipes()
@@ -64,42 +63,20 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Active GetActive()
-        {
-            return new Damnation(250, 60);
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new SoulTaint(2, 20, 50);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
+            if (Active.currentlyActive)
             {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
-                    return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
-                else
-                    return "";
+                if (Active.cooldownCount > 0)
+                    return (Active.cooldownCount / 60).ToString();
             }
-            else
-                return "";
+            return "";
         }
 
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-            {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
-                    return true;
-                else
-                    return false;
-            }
+            if (Active.cooldownCount > 0 || !Active.currentlyActive)
+                return true;
             else
                 return false;
         }

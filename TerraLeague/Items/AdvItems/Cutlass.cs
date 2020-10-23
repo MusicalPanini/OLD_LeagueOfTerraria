@@ -26,14 +26,8 @@ namespace TerraLeague.Items.AdvItems
             item.value = Item.buyPrice(0, 15, 0, 0);
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
-        }
 
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            if (slot >= 3 && slot <= 8)
-                player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot - 3] = (int)(75 * player.GetModPlayer<PLAYERGLOBAL>().Cdr * 60);
-
-            return true;
+            Active = new Damnation(100, 75);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -56,37 +50,20 @@ namespace TerraLeague.Items.AdvItems
             recipe.AddRecipe();
         }
 
-        public override Active GetActive()
-        {
-            return new Damnation(100, 75);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
+            if (Active.currentlyActive)
             {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
-                    return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
-                else
-                    return "";
+                if (Active.cooldownCount > 0)
+                    return (Active.cooldownCount / 60).ToString();
             }
-            else
-                return "";
+            return "";
         }
 
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-            {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
-                    return true;
-                else
-                    return false;
-            }
+            if (Active.cooldownCount > 0 || !Active.currentlyActive)
+                return true;
             else
                 return false;
         }

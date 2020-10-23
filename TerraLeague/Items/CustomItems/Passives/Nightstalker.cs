@@ -39,10 +39,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (modPlayer.nightStalker)
             {
-                modPlayer.FindAndSetPassiveStat(this, 0);
+                passiveStat = 0;
                 Efx(player, target);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                SendEfx(player, target, modItem);
                 modPlayer.nightStalker = false;
                 player.ClearBuff(BuffType<Buffs.NightStalker>());
             }
@@ -56,10 +55,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (modPlayer.nightStalker && proj.melee)
             {
-                modPlayer.FindAndSetPassiveStat(this, 0);
+                passiveStat = 0;
                 Efx(player, target);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                SendEfx(player, target, modItem);
                 modPlayer.nightStalker = false;
                 player.ClearBuff(BuffType<Buffs.NightStalker>());
             }
@@ -77,11 +75,11 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                 if (!Prox || player.invis)
                 {
-                    AddStat(player, modItem, 100, 2);
+                    AddStat(player, 100, 2);
                 }
             }
 
-            if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 100)
+            if (passiveStat >= 100)
             {
                 if (Main.rand.Next(0, 5) == 0)
                 {
@@ -98,27 +96,21 @@ namespace TerraLeague.Items.CustomItems.Passives
             base.PostPlayerUpdate(player, modItem);
         }
 
-        public void AddStat(Player player, ModItem modItem, double maxStat, double statToAdd)
+        public void AddStat(Player player, float maxStat, float statToAdd)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(player, modItem);
-
-            if (slot != -1)
+            if (passiveStat < maxStat)
             {
-                if (player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot] < maxStat)
-                {
-                    player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot] += statToAdd;
+                passiveStat += statToAdd;
 
-                    if (player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot] >= maxStat)
-                    {
-                        Main.PlaySound(new LegacySoundStyle(3, 54).WithPitchVariance(0.2f));
-                    }
-                }
-                
-
-                if (player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot] > maxStat)
+                if (passiveStat >= maxStat)
                 {
-                    player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot] = maxStat;
+                    Main.PlaySound(new LegacySoundStyle(3, 54).WithPitchVariance(0.2f));
                 }
+            }
+
+            if (passiveStat > maxStat)
+            {
+                passiveStat = maxStat;
             }
         }
 

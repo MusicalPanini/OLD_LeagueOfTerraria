@@ -24,6 +24,11 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 80, 0, 0);
             item.rare = ItemRarityID.Red;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new CriticalEdge(25)
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -50,11 +55,6 @@ namespace TerraLeague.Items.CompleteItems
         public override bool CanEquipAccessory(Player player, int slot)
         {
             return base.CanEquipAccessory(player, slot);
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new CriticalEdge(25);
         }
     }
 }

@@ -12,13 +12,12 @@ namespace TerraLeague.Items.CustomItems.Actives
     {
         int baseDamage;
         int magicMinionScaling;
-        int cooldown;
 
         public FrostBolt(int BaseDamage, int MagicMinionScaling, int Cooldown)
         {
             baseDamage = BaseDamage;
             magicMinionScaling = MagicMinionScaling;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -32,12 +31,12 @@ namespace TerraLeague.Items.CustomItems.Actives
                 scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
             return TooltipName("FROST BOLT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Fire 10 frost projectiles in a cone that deal ") + baseDamage + " + " + scaleText + TerraLeague.CreateColorString(ActiveSecondaryColor, " magic damage and apply 'Slowed'")
-                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with either MAG or SUM");
+                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with either MAG or SUM");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 Vector2 position = player.Center;
@@ -58,13 +57,12 @@ namespace TerraLeague.Items.CustomItems.Actives
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
 
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
             }
         }
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

@@ -803,14 +803,14 @@ namespace TerraLeague
         }
 
 
-        public void SendPassiveEfx(int toWho, int fromWho, int user, int itemID, bool secondary)
+        public void SendPassiveEfx(int toWho, int fromWho, int user, int itemID, int passiveArrayPosition)
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
                 ModPacket packet = GetPacket(passive, fromWho);
                 packet.Write(user);
                 packet.Write(itemID);
-                packet.Write(secondary);
+                packet.Write(passiveArrayPosition);
                 packet.Send(toWho, fromWho);
                 TerraLeague.Log("[DEBUG] - Sending Passive Efx", Color.LightSlateGray);
             }
@@ -821,33 +821,36 @@ namespace TerraLeague
 
             int user = reader.ReadInt32();
             int itemID = reader.ReadInt32();
-            bool secondary = reader.ReadBoolean();
+            int passiveArrayPosition = reader.ReadInt32();
 
             if (Main.netMode == NetmodeID.Server)
             {
-                SendPassiveEfx(-1, fromWho, user, itemID, secondary);
+                SendPassiveEfx(-1, fromWho, user, itemID, passiveArrayPosition);
             }
             else
             {
                 LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
                 {
-                    if (secondary)
-                        legItem.GetSecondaryPassive().Efx(Main.player[user]);
-                    else
-                        legItem.GetPrimaryPassive().Efx(Main.player[user]);
+                    if (legItem.Passives != null && passiveArrayPosition >= 0)
+                    {
+                        if (passiveArrayPosition < legItem.Passives.Length)
+                        {
+                            legItem.Passives[passiveArrayPosition].Efx(Main.player[user]);
+                        }
+                    }
                 }
             }
         }
 
-        public void SendPassiveEfx(int toWho, int fromWho, int user, int itemID, bool secondary, int npc)
+        public void SendPassiveEfx(int toWho, int fromWho, int user, int itemID, int passiveArrayPosition, int npc)
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
                 ModPacket packet = GetPacket(targetpassive, fromWho);
                 packet.Write(user);
                 packet.Write(itemID);
-                packet.Write(secondary);
+                packet.Write(passiveArrayPosition);
                 packet.Write(npc);
                 packet.Send(toWho, fromWho);
                 TerraLeague.Log("[DEBUG] - Sending Passive Efx", Color.LightSlateGray);
@@ -859,22 +862,25 @@ namespace TerraLeague
 
             int user = reader.ReadInt32();
             int itemID = reader.ReadInt32();
-            bool secondary = reader.ReadBoolean();
+            int passiveArrayPosition = reader.ReadInt32();
             int npc = reader.ReadInt32();
 
             if (Main.netMode == NetmodeID.Server)
             {
-                SendPassiveEfx(-1, fromWho, user, itemID, secondary, npc);
+                SendPassiveEfx(-1, fromWho, user, itemID, passiveArrayPosition, npc);
             }
             else
             {
                 LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
                 {
-                    if (secondary)
-                        legItem.GetSecondaryPassive().Efx(Main.player[user], Main.npc[npc]);
-                    else
-                        legItem.GetPrimaryPassive().Efx(Main.player[user], Main.npc[npc]);
+                    if (legItem.Passives != null && passiveArrayPosition >= 0)
+                    {
+                        if (passiveArrayPosition < legItem.Passives.Length)
+                        {
+                            legItem.Passives[passiveArrayPosition].Efx(Main.player[user], Main.npc[npc]);
+                        }
+                    }
                 }
             }
         }
@@ -904,7 +910,7 @@ namespace TerraLeague
             }
             else
             {
-                Cleave.Efx(user, type);
+                Cleave.Efx(user, (CleaveType)type);
             }
         }
     }
@@ -956,7 +962,7 @@ namespace TerraLeague
             {
                 LeagueItem legItem = GetModItem(itemID) as LeagueItem;
                 if (legItem != null)
-                    legItem.GetActive().Efx(Main.player[user]);
+                    legItem.Active.Efx(Main.player[user]);
             }
         }
     }

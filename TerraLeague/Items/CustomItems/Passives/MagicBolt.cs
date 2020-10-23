@@ -11,13 +11,12 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         int extraDamage;
         int magicMinionScaling;
-        int cooldown;
 
         public MagicBolt(int Damage, int MagicMinionScaling, int Cooldown)
         {
             extraDamage = Damage;
             magicMinionScaling = MagicMinionScaling;
-            cooldown = Cooldown;
+            passiveCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, ModItem modItem)
@@ -31,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 scaleText = TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, magicMinionScaling);
 
             return TooltipName("MAGIC BOLT") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your next magic or minion attack will deal ") + extraDamage + " + " + scaleText + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra damage") +
-                "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown. Damage scales with the highest of either MAG or SUM");
+                "\n" + TerraLeague.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown. Damage scales with the highest of either MAG or SUM");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -43,13 +42,12 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] <= 0 && (proj.magic || TerraLeague.IsMinionDamage(proj)))
+            if (cooldownCount <= 0 && (proj.magic || TerraLeague.IsMinionDamage(proj)))
             {
                 damage += extraDamage + (int)(Math.Max(modPlayer.SUM, modPlayer.MAG) * magicMinionScaling / 100d);
                 Efx(player, target);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
-                modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = (int)(cooldown * modPlayer.Cdr * 60);
+                SendEfx(player, target, modItem);
+                SetCooldown(player);
             }
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
@@ -57,7 +55,6 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void PostPlayerUpdate(Player player, ModItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

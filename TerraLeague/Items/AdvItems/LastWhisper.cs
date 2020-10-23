@@ -22,6 +22,11 @@ namespace TerraLeague.Items.AdvItems
             item.value = Item.buyPrice(0, 10, 0, 0);
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new CustomItems.Passives.LastWhisper(15, true)
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -46,11 +51,6 @@ namespace TerraLeague.Items.AdvItems
             recipe2.AddTile(TileID.Anvils);
             recipe2.SetResult(this);
             recipe2.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new CustomItems.Passives.LastWhisper(15, true);
         }
     }
 }

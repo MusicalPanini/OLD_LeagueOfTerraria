@@ -9,13 +9,12 @@ namespace TerraLeague.Items.CustomItems.Actives
     public class Stasis : Active
     {
         int duration;
-        int cooldown;
         bool stopWatch;
 
         public Stasis(int Duration, int Cooldown, bool StopWatch = false)
         {
             duration = Duration;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
             stopWatch = StopWatch;
         }
 
@@ -30,7 +29,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             else
             {
                 return TooltipName("STASIS") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Render yourself frozen and invulnerable for " + duration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
             }
         }
 
@@ -38,7 +37,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modItem.GetStatOnPlayer(player) <= 0 && !stopWatch || stopWatch && modPlayer.stopWatchActive)
+            if (cooldownCount <= 0 && !stopWatch || stopWatch && modPlayer.stopWatchActive)
             {
                 if (stopWatch)
                 {
@@ -46,7 +45,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 }
                 else
                 {
-                    modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                    SetCooldown(player);
                 }
 
                 player.AddBuff(BuffType<Buffs.Stasis>(), 120);
@@ -59,9 +58,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            if (!stopWatch)
-                AddStat(player, modItem, cooldown * 60, -1, true);
-
             base.PostPlayerUpdate(player, modItem);
         }
 

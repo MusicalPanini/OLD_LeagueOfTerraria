@@ -25,6 +25,12 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 80, 0, 0);
             item.rare = ItemRarityID.Red;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new Crush(),
+                new Rage(5)
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -44,16 +50,6 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new Crush();
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new Rage(5);
         }
     }
 }

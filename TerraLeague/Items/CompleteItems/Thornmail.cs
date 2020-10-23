@@ -26,6 +26,12 @@ namespace TerraLeague.Items.CompleteItems
             item.rare = ItemRarityID.LightPurple;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new Thorns(),
+                new ColdSteel(2, 350)
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -46,16 +52,6 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new Thorns();
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new ColdSteel(2, 350);
         }
     }
 }

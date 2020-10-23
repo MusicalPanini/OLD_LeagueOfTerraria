@@ -40,10 +40,10 @@ namespace TerraLeague.Items.CustomItems.Passives
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
                 Efx(player);
+                SendEfx(player, modItem);
+
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
-
                     var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, effectRadius, player.whoAmI, player.team);
 
                     for (int i = 0; i < players.Count; i++)

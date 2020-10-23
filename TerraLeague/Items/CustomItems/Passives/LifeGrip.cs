@@ -7,6 +7,11 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class LifeGrip : Passive
     {
+        public LifeGrip()
+        {
+            deactivateIfNotUnique = false;
+        }
+
         public override string Tooltip(Player player, ModItem modItem)
         {
             return TerraLeague.CreateColorString(PassiveSecondaryColor, "Triggering LIFELINE grants LIFEGRIP") + "\n" + TooltipName("LAST WHISPER") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Grants 5% life steal, melee and ranged damage, and 5 resist");

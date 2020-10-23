@@ -30,7 +30,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             if (proj.magic || TerraLeague.IsMinionDamage(proj))
             {
-                AddStat(player, modItem, BloodPoolMaxStack, damage * 0.1);
+                AddStat(player, BloodPoolMaxStack, damage * 0.1f);
             }
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);

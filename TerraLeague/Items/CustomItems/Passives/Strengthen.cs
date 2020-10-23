@@ -25,18 +25,14 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void UpdateAccessory(Player player, ModItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            player.statLifeMax2 += (int)modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)];
+            player.statLifeMax2 += (int)passiveStat;
 
             base.UpdateAccessory(player, modItem);
         }
 
         public override void OnKilledNPC(NPC npc, int damage, bool crit, Player player, ModItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            AddStat(player, modItem, maxStacks, lifeperStack);
+            AddStat(player, maxStacks, lifeperStack);
 
             base.OnKilledNPC(npc, damage, crit, player, modItem);
         }
@@ -45,7 +41,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;
+            passiveStat = 0;
 
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, modItem);
         }

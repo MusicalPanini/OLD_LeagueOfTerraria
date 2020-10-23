@@ -42,14 +42,13 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 100 && proj.magic)
+            if (passiveStat >= 100 && proj.magic)
             {
                 int bonusDamage = baseDamage + (int)(modPlayer.MAG * magicScaling / 100d);
                 damage += bonusDamage;
 
                 Efx(player, target);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                SendEfx(player, target, modItem);
 
                 for (int i = 0; i < 8; i++)
                 {
@@ -66,13 +65,13 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            double stat;
+            float stat;
             if (player.velocity.X < 0)
-                stat = -player.velocity.X * 0.05;
+                stat = -player.velocity.X * 0.05f;
             else
-                stat = player.velocity.X * 0.05;
+                stat = player.velocity.X * 0.05f;
 
-            AddStat(player, modItem, 100, stat);
+            AddStat(player, 100, stat);
 
             if (modPlayer.echo)
             {

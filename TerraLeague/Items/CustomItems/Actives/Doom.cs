@@ -9,29 +9,24 @@ namespace TerraLeague.Items.CustomItems.Actives
     {
         int percentMaxLife;
         int damageCap;
-        int cooldown;
 
         public Doom(int PercentMaxLife, int DamageCap, int Cooldown)
         {
             percentMaxLife = PercentMaxLife;
             damageCap = DamageCap;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
             return TooltipName("DISEASE HARVEST") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Target an enemy and deal " + percentMaxLife + "% of their max life as magic damage to it and all near by enemies (Max: " + damageCap + ")" +
                 "\nAll hit enemies will take 20% more magic damage for 4 seconds")
-                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                + "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 int npc = TerraLeague.NPCMouseIsHovering();
                 if (npc != -1)
@@ -40,14 +35,14 @@ namespace TerraLeague.Items.CustomItems.Actives
                     if (damage > damageCap)
                         damage = damageCap;
                     Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Item_DoomBomb>(), damage, 0, player.whoAmI, npc);
-                    modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                    SetCooldown(player);
+                    //modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
                 }
             }
         }
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
     }

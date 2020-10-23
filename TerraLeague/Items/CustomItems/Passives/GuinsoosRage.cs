@@ -23,8 +23,8 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.meleeSpeed += (float)(meleeRangedAttackSpeed * 0.01 * modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)]);
-            modPlayer.rangedAttackSpeed += meleeRangedAttackSpeed * 0.01 * modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)];
+            player.meleeSpeed += (float)(meleeRangedAttackSpeed * 0.01 * passiveStat);
+            modPlayer.rangedAttackSpeed += meleeRangedAttackSpeed * 0.01 * passiveStat;
 
             if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 6)
             {
@@ -41,19 +41,17 @@ namespace TerraLeague.Items.CustomItems.Passives
             if (modPlayer.CombatTimer >= 120)
             {
                 modPlayer.rageTimer = 0;
-                modPlayer.FindAndSetPassiveStat(this, 0);
+                passiveStat = 0;
             }
-            if (modPlayer.CombatTimer < 120 && modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] < 6)
+            if (modPlayer.CombatTimer < 120 && passiveStat < 6)
             {
                 modPlayer.rageTimer++;
                 if (modPlayer.rageTimer >= 60)
                 {
                     modPlayer.rageTimer = 0;
-                    AddStat(player, modItem, 10, 1);
+                    AddStat(player, 10, 1);
                 }
             }
-
-            
 
             base.PostPlayerUpdate(player, modItem);
         }

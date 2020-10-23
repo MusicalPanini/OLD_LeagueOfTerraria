@@ -49,15 +49,13 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (modPlayer.summonedBlade)
                 {
                     Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
+                    SendEfx(player, target, modItem);
                     player.ClearBuff(BuffType<SpellBlade>());
                 }
                 else
                 {
                     Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
+                    SendEfx(player, target, modItem);
                     player.ClearBuff(BuffType<SpellBlade>());
                 }
                 if (modPlayer.icyZone)
@@ -78,8 +76,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                     target.AddBuff(BuffType<Slowed>(), 300);
 
                     Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    SendEfx(player, target, modItem);
                 }
             }
 

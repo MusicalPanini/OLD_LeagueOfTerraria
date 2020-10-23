@@ -26,6 +26,11 @@ namespace TerraLeague.Items.AdvItems
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new Strengthen(20, 1)
+            };
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -52,17 +57,10 @@ namespace TerraLeague.Items.AdvItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Strengthen(20, 1);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString();
+            if (Passives[0].currentlyActive)
+                return ((int)Passives[0].passiveStat).ToString();
             else
                 return "";
         }

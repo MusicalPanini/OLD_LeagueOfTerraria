@@ -31,25 +31,21 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.magicDamage += (float)magicPerStack * (int)modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] * 0.01f;
-            modPlayer.armor += (int)(armorPerStack * (int)modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)]);
+            player.magicDamage += (float)magicPerStack * passiveStat * 0.01f;
+            modPlayer.armor += (int)(armorPerStack * (int)passiveStat);
             base.UpdateAccessory(player, modItem);
         }
 
         public override void OnKilledNPC(NPC npc, int damage, bool crit, Player player, ModItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            AddStat(player, modItem, maxStacks, 1);
+            AddStat(player, maxStacks, 1);
 
             base.OnKilledNPC(npc, damage, crit, player, modItem);
         }
 
         public override int PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, Player player, ModItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;
+            passiveStat = 0;
 
             return base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, modItem);
         }

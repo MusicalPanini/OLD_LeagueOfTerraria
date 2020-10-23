@@ -43,8 +43,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, (weaker ? BuffType<Buffs.WeakSunfire>() : BuffType<Buffs.Sunfire>()), 240, true, true);
 
                 Efx(player);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                SendEfx(player, modItem);
             }
         }
 
@@ -61,11 +60,6 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 6, Color.White, 3);
             base.Efx(user);
-        }
-
-        public override void Efx(Player user, NPC effectedNPC)
-        {
-            base.Efx(user, effectedNPC);
         }
     }
 }

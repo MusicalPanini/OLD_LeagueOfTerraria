@@ -22,7 +22,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = modPlayer.cauterizedDamage;
+            passiveStat = modPlayer.cauterizedDamage;
 
             base.UpdateAccessory(player, modItem);
         }

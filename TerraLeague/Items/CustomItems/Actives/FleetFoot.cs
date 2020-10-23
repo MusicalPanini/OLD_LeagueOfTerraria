@@ -10,13 +10,12 @@ namespace TerraLeague.Items.CustomItems.Actives
     {
         int effectRadius = 500;
         int effectDuration;
-        int cooldown;
 
         public FleetFoot(int EffectRadius, int EffectDuration, int Cooldown)
         {
             effectRadius = EffectRadius;
             effectDuration = EffectDuration;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -24,17 +23,17 @@ namespace TerraLeague.Items.CustomItems.Actives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             return TooltipName("FLEET FOOT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give all nearby allies a speed boost for " + effectDuration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
                 Efx(player);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 if (player.whoAmI == Main.myPlayer)
                 {
@@ -59,7 +58,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

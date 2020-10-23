@@ -28,6 +28,11 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 30, 0, 0);
             item.rare = ItemRarityID.LightRed;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new Disruption()
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -52,11 +57,6 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new Disruption();
         }
     }
 }

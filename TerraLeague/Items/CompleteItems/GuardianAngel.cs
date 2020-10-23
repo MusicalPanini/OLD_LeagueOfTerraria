@@ -26,12 +26,11 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 50, 0, 0);
             item.rare = ItemRarityID.Lime;
             item.accessory = true;
-        }
-        public override bool CanEquipAccessory(Player player, int slot)
-        {
-            if (slot >= 3 && slot <= 8)
-                player.GetModPlayer<PLAYERGLOBAL>().accessoryStat[slot - 3] = (int)(240 * player.GetModPlayer<PLAYERGLOBAL>().Cdr * 60);
-            return true;
+
+            Passives = new Passive[]
+            {
+                new AngelsBlessing(240)
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -56,37 +55,20 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new AngelsBlessing(240);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
+            if (Passives[0].currentlyActive)
             {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                    return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
-                else
-                    return "";
+                if (Passives[0].cooldownCount > 0)
+                    return (Passives[0].cooldownCount / 60).ToString();
             }
-            else
-                return "";
+            return "";
         }
 
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-            {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                    return true;
-                else
-                    return false;
-            }
+            if (Passives[0].cooldownCount > 0 || !Passives[0].currentlyActive)
+                return true;
             else
                 return false;
         }

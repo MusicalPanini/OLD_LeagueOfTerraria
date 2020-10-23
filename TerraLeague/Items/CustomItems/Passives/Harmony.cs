@@ -43,10 +43,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                     if (legItem != null)
                     {
-                        if (legItem.GetPrimaryPassive() != null)
-                            hasDiss = legItem.GetPrimaryPassive().GetType().Name == "Dissonance";
-                        if (legItem.GetSecondaryPassive() != null)
-                            hasDiss = legItem.GetSecondaryPassive().GetType().Name == "Dissonance";
+                        for (int j = 0; j < legItem.Passives.Length; j++)
+                        {
+                            hasDiss = legItem.Passives[j].GetType().Name == "Dissonance";
+                        }
 
                         if (!hasDiss)
                         {

@@ -23,20 +23,20 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (modPlayer.CombatTimer >= 240)
             {
-                modPlayer.madnessTimer = 0;
-                modPlayer.FindAndSetPassiveStat(this, 0);
+                cooldownCount = 0;
+                passiveStat = 0;
             }
-            if (modPlayer.CombatTimer < 240 && modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] < 10)
+            if (modPlayer.CombatTimer < 240 && passiveStat < 10)
             {
-                modPlayer.madnessTimer++;
-                if (modPlayer.madnessTimer >= 60)
+                cooldownCount++;
+                if (cooldownCount >= 60)
                 {
-                    modPlayer.madnessTimer = 0;
-                    AddStat(player, modItem, 10, 1);
+                    cooldownCount = 0;
+                    AddStat(player, 10, 1);
                 }
             }
 
-            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += minionDamagePerStack * 0.01 * modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)];
+            player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += minionDamagePerStack * 0.01 * passiveStat;
 
             base.UpdateAccessory(player, modItem);
         }

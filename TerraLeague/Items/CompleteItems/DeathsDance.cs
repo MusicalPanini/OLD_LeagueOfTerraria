@@ -25,6 +25,12 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 50, 0, 0);
             item.rare = ItemRarityID.Lime;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new Omniheal(2),
+                new CauterizedWounds(30)
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -49,22 +55,10 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Omniheal(2); // 4
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new CauterizedWounds(30);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString();
+            if (Passives[1].currentlyActive)
+                return ((int)Passives[1].passiveStat).ToString();
             else
                 return "";
         }

@@ -23,6 +23,11 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 30, 0, 0);
             item.rare = ItemRarityID.LightRed;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new Dread(25, 6, 1.5)
+            };
         }
         
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -44,17 +49,10 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Dread(25, 6, 1.5);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString();
+            if (Passives[0].currentlyActive)
+                return ((int)Passives[0].passiveStat).ToString();
             else
                 return "";
         }

@@ -346,7 +346,7 @@ namespace TerraLeague.UI
                 {
                     _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorderCooldown");
                 }
-                else if (legItem.GetActive() != null)
+                else if (legItem.Active != null)
                 {
                     _backgroundTexture = TerraLeague.instance.GetTexture("UI/ItemBorderActive");
                 }
@@ -388,7 +388,6 @@ namespace TerraLeague.UI
                     {
                         string[] activeTip;
                         string[] primPassiveTip;
-                        string[] secPassiveTip;
                         System.Collections.Generic.List<string> activePassiveTooltips = new System.Collections.Generic.List<string>();
 
                         for (int i = 3; i < 9; i++)
@@ -402,34 +401,34 @@ namespace TerraLeague.UI
 
                         legItem = modItem as LeagueItem;
 
-
                         if (legItem != null)
                         {
                             int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, legItem);
                             if (slot != -1)
                             {
-                                if (legItem.GetActive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ActivesAreActive[slot])
+                                if (legItem.Active != null)
                                 {
-                                    activeTip = legItem.GetActive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                    for (int i = 0; i < activeTip.Length; i++)
+                                    if (legItem.Active.currentlyActive)
                                     {
-                                        activePassiveTooltips.Add(activeTip[i]);
+                                        activeTip = legItem.Active.Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                        for (int i = 0; i < activeTip.Length; i++)
+                                        {
+                                            activePassiveTooltips.Add(activeTip[i]);
+                                        }
                                     }
                                 }
-                                if (legItem.GetPrimaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
+                                if (legItem.Passives != null)
                                 {
-                                    primPassiveTip = legItem.GetPrimaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                    for (int i = 0; i < primPassiveTip.Length; i++)
+                                    for (int j = 0; j < legItem.Passives.Length; j++)
                                     {
-                                        activePassiveTooltips.Add(primPassiveTip[i]);
-                                    }
-                                }
-                                if (legItem.GetSecondaryPassive() != null && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[(slot * 2) + 1])
-                                {
-                                    secPassiveTip = legItem.GetSecondaryPassive().Tooltip(Main.LocalPlayer, legItem).Split('\n');
-                                    for (int i = 0; i < secPassiveTip.Length; i++)
-                                    {
-                                        activePassiveTooltips.Add(secPassiveTip[i]);
+                                        if (legItem.Passives[j].currentlyActive)
+                                        {
+                                            primPassiveTip = legItem.Passives[j].Tooltip(Main.LocalPlayer, legItem).Split('\n');
+                                            for (int i = 0; i < primPassiveTip.Length; i++)
+                                            {
+                                                activePassiveTooltips.Add(primPassiveTip[i]);
+                                            }
+                                        }
                                     }
                                 }
                             }

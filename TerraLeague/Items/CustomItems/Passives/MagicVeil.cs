@@ -7,11 +7,10 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class MagicVeil : Passive
     {
-        int cooldown;
 
         public MagicVeil(int Cooldown)
         {
-            cooldown = Cooldown;
+            passiveCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, ModItem modItem)
@@ -19,7 +18,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             return TooltipName("MAGIC VEIL") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain a shield that will protect from one projectile at full charge") +
-                "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                "\n" + TerraLeague.CreateColorString(PassiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -39,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 Efx(player);
                 player.endurance = 1;
-                AddStat(player, modItem, cooldown * 60, (int)(cooldown * 60 * modPlayer.Cdr));
+                SetCooldown(player);
             }
 
             base.OnHitByProjectile(npc, ref damage, ref crit, player, modItem);
@@ -52,7 +51,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             {
                 Efx(player);
                 player.endurance = 1;
-                AddStat(player, modItem, cooldown * 60, (int)(cooldown * 60 * modPlayer.Cdr));
+                SetCooldown(player);
             }
 
             base.OnHitByProjectile(proj, ref damage, ref crit, player, modItem);
@@ -60,7 +59,6 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void PostPlayerUpdate(Player player, ModItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

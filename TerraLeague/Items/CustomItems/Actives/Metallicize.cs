@@ -9,11 +9,9 @@ namespace TerraLeague.Items.CustomItems.Actives
 {
     public class Metallicize : Active
     {
-        int cooldown;
-
         public Metallicize(int Cooldown)
         {
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -21,12 +19,12 @@ namespace TerraLeague.Items.CustomItems.Actives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             return TooltipName("METALLICIZE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Increase your health by 125% while lowering your attack for 10 seconds" +
                 "\nIf STONE SKIN is active, also full heal") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -44,7 +42,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 }
 
                 player.AddBuff(BuffType<GargoylesMight>(), 600);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -54,7 +52,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

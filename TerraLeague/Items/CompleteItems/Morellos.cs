@@ -25,6 +25,12 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 45, 0, 0);
             item.rare = ItemRarityID.Pink;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new CursedStrike(),
+                new TouchOfDeath(15)
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -45,16 +51,6 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddTile(TileID.CrystalBall);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new CursedStrike();
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new TouchOfDeath(15);
         }
     }
 }

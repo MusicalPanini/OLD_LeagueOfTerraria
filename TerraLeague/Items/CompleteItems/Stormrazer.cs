@@ -26,6 +26,12 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 25, 0, 0);
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new Energized(15, 25),
+                new Storm()
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -57,38 +63,17 @@ namespace TerraLeague.Items.CompleteItems
             Muramasa.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Energized(15, 25);
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new Storm();
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString() + "%";
+            if (Passives[0].currentlyActive)
+                return ((int)Passives[0].passiveStat).ToString() + "%";
             else
                 return "";
         }
 
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-            if (slot != -1)
-            {
-                if (!Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                    return true;
-                else
-                    return false;
-            }
-            else
-                return false;
+            return !Passives[0].currentlyActive;
         }
     }
 }

@@ -34,46 +34,44 @@ namespace TerraLeague.Items.CustomItems.Passives
         public override void UpdateAccessory(Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            int num;
+            //int num;
 
 
-            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<StaticShiv>()));
-            if (num != -1)
-                if (modPlayer.accessoryStat[num] >= 100)
-                    modPlayer.EnergizedDischarge = true;
+            //num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<StaticShiv>()));
+            //if (num != -1)
+            //    if (passiveStat >= 100)
+            //        modPlayer.EnergizedDischarge = true;
 
-            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<RapidFire>()));
-            if (num != -1)
-                if (modPlayer.accessoryStat[num] >= 100)
-                    modPlayer.EnergizedDetonate = true;
+            //num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<RapidFire>()));
+            //if (num != -1)
+            //    if (passiveStat >= 100)
+            //        modPlayer.EnergizedDetonate = true;
 
-            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<Stormrazer>()));
-            if (num != -1)
-                if (modPlayer.accessoryStat[num] >= 100)
-                    modPlayer.EnergizedStorm = true;
+            //num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<Stormrazer>()));
+            //if (num != -1)
+            //    if (passiveStat >= 100)
+            //        modPlayer.EnergizedStorm = true;
 
-            num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<KircheisShard>()));
-            if (num != -1)
-                if (modPlayer.accessoryStat[num] >= 100)
-                    modPlayer.EnergizedShard = true;
+            //num = TerraLeague.FindAccessorySlotOnPlayer(player, GetModItem(ItemType<KircheisShard>()));
+            //if (num != -1)
+            //    if (passiveStat >= 100)
+            //        modPlayer.EnergizedShard = true;
 
             base.UpdateAccessory(player, modItem);
         }
 
         public override void PostPlayerUpdate(Player player, ModItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            double stat;
-            double chargeRate = superCharge ? 0.1 : 0.05;
+            float stat;
+            float chargeRate = superCharge ? 0.1f : 0.05f;
             if (player.velocity.X < 0)
                 stat = -player.velocity.X * chargeRate;
             else
                 stat = player.velocity.X * chargeRate;
 
-            AddStat(player, modItem, 100, stat);
+            AddStat(player, 100, stat);
 
-            if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 100)
+            if (passiveStat >= 100)
             {
                 if (Main.rand.Next(0, 6) == 0)
                 {
@@ -90,7 +88,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            AddStat(player, modItem, 100, 2);
+            AddStat(player, 100, 2);
 
             if (modPlayer.energized)
             {
@@ -106,8 +104,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     damage += bonusDamage;
                     Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    SendEfx(player, target, modItem);
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
 
@@ -128,7 +125,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 //}
 
                 modPlayer.energized = false;
-                modPlayer.FindAndSetPassiveStat(this, 0);
+                passiveStat = 0;
             }
 
             base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
@@ -140,7 +137,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (proj.ranged)
             {
-                AddStat(player, modItem, 100, 2);
+                AddStat(player, 100, 2);
             }
 
             if (modPlayer.energized && (proj.melee || proj.ranged))
@@ -161,8 +158,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     damage += bonusDamage;
                     Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    SendEfx(player, target, modItem);
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
 
@@ -181,7 +177,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 //    //damage += bonusDamage;
                 //}
 
-                modPlayer.FindAndSetPassiveStat(this, 0);
+                passiveStat = 0;
             }
 
             // Energized Stuff
@@ -196,8 +192,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (modPlayer.EnergizedStorm)
                 {
                     Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    SendEfx(player, target, modItem);
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
             }
@@ -206,8 +201,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 if (modPlayer.EnergizedStorm)
                 {
                     Efx(player, target);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                    SendEfx(player, target, modItem);
                     target.AddBuff(BuffType<Buffs.Slowed>(), 180);
                 }
             }

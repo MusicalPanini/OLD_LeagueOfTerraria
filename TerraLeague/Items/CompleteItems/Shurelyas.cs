@@ -28,6 +28,8 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 30, 0, 0);
             item.rare = ItemRarityID.LightRed;
             item.accessory = true;
+
+            Active = new FleetFoot(500, 4, 90);
         }
 
         public override bool CanEquipAccessory(Player player, int slot)
@@ -61,37 +63,20 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Active GetActive()
-        {
-            return new FleetFoot(500, 4, 90);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
+            if (Active.currentlyActive)
             {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0)
-                    return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
-                else
-                    return "";
+                if (Active.cooldownCount > 0)
+                    return (Active.cooldownCount / 60).ToString();
             }
-            else
-                return "";
+            return "";
         }
 
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-            {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0)
-                    return true;
-                else
-                    return false;
-            }
+            if (Active.cooldownCount > 0 || !Active.currentlyActive)
+                return true;
             else
                 return false;
         }

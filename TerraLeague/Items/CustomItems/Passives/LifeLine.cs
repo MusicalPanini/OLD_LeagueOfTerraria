@@ -168,8 +168,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             TriggerLifeLine(player);
             modPlayer.lifeLineCooldown = (int)(cooldown * modPlayer.Cdr * 60);
             Efx(player);
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+            SendEfx(player, modItem);
         }
 
         public void TriggerLifeLine(Player player)

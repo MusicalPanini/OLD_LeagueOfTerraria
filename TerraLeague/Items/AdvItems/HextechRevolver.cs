@@ -24,6 +24,11 @@ namespace TerraLeague.Items.AdvItems
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new MagicBolt(20, 20, 60)
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -44,37 +49,20 @@ namespace TerraLeague.Items.AdvItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new MagicBolt(20, 20, 60);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
+            if (Passives[0].currentlyActive)
             {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                    return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
-                else
-                    return "";
+                if (Passives[0].cooldownCount > 0)
+                    return (Passives[0].cooldownCount / 60).ToString();
             }
-            else
-                return "";
+            return "";
         }
 
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-            {
-                if ((int)GetStatOnPlayer(Main.LocalPlayer) > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                    return true;
-                else
-                    return false;
-            }
+            if (Passives[0].cooldownCount > 0 || !Passives[0].currentlyActive)
+                return true;
             else
                 return false;
         }

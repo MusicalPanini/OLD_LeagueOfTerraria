@@ -27,6 +27,11 @@ namespace TerraLeague.Items.CompleteItems
             item.rare = ItemRarityID.Yellow;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new Lifeline(90)
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -52,37 +57,24 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Lifeline(90);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-            if (slot != -1)
+
+            if (Passives[0].currentlyActive)
             {
-                if (modPlayer.lifeLineCooldown > 0 && Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                    return ((int)GetStatOnPlayer(Main.LocalPlayer) / 60).ToString();
-                else
-                    return "";
+                if (modPlayer.lifeLineCooldown > 0)
+                    return (modPlayer.lifeLineCooldown / 60).ToString();
             }
-            else
-                return "";
+            return "";
         }
 
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            if (slot != -1)
-            {
-                if (modPlayer.lifeLineCooldown > 0 || !Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().PassivesAreActive[slot * 2])
-                    return true;
-                else
-                    return false;
-            }
+
+            if (modPlayer.lifeLineCooldown > 0 || !Passives[0].currentlyActive)
+                return true;
             else
                 return false;
         }

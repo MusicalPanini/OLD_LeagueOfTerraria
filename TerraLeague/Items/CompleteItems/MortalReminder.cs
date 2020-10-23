@@ -1,5 +1,6 @@
 ﻿using TerraLeague.Items.AdvItems;
 using TerraLeague.Items.CustomItems;
+using TerraLeague.Items.CustomItems.Passives;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,6 +23,12 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 45, 0, 0);
             item.rare = ItemRarityID.Pink;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new CustomItems.Passives.LastWhisper(20, false),
+                new Executioner(3)
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -32,23 +39,13 @@ namespace TerraLeague.Items.CompleteItems
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<Executioners>(), 1);
-            recipe.AddIngredient(ItemType<LastWhisper>(), 1);
+            recipe.AddIngredient(ItemType<AdvItems.LastWhisper>(), 1);
             recipe.AddIngredient(ItemID.BlackLens, 1);
             recipe.AddIngredient(ItemType<DarksteelBar>(), 8);
             recipe.AddIngredient(ItemID.SoulofSight, 5);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new CustomItems.Passives.LastWhisper(20, false);
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new CustomItems.Passives.Executioner(3);
         }
     }
 }

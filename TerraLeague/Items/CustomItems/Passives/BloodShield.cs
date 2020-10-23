@@ -16,12 +16,5 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             base.UpdateAccessory(player, modItem);
         }
-
-        public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
-        {
-            player.GetModPlayer<PLAYERGLOBAL>().bloodShield = true;
-
-            base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
-        }
     }
 }

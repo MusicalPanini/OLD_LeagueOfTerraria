@@ -10,28 +10,27 @@ namespace TerraLeague.Items.CustomItems.Actives
     public class Quicksilver : Active
     {
         int effectDuration;
-        int cooldown;
 
         public Quicksilver(int EffectDuration, int Cooldown)
         {
             effectDuration = EffectDuration;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             return TooltipName("QUICKSILVER") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Become immune to most debuffs for " + effectDuration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 player.AddBuff(BuffType<GeneralCleanse>(), effectDuration * 60);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -41,7 +40,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

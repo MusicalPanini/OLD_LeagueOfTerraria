@@ -10,7 +10,6 @@ namespace TerraLeague.Items.CustomItems.Actives
     {
         int baseDamage;
         int baseMinions;
-        int cooldown;
         int sumScaling;
 
         public VoidCaller(int BaseDamage, int BaseMinions, int SumScaling, int Cooldown)
@@ -18,7 +17,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             baseDamage = BaseDamage;
             baseMinions = BaseMinions;
             sumScaling = SumScaling;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -27,18 +26,18 @@ namespace TerraLeague.Items.CustomItems.Actives
             return TooltipName("VOID CALLER") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Summon a Zz'Rot portal at your cursor" +
                 "\nIt ejects ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 3, 100) + " + " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)modPlayer.maxMinionsLastStep, 100) +
                 TerraLeague.CreateColorString(ActiveSecondaryColor, " Zz'Rots every second for 5 seconds. The Zz'Rots deal ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseDamage, 100) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, sumScaling) +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 player.FindSentryRestingSpot(ProjectileType<Item_ZzrotPortal>(), out int xPos, out int yPos, out int yDis);
                 Projectile.NewProjectile((float)xPos, (float)(yPos - yDis), 0f, 0f, ProjectileType<Item_ZzrotPortal>(), baseDamage + (int)(modPlayer.SUM * sumScaling * 0.01f), 2, player.whoAmI, baseMinions);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -54,7 +53,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
     }

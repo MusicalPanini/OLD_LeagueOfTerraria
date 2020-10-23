@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = GetStat;
+            passiveStat = GetStat;
             player.statLifeMax2 += lifePerTime * GetStat;
             player.statManaMax2 += lifePerTime * GetStat;
             player.magicDamage += (float)(magicMinionDamage * 0.01f * GetStat);

@@ -27,6 +27,11 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 45, 0, 0);
             item.rare = ItemRarityID.Pink;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new BloodShield()
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -50,11 +55,6 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new BloodShield();
         }
     }
 }

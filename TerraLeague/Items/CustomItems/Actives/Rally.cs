@@ -10,29 +10,28 @@ namespace TerraLeague.Items.CustomItems.Actives
     {
         int duration;
         int minionScaling;
-        int cooldown;
 
         public Rally(int Duration, int MinionScaling, int Cooldown)
         {
             duration = Duration;
             minionScaling = MinionScaling;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             return TooltipName("RALLY") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Your minions deal ") + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling, false, "%") + TerraLeague.CreateColorString(ActiveSecondaryColor, " increased damage for " + duration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 player.AddBuff(BuffType<Buffs.Rally>(), duration * 60);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -43,7 +42,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             if (modPlayer.rally)

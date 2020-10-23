@@ -14,14 +14,13 @@ namespace TerraLeague.Items.CustomItems.Actives
         int percentLifeShield;
         int effectRadius = 500;
         int shieldDuration;
-        int cooldown;
 
         public SolarisProtection(int PercentLifeShield, int EffectRadius, int ShieldDuration, int Cooldown)
         {
             percentLifeShield = PercentLifeShield;
             effectRadius = EffectRadius;
             shieldDuration = ShieldDuration;
-            cooldown = Cooldown;
+            cooldownCount = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -29,12 +28,12 @@ namespace TerraLeague.Items.CustomItems.Actives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             return TooltipName("SOLARI'S PROTECTION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give nearby allies a ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", modPlayer.maxLifeLastStep, percentLifeShield, true) + TerraLeague.CreateColorString(ActiveSecondaryColor, " Shield") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                 int shieldAmount = modPlayer.ScaleValueWithHealPower(modPlayer.GetRealHeathWithoutShield(true) * percentLifeShield * 0.01f);
@@ -42,7 +41,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 Efx(player);
                 player.AddBuff(BuffType<SolarisBlessing>(), shieldDuration * 60);
                 modPlayer.AddShieldAttachedToBuff(shieldAmount, BuffType<SolarisBlessing>(), new Color(224, 113, 0), ShieldType.Basic);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 // For Server
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -62,7 +61,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

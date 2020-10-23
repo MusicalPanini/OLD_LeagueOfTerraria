@@ -41,8 +41,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 TerraLeague.GiveNPCsInRangeABuff(player.MountedCenter, effectRadius, BuffType<Buffs.AbyssalCurse>(), 240, true, true);
 
                 Efx(player);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                SendEfx(player, modItem);
             }
         }
 

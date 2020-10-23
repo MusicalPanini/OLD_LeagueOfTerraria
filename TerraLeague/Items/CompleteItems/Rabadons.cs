@@ -25,6 +25,11 @@ namespace TerraLeague.Items.CompleteItems
             item.rare = ItemRarityID.Red;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new RawPower()
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -45,11 +50,6 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new RawPower();
         }
     }
 }

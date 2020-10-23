@@ -27,11 +27,16 @@ namespace TerraLeague.Items.CompleteItems
             item.rare = ItemRarityID.Pink;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new Impendulum(4, 1),
+                new Eternity()
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            
             player.statLifeMax2 += 20;
             player.statManaMax2 += 20;
             player.magicDamage += 0.03f;
@@ -55,22 +60,10 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Impendulum(4, 1);
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new Eternity();
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString();
+            if (Passives[0].currentlyActive)
+                return (Impendulum.GetStat).ToString();
             else
                 return "";
         }

@@ -9,30 +9,29 @@ namespace TerraLeague.Items.CustomItems.Actives
     {
         int duration;
         int shieldAmount;
-        int cooldown;
 
         public NightsVeil(int Duration, int ShieldAmount, int Cooldown)
         {
             duration = Duration;
             shieldAmount = ShieldAmount;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             return TooltipName("NIGHT'S VEIL") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Gain a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, shieldAmount, 100, true) + TerraLeague.CreateColorString(ActiveSecondaryColor, " Magic Shield for " + duration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
                 modPlayer.AddShield((int)(shieldAmount * modPlayer.healPower), duration * 60, new Color(43, 36, 110), ShieldType.Magic);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -44,7 +43,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

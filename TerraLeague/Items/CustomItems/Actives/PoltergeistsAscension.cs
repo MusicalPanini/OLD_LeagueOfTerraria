@@ -8,24 +8,23 @@ namespace TerraLeague.Items.CustomItems.Actives
     public class PoltergeistsAscension : Active
     {
         int effectDuration;
-        int cooldown;
 
         public PoltergeistsAscension(int EffectDuration, int Cooldown)
         {
             effectDuration = EffectDuration;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             return TooltipName("POLTERGEIST'S ASCENSION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Gain a burst of movement speed for " + effectDuration + " seconds") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -34,13 +33,12 @@ namespace TerraLeague.Items.CustomItems.Actives
                     PacketHandler.SendActiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type);
 
                 player.AddBuff(BuffID.Swiftness, effectDuration * 60);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
             }
         }
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

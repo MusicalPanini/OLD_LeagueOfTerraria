@@ -13,7 +13,7 @@ namespace TerraLeague.Items.BasicItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Magic Stopwatch");
-            Tooltip.SetDefault("\"Seems fragile\"");
+            Tooltip.SetDefault("\'Seems fragile\'");
         }
 
         public override void SetDefaults()
@@ -24,6 +24,8 @@ namespace TerraLeague.Items.BasicItems
             item.rare = ItemRarityID.LightRed;
             item.accessory = true;
             item.material = true;
+
+            Active = new Stasis(2, 120, true);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -48,16 +50,9 @@ namespace TerraLeague.Items.BasicItems
             recipe.AddRecipe();
         }
 
-        public override Active GetActive()
-        {
-            return new Stasis(2, 120, true);
-        }
-
         public override bool OnCooldown(Player player)
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
+            if (Active.currentlyActive)
             {
                 if (!Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().stopWatchActive)
                     return true;

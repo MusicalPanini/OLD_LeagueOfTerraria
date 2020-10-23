@@ -21,7 +21,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.magicArmorPen += magicArmorPen;
+            modPlayer.magicArmorPen += magicArmorPen * (int)passiveStat;
 
             base.UpdateAccessory(player, modItem);
         }

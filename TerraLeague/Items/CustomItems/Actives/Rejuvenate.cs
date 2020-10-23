@@ -9,13 +9,12 @@ namespace TerraLeague.Items.CustomItems.Actives
     {
         int baseHeal;
         int effectRadius = 500;
-        int cooldown;
 
         public Rejuvenate(int BaseHeal, int EffectRadius, int Cooldown)
         {
             baseHeal = BaseHeal;
             effectRadius = EffectRadius;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -38,17 +37,17 @@ namespace TerraLeague.Items.CustomItems.Actives
             }
 
             return TooltipName("REJUVINATE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Heal nearby allies for ") + statis + TerraLeague.CreateColorString(ActiveSecondaryColor, " life\nHeal Power is 2 times as effective for this heal") +
-                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                 "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
                 Efx(player);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 if (player.whoAmI == Main.myPlayer)
                 {
@@ -74,10 +73,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-            AddStat(player, modItem, cooldown * 60, -1, true);
-
             base.PostPlayerUpdate(player, modItem);
         }
 

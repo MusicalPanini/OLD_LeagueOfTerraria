@@ -11,7 +11,6 @@ namespace TerraLeague.Items.CustomItems.Actives
         int percentMana;
         int manaScaling;
         int baseShield;
-        int cooldown;
 
         public ManaShield(int Duration, int PercentMana, int ManaScaling, int BaseShield, int Cooldown)
         {
@@ -19,7 +18,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             percentMana = PercentMana;
             manaScaling = ManaScaling;
             baseShield = BaseShield;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -29,12 +28,12 @@ namespace TerraLeague.Items.CustomItems.Actives
             return TooltipName("MANA SHIELD") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Consume ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, percentMana) 
                 + TerraLeague.CreateColorString(ActiveSecondaryColor, " mana\nGain a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseShield, 100, true) + " + " + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, (int)(percentMana * manaScaling * 0.01), true)
                 + TerraLeague.CreateColorString(ActiveSecondaryColor, " shield for " + duration + " seconds")
-                +"\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown"); ;
+                +"\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown"); ;
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
@@ -42,7 +41,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                 player.CheckMana(manaUsed, true);
 
                 modPlayer.AddShield(manaUsed + baseShield,duration * 60, Color.SkyBlue, ShieldType.Basic);
-                modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+                SetCooldown(player);
 
                 Efx(player);
                 if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -53,7 +52,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 

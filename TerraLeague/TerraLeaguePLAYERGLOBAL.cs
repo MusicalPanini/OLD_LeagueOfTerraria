@@ -657,9 +657,9 @@ namespace TerraLeague
         public bool windPower = false;
         public bool Disruption = false;
         public bool angelsProtection = false;
-        public bool tiamat = false;
-        public bool titanic = false;
-        public bool ravenous = false;
+        public bool cleaveBasic = false;
+        public bool cleaveMaxLife = false;
+        public bool cleaveLifesteal = false;
         public bool nightStalker = false;
         public bool guinsoosRage = false;
         public int absorbtionTimer = 0;
@@ -798,9 +798,9 @@ namespace TerraLeague
 
             // Complete
             summonedBlade = false;
-            tiamat = false;
-            titanic = false;
-            ravenous = false;
+            cleaveBasic = false;
+            cleaveMaxLife = false;
+            cleaveLifesteal = false;
 
             EnergizedShard = false;
             EnergizedDischarge = false;
@@ -1855,43 +1855,43 @@ namespace TerraLeague
                     {
                         LeagueItem item = player.armor[3].modItem as LeagueItem;
                         if (item != null)
-                            if (item.GetActive() != null)
-                                item.GetActive().DoActive(player, item);
+                            if (item.Active != null)
+                                item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item2.JustPressed)
                     {
                         LeagueItem item = player.armor[4].modItem as LeagueItem;
                         if (item != null)
-                            if (item.GetActive() != null)
-                                item.GetActive().DoActive(player, item);
+                            if (item.Active != null)
+                                item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item3.JustPressed)
                     {
                         LeagueItem item = player.armor[5].modItem as LeagueItem;
                         if (item != null)
-                            if (item.GetActive() != null)
-                                item.GetActive().DoActive(player, item);
+                            if (item.Active != null)
+                                item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item4.JustPressed)
                     {
                         LeagueItem item = player.armor[6].modItem as LeagueItem;
                         if (item != null)
-                            if (item.GetActive() != null)
-                                item.GetActive().DoActive(player, item);
+                            if (item.Active != null)
+                                item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item5.JustPressed)
                     {
                         LeagueItem item = player.armor[7].modItem as LeagueItem;
                         if (item != null)
-                            if (item.GetActive() != null)
-                                item.GetActive().DoActive(player, item);
+                            if (item.Active != null)
+                                item.Active.DoActive(player, item);
                     }
                     if (TerraLeague.Item6.JustPressed)
                     {
                         LeagueItem item = player.armor[8].modItem as LeagueItem;
                         if (item != null)
-                            if (item.GetActive() != null)
-                                item.GetActive().DoActive(player, item);
+                            if (item.Active != null)
+                                item.Active.DoActive(player, item);
                     }
                 }
 
@@ -1940,38 +1940,7 @@ namespace TerraLeague
             // Runs PostPlayerUpdate() for all equiped LeagueItems
             if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                for (int i = 3; i < 9; i++)
-                {
-                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                    if (legItem != null)
-                    {
-                        if (PassivesAreActive[(i - 3) * 2])
-                        {
-                            Passive primPassive = legItem.GetPrimaryPassive();
-                            if (primPassive != null)
-                            {
-                                primPassive.PostPlayerUpdate(player, legItem);
-                            }
-                        }
-                        if (PassivesAreActive[((i - 3) * 2) + 1])
-                        {
-                            Passive secPassive = legItem.GetSecondaryPassive();
-                            if (secPassive != null)
-                            {
-                                secPassive.PostPlayerUpdate(player, legItem);
-                            }
-                        }
-                        if (ActivesAreActive[i - 3])
-                        {
-                            Active active = legItem.GetActive();
-                            if (active != null)
-                            {
-                                active.PostPlayerUpdate(player, legItem);
-                            }
-                        }
-                    }
-                }
+                LeagueItem.RunEnabled_PostPlayerUpdate(player);
             }
 
             // Handles Summoner Spell cooldowns
@@ -2042,37 +2011,10 @@ namespace TerraLeague
         /// <returns></returns>
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            int doesKill = -1;
-
-            for (int i = 3; i < 9; i++)
+            bool? itemKill = LeagueItem.RunEnabled_PreKill(player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+            if (itemKill != null)
             {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
-                {
-
-                    if (PassivesAreActive[(i - 3) * 2])
-                    {
-                        Passive primPassive = legItem.GetPrimaryPassive();
-                        if (primPassive != null)
-                        {
-                            doesKill = primPassive.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, legItem);
-                        }
-                    }
-                    if (PassivesAreActive[((i - 3) * 2) + 1])
-                    {
-                        Passive secPassive = legItem.GetSecondaryPassive();
-                        if (secPassive != null)
-                        {
-                            doesKill = secPassive.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource, player, legItem);
-                        }
-                    }
-                }
-
-                if (doesKill != -1)
-                {
-                    return doesKill == 0 ? false : true;
-                }
+                return (bool)itemKill;
             }
             
             if (GetRealHeathWithoutShield() <= 0)
@@ -2155,38 +2097,8 @@ namespace TerraLeague
                 }
 
                 // Runs NPCHitWithProjectile() for all equiped LeagueItems
-                for (int i = 3; i < 9; i++)
-                {
-                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                    if (legItem != null)
-                    {
-                        if (PassivesAreActive[(i - 3) * 2])
-                        {
-                            Passive primPassive = legItem.GetPrimaryPassive();
-                            if (primPassive != null)
-                            {
-                                primPassive.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage, player, legItem);
-                            }
-                        }
-                        if (PassivesAreActive[((i - 3) * 2) + 1])
-                        {
-                            Passive secPassive = legItem.GetSecondaryPassive();
-                            if (secPassive != null)
-                            {
-                                secPassive.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage, player, legItem);
-                            }
-                        }
-                        if (ActivesAreActive[i - 3])
-                        {
-                            Active active = legItem.GetActive();
-                            if (active != null)
-                            {
-                                active.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage, player, legItem);
-                            }
-                        }
-                    }
-                }
+                LeagueItem.RunEnabled_NPCHitWithProjectile(player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage);
+                
 
                 if (voidbornSet && proj.minion)
                 {
@@ -2361,39 +2273,9 @@ namespace TerraLeague
             }
 
             // Runs NPCHit() for all equiped LeagueItems
-            for (int i = 3; i < 9; i++)
-            {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
+            LeagueItem.RunEnabled_NPCHit(player, item, target, ref damage, ref knockback, ref crit, ref onhitdamage);
 
-                if (legItem != null)
-                {
-                    if (PassivesAreActive[(i - 3) * 2])
-                    {
-                        Passive primPassive = legItem.GetPrimaryPassive();
-                        if (primPassive != null)
-                        {
-                            primPassive.NPCHit(item, target, ref damage, ref knockback, ref crit, ref onhitdamage, player, legItem);
-                        }
-                    }
-                    if (PassivesAreActive[((i - 3) * 2) + 1])
-                    {
-                        Passive secPassive = legItem.GetSecondaryPassive();
-                        if (secPassive != null)
-                        {
-                            secPassive.NPCHit(item, target, ref damage, ref knockback, ref crit, ref onhitdamage, player, legItem);
-                        }
-                    }
-                    if (ActivesAreActive[i - 3])
-                    {
-                        Active active = legItem.GetActive();
-                        if (active != null)
-                        {
-                            active.NPCHit(item, target, ref damage, ref knockback, ref crit, ref onhitdamage, player, legItem);
-                        }
-                    }
-                }
-            }
-
+            // Damage Buffs
             if (scourgeBlessing)
                 target.AddBuff(BuffID.ShadowFlame, 120);
             if (excessiveForce)
@@ -2414,28 +2296,28 @@ namespace TerraLeague
 
             // +-+-+-+-+FINALIZED DAMAGE+-+-+-+-+
 
-            if ((ravenous || titanic || tiamat) && cleaveCooldown == 0)
+            if ((cleaveLifesteal || cleaveMaxLife || cleaveBasic) && cleaveCooldown == 0)
             {
                 int cleaveDamage = 0;
                 var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 200, true, true);
 
-                if (ravenous)
+                if (cleaveLifesteal)
                 {
-                    Cleave.Efx(player.whoAmI, 2);
+                    Cleave.Efx(player.whoAmI, CleaveType.Lifesteal);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 2, player.whoAmI);
                     cleaveDamage = (int)(MEL * 50 / 100f);
                     cleaveCooldown = 45;
                 }
-                else if (titanic)
+                else if (cleaveMaxLife)
                 {
-                    Cleave.Efx(player.whoAmI, 1);
+                    Cleave.Efx(player.whoAmI, CleaveType.MaxLife);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 1, player.whoAmI);
                     cleaveDamage = (int)((MEL * 40 / 100f) + (player.statLifeMax2 * 0.05));
                     cleaveCooldown = 45;
                 }
-                else if (tiamat)
+                else if (cleaveBasic)
                 {
-                    Cleave.Efx(player.whoAmI, 0);
+                    Cleave.Efx(player.whoAmI, CleaveType.Basic);
                     Passive.PacketHandler.SendCleave(-1, player.whoAmI, 0, player.whoAmI);
                     cleaveDamage = (int)(MEL * 40 / 100f);
                     cleaveCooldown = 60;
@@ -2447,7 +2329,7 @@ namespace TerraLeague
                     if (player.CanHit(npc) && npc.whoAmI != target.whoAmI)
                     {
                         player.ApplyDamageToNPC(npc, cleaveDamage, 0, 0, crit);
-                        if (ravenous && npc.type != NPCID.TargetDummy)
+                        if (cleaveLifesteal && npc.type != NPCID.TargetDummy)
                             lifeToHeal += (int)((cleaveDamage - (npc.defense * 0.5)) * 0.05);
                     }
                 }
@@ -2509,38 +2391,7 @@ namespace TerraLeague
                 wasHitByProjOrNPCLastStep = "Proj";
 
                 // Runs OnHitByProjectile(npc) for all equiped LeagueItems
-                for (int i = 3; i < 9; i++)
-                {
-                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                    if (legItem != null)
-                    {
-                        if (PassivesAreActive[(i - 3) * 2])
-                        {
-                            Passive primPassive = legItem.GetPrimaryPassive();
-                            if (primPassive != null)
-                            {
-                                primPassive.OnHitByProjectile(npc, ref damage, ref crit, player, legItem);
-                            }
-                        }
-                        if (PassivesAreActive[((i - 3) * 2) + 1])
-                        {
-                            Passive secPassive = legItem.GetSecondaryPassive();
-                            if (secPassive != null)
-                            {
-                                secPassive.OnHitByProjectile(npc, ref damage, ref crit, player, legItem);
-                            }
-                        }
-                        if (ActivesAreActive[i - 3])
-                        {
-                            Active active = legItem.GetActive();
-                            if (active != null)
-                            {
-                                active.OnHitByProjectile(npc, ref damage, ref crit, player, legItem);
-                            }
-                        }
-                    }
-                }
+                LeagueItem.RunEnabled_OnHitByProjectile(player, npc, ref damage, ref crit);
 
                 // Reduces the projectile damage based on Players resist stat
                 if (Main.expertMode)
@@ -2553,38 +2404,7 @@ namespace TerraLeague
                 wasHitByProjOrNPCLastStep = "NPC";
 
                 // Runs OnHitByNPC() for all equiped LeagueItems
-                for (int i = 3; i < 9; i++)
-                {
-                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                    if (legItem != null)
-                    {
-                        if (PassivesAreActive[(i - 3) * 2])
-                        {
-                            Passive primPassive = legItem.GetPrimaryPassive();
-                            if (primPassive != null)
-                            {
-                                primPassive.OnHitByNPC(npc, ref damage, ref crit, player, legItem);
-                            }
-                        }
-                        if (PassivesAreActive[((i - 3) * 2) + 1])
-                        {
-                            Passive secPassive = legItem.GetSecondaryPassive();
-                            if (secPassive != null)
-                            {
-                                secPassive.OnHitByNPC(npc, ref damage, ref crit, player, legItem);
-                            }
-                        }
-                        if (ActivesAreActive[i - 3])
-                        {
-                            Active active = legItem.GetActive();
-                            if (active != null)
-                            {
-                                active.OnHitByNPC(npc, ref damage, ref crit, player, legItem);
-                            }
-                        }
-                    }
-                }
+                LeagueItem.RunEnabled_OnHitByNPC(player, npc, ref damage, ref crit);
 
                 // Reduces the contact damage based on Players armor stat
                 if (Main.expertMode)
@@ -2611,38 +2431,7 @@ namespace TerraLeague
             wasHitByProjOrNPCLastStep = "Proj";
 
             // Runs OnHitByProjectile(Projectile) for all equiped LeagueItems
-            for (int i = 3; i < 9; i++)
-            {
-                LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                if (legItem != null)
-                {
-                    if (PassivesAreActive[(i - 3) * 2])
-                    {
-                        Passive primPassive = legItem.GetPrimaryPassive();
-                        if (primPassive != null)
-                        {
-                            primPassive.OnHitByProjectile(proj, ref damage, ref crit, player, legItem);
-                        }
-                    }
-                    if (PassivesAreActive[((i - 3) * 2) + 1])
-                    {
-                        Passive secPassive = legItem.GetSecondaryPassive();
-                        if (secPassive != null)
-                        {
-                            secPassive.OnHitByProjectile(proj, ref damage, ref crit, player, legItem);
-                        }
-                    }
-                    if (ActivesAreActive[i - 3])
-                    {
-                        Active active = legItem.GetActive();
-                        if (active != null)
-                        {
-                            active.OnHitByProjectile(proj, ref damage, ref crit, player, legItem);
-                        }
-                    }
-                }
-            }
+            LeagueItem.RunEnabled_OnHitByProjectile(player, proj, ref damage, ref crit);
 
             // Greymark
             if (greymark)
@@ -2729,38 +2518,7 @@ namespace TerraLeague
             if (npc.life - (damage - (npc.defense / 2)) <= 0 || npc.life - (damage - (npc.defense / 2)) * 2 <= 0 && crit)
             {
                 // Runs OnKilledNPC() for all equiped LeagueItems
-                for (int i = 3; i < 9; i++)
-                {
-                    LeagueItem legItem = player.armor[i].modItem as LeagueItem;
-
-                    if (legItem != null)
-                    {
-                        if (PassivesAreActive[(i - 3) * 2])
-                        {
-                            Passive primPassive = legItem.GetPrimaryPassive();
-                            if (primPassive != null)
-                            {
-                                primPassive.OnKilledNPC(npc, damage, crit, player, legItem);
-                            }
-                        }
-                        if (PassivesAreActive[((i - 3) * 2) + 1])
-                        {
-                            Passive secPassive = legItem.GetSecondaryPassive();
-                            if (secPassive != null)
-                            {
-                                secPassive.OnKilledNPC(npc, damage, crit, player, legItem);
-                            }
-                        }
-                        //if (ActivesAreActive[i - 3])
-                        //{
-                        //    Active active = legItem.GetActive();
-                        //    if (active != null)
-                        //    {
-                        //        active.OnKilledNPC(npc, damage, crit, player, legItem);
-                        //    }
-                        //}
-                    }
-                }
+                LeagueItem.RunEnabled_OnKilledNPC(player, npc, ref damage, ref crit);
 
                 // Gives mana if Dorans Ring is equiped
                 if (dring && player.statMana < player.statManaMax2)
@@ -2818,8 +2576,8 @@ namespace TerraLeague
             {
                 if (bloodPool)
                 {
-                    healAmount += (int)GetPassiveStat(new BloodPool(0), true);
-                    FindAndSetPassiveStat(new BloodPool(0), 0, true);
+                    healAmount += (int)GetPassiveStat(new BloodPool(0));
+                    FindAndSetPassiveStat(new BloodPool(0), 0);
                 }
 
                 if (ardentsFrenzy)
@@ -3557,31 +3315,27 @@ namespace TerraLeague
         /// <param name="SearchTarget">The Passive to search for</param>
         /// <param name="setTo">The number to set the stat to</param>
         /// <param name="secondaryPassive">Search the secondary slot of the LeagueItems</param>
-        public void FindAndSetPassiveStat(Passive SearchTarget, int setTo, bool secondaryPassive = false)
+        public void FindAndSetPassiveStat(Passive SearchTarget, float setTo)
         {
             if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
                 for (int i = 3; i < 9; i++)
                 {
                     LeagueItem item = player.armor[i].modItem as LeagueItem;
-                    Passive passive;
 
                     if (item != null)
                     {
-                        if (secondaryPassive)
-                            passive = item.GetSecondaryPassive();
-                        else
-                            passive = item.GetPrimaryPassive();
-
-                        if (passive != null)
+                        if (item.Passives != null)
                         {
-                            if (passive.GetType() == SearchTarget.GetType())
+                            for (int j = 0; j < item.Passives.Length; j++)
                             {
-                                accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, player.armor[i].modItem)] = setTo;
+                                if (item.Passives[j].GetType() == SearchTarget.GetType() && item.Passives[j].currentlyActive)
+                                {
+                                    item.Passives[j].passiveStat = setTo;
+                                }
                             }
                         }
                     }
-
                 }
             }
         }
@@ -3593,24 +3347,23 @@ namespace TerraLeague
         /// <param name="setTo">The number to set the stat to</param>
         public void FindAndSetActiveStat(Active SearchTarget, int setTo)
         {
-            for (int i = 3; i < 9; i++)
+            if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                LeagueItem item = player.armor[i].modItem as LeagueItem;
-                Active active;
-
-                if (item != null)
+                for (int i = 3; i < 9; i++)
                 {
-                    active = item.GetActive();
+                    LeagueItem item = player.armor[i].modItem as LeagueItem;
 
-                    if (active != null)
+                    if (item != null)
                     {
-                        if (active.GetType() == SearchTarget.GetType())
+                        if (item.Active != null)
                         {
-                            accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, player.armor[i].modItem)] = setTo;
+                            if (item.Active.GetType() == SearchTarget.GetType() && item.Active.currentlyActive)
+                            {
+                                item.Active.activeStat = setTo;
+                            }
                         }
                     }
                 }
-
             }
         }
 
@@ -3620,25 +3373,22 @@ namespace TerraLeague
         /// <param name="SearchTarget">The Passive to search fo</param>
         /// <param name="secondaryPassive">Search the secondary slot of the LeagueItems</param>
         /// <returns></returns>
-        public double GetPassiveStat(Passive SearchTarget, bool secondaryPassive = false)
+        public float GetPassiveStat(Passive SearchTarget)
         {
             for (int i = 3; i < 9; i++)
             {
                 LeagueItem item = player.armor[i].modItem as LeagueItem;
-                Passive passive;
 
                 if (item != null)
                 {
-                    if (secondaryPassive)
-                        passive = item.GetSecondaryPassive();
-                    else
-                        passive = item.GetPrimaryPassive();
-
-                    if (passive != null)
+                    if (item.Passives != null)
                     {
-                        if (passive.GetType() == SearchTarget.GetType())
+                        for (int j = 0; j < item.Passives.Length; j++)
                         {
-                            return accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, player.armor[i].modItem)];
+                            if (item.Passives[j].GetType() == SearchTarget.GetType() && item.Passives[j].currentlyActive)
+                            {
+                                return item.Passives[j].passiveStat;
+                            }
                         }
                     }
                 }
@@ -3693,8 +3443,8 @@ namespace TerraLeague
         public void CheckActivesandPassivesAreActive()
         {
             List<string> names = new List<string>();
-            PassivesAreActive = new bool[12];
-            ActivesAreActive = new bool[6];
+            //PassivesAreActive = new bool[12];
+            //ActivesAreActive = new bool[6];
 
             for (int i = 0; i < 6; i++)
             {
@@ -3702,44 +3452,33 @@ namespace TerraLeague
 
                 if (legItem != null)
                 {
-                    Passive PrimTarget = legItem.GetPrimaryPassive();
-                    Passive SecTarget = legItem.GetSecondaryPassive();
-                    Active ActTarget = legItem.GetActive();
-
-                    if (PrimTarget != null)
+                    if (legItem.Passives != null)
                     {
-                        if (!names.Contains(PrimTarget.GetType().Name) || PrimTarget.GetType().Name == "Lifeline")
+                        for (int j = 0; j < legItem.Passives.Length; j++)
                         {
-                            names.Add(PrimTarget.GetType().Name);
-                            PassivesAreActive[i * 2] = true;
-                        }
-                        else
-                        {
-                            PassivesAreActive[i * 2] = false;
+                            bool contains = names.Contains(legItem.Passives[j].GetType().Name);
+                            bool notUnique = legItem.Passives[j].deactivateIfNotUnique;
+                            if (!contains || (contains && !notUnique))
+                            {
+                                names.Add(legItem.Passives[j].GetType().Name);
+                                legItem.Passives[j].currentlyActive = true;
+                            }
+                            else
+                            {
+                                legItem.Passives[j].currentlyActive = false;
+                            }
                         }
                     }
-                    if (SecTarget != null)
+                    if (legItem.Active != null)
                     {
-                        if (!names.Contains(SecTarget.GetType().Name) || PrimTarget.GetType().Name == "Lifeline")
+                        if (!names.Contains(legItem.Active.GetType().Name))
                         {
-                            names.Add(SecTarget.GetType().Name);
-                            PassivesAreActive[(i * 2) + 1] = true;
+                            names.Add(legItem.Active.GetType().Name);
+                            legItem.Active.currentlyActive = true;
                         }
                         else
                         {
-                            PassivesAreActive[(i * 2) + 1] = false;
-                        }
-                    }
-                    if (ActTarget != null)
-                    {
-                        if (!names.Contains(ActTarget.GetType().Name))
-                        {
-                            names.Add(ActTarget.GetType().Name);
-                            ActivesAreActive[i] = true;
-                        }
-                        else
-                        {
-                            ActivesAreActive[i] = false;
+                            legItem.Active.currentlyActive = false;
                         }
                     }
                 }

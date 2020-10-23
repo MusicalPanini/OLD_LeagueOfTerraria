@@ -16,9 +16,9 @@ namespace TerraLeague.Items.CustomItems.Passives
 {
     public class Dreadnought : Passive
     {
-        double statModifier;
+        float statModifier;
 
-        public Dreadnought(double StatIncreaseModifier)
+        public Dreadnought(float StatIncreaseModifier)
         {
             statModifier = StatIncreaseModifier;
         }
@@ -45,8 +45,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 modPlayer.meleeFlatDamage += 2 * modPlayer.armorLastStep;
 
                 Efx(player, target);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem), target.whoAmI);
+                SendEfx(player, target, modItem);
 
                 modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;
             }
@@ -66,10 +65,9 @@ namespace TerraLeague.Items.CustomItems.Passives
                 modPlayer.minionFlatDamage += 2 * modPlayer.armorLastStep;
 
                 Efx(player, target);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    PacketHandler.SendPassiveEfx(-1, player.whoAmI, player.whoAmI, modItem.item.type, FindIfPassiveIsSecondary(modItem));
+                SendEfx(player, target, modItem);
 
-                modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;
+                passiveStat = 0;
             }
 
             base.NPCHitWithProjectile(proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref OnHitDamage, player, modItem);
@@ -79,18 +77,18 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            double stat;
+            float stat;
 
             if (player.velocity.X < 0)
                 stat = -player.velocity.X * statModifier;
             else
                 stat = player.velocity.X * statModifier;
 
-            AddStat(player, modItem, 100, stat);
+            AddStat(player, 100, stat);
 
-            player.moveSpeed += (float)modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] * 0.0025f;
+            player.moveSpeed += passiveStat * 0.0025f;
 
-            if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 100)
+            if (passiveStat >= 100)
             {
                 player.armorEffectDrawShadow = true;
                 Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 5, 0, 0, 0, new Color(255, 0, 0, 150), 1.5f);

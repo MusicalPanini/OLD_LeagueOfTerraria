@@ -13,6 +13,11 @@ namespace TerraLeague.Items.CustomItems
         public static string ActiveMainColor = "ff4d4d";
         public static string ActiveSecondaryColor = "ff8080";
         public static string ActiveSubColor = "cc0000";
+        public bool currentlyActive = true;
+
+        public float activeStat = 0;
+        public int cooldownCount = 0;
+        public int activeCooldown = 0;
 
         public abstract string Tooltip(Player player, LeagueItem modItem);
         internal ActivePacketHandler PacketHandler = new ActivePacketHandler(5);
@@ -25,7 +30,8 @@ namespace TerraLeague.Items.CustomItems
 
         virtual public void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-
+            if (cooldownCount > 0)
+                cooldownCount--;
         }
 
         virtual public void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int HitDamage, Player player, ModItem modItem)
@@ -74,6 +80,17 @@ namespace TerraLeague.Items.CustomItems
         virtual public void Efx(Player user)
         {
 
+        }
+
+        internal int GetScaledCooldown(Player player)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            return (int)(activeCooldown * modPlayer.cdrLastStep);
+        }
+
+        internal void SetCooldown(Player player)
+        {
+            cooldownCount = GetScaledCooldown(player) * 60;
         }
     }
 }

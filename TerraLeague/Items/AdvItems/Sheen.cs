@@ -25,6 +25,11 @@ namespace TerraLeague.Items.AdvItems
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new Spellblade(1.5)
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -57,11 +62,6 @@ namespace TerraLeague.Items.AdvItems
             recipe2.AddTile(TileID.Anvils);
             recipe2.SetResult(this);
             recipe2.AddRecipe();
-        }
-
-        public override Passive GetPrimaryPassive()
-        {
-            return new Spellblade(1.5);
         }
     }
 }

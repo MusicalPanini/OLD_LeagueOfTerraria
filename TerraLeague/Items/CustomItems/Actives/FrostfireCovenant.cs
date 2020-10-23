@@ -9,14 +9,13 @@ namespace TerraLeague.Items.CustomItems.Actives
     public class FrostfireCovenant : Active
     {
         int damage;
-        int cooldown;
         int effectDuration;
 
         public FrostfireCovenant(int Damage, int EffectDuration, int Cooldown)
         {
             damage = Damage;
             effectDuration = EffectDuration;
-            cooldown = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
@@ -26,12 +25,12 @@ namespace TerraLeague.Items.CustomItems.Actives
                 "\nAll their attacks will deal 40 On Hit damage and apply 'Harbingers Inferno'" +
                 "\nAt the same time you channel the Harbinger of Frost for " + effectDuration + " seconds, slowing near by enemies in a Frost Storm around you." +
                 "\nBurnt enemies caught in the Frost Storm will take " + damage + " magic damage") +
-                "\n" + TerraLeague.CreateColorString(ActiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
         public override void DoActive(Player player, LeagueItem modItem)
         {
-            if (modItem.GetStatOnPlayer(player) <= 0)
+            if (cooldownCount <= 0)
             {
                 int target = TerraLeague.PlayerMouseIsHovering(30);
                 if (target != -1 && target != player.whoAmI)
@@ -43,7 +42,6 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         public override void PostPlayerUpdate(Player player, LeagueItem modItem)
         {
-            AddStat(player, modItem, cooldown * 60, -1, true);
             base.PostPlayerUpdate(player, modItem);
         }
 
@@ -55,8 +53,7 @@ namespace TerraLeague.Items.CustomItems.Actives
             player.AddBuff(BuffType<HarbingerOfFrost>(), effectDuration * 60);
             modPlayer.frostHarbinger = true;
             Projectile.NewProjectileDirect(player.Center, Vector2.Zero, ProjectileType<Item_FrostStorm>(), damage, 0, player.whoAmI, target).timeLeft = effectDuration * 60;
-
-            modPlayer.FindAndSetActiveStat(this, (int)(cooldown * modPlayer.Cdr * 60));
+            SetCooldown(player);
         }
     }
 }

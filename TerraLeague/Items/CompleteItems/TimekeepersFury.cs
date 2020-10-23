@@ -28,6 +28,12 @@ namespace TerraLeague.Items.CompleteItems
             item.rare = ItemRarityID.Pink;
             item.accessory = true;
             item.material = true;
+
+            Passives = new Passive[]
+            {
+                new Impendulum(2, 1.5),
+                new TouchOfDeath(2)
+            };
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -36,6 +42,8 @@ namespace TerraLeague.Items.CompleteItems
             player.statManaMax2 += 20;
             player.magicDamage += 0.03f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.03;
+
+            Passives[1].passiveStat = Impendulum.GetStat;
 
             base.UpdateAccessory(player, hideVisual);
         }
@@ -54,24 +62,13 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Impendulum(2, 1.5);
-        }
-
-        public override Passive GetSecondaryPassive()
-        {
-            return new TouchOfDeath(2 * Impendulum.GetStat);
-        }
-
         public override string GetStatText()
         {
-            int slot = TerraLeague.FindAccessorySlotOnPlayer(Main.LocalPlayer, this);
-
-            if (slot != -1)
-                return ((int)GetStatOnPlayer(Main.LocalPlayer)).ToString();
-            else
-                return "";
+            if (Active.currentlyActive)
+            {
+                return Impendulum.GetStat.ToString();
+            }
+            return "";
         }
     }
 }

@@ -25,6 +25,11 @@ namespace TerraLeague.Items.CompleteItems
             item.value = Item.buyPrice(0, 45, 0, 0);
             item.rare = ItemRarityID.Lime;
             item.accessory = true;
+
+            Passives = new Passive[]
+            {
+                new Nightstalker(3, 50)
+            };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -49,13 +54,11 @@ namespace TerraLeague.Items.CompleteItems
             recipe.AddRecipe();
         }
 
-        public override Passive GetPrimaryPassive()
-        {
-            return new Nightstalker(3, 50);
-        }
-
         public override string GetStatText()
         {
+            if (Passives[0].currentlyActive)
+                return ((int)Passives[0].passiveStat).ToString() + "%";
+            else
                 return "";
         }
     }
