@@ -35,8 +35,6 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             AddStat(player, maxStacks, 1);
 
-            passiveStat += 1;
-
             base.OnKilledNPC(npc, damage, crit, player, modItem);
         }
 
