@@ -8,6 +8,7 @@ using System;
 using Terraria.ID;
 using TerraLeague.Items.SummonerSpells;
 using TerraLeague.Items.CustomItems;
+using TerraLeague.Items.Boots;
 
 namespace TerraLeague.UI
 {
@@ -433,6 +434,18 @@ namespace TerraLeague.UI
                                 }
                             }
                         }
+                        else
+                        {
+                            var bootItem = modItem as LeagueBoot;
+                            if (bootItem != null)
+                            {
+                                primPassiveTip = bootItem.BuildFullTooltip(false).Split('\n');
+                                for (int i = 0; i < primPassiveTip.Length; i++)
+                                {
+                                    activePassiveTooltips.Add(primPassiveTip[i]);
+                                }
+                            }
+                        }
 
                         string heading = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetItemName(modItem.item.type).Value);
                         var itemsBaseTooltip = Lang.GetTooltip(modItem.item.type);
@@ -440,7 +453,11 @@ namespace TerraLeague.UI
                         string[] compiledTooltip = new string[ToolTipUI.MaxLines];
                         compiledTooltip[0] = heading;
 
-                        for (int i = 0; i < itemsBaseTooltip.Lines; i++)
+                        int baseTooltipLines = itemsBaseTooltip.Lines;
+                        if (baseTooltipLines == 1 && itemsBaseTooltip.GetLine(0) == "")
+                            baseTooltipLines = 0;
+
+                        for (int i = 0; i < baseTooltipLines; i++)
                         {
                             if (i + 1 > ToolTipUI.MaxLines)
                                 break;
@@ -448,9 +465,9 @@ namespace TerraLeague.UI
                         }
                         for (int i = 0; i < activePassiveTooltips.Count; i++)
                         {
-                            if (i + 1 + itemsBaseTooltip.Lines > ToolTipUI.MaxLines)
+                            if (i + 1 + baseTooltipLines > ToolTipUI.MaxLines)
                                 break;
-                            compiledTooltip[i + 1 + itemsBaseTooltip.Lines] = activePassiveTooltips[i];
+                            compiledTooltip[i + 1 + baseTooltipLines] = activePassiveTooltips[i];
                         }
 
                         TerraLeague.instance.tooltipUI.DrawText(compiledTooltip);

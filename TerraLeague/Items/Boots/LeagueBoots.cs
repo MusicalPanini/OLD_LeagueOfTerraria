@@ -14,6 +14,30 @@ namespace TerraLeague.Items.Boots
         {
         }
 
+        public string BuildFullTooltip(bool withUpgradeText = true)
+        {
+            if (Main.hardMode)
+            {
+                return "[c/F892F8:Tier 5: Fastest Sprint + Rocket Boots + Ice Skates]\n8% increased movement speed\n" + Tier5Tip();
+            }
+            else if (NPC.downedBoss3)
+            {
+                return "[c/F49090:Tier 4: Faster Sprint + Rocket Boots]\n8% increased movement speed\n" + Tier4Tip() + (withUpgradeText ? "\nDefeat The Wall of Flesh to upgrade" : "");
+            }
+            else if (NPC.downedBoss2)
+            {
+                return "[c/E8B688:Tier 3: Fast Sprint + Rocket Boots]\n" + Tier3Tip() + (withUpgradeText ? "\nDefeat Skeletron to upgrade" : "");
+            }
+            else if (NPC.downedBoss1)
+            {
+                return "[c/92F892:Tier 2: Fast Sprint]\n" + Tier2Tip() + (withUpgradeText ? (Main.ActiveWorldFileData.HasCorruption ? "\nDefeat The Eater of Worlds to upgrade" : "\nDefeat The Brain of Cthulhu to upgrade") : "");
+            }
+            else
+            {
+                return "[c/8686E5:Tier 1: Slow Sprint]\n" + Tier1Tip() + (withUpgradeText ? "\nDefeat The Eye of Cthulhu to upgrade" : "");
+            }
+        }
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
@@ -22,33 +46,29 @@ namespace TerraLeague.Items.Boots
 
             if (tt != null)
             {
+                tt.text = BuildFullTooltip();
                 if (Main.hardMode)
                 {
-                    tt.text = "[c/F892F8:Tier 5: Fastest Sprint + Rocket Boots + Ice Skates]\n8% increased movement speed\n" + Tier5Tip();
                     item.value = 350000;
                     item.rare = ItemRarityID.Pink;
                 }
                 else if (NPC.downedBoss3)
                 {
-                    tt.text = "[c/F49090:Tier 4: Faster Sprint + Rocket Boots]\n8% increased movement speed\n" + Tier4Tip() + "\nDefeat The Wall of Flesh to upgrade";
                     item.value = 240000;
                     item.rare = ItemRarityID.LightRed;
                 }
                 else if (NPC.downedBoss2)
                 {
-                    tt.text = "[c/E8B688:Tier 3: Fast Sprint + Rocket Boots]\n" + Tier3Tip() + "\nDefeat Skeletron to upgrade";
                     item.value = 100000;
                     item.rare = ItemRarityID.Orange;
                 }
                 else if (NPC.downedBoss1)
                 {
-                    tt.text = "[c/92F892:Tier 2: Fast Sprint]\n" + Tier2Tip() + (Main.ActiveWorldFileData.HasCorruption ? "\nDefeat The Eater of Worlds to upgrade" : "\nDefeat The Brain of Cthulhu to upgrade");
                     item.value = 50000;
                     item.rare = ItemRarityID.Green;
                 }
                 else
                 {
-                    tt.text = "[c/8686E5:Tier 1: Slow Sprint]\n" + Tier1Tip() + "\nDefeat The Eye of Cthulhu to upgrade";
                     item.value = 25000;
                     item.rare = ItemRarityID.Blue;
                 }
