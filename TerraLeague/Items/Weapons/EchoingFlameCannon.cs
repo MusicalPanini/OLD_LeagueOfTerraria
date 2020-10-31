@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -29,105 +30,6 @@ namespace TerraLeague.Items.Weapons
             return "You cannot know strength... Until you are broken.";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "Corrosive Charge";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "AbilityImages/CorrosiveCharge";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                return "Launch a canister of corrosive gas that detonates on impact with the ground";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return (int)(item.damage * 0.6);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (dam == DamageType.RNG)
-                    return 30;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 20;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.RNG) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " ranged damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            return false;
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 10;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 16);
-                    int projType = ProjectileType<EchoingFlameCannon_CorrosiveCharge>();
-                    int damage = (GetAbilityBaseDamage(player, type)) + GetAbilityScalingDamage(player, type, DamageType.RNG);
-                    int knockback = 0;
-
-                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 52;
@@ -142,10 +44,12 @@ namespace TerraLeague.Items.Weapons
             item.value = 100000;
             item.rare = ItemRarityID.Pink;
             item.shootSpeed = 12f;
-            item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 36);
+            item.UseSound = new LegacySoundStyle(2, 36);
             item.useAmmo = AmmoID.Bullet;
-            item.shoot = 10;
+            item.shoot = ProjectileID.Bullet;
             item.autoReuse = true;
+
+            Abilities[(int)AbilityType.Q] = new CorrosiveCharge(this);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -216,19 +120,6 @@ namespace TerraLeague.Items.Weapons
                     Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(projectileAngles[i])), ProjectileType<EchoingFlameCannon_EchoingFlames>(), damage/2, 5, player.whoAmI);
                 }
             }
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
         }
 
         public override void AddRecipes()

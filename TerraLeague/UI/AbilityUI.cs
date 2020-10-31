@@ -11,6 +11,7 @@ using System.Linq;
 using Terraria.Graphics;
 using System.Collections.Generic;
 using TerraLeague.Items.Weapons;
+using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.UI
 {
@@ -94,16 +95,16 @@ namespace TerraLeague.UI
             base.DrawSelf(spriteBatch);
         }
 
-        void SetToolTip(AbilityItem item, AbilityType type)
+        void SetToolTip(Ability ability, AbilityType type)
         {
-            if (item != null)
+            if (ability != null)
             {
                 List<string> tooltip = new List<string>();
-                tooltip.Add(TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, item.GetAbilityName(type)));
-                if (item.GetDamageTooltip(Main.LocalPlayer, type) != "")
-                    tooltip.AddRange(item.GetDamageTooltip(Main.LocalPlayer, type).Split('\n'));
-                tooltip.AddRange(item.GetAbilityTooltip(type).Split('\n'));
-                tooltip.Add(item.GetCooldown(type) + " second cooldown");
+                tooltip.Add(TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, ability.GetAbilityName()));
+                if (ability.GetDamageTooltip(Main.LocalPlayer) != "")
+                    tooltip.AddRange(ability.GetDamageTooltip(Main.LocalPlayer).Split('\n'));
+                tooltip.AddRange(ability.GetAbilityTooltip().Split('\n'));
+                tooltip.Add(ability.GetCooldown() + " second cooldown");
 
                 TerraLeague.instance.tooltipUI.DrawText(tooltip.ToArray());
             }
@@ -228,14 +229,14 @@ namespace TerraLeague.UI
 
                 slotIcon.SetImage(GetImage(abilityType));
 
-                if (modPlayer.Abilities[(int)abilityType].GetScaledManaCost(abilityType) > Main.LocalPlayer.statMana)
+                if (modPlayer.Abilities[(int)abilityType].GetScaledManaCost() > Main.LocalPlayer.statMana)
                     slotOOM.SetImage(TerraLeague.instance.GetTexture("AbilityImages/OOM"));
-                else if(!modPlayer.Abilities[(int)abilityType].CheckIfNotOnCooldown(Main.LocalPlayer, abilityType) || !modPlayer.Abilities[(int)abilityType].CanCurrentlyBeCast(Main.LocalPlayer, abilityType))
+                else if(!Ability.CheckIfNotOnCooldown(Main.LocalPlayer, abilityType) || !modPlayer.Abilities[(int)abilityType].CanCurrentlyBeCast(Main.LocalPlayer))
                     slotOOM.SetImage(TerraLeague.instance.GetTexture("AbilityImages/CantCast"));
                 else
                     slotOOM.SetImage(TerraLeague.instance.GetTexture("AbilityImages/Clear"));
 
-                if (modPlayer.Abilities[(int)abilityType].CurrentlyHasSpecialCast(Main.LocalPlayer, abilityType))
+                if (modPlayer.Abilities[(int)abilityType].CurrentlyHasSpecialCast(Main.LocalPlayer))
                     slotSpecialCast.SetImage(TerraLeague.instance.GetTexture("AbilityImages/SpecialCast"));
                 else
                     slotSpecialCast.SetImage(clear);
@@ -262,8 +263,8 @@ namespace TerraLeague.UI
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
             try
             {
-                if (modPlayer.Abilities[(int)type].GetScaledManaCost(type) > 0)
-                    return modPlayer.Abilities[(int)type].GetScaledManaCost(type).ToString();
+                if (modPlayer.Abilities[(int)type].GetScaledManaCost() > 0)
+                    return modPlayer.Abilities[(int)type].GetScaledManaCost().ToString();
                 else
                     return "";
             }
@@ -279,7 +280,7 @@ namespace TerraLeague.UI
 
             try
             {
-                return TerraLeague.instance.GetTexture(modPlayer.Abilities[(int)type].GetIconTexturePath(type));
+                return TerraLeague.instance.GetTexture(modPlayer.Abilities[(int)type].GetIconTexturePath());
             }
             catch (Exception)
             {

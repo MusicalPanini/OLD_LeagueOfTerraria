@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -30,111 +31,6 @@ namespace TerraLeague.Items.Weapons
             return "Prepare... for your finale";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "Dancing Grenade";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "AbilityImages/DancingGranade";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                return "Launch a bouncing grenade that gains 44% more damage for each enemy it hits";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return (int)System.Math.Round(0.75 * item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rocketDamageLastStep);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (dam == DamageType.RNG)
-                    return 75;
-                else if (dam == DamageType.MAG)
-                    return 60;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 30;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.RNG) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " ranged damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 8;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return false;
-            else
-                return false;
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 18f);
-                    velocity.Y *= 0.8f;
-                    int projType = ProjectileType<Whisper_DancingGrenade>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG) + GetAbilityScalingDamage(player, type, DamageType.MAG);
-                    int knockback = 4;
-
-                    SetAnimation(player, 20, 20, position + velocity);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 140;
@@ -152,6 +48,8 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 1f;
             item.useAmmo = AmmoID.Bullet;
             item.autoReuse = true;
+
+            Abilities[(int)AbilityType.Q] = new DancingGrenade(this);
         }
 
         public override bool CanUseItem(Player player)
@@ -207,19 +105,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
         }
     }
 }

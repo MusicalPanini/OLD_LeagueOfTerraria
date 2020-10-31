@@ -1485,7 +1485,10 @@ namespace TerraLeague
                 AbilityItem abilityItem = GetModItem(CastItem) as AbilityItem;
 
                 if (abilityItem != null)
-                    abilityItem.Efx(Main.player[Caster], AbilityType);
+                {
+                    abilityItem.SetDefaults();
+                    abilityItem.Abilities[(int)AbilityType].Efx(Main.player[Caster]);
+                }
             }
         }
 

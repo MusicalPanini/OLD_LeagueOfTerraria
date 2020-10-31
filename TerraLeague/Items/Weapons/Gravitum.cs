@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -28,147 +29,6 @@ namespace TerraLeague.Items.Weapons
             return "Darkness will weigh upon them";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "Binding Eclipse";
-            else if (type == AbilityType.W)
-                return "Phase";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "AbilityImages/BindingEclipse";
-            else if (type == AbilityType.W)
-                return "AbilityImages/Phase";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                return "Expunge all marked enemies, stunning and dealing damage to them";
-            }
-            else if (type == AbilityType.W)
-            {
-                return "Swap weapon to Infernum";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-            if (type == AbilityType.Q)
-                return (int)(item.damage * 2f);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
-            if (type == AbilityType.Q)
-            {
-                if (dam == DamageType.MAG)
-                    return 80;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 40;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " magic damage"
-                    + "\nUses 10% Gravitum Ammo";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 14;
-            else if (type == AbilityType.W)
-                return 1;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            return false;
-        }
-
-        public override bool CanCurrentlyBeCast(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo < 10)
-                {
-                    return false;
-                }
-
-                return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 999999, BuffType<GravitumMark>());
-            }
-            return base.CanCurrentlyBeCast(player, type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type)))
-                {
-                    player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo -= 10;
-                    player.CheckMana(GetBaseManaCost(type), true);
-                    var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 999999, true, true);
-
-                    for (int i = 0; i < npcs.Count; i++)
-                    {
-                        NPC npc = Main.npc[npcs[i]];
-                        if (npc.HasBuff(BuffType<GravitumMark>()))
-                        {
-                            SetCooldowns(player, type);
-                            Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ProjectileType<Projectiles.Gravitum_BindingEclipse>(), GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.MAG), 0, player.whoAmI, npcs[i]);
-                        }
-                    }
-                }
-            }
-            else if (type == AbilityType.W)
-            {
-                if (CheckIfNotOnCooldown(player, type))
-                {
-                    item.SetDefaults(ItemType<Infernum>());
-
-                    CombatText.NewText(player.Hitbox, new Color(0, 148, 255), "INFERNUM");
-
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 100;
@@ -187,6 +47,9 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<Gravitum_Orb>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 111);
             item.autoReuse = true;
+
+            Abilities[(int)AbilityType.Q] = new BindingEclipse(this);
+            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Grv);
         }
 
         public override bool CanUseItem(Player player)
@@ -225,26 +88,9 @@ namespace TerraLeague.Items.Weapons
             recipe.AddRecipe();
         }
 
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            if (type == AbilityType.W)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-30, -10);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 13, -1f);
-            }
         }
     }
 }

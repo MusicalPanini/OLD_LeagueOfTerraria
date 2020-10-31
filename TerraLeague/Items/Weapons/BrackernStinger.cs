@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -21,99 +22,6 @@ namespace TerraLeague.Items.Weapons
             return "Feel my sting!";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "Crystalline Exoskeleton";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "AbilityImages/CrystallineExoskeleton";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                return "Gain 'Swiftness' and 10% of your max life as a shield for 6 seconds";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return (int)((player.GetModPlayer<PLAYERGLOBAL>().maxLifeLastStep/10));
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 45;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", GetAbilityBaseDamage(player, type), 100, true) + " shielding";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override string GetTooltip(AbilityType type)
-        {
-            return base.GetTooltip(type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return true;
-            else
-                return false;
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 12;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
-                    player.AddBuff(BuffID.Swiftness, 360);
-                    modPlayer.AddShield(player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(GetAbilityBaseDamage(player, type), true), 360, new Color(181,77,177), ShieldType.Basic);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 9;
@@ -131,6 +39,8 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<BrackernStinger_Whip>();
             item.noMelee = true;
             item.noUseGraphic = true;
+
+            Abilities[(int)AbilityType.W] = new CrystallineExoskeleton(this);
         }
 
         public override bool CanUseItem(Player player)
@@ -142,8 +52,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-
-
             Projectile.NewProjectile(position.X, position.Y, speedX, speedY, type, damage, knockBack, player.whoAmI, 0,
                 Main.rand.Next(-100, 100) * 0.001f * player.gravDir);
             return false;
@@ -159,22 +67,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 27, -0.5f);
-            }
-            base.Efx(player, type);
         }
     }
 }

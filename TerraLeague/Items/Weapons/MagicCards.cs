@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -29,117 +30,6 @@ namespace TerraLeague.Items.Weapons
             return "Lady luck is smilin'";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "Wild Cards";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "AbilityImages/WildCards";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                return "Throw 3 cards in a cone";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return (int)System.Math.Round(item.damage * 1.5);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (dam == DamageType.MAG)
-                {
-                    return 65;
-                }
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 35;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " magic damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            else
-                return false;
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 6;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15 * 0.6f);
-                    int projType = ProjectileType<MagicCards_GreenCard>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.MAG);
-                    int knockback = 4;
-
-                    int numberProjectiles = 3;
-                    float startingAngle = 30;
-                    for (int i = 0; i < numberProjectiles; i++)
-                    {
-                        Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
-                        Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
-                        startingAngle -= 30f;
-                    }
-                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 12;
@@ -160,6 +50,8 @@ namespace TerraLeague.Items.Weapons
             item.useTurn = true;
             item.autoReuse = true;
             item.noUseGraphic = true;
+
+            Abilities[(int)AbilityType.Q] = new WildCards(this);
         }
 
         public override bool CanUseItem(Player player)
@@ -200,19 +92,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                Main.PlaySound(new LegacySoundStyle(2, 19, Terraria.Audio.SoundType.Sound));
         }
     }
 }

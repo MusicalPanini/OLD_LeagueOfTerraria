@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -27,116 +28,6 @@ namespace TerraLeague.Items.Weapons
             return "As evil grows, so shall I";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return "Divine Judgement";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return "AbilityImages/DivineJudgement";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.R)
-            {
-                return "Grant an ally or yourself invulnerability for 2 seconds." +
-                    "\nWhen the shield wears off, 7 celestial swords will fall from the sky and explode on the ground";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return item.damage * 2;
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.R)
-            {
-                if (dam == DamageType.MEL)
-                    return 100;
-                else if (dam == DamageType.SUM)
-                    return 80;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return 150;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MEL) + " + " + GetScalingTooltip(player, type, DamageType.SUM) + " summon damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return 120;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-            {
-                int target = TerraLeague.PlayerMouseIsHovering(30, -1, player.team);
-                if (target != -1)
-                {
-                    if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                    {
-                        Vector2 position = Main.player[target].position;
-                        Vector2 velocity = Vector2.Zero;
-                        int projType = ProjectileType<StarfireSpellblades_DivineJudgement>();
-                        int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MEL) + GetAbilityScalingDamage(player, type, DamageType.SUM);
-                        int knockback = 10;
-
-                        DoEfx(Main.player[target], type);
-                        Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, target);
-                        SetCooldowns(player, type);
-                    }
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-            {
-                Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
-            }
-
-            base.Efx(player, type);
-        }
-
         public override void SetDefaults()
         {
             item.damage = 110;
@@ -153,6 +44,8 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shoot = ModContent.ProjectileType<StarfireSpellblades_Firewave>();
             item.shootSpeed = 8;
+
+            Abilities[(int)AbilityType.R] = new DivineJudgement(this);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -207,11 +100,6 @@ namespace TerraLeague.Items.Weapons
             item.prefix = prefix;
 
             base.Update(ref gravity, ref maxFallSpeed);
-        }
-
-        public override void AddRecipes()
-        {
-           
         }
 
         public override bool GetIfAbilityExists(AbilityType type)

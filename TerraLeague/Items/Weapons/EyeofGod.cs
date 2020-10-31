@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -25,94 +26,6 @@ namespace TerraLeague.Items.Weapons
             return "There are kind and gentle gods. Mine isn't one of those.";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return "Test of Spirit";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return "AbilityImages/TestofSpirit";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.E)
-            {
-                return "Reach out and pull the spirit of an enemy." +
-                    "\nThis spirit can be attacked to deal 50% of the damage back to the owner of the spirit.";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return 40;
-            return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return 14;
-            return base.GetRawCooldown(type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            return false;
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.E)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12f);
-                    int projType = ProjectileType<EyeofGod_TestofSpirit>();
-                    int damage = 1;
-                    int knockback = 0;
-
-                    Projectile proj = Projectile.NewProjectileDirect(position, velocity, projType, damage, knockback, player.whoAmI);
-
-                    SetAnimation(player, 30, 30, position + velocity);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 15;
@@ -132,6 +45,8 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<EyeofGod_Tentacle>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 8);
             item.autoReuse = false;
+
+            Abilities[(int)AbilityType.E] = new TestOfSpirit(this);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -143,13 +58,6 @@ namespace TerraLeague.Items.Weapons
             return false;
         }
 
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
@@ -157,14 +65,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.E)
-            {
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 8, -0.25f);
-            }
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using TerraLeague.Buffs;
 using TerraLeague.Items.Weapons;
+using TerraLeague.Items.Weapons.Abilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -109,11 +110,11 @@ namespace TerraLeague.Projectiles
             {
                 Player player = Main.player[projectile.owner];
 
-                AbilityItem item = GetModItem(ItemType<TerrorOfTheVoid>()) as AbilityItem;
+                Feast feast = new Feast(GetModItem(ItemType<TerrorOfTheVoid>()) as AbilityItem);
 
-                if (item != null)
+                if (feast != null)
                 {
-                    item.DoEfx(player, AbilityType.R);
+                    feast.DoEfx(player, AbilityType.R);
                     player.GetModPlayer<PLAYERGLOBAL>().feastStacks += target.lifeMax;
                     CombatText.NewText(player.getRect(), new Color(89, 0, 77), "+" + target.lifeMax, true);
                 }

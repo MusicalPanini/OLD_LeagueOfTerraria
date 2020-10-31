@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -29,99 +30,6 @@ namespace TerraLeague.Items.Weapons
             return "Feel the thorns embrace";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "Rampant Growth";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "AbilityImages/RampantGrowth";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                return "Toss 2 seeds that will grow into a Night-Blooming Zychid bulb";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return (int)Math.Round(0.5 * item.damage);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.W)
-            {
-                if (dam == DamageType.SUM)
-                    return 20;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 0;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.SUM) + " minion damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 20;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    Vector2 position = player.Center;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 10);
-                    int projType = ProjectileType<StrangleThornsTome_Seed>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.SUM);
-                    float knockback = item.knockBack;
-
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                    Projectile.NewProjectile(position, velocity * 1.25f, projType, damage, knockback, player.whoAmI);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 30;
@@ -138,19 +46,9 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item8;
             item.mana = 16;
             item.shootSpeed = 32;
-            
             item.shoot = ProjectileType<StrangleThornsTome_StrangleThorns>();
-        }
 
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            item.shoot = ProjectileType<StrangleThornsTome_StrangleThorns>();
-            return base.Shoot(player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
-        }
-
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
-        {
-
+            Abilities[(int)AbilityType.W] = new RampantGrowth(this);
         }
 
         public override void AddRecipes()
@@ -164,13 +62,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return true;
-            return base.GetIfAbilityExists(type);
         }
     }
 }

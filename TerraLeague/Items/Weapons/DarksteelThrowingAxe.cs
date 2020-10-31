@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -25,103 +26,6 @@ namespace TerraLeague.Items.Weapons
             return "Welcome to the League of Draaaaven";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "Spinning Axe";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return "AbilityImages/SpinningAxe";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                return "You unfurl your axe and start to rapidly spin it." +
-                 "\nThis axe deals bonus damage and will ricochet of the enemy for you to catch." +
-                 "\nCatching the axe will refresh this buff";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return (int)(item.damage);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (dam == DamageType.RNG)
-                    return 100;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 30;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.RNG) + " bonus ranged damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            else
-                return false;
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return 8;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    player.AddBuff(BuffType<Buffs.SpinningAxe>(), 240);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 42;
@@ -141,6 +45,8 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.useTurn = true;
             item.noUseGraphic = true;
+
+            Abilities[(int)AbilityType.Q] = new SpinningAxe(this);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -149,7 +55,10 @@ namespace TerraLeague.Items.Weapons
 
             if (player.GetModPlayer<PLAYERGLOBAL>().spinningAxe)
             {
-                Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY) * 1.2f, ProjectileType<Projectiles.DarksteelThrowingAxe_SpinningAxe>(), damage + (int)(GetAbilityBaseDamage(player, AbilityType.Q) + GetAbilityScalingDamage(player, AbilityType.Q, DamageType.RNG)), knockBack + 1.5f, player.whoAmI, 1, player.velocity.X);
+                type = ProjectileType<DarksteelThrowingAxe_SpinningAxe>();
+                damage += Abilities[(int)AbilityType.Q].GetAbilityBaseDamage(player);
+                damage += Abilities[(int)AbilityType.Q].GetAbilityScaledDamage(player, DamageType.RNG);
+                Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY) * 1.2f, type, damage, knockBack + 1.5f, player.whoAmI, 1, player.velocity.X);
                 player.ClearBuff(BuffType<Buffs.SpinningAxe>());
                 return false;
             }
@@ -173,15 +82,6 @@ namespace TerraLeague.Items.Weapons
             if (type == AbilityType.Q)
                 return true;
             return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.Q)
-            {
-                Main.PlaySound(SoundID.Item7, player.MountedCenter);
-            }
-            base.Efx(player, type);
         }
     }
 }

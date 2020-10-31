@@ -20,6 +20,7 @@ using Microsoft.Xna.Framework.Audio;
 using TerraLeague.Items.CustomItems.Passives;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items;
+using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague
 {
@@ -483,7 +484,7 @@ namespace TerraLeague
         public bool reviving = false;
 
         // Abilities
-        public AbilityItem[] Abilities = new AbilityItem[4];
+        public Ability[] Abilities = new Ability[4];
         public int[] AbilityCooldowns = new int[4];
 
         // Actives and Passives
@@ -1361,14 +1362,12 @@ namespace TerraLeague
                 player.velocity = Vector2.Zero;
                 if (requiemChannelTime == 1 && player == Main.LocalPlayer)
                 {
-                    int deathTomeDamage = player.inventory.Where(x => x.type == ItemType<DeathsingerTome>()).First().damage;
-
                     var npcs = TerraLeague.GetAllNPCsInRange(player.Center, 999999, true, true);
 
                     for (int i = 0; i < npcs.Count; i++)
                     {
                         NPC npc = Main.npc[npcs[i]];
-                        Projectile.NewProjectile(new Vector2(npc.Center.X, npc.Center.Y - 500), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityBaseDamage(player, AbilityType.R) + ((AbilityItem)GetInstance<DeathsingerTome>()).GetAbilityScalingDamage(player, AbilityType.R, DamageType.MAG), 0, player.whoAmI, npc.whoAmI);
+                        Projectile.NewProjectile(new Vector2(npc.Center.X, npc.Center.Y - 500), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), requiemDamage, 0, player.whoAmI, npc.whoAmI);
                     }
                 }
             }
@@ -1896,20 +1895,24 @@ namespace TerraLeague
                 }
 
                 if (TerraLeague.QAbility.Current && Abilities[0] != null)
-                    if (Abilities[0].CanCurrentlyBeCast(player, AbilityType.Q))
-                        UseAbility(AbilityType.Q);
+                    if (Abilities[0].CanCurrentlyBeCast(player))
+                        Abilities[0].DoEffect(player, AbilityType.Q);
+                        //UseAbility(AbilityType.Q);
 
                 if (TerraLeague.WAbility.Current && Abilities[1] != null)
-                    if (Abilities[1].CanCurrentlyBeCast(player, AbilityType.W))
-                        UseAbility(AbilityType.W);
+                    if (Abilities[1].CanCurrentlyBeCast(player))
+                        Abilities[1].DoEffect(player, AbilityType.W);
+                //UseAbility(AbilityType.W);
 
                 if (TerraLeague.EAbility.Current && Abilities[2] != null)
-                    if (Abilities[2].CanCurrentlyBeCast(player, AbilityType.E))
-                        UseAbility(AbilityType.E);
+                    if (Abilities[2].CanCurrentlyBeCast(player))
+                        Abilities[2].DoEffect(player, AbilityType.E);
+                //UseAbility(AbilityType.E);
 
                 if (TerraLeague.RAbility.Current && Abilities[3] != null)
-                    if (Abilities[3].CanCurrentlyBeCast(player, AbilityType.R))
-                        UseAbility(AbilityType.R);
+                    if (Abilities[3].CanCurrentlyBeCast(player))
+                        Abilities[3].DoEffect(player, AbilityType.R);
+                //UseAbility(AbilityType.R);
 
                 if (!player.silence)
                 {
@@ -2088,9 +2091,9 @@ namespace TerraLeague
                 if (bioBarrage && proj.ranged)
                 {
                     int bioonhit = (int)(target.lifeMax * (0.04 + (MAG * 0.0005)));
-                    if (bioonhit > MouthoftheAbyss.GetMaxOnHit(this))
+                    if (bioonhit > Items.Weapons.Abilities.BioArcaneBarrage.GetMaxOnHit(this))
                     {
-                        bioonhit = MouthoftheAbyss.GetMaxOnHit(this);
+                        bioonhit = Items.Weapons.Abilities.BioArcaneBarrage.GetMaxOnHit(this);
                     }
 
                     onhitdamage += bioonhit;
@@ -2143,7 +2146,7 @@ namespace TerraLeague
 
                 if (toxicShot && proj.ranged)
                 {
-                    onhitdamage += (int)(new ToxicBlowgun().GetAbilityBaseDamage(player, AbilityType.E) + new ToxicBlowgun().GetAbilityScalingDamage(player, AbilityType.E, DamageType.SUM));
+                    onhitdamage += Items.Weapons.Abilities.ToxicShot.GetMaxOnHit(this);
                     target.AddBuff(BuffID.Venom, 240);
                 }
                 if (proj.melee)
@@ -2269,7 +2272,7 @@ namespace TerraLeague
             if (decisiveStrike)
             {
                 target.AddBuff(BuffType<Slowed>(), 180);
-                player.ClearBuff(BuffType<DecisiveStrike>());
+                player.ClearBuff(BuffType<Buffs.DecisiveStrike>());
             }
 
             // Runs NPCHit() for all equiped LeagueItems
@@ -2342,7 +2345,7 @@ namespace TerraLeague
             }
             if (excessiveForce)
             {
-                player.ClearBuff(BuffType<ExcessiveForce>());
+                player.ClearBuff(BuffType<Buffs.ExcessiveForce>());
                 excessiveForce = false;
                 float angle = player.AngleTo(Main.MouseWorld);
                 for (int i = 0; i < 12; i++)
@@ -2698,6 +2701,7 @@ namespace TerraLeague
         /// Activates the desired ability if it exists
         /// </summary>
         /// <param name="abilityType"></param>
+        [Obsolete]
         public void UseAbility(AbilityType abilityType)
         {
             if (player.whoAmI == Main.myPlayer)
@@ -2720,11 +2724,12 @@ namespace TerraLeague
 
                 if (heldItem != null)
                 {
+                    heldItem.SetDefaults();
                     for (int i = 0; i < Abilities.Length; i++)
                     {
                         if (heldItem.GetIfAbilityExists((AbilityType)i))
                         {
-                            Abilities[i] = heldItem;
+                            Abilities[i] = heldItem.Abilities[i];
                             Found[i] = true;
                         }
                     }
@@ -2736,11 +2741,12 @@ namespace TerraLeague
 
                     if (curItem != null)
                     {
+                        curItem.SetDefaults();
                         for (int i = 0; i < Abilities.Length; i++)
                         {
                             if (curItem.GetIfAbilityExists((AbilityType)i) && !Found[i])
                             {
-                                Abilities[i] = curItem;
+                                Abilities[i] = curItem.Abilities[i];
                                 Found[i] = true;
                             }
                         }
@@ -2749,7 +2755,6 @@ namespace TerraLeague
                             break;
                     }
                 }
-
 
                 for (int i = 0; i < Abilities.Length; i++)
                 {
