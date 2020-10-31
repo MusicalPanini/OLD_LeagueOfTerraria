@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -27,92 +28,7 @@ namespace TerraLeague.Items.Weapons
         {
             return "Here comes the punch line!";
         }
-
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return "Excessive Force";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return "AbilityImages/ExcessiveForce";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.E)
-            {
-                return "Your next melee attack will deal 300% more damage and splash outward";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return (int)0;
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return 30;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return "";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return true;
-            else
-                return false;
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return 16;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.E)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    player.AddBuff(BuffType<ExcessiveForce>(), 240);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
+        
         public override void SetDefaults()
         {
             item.damage = 70;
@@ -130,6 +46,8 @@ namespace TerraLeague.Items.Weapons
             item.noUseGraphic = true;
             item.noMelee = true;
             item.autoReuse = true;
+
+            Abilities[(int)AbilityType.E] = new Abilities.ExcessiveForce(this);
         }
 
         public override bool CanUseItem(Player player)
@@ -164,29 +82,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.E)
-            {
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 42, 24, -0.5f);
-                for (int j = 0; j < 10; j++)
-                {
-                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Fire, 0, -10);
-                    dust.velocity.X *= 0;
-                    dust.velocity.Y -= 4;
-                    dust.noGravity = true;
-                    dust.scale = 2;
-                }
-            }
         }
     }
 }

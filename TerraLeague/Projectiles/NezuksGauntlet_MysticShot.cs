@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
+using TerraLeague.Items.Weapons.Abilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
@@ -71,8 +72,7 @@ namespace TerraLeague.Projectiles
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             if (target.HasBuff(BuffType<Buffs.EssenceFluxDebuff>()))
             {
-                Items.Weapons.NezuksGauntlet gaunt = new Items.Weapons.NezuksGauntlet();
-                modPlayer.magicFlatDamage += (int)(player.HeldItem.damage + gaunt.GetAbilityScalingDamage(player, AbilityType.W, DamageType.RNG) + gaunt.GetAbilityScalingDamage(player, AbilityType.W, DamageType.MAG));
+                modPlayer.magicFlatDamage += EssenceFlux.GetFluxDamage(modPlayer);
 
                 TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 12, 0.5f);
 

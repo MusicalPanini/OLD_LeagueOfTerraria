@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using TerraLeague.Buffs;
+using TerraLeague.Items.Weapons.Abilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,91 +26,6 @@ namespace TerraLeague.Items.Weapons
             return "Valor, to me";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "Heightened Senses";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "AbilityImages/HeightenedSenses";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                return "Shows location of enemies, traps and treasure";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return (int)0;
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 60;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return true;
-            else
-                return false;
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 90;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    player.AddBuff(BuffType<HeightenedSenses>(), 60 * 4);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 14;
@@ -129,21 +44,13 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item5;
             item.shoot = ProjectileID.PurificationPowder;
             item.useAmmo = AmmoID.Arrow;
-        }
 
-        public override bool CanUseItem(Player player)
-        {
-            return base.CanUseItem(player);
+            Abilities[(int)AbilityType.W] = new HeightenedSenses(this);
         }
 
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-5, 0);
-        }
-
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
-        {
-            return true;
         }
 
         public override void AddRecipes()
@@ -153,22 +60,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 4, -0.5f);
-                TerraLeague.DustRing(133, player, Color.White);
-            }
         }
     }
 }

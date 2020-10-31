@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Linq;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -28,101 +29,6 @@ namespace TerraLeague.Items.Weapons
             return "BYE BYE";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return "Super Mega Death Rocket!";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return "AbilityImages/SMDR";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.R)
-            {
-                return "Fire a giant rocket that gains damage the longer it flys";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return (int)(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().rocketDamageLastStep * item.damage * 5);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.R)
-            {
-                if (dam == DamageType.RNG)
-                    return 150;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return 150;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return "Up to " + GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.RNG) + " ranged damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return 30;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    Vector2 position = player.MountedCenter;
-                    Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 2.5f);
-                    int projType = ProjectileType<FishBones_SMDR>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.RNG);
-                    int knockback = 6;
-
-                    SetAnimation(player, item.useTime, item.useAnimation, position + velocity);
-                    DoEfx(player, type);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.width = 32;
@@ -141,6 +47,8 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileID.RocketI;
             item.shootSpeed = 6;
             item.useAmmo = AmmoID.Rocket;
+
+            Abilities[(int)AbilityType.R] = new SuperMegaDeathRocket(this);
         }
 
         public override bool CanUseItem(Player player)
@@ -150,8 +58,6 @@ namespace TerraLeague.Items.Weapons
             item.useTime = 30;
             return true;
         }
-
-        
         
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
@@ -214,19 +120,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.R)
-                Main.PlaySound(new LegacySoundStyle(2, 11), player.Center);
         }
     }
 }

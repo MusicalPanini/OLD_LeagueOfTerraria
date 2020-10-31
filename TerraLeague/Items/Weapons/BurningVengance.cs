@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
 using Terraria.Audio;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
@@ -31,148 +32,6 @@ namespace TerraLeague.Items.Weapons
             return "The inferno begins";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "Pillar of Flame";
-            else if (type == AbilityType.R)
-                return "Pyroclasm";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "AbilityImages/PillarOfFlame";
-            else if (type == AbilityType.R)
-                return "AbilityImages/Pyroclasm";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                return "Create a rising pillar of magic fire." +
-                    "\nIf a target is on fire, set them 'Ablaze' instead";
-            }
-            else if (type == AbilityType.R)
-            {
-                return "Launch a homing fireball at a target that bounces between enemies" +
-                    "\nDeals double damage to enemies who are 'Ablaze' and causes an explosion";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return (int)(2 * item.damage);
-            else if (type == AbilityType.R)
-                return (int)(4 * item.damage);
-            else
-                return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.W)
-            {
-                if (dam == DamageType.MAG)
-                    return 60;
-            }
-            else if (type == AbilityType.R)
-            {
-                if (dam == DamageType.MAG)
-                    return 25;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 60;
-            else if (type == AbilityType.R)
-                return 100;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " magic damage";
-            else if (type == AbilityType.R)
-                return GetAbilityBaseDamage(player, type) + " + " + GetScalingTooltip(player, type, DamageType.MAG) + " magic damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 12;
-            else if (type == AbilityType.R)
-                return 40;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.W || type == AbilityType.R)
-                return true;
-            else
-                return false;
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y + 600);
-                    Vector2 velocity = new Vector2(0, -1.25f);
-                    int projType = ProjectileType<BurningVengance_PillarOfFlame>();
-                    int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
-                    int knockback = 0;
-
-                    SetAnimation(player, 10, 10, position + velocity);
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                    SetCooldowns(player, type);
-                }
-            }
-            else if (type == AbilityType.R)
-            {
-                if (TerraLeague.NPCMouseIsHovering(30, true) != -1)
-                {
-                    if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                    {
-                        Vector2 position = player.position;
-                        Vector2 velocity = new Vector2(0, 0);
-                        int projType = ProjectileType<BurningVengance_Pyroclasm>();
-                        int damage = GetAbilityBaseDamage(player, type) + GetAbilityScalingDamage(player, type, DamageType.MAG);
-                        int knockback = 0;
-
-                        SetAnimation(player, 10, 10, position + velocity);
-                        Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, TerraLeague.NPCMouseIsHovering(30, true), -1);
-                        SetCooldowns(player, type);
-                    }
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 23;
@@ -191,6 +50,9 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.shoot = ProjectileType<BurningVengance_Flame>();
             item.autoReuse = true;
+
+            Abilities[(int)AbilityType.W] = new PillarOfFlame(this);
+            Abilities[(int)AbilityType.R] = new Pyroclasm(this);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -207,17 +69,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.Bookcases);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.W || type == AbilityType.R)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
         }
     }
 }

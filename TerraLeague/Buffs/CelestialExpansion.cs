@@ -19,8 +19,9 @@ namespace TerraLeague.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            StarForgersCore star = new StarForgersCore();
-            player.GetModPlayer<PLAYERGLOBAL>().minionFlatDamage += star.GetAbilityBaseDamage(player, AbilityType.W) + star.GetAbilityScalingDamage(player, AbilityType.W, DamageType.SUM);
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            modPlayer.minionFlatDamage += Items.Weapons.Abilities.CelestialExpansion.GetBonusDamage(modPlayer);
 
             if (player.buffTime[buffIndex] == 1)
             {

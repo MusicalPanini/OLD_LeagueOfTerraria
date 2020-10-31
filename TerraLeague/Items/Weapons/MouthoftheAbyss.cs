@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using TerraLeague.Buffs;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
@@ -26,100 +26,6 @@ namespace TerraLeague.Items.Weapons
             return "Hunger never sleep";
         }
 
-        public override string GetAbilityName(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "Bio-Arcane Barrage";
-            else
-                return base.GetAbilityName(type);
-        }
-
-        public override string GetIconTexturePath(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return "AbilityImages/Bio-ArcaneBarrage";
-            else
-                return base.GetIconTexturePath(type);
-        }
-
-        public override string GetAbilityTooltip(AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                return "Your ranged attacks deal On Hit damage based on targets max life for 3 seconds.";
-            }
-            else
-            {
-                return base.GetAbilityTooltip(type);
-            }
-        }
-
-        public override int GetAbilityBaseDamage(Player player, AbilityType type)
-        {
-            return base.GetAbilityBaseDamage(player, type);
-        }
-
-        public override int GetAbilityScalingAmount(Player player, AbilityType type, DamageType dam)
-        {
-            if (type == AbilityType.W)
-            {
-                if (dam == DamageType.MAG)
-                    return 5;
-            }
-            return base.GetAbilityScalingAmount(player, type, dam);
-        }
-
-        public override int GetBaseManaCost(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 40;
-            else
-                return base.GetBaseManaCost(type);
-        }
-
-        public override bool CanBeCastWhileUsingItem(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return true;
-            return base.CanBeCastWhileUsingItem(type);
-        }
-
-        public override string GetDamageTooltip(Player player, AbilityType type)
-        {
-            TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, 5, false, "%");
-
-            if (type == AbilityType.W)
-                return "4% + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, 5, false, "%") + " of targets max life On Hit" +
-                    "\nMax: 20 + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, player.GetModPlayer<PLAYERGLOBAL>().MAG, 50) + " damage";
-            else
-                return base.GetDamageTooltip(player, type);
-        }
-
-        public override int GetRawCooldown(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return 20;
-            else
-                return base.GetRawCooldown(type);
-        }
-
-        public override void DoEffect(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(type), true))
-                {
-                    player.AddBuff(BuffType<BioArcaneBarrage>(), 60 * 3);
-                    DoEfx(player, type);
-                    SetCooldowns(player, type);
-                }
-            }
-            else
-            {
-                base.DoEffect(player, type);
-            }
-        }
-
         public override void SetDefaults()
         {
             item.damage = 26;
@@ -138,11 +44,8 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shootSpeed = 13f;
             item.useAmmo = AmmoID.Bullet;
-        }
 
-        public override bool CanUseItem(Player player)
-        {
-            return true;
+            Abilities[(int)AbilityType.W] = new BioArcaneBarrage(this);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -181,26 +84,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.W)
-                return true;
-            return base.GetIfAbilityExists(type);
-        }
-
-        public override void Efx(Player player, AbilityType type)
-        {
-            if (type == AbilityType.W)
-            {
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 95, -1f);
-            }
-        }
-
-        public static int GetMaxOnHit(PLAYERGLOBAL player)
-        {
-            return (int)(20 + (player.MAG * 0.05 * 10));
         }
     }
 }
