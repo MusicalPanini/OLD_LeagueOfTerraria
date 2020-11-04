@@ -64,6 +64,7 @@ namespace TerraLeague
         /// Is the player in the Black Mist
         /// </summary>
         internal bool zoneBlackMist = false;
+        internal bool zoneTargonPeak = false;
         internal bool zoneTargon = false;
         /// <summary>
         /// Has the player hit an enemy with current melee swing
@@ -1057,6 +1058,7 @@ namespace TerraLeague
 
         public override void UpdateBiomes()
         {
+            zoneTargonPeak = false;
             zoneTargon = false;
 
             if (NPC.CountNPCS(NPCType<TargonSigil>()) != 0)
@@ -1064,10 +1066,15 @@ namespace TerraLeague
                 NPC sigil = Main.npc.FirstOrDefault(x => x.type == NPCType<TargonSigil>());
                 if (sigil != null)
                 {
-                    zoneTargon = sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.3 * 16;
+                    zoneTargonPeak = sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.3 * 16;
                     if (sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.4 * 16 && !Main.hardMode)
                     {
                         player.AddBuff(BuffType<CelestialFrostbite>(), 2);
+                    }
+
+                    if (Math.Abs(sigil.Center.X - player.MountedCenter.X) < Main.mapMaxX / 10 * 16 && Math.Abs(sigil.Center.Y - player.MountedCenter.Y) < Main.worldSurface * 16)
+                    {
+                        zoneTargon = true;
                     }
                 }
             }
@@ -1996,7 +2003,7 @@ namespace TerraLeague
         {
             //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
             //if (TerraLeague.DrawBlackMistFog)
-            player.ManageSpecialBiomeVisuals("TerraLeague:Targon", zoneTargon, player.Center);
+            player.ManageSpecialBiomeVisuals("TerraLeague:Targon", zoneTargonPeak, player.Center);
             player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
             base.UpdateBiomeVisuals();
         }
