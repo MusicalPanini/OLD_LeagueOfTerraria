@@ -97,6 +97,12 @@ namespace TerraLeague
                 return;
             }
             tasks.Insert(desert + 1, new PassLegacy("Surface Marble Plants", GenerateSunstone));
+
+            int floatingIslands = tasks.FindIndex(genpass => genpass.Name.Equals("Floating Islands"));
+            if (genIndex != -1)
+            {
+                tasks[floatingIslands] = new PassLegacy("Modified Floating Islands", GenerateFloatingIslands);
+            }
         }
 
         private void GenerateFerrospike(GenerationProgress progress)
@@ -105,7 +111,7 @@ namespace TerraLeague
             {
                 int X = WorldGen.genRand.Next(0, Main.maxTilesX);
                 int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 2, Main.maxTilesY - 200);
-                
+
                 WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(5, 8), WorldGen.genRand.Next(5, 11), (ushort)TileType<FerrospikeOre>());
             }
         }
@@ -120,7 +126,7 @@ namespace TerraLeague
                 int X = Main.rand.Next(2) == 0 ? WorldGen.genRand.Next((Main.maxTilesX * 1) / 5, (Main.maxTilesX * 2) / 5) : WorldGen.genRand.Next((Main.maxTilesX * 3) / 5, (Main.maxTilesX * 4) / 5);
                 int biomeWidth = Main.rand.Next(Main.maxTilesX / 12, Main.maxTilesX / 10);
                 int biomeDepth = Main.maxTilesY / 3;
-                for (int x = X - biomeWidth/2; x < X + biomeWidth/2; x++)
+                for (int x = X - biomeWidth / 2; x < X + biomeWidth / 2; x++)
                 {
                     for (int y = 0; y < biomeDepth; y++)
                     {
@@ -142,8 +148,8 @@ namespace TerraLeague
         {
             progress.Message = "You put the lime in the marble and you shake it all up";
             progress.Value += 0.01f;
-            
-            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)  
+
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)
             {
                 int X = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
                 int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200);
@@ -205,7 +211,7 @@ namespace TerraLeague
             progress.Message = "Adding warmth to the desert";
             progress.Value += 0.01f;
 
-            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)  
+            for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 100E-05); k++)
             {
                 int x = WorldGen.genRand.Next(10, Main.maxTilesX - 10);
                 int y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200);
@@ -274,7 +280,7 @@ namespace TerraLeague
 
             progress.Message = "Reaching the heavens";
             progress.Value += 0.01f;
-            int xCord = Main.rand.Next(2) == 0 ? Main.rand.Next(600, Main.maxTilesX/3) : Main.rand.Next((Main.maxTilesX * 2) / 3, Main.maxTilesX - 600);
+            int xCord = Main.rand.Next(2) == 0 ? Main.rand.Next(600, Main.maxTilesX / 3) : Main.rand.Next((Main.maxTilesX * 2) / 3, Main.maxTilesX - 600);
             int distanceFromGroundToSky = 75; // k
             int displacementFromTop = 50;
             for (int i = 0; i < Main.maxTilesY; i++)
@@ -289,7 +295,7 @@ namespace TerraLeague
             int width = Main.maxTilesX / 21; // w
             float height = (float)Math.Pow(distanceFromGroundToSky, (1d / -width)); // h;
 
-            float baseNoise = 0.3f * (width + height)/2f; // N
+            float baseNoise = 0.3f * (width + height) / 2f; // N
             float steepness = 0.005f * (width + height) / 2f; // s
 
             int CenterHieght = (int)(Math.Pow(height, (steepness * Math.Abs(0)) - width) + CreateNoise(0, width, baseNoise));
@@ -297,7 +303,7 @@ namespace TerraLeague
 
             for (int X = -width * 2 / 3; X < width * 2 / 3; X++)
             {
-                float modifideNoise = (float)Math.Pow(baseNoise, -Math.Abs(X/(width*3f)) * Main.rand.NextFloat(5, 10) + 0.9); // n
+                float modifideNoise = (float)Math.Pow(baseNoise, -Math.Abs(X / (width * 3f)) * Main.rand.NextFloat(5, 10) + 0.9); // n
 
                 int mountStart = (int)(-Math.Pow(height, (steepness * Math.Abs(X)) - width) + CreateNoise(X, width, modifideNoise)) + YPeak; // y
 
@@ -315,7 +321,7 @@ namespace TerraLeague
 
             for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
             {
-                if (Main.tile[xCord - width/2, y].active())
+                if (Main.tile[xCord - width / 2, y].active())
                 {
                     leftBottom = new Vector2(xCord - (width * 0.5f), y);
                     break;
@@ -323,7 +329,7 @@ namespace TerraLeague
             }
             for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
             {
-                if (Main.tile[xCord + width/2, y].active())
+                if (Main.tile[xCord + width / 2, y].active())
                 {
                     rightBottom = new Vector2(xCord + (width * 0.5f), y);
                     break;
@@ -351,7 +357,7 @@ namespace TerraLeague
             progress.Message = "Blessing the earth";
             progress.Value += 0.01f;
 
-            for (int x = TargonCenterX-TargonWidthFromCenter; x < TargonCenterX + TargonWidthFromCenter; x++)
+            for (int x = TargonCenterX - TargonWidthFromCenter; x < TargonCenterX + TargonWidthFromCenter; x++)
             {
                 for (int y = 0; y < (Main.worldSurface * 0.5) + 50; y++)
                 {
@@ -438,7 +444,7 @@ namespace TerraLeague
         public override void PostWorldGen()
         {
             // Place some items in Wood Chests
-            int[] itemsToPlaceInWoodChests = new int[] { ItemType<LongSword>(), ItemType<Dagger>(), ItemType<AmpTome>(), ItemType<RubyCrystal>(), ItemType<SapphireCrystal>(), ItemType<NullMagic>(), ItemType<ClothArmor>()};
+            int[] itemsToPlaceInWoodChests = new int[] { ItemType<LongSword>(), ItemType<Dagger>(), ItemType<AmpTome>(), ItemType<RubyCrystal>(), ItemType<SapphireCrystal>(), ItemType<NullMagic>(), ItemType<ClothArmor>() };
             int itemsToPlaceInWoodChestsChoice = 0;
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
@@ -483,7 +489,7 @@ namespace TerraLeague
             for (int chestIndex = 0; chestIndex < 1000; chestIndex++)
             {
                 Chest chest = Main.chest[chestIndex];
-                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 13 * 36 )
+                if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 13 * 36)
                 {
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++)
                     {
@@ -628,7 +634,7 @@ namespace TerraLeague
                     PacketHandler.SendBlackMist(-1, -1, BlackMistEvent);
             }
 
-            if (Main.hardMode) 
+            if (Main.hardMode)
             {
                 if (!TargonOreSpawned)
                 {
@@ -664,7 +670,7 @@ namespace TerraLeague
                 if (!ManaOreSpawned)
                 {
                     ManaOreSpawned = true;
-                    
+
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("The Evil is no longer suppressing the magic in the jungle", 0, 130, 255);
                     else if (Main.netMode == NetmodeID.Server)
@@ -674,24 +680,24 @@ namespace TerraLeague
                     }
 
 
-                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 50E-05); k++)   
+                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 50E-05); k++)
                     {
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
-                        int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200); 
+                        int Y = WorldGen.genRand.Next((int)Main.maxTilesY / 3, Main.maxTilesY - 200);
 
                         if (Main.tile[X, Y].type == TileID.Mud)
                         {
-                            WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(4, 5), WorldGen.genRand.Next(3, 8), (ushort)TileType<ManaStone>());  
+                            WorldGen.OreRunner(X, Y, WorldGen.genRand.Next(4, 5), WorldGen.genRand.Next(3, 8), (ushort)TileType<ManaStone>());
                         }
                     }
                 }
             }
 
-            if (NPC.downedBoss3) 
+            if (NPC.downedBoss3)
             {
                 if (!VoidOreSpawned)
                 {
-                    VoidOreSpawned = true;  
+                    VoidOreSpawned = true;
 
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText("The Void has morphed some of this worlds matter", 255, 0, 255);
@@ -701,7 +707,7 @@ namespace TerraLeague
                         NetMessage.SendData(MessageID.WorldData);
                     }
 
-                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.000005); k++)  
+                    for (int k = 0; k < (int)((double)(Main.maxTilesX * Main.maxTilesY) * 0.000005); k++)
                     {
                         int X = WorldGen.genRand.Next(0, Main.maxTilesX);
                         int Y = WorldGen.genRand.Next((int)(Main.rockLayer * 1.5), Main.maxTilesY - 200);
@@ -1011,7 +1017,7 @@ namespace TerraLeague
 
             if (Main.netMode == NetmodeID.SinglePlayer)
             {
-                Main.NewText("The Celestials are pleased. You are now immune to Celesital Frostbite and a gift has been dropped from the heavens", 0, 200, 255); 
+                Main.NewText("The Celestials are pleased. You are now immune to Celesital Frostbite and a gift has been dropped from the heavens", 0, 200, 255);
             }
             else if (Main.netMode == NetmodeID.Server)
             {
@@ -1024,6 +1030,84 @@ namespace TerraLeague
             }
             TargonOreSpawned = true;
             return true;
+        }
+
+        private void GenerateFloatingIslands(GenerationProgress progress)
+        {
+            int[] floatingIslandHouse_XCord = new int[30];
+            int[] floatingIslandHouse_YCord = new int[30];
+            bool[] skyLake = new bool[30];
+
+            int numIslandHouses = 0;
+            int skyLakes = 1;
+            if (Main.maxTilesX > 8000)
+            {
+                skyLakes++;
+            }
+            if (Main.maxTilesX > 6000)
+            {
+                skyLakes++;
+            }
+
+            progress.Message = Lang.gen[12].Value;
+            for (int num591 = 0; num591 < (int)((double)Main.maxTilesX * 0.0008) + skyLakes; num591++)
+            {
+                int num592 = 1000;
+                int num593 = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.1), (int)((double)Main.maxTilesX * 0.9));
+                while (--num592 > 0)
+                {
+                    bool flag45 = true;
+                    while (num593 > Main.maxTilesX / 2 - 80 && num593 < Main.maxTilesX / 2 + 80)
+                    {
+                        num593 = WorldGen.genRand.Next((int)((double)Main.maxTilesX * 0.1), (int)((double)Main.maxTilesX * 0.9));
+                    }
+                    int num594 = 0;
+                    while (num594 < numIslandHouses)
+                    {
+                        if ((num593 <= floatingIslandHouse_XCord[num594] - 180 || num593 >= floatingIslandHouse_XCord[num594] + 180) && (num593 <= TargonCenterX - 180 || num593 >= TargonCenterX - 180))
+                        {
+                            num594++;
+                            continue;
+                        }
+                        flag45 = false;
+                        break;
+                    }
+                    if (flag45)
+                    {
+                        flag45 = false;
+                        int num595 = 0;
+                        int num596 = 200;
+                        while ((double)num596 < Main.worldSurface)
+                        {
+                            if (!Main.tile[num593, num596].active())
+                            {
+                                num596++;
+                                continue;
+                            }
+                            num595 = num596;
+                            flag45 = true;
+                            break;
+                        }
+                        if (flag45)
+                        {
+                            int val = WorldGen.genRand.Next(90, num595 - 100);
+                            val = Math.Min(val, (int)WorldGen.worldSurfaceLow - 50);
+                            if (num591 < skyLakes)
+                            {
+                                skyLake[numIslandHouses] = true;
+                                WorldGen.CloudLake(num593, val);
+                            }
+                            else
+                            {
+                                WorldGen.CloudIsland(num593, val);
+                            }
+                            floatingIslandHouse_XCord[numIslandHouses] = num593;
+                            floatingIslandHouse_YCord[numIslandHouses] = val;
+                            numIslandHouses++;
+                        }
+                    }
+                }
+            }
         }
     }
 }
