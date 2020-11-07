@@ -1383,7 +1383,7 @@ namespace TerraLeague
             {
                 if (i != 0)
                     rejoinedText += "\n";
-                rejoinedText += "[c/" + hexValue + ":" + splitText[i] + "]";
+                rejoinedText += "[c/" + PulseText(ConvertHexToColor(hexValue)).Hex3() + ":" + splitText[i] + "]";
             }
 
             return rejoinedText;
@@ -1397,7 +1397,7 @@ namespace TerraLeague
             {
                 if (i != 0)
                     rejoinedText += "\n";
-                rejoinedText += "[c/" + color.Hex3() + ":" + splitText[i] + "]";
+                rejoinedText += "[c/" + PulseText(color).Hex3() + ":" + splitText[i] + "]";
             }
 
             return rejoinedText;
@@ -1406,22 +1406,24 @@ namespace TerraLeague
         public static string CreateScalingTooltip(DamageType type, int valueToScale, int percentScaling, bool affectedByHealPower = false, string extraText = "")
         {
             string text = "";
+            Color textColor;
+
             switch (type)
             {
                 case DamageType.MEL:
-                    text += "[c/" + MELColor + ":";
+                    textColor = ConvertHexToColor(MELColor);
                     break;
                 case DamageType.RNG:
-                    text += "[c/" + RNGColor + ":";
+                    textColor = ConvertHexToColor(RNGColor);
                     break;
                 case DamageType.MAG:
-                    text += "[c/" + MAGColor + ":";
+                    textColor = ConvertHexToColor(MAGColor);
                     break;
                 case DamageType.SUM:
-                    text += "[c/" + SUMColor + ":";
+                    textColor = ConvertHexToColor(SUMColor);
                     break;
                 default:
-                    text += "[c/" + Color.White.Hex3() + ":";
+                    textColor = Color.White;
                     break;
             }
             int value = (int)(valueToScale * percentScaling * 0.01);
@@ -1431,30 +1433,31 @@ namespace TerraLeague
                 switch (type)
                 {
                     case DamageType.MEL:
-                        text += percentScaling + "% MEL(" + value + extraText + ")]";
+                        text += percentScaling + "% MEL(" + value + extraText + ")";
                         break;
                     case DamageType.RNG:
-                        text += percentScaling + "% RNG(" + value + extraText + ")]";
+                        text += percentScaling + "% RNG(" + value + extraText + ")";
                         break;
                     case DamageType.MAG:
-                        text += percentScaling + "% MAG(" + value + extraText + ")]";
+                        text += percentScaling + "% MAG(" + value + extraText + ")";
                         break;
                     case DamageType.SUM:
-                        text += percentScaling + "% SUM(" + value + extraText + ")]";
+                        text += percentScaling + "% SUM(" + value + extraText + ")";
                         break;
                     default:
-                        text += value + extraText + "]";
+                        text += value + extraText;
                         break;
                 }
-
+                text = CreateColorString(textColor, text);
                 if (affectedByHealPower)
-                    text += " + [c/" + HEALColor + ":HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")]";
+                    text += " + " + CreateColorString(ConvertHexToColor(HEALColor), "HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")");
             }
             else
             {
                 if (affectedByHealPower)
                     value = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true);
-                text += value + extraText +  "]";
+                text += value + extraText;
+                text = CreateColorString(textColor, text);
             }
 
             return text;
@@ -1462,7 +1465,7 @@ namespace TerraLeague
 
         public static string CreateScalingTooltip(string color, string valueName, int valueToScale, int percentScaling, bool affectedByHealPower = false, string extraText = "")
         {
-            string text = "[c/" + color + ":";
+            string text = "[c/" + PulseText(ConvertHexToColor(color)).Hex3() + ":";
 
             int value = (int)(valueToScale * percentScaling * 0.01);
             
@@ -1471,7 +1474,7 @@ namespace TerraLeague
             {
                 text += percentScaling + "% " + valueName + "(" + value + extraText + ")]";
                 if (affectedByHealPower)
-                    text += " + [c/" + HEALColor + ":HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")]";
+                    text += " + [c/" + PulseText(ConvertHexToColor(HEALColor)).Hex3() + ":HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")]";
             }
             else
             {
@@ -1481,6 +1484,27 @@ namespace TerraLeague
             }
 
             return text;
+        }
+
+        public static Color ConvertHexToColor(string hexValue)
+        {
+            if (hexValue != null)
+            {
+                if (hexValue.Length >= 6)
+                {
+                    int red = Int32.Parse(hexValue[0] + "" + hexValue[1], System.Globalization.NumberStyles.HexNumber);
+                    int green = Int32.Parse(hexValue[2] + "" + hexValue[3], System.Globalization.NumberStyles.HexNumber);
+                    int blue = Int32.Parse(hexValue[4] + "" + hexValue[5], System.Globalization.NumberStyles.HexNumber);
+                    return new Color(red, green, blue);
+                }
+            }
+            return Color.White;
+        }
+
+        public static Color PulseText(Color color)
+        {
+            float pulse = (float)(int)Main.mouseTextColor / 255f;
+            return new Color((byte)(color.R * pulse), (byte)(color.G * pulse), (byte)(color.B * pulse), Main.mouseTextColor);
         }
     }
 }

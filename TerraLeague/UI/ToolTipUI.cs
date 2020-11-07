@@ -55,12 +55,16 @@ namespace TerraLeague.UI
         {
             Left.Set(0, 0f);
             Top.Set(0, 0f);
+
             for (int i = 0; i < uiLines.Length; i++)
             {
                 uiLines[i].Top.Set((Main.screenHeight - 620) + (28 * i), 0);
                 uiLines[i].Left.Set(Main.screenWidth/2 - 760, 0);
                 uiLines[i].VAlign = 0;
                 uiLines[i].HAlign = 0;
+
+                
+                uiLines[i].TextColor = TerraLeague.PulseText(Color.White);
             }
 
             if (drawText)
