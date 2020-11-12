@@ -27,14 +27,11 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void UpdateAccessory(Player player, ModItem modItem)
         {
-
             base.UpdateAccessory(player, modItem);
         }
 
         public override void PostPlayerUpdate(Player player, ModItem modItem)
         {
-            bool hasDiss = false;
-
             for (int i = 3; i < 9; i++)
             {
                 if (player.armor[i].modItem != null)
@@ -43,21 +40,27 @@ namespace TerraLeague.Items.CustomItems.Passives
 
                     if (legItem != null)
                     {
-                        for (int j = 0; j < legItem.Passives.Length; j++)
+                        if (legItem.Passives != null)
                         {
-                            hasDiss = legItem.Passives[j].GetType().Name == "Dissonance";
-                        }
-
-                        if (!hasDiss)
-                        {
-                            player.lifeRegen += (int)(player.statMana / preMana) * lifeRegen;
-                            break;
+                            for (int j = 0; j < legItem.Passives.Length; j++)
+                            {
+                                if (legItem.Passives[j].GetType().Name == "Dissonance")
+                                {
+                                    currentlyActive = false;
+                                    player.lifeRegen += (int)(player.statMana / preMana) * lifeRegen;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
             }
 
+            
+
             base.PostPlayerUpdate(player, modItem);
         }
+
+
     }
 }
