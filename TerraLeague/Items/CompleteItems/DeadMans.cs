@@ -58,7 +58,7 @@ namespace TerraLeague.Items.CompleteItems
         public override string GetStatText()
         {
             if (Passives[0].currentlyActive)
-                return (Passives[0].passiveStat).ToString();
+                return ((int)Passives[0].passiveStat).ToString() + "%";
             else
                 return "";
         }
