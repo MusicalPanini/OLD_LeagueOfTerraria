@@ -16,6 +16,7 @@ namespace TerraLeague.Projectiles
     {
         int damage = 0;
         int healing = 0;
+        int hit = -1;
 
         public override void SetStaticDefaults()
         {
@@ -36,7 +37,7 @@ namespace TerraLeague.Projectiles
             projectile.tileCollide = true;
             projectile.ignoreWater = true;
             projectile.netImportant = true;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            //projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
@@ -47,7 +48,7 @@ namespace TerraLeague.Projectiles
                 healing = (int)projectile.ai[1];
                 Main.PlaySound(new LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound));
                 projectile.ai[0] = 0;
-                projectile.ai[1] = 0;
+                projectile.ai[1] = -1;
             }
             projectile.soundDelay = 100;
 
@@ -69,7 +70,7 @@ namespace TerraLeague.Projectiles
                         projectile.localAI[0] = 1f;
                     }
                     Vector2 move = Vector2.Zero;
-                    float distance = 1000;
+                    float distance = 400;
                     bool target = false;
                     for (int k = 0; k < 200; k++)
                     {
@@ -102,7 +103,7 @@ namespace TerraLeague.Projectiles
                         projectile.localAI[0] = 1f;
                     }
                     Vector2 move = Vector2.Zero;
-                    float distance = 1000;
+                    float distance = 400;
                     int targetPlayer = TerraLeague.GetClosestPlayer(projectile.Center, distance, -1, Main.player[projectile.owner].team);
 
                     if (targetPlayer != -1)
@@ -147,7 +148,7 @@ namespace TerraLeague.Projectiles
                 dust.velocity *= 0.25f;
                 dust.velocity += projectile.velocity * 0.5f;
             }
-            if (!projectile.friendly)
+            if (!projectile.friendly && projectile.timeLeft < 84)
             {
                 for (int i = 0; i < 200; i++)
                 {
@@ -192,7 +193,8 @@ namespace TerraLeague.Projectiles
 
         public void HitPlayer(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
+            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 4, 0);
+            Main.PlaySound(new LegacySoundStyle(2, 21), player.Center);
 
             projectile.netUpdate = true;
             if (projectile.owner == Main.LocalPlayer.whoAmI)

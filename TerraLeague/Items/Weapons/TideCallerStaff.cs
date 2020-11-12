@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using System.Linq;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
@@ -10,16 +12,32 @@ namespace TerraLeague.Items.Weapons
 {
 	public class TideCallerStaff : AbilityItem
 	{
+        int healing = 0;
+
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Tide Caller Staff");
+			DisplayName.SetDefault("Tidecaller Staff");
             Tooltip.SetDefault("");
             Item.staff[item.type] = false;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            base.ModifyTooltips(tooltips);
+
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+
+            int tt2 = tooltips.FindIndex(x => x.Name == "Damage" && x.mod == "Terraria");
+            if (tt2 != -1)
+            {
+                tooltips.Insert(tt2 + 1, new TooltipLine(TerraLeague.instance, "Healing", TerraLeague.CreateScalingTooltip(DamageType.NONE, modPlayer.ScaleValueWithHealPower(healing * (float)modPlayer.magicDamageLastStep, true), 100, true) + " magic healing"));
+            }
+        }
+
         public override string GetWeaponTooltip()
         {
-            return "";
+            return "Create a flow of water that will ebb off the first stuck enemy and heal the nearest player" +
+                "\nAfter healing, it will then strike another enemy";
         }
 
         public override string GetQuote()
@@ -29,23 +47,36 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 15;
-            item.mana = 4;
+            item.damage = 26;
+            item.mana = 20;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.magic = true;
-            item.useTime = 25;
-            item.useAnimation = 25;
+            item.useTime = 36;
+            item.useAnimation = 36;
             item.noMelee = true;
             item.knockBack = 3;
             item.value = 4000;
             item.rare = ItemRarityID.Green;
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 21, Terraria.Audio.SoundType.Sound);
-            item.shoot = ProjectileType<TideCallerStaff_WaterShot>();
-            item.shootSpeed = 7f;
-            item.autoReuse = true;
-
+            item.shoot = ProjectileType<TideCallerStaff_EbbandFlow>();
+            //item.shoot = ProjectileType<TideCallerStaff_WaterShot>();
+            item.shootSpeed = 11f;
+            healing = 5;
             Abilities[(int)AbilityType.Q] = new AquaPrison(this);
-            Abilities[(int)AbilityType.W] = new EbbAndFlow(this);
+            //Abilities[(int)AbilityType.W] = new EbbAndFlow(this);
+            Abilities[(int)AbilityType.E] = new TidecallersBlessing(this);
+        }
+
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            item.mana = 20;
+            Vector2 velocity = new Vector2(speedX, speedY);
+
+            int scaledHealing = modPlayer.ScaleValueWithHealPower(healing * player.magicDamage);
+
+            Projectile.NewProjectileDirect(position, velocity, type, damage, knockBack, player.whoAmI, damage, scaledHealing);
+            return false;
         }
 
         public override Vector2? HoldoutOffset()

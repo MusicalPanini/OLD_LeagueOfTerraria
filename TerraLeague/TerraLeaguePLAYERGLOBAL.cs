@@ -537,6 +537,7 @@ namespace TerraLeague
         public bool stonePlating = false;
         public bool stunned = false;
         public bool surge = false;
+        public bool tidecallersBlessing = false;
         public bool toxicShot = false;
         public bool trueInvis = false;
         public bool invincible = false;
@@ -730,6 +731,7 @@ namespace TerraLeague
             stonePlating = false;
             stunned = false;
             surge = false;
+            tidecallersBlessing = false;
             toxicShot = false;
             trueInvis = false;
             umbralTrespassing = false;
@@ -2109,7 +2111,10 @@ namespace TerraLeague
                 // Runs NPCHitWithProjectile() for all equiped LeagueItems
                 LeagueItem.RunEnabled_NPCHitWithProjectile(player, proj, target, ref damage, ref knockback, ref crit, ref hitDirection, ref onhitdamage);
                 
-
+                if (tidecallersBlessing)
+                {
+                    target.AddBuff(BuffType<Slowed>(), 60 * 2);
+                }
                 if (voidbornSet && proj.minion)
                 {
                     player.ManaEffect(2);
@@ -2346,6 +2351,10 @@ namespace TerraLeague
                 damage += cleaveDamage;
             }
 
+            if (tidecallersBlessing)
+            {
+                target.AddBuff(BuffType<Slowed>(), 60 * 2);
+            }
             if (flameHarbinger)
             {
                 target.AddBuff(BuffType<HarbingersInferno>(), 180);
