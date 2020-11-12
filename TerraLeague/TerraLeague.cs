@@ -1450,7 +1450,7 @@ namespace TerraLeague
                 }
                 text = CreateColorString(textColor, text);
                 if (affectedByHealPower)
-                    text += " + " + CreateColorString(ConvertHexToColor(HEALColor), "HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + ")");
+                    text += " + " + CreateColorString(ConvertHexToColor(HEALColor), "HEAL(" + (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(value, true) - value) + extraText + ")");
             }
             else
             {
