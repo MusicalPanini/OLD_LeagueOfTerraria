@@ -27,7 +27,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/DancingGrenade";
+            return "AbilityImages/DancingGranade";
         }
 
         public override string GetAbilityTooltip()
