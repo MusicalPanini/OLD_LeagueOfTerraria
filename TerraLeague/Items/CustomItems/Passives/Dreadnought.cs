@@ -47,7 +47,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 Efx(player, target);
                 SendEfx(player, target, modItem);
 
-                modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;
+                passiveStat = 0;
             }
 
             base.NPCHit(item, target, ref damage, ref knockback, ref crit, ref OnHitDamage, player, modItem);
@@ -90,9 +90,16 @@ namespace TerraLeague.Items.CustomItems.Passives
 
             if (passiveStat >= 100)
             {
-                player.armorEffectDrawShadow = true;
-                Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 5, 0, 0, 0, new Color(255, 0, 0, 150), 1.5f);
-                dust.noGravity = true;
+                if (player.velocity.Length() > 0)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        player.armorEffectDrawShadow = true;
+                        Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 5, 0, 0, 0, new Color(255, 0, 0, 150), 0.2f * player.velocity.Length());
+                        dust.velocity *= 0;
+                        dust.noGravity = true;
+                    }
+                }
                 player.AddBuff(BuffType<CrushingBlow>(), 2);
             }
             else
