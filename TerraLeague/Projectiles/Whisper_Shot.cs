@@ -37,12 +37,15 @@ namespace TerraLeague.Projectiles
 
             Lighting.AddLight(projectile.Left, 1f, 0.5f, 0.01f);
 
-            Dust dust = Dust.NewDustPerfect(projectile.Center, 75, Vector2.Zero, 0, new Color(255, 0, 0));
-            dust.noGravity = true;
-            dust.velocity *= 0;
-            dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 75, Vector2.Zero, 0, new Color(255, 0, 0));
-            dust.noGravity = true;
-            dust.velocity *= 0;
+            if (projectile.timeLeft < 354)
+            {
+                Dust dust = Dust.NewDustPerfect(projectile.Center, 75, Vector2.Zero, 0, new Color(255, 0, 0));
+                dust.noGravity = true;
+                dust.velocity *= 0;
+                dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 75, Vector2.Zero, 0, new Color(255, 0, 0));
+                dust.noGravity = true;
+                dust.velocity *= 0;
+            }
 
             //if (projectile.alpha > 0)
             //    projectile.alpha -= 15;

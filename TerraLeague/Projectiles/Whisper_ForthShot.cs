@@ -40,12 +40,15 @@ namespace TerraLeague.Projectiles
             }
             projectile.soundDelay = 100;
 
-            Dust dust = Dust.NewDustPerfect(projectile.Center, 182, Vector2.Zero);
-            dust.noGravity = true;
-            dust.velocity *= 0;
-            dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 182, Vector2.Zero);
-            dust.noGravity = true;
-            dust.velocity *= 0;
+            if (projectile.timeLeft < 354)
+            {
+                Dust dust = Dust.NewDustPerfect(projectile.Center, 182, Vector2.Zero);
+                dust.noGravity = true;
+                dust.velocity *= 0;
+                dust = Dust.NewDustPerfect(projectile.Center - projectile.velocity.SafeNormalize(Vector2.Zero), 182, Vector2.Zero);
+                dust.noGravity = true;
+                dust.velocity *= 0;
+            }
 
             Lighting.AddLight(projectile.position, 1f, 0.0f, 0.0f);
             if (projectile.alpha > 0)
