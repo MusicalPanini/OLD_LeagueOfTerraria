@@ -8,6 +8,8 @@ namespace TerraLeague.Projectiles
 {
     public class CelestialStaff_Starcall : ModProjectile
     {
+        bool droppedStar = false;
+
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Starcall");
@@ -19,10 +21,10 @@ namespace TerraLeague.Projectiles
             projectile.height = 24;
             projectile.timeLeft = 300;
             projectile.penetrate = -1;
-            projectile.friendly = false;
+            projectile.friendly = true;
             projectile.magic = true;
             projectile.tileCollide = false;
-            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
+            //projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
         public override void AI()
@@ -31,7 +33,7 @@ namespace TerraLeague.Projectiles
 
             if (projectile.soundDelay == 0)
             {
-                projectile.soundDelay = Main.rand.Next(20, 31);
+                projectile.soundDelay = Main.rand.Next(50, 71);
                 Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 9), projectile.position);
             }
 
@@ -63,8 +65,22 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            if (!target.immortal)
-                Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<CelestialStaff_StarcallRejuv>(), 0, 0, projectile.owner);
+            if (projectile.width == 22)
+                Prime();
+            if (!droppedStar)
+            {
+                if (!target.immortal)
+                {
+                    float chance = Items.Weapons.CelestialStaff.RejuvDropChance(Main.player[projectile.owner]);
+
+                    if (Main.rand.NextFloat() < chance)
+                    {
+                        droppedStar = true;
+                        Item.NewItem(projectile.Hitbox, ItemType<Items.RegenHeart>());
+                    }
+                }
+            }
+                //Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<CelestialStaff_StarcallRejuv>(), 0, 0, projectile.owner);
 
             base.OnHitNPC(target, damage, knockback, crit);
         }

@@ -13,6 +13,8 @@ namespace TerraLeague.Items.Weapons
 {
 	public class CelestialStaff : AbilityItem
 	{
+        static readonly float baseRejuvChance = 0.1f;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Celestial Staff");
@@ -21,8 +23,8 @@ namespace TerraLeague.Items.Weapons
 
         public override void SetDefaults()
         {
-            item.damage = 14;
-            item.mana = 25;
+            item.damage = 26;
+            item.mana = 18;
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.magic = true;
             item.useTime = 35;
@@ -32,7 +34,7 @@ namespace TerraLeague.Items.Weapons
             item.value = 4000;
             item.rare = ItemRarityID.LightRed;
             item.UseSound = SoundID.Item8;
-            item.shoot = ProjectileType<CelestialStaff_CelestialHeal>();
+            item.shoot = ProjectileType<CelestialStaff_Starcall>();
             item.shootSpeed = 12f;
             item.autoReuse = true;
 
@@ -42,7 +44,15 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "";
+            return "Call down stars that have a chance to drop Rejuvenation Hearts on hit" +
+                "\nDrop Chance: " + TerraLeague.CreateScalingTooltip(DamageType.NONE, (int)(baseRejuvChance * 100), 100, true, "%") + " + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, 15, true, "%");
+        }
+
+        public static float RejuvDropChance(Player player)
+        {
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+
+            return modPlayer.ScaleValueWithHealPower((baseRejuvChance + (modPlayer.MAG * 0.15f * 0.01f)) * 100, true) * 0.01f; //(100 - baseRejuvChance) / (100 + modPlayer.ScaleValueWithHealPower(modPlayer.MAG, true));
         }
 
         public override string GetQuote()
@@ -52,36 +62,24 @@ namespace TerraLeague.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            if (player.statLife <= player.statLifeMax2 / 20)
-            {
-                return false;
-            }
-            else
-            {
-                item.UseSound = SoundID.Item8;
-                return true;
-            }
+
+            return true;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             base.ModifyTooltips(tooltips);
-
-            TooltipLine tt2 = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
-            if (tt2 != null)
-            {
-                tt2.text = System.Math.Round(Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(item.damage, true) * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().magicDamageLastStep) + " magic healing";
-            }
-
-            tooltips.FirstOrDefault(x => x.Name == "Knockback" && x.mod == "Terraria").text = "";
-            tooltips.FirstOrDefault(x => x.Name == "UseMana" && x.mod == "Terraria").text += " and 5% of max life";
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            player.statLife -= player.statLifeMax2 / 20;
-            damage = player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(damage);
-            return true;
+            position = player.Center;
+            position.X += Main.rand.NextFloat(-300, 300);
+            position.Y -= 600;
+            Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 14f);
+            item.damage = 26;
+            Projectile.NewProjectile(position, velocity, type, damage, 0, player.whoAmI);
+            return false;
         }
 
         public override Vector2? HoldoutOffset()

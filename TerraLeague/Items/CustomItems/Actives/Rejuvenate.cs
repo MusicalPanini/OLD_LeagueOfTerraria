@@ -22,18 +22,18 @@ namespace TerraLeague.Items.CustomItems.Actives
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
             float modifiedhealPower = (float)(1 + ((Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().healPowerLastStep - 1) * 2));
-            string statis = "[c/" + Color.White.Hex3() + ":";
+            string statis = "";
 
             int value = (int)(baseHeal * modifiedhealPower);
 
             if (UI.ItemUI.extraStats)
             {
-                statis += value + "] + [c/" + TerraLeague.HEALColor + ":HEAL(" + (((int)(value * modifiedhealPower)) - (value)) + ")]";
+                statis += TerraLeague.CreateColorString(Color.White.Hex3(), value + "") + " + " + TerraLeague.CreateColorString(TerraLeague.HEALColor, "HEAL(" + (((int)(value * modifiedhealPower)) - (value)) + ")");
             }
             else
             {
                 value = (int)(value * modifiedhealPower);
-                statis += value + "]";
+                statis += TerraLeague.CreateColorString(Color.White.Hex3(), value + "");
             }
 
             return TooltipName("REJUVINATE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Heal nearby allies for ") + statis + TerraLeague.CreateColorString(ActiveSecondaryColor, " life\nHeal Power is 2 times as effective for this heal") +
