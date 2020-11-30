@@ -63,6 +63,8 @@ namespace TerraLeague.Projectiles
         {
             if (target.GetGlobalNPC<NPCsGLOBAL>().harbingersInferno)
             {
+                if (target.townNPC)
+                    return false;
                 return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2f);
             }
             else
