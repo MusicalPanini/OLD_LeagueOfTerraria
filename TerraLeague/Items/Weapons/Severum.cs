@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using TerraLeague.Buffs;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
@@ -49,8 +48,8 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noMelee = true;
 
-            Abilities[(int)AbilityType.Q] = new Abilities.Onslaught(this);
-            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Cre);
+            Abilities[(int)AbilityType.Q] = new Onslaught(this);
+            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Sev);
         }
 
         public override bool CanUseItem(Player player)
