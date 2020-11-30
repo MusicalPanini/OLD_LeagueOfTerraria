@@ -75,7 +75,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanCurrentlyBeCast(Player player)
         {
-            return player.GetModPlayer<PLAYERGLOBAL>().calibrumAmmo < 10;
+            return player.GetModPlayer<PLAYERGLOBAL>().calibrumAmmo >= 10;
         }
 
         public override void DoEffect(Player player, AbilityType type)
