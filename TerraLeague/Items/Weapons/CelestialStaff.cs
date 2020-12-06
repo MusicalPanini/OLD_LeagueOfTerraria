@@ -29,7 +29,7 @@ namespace TerraLeague.Items.Weapons
             item.magic = true;
             item.useTime = 35;
             item.useAnimation = 35;
-            item.noMelee = true; 
+            item.noMelee = true;
             item.knockBack = 0;
             item.value = 4000;
             item.rare = ItemRarityID.LightRed;
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 12f;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new Starcall(this);
+            Abilities[(int)AbilityType.W] = new AstralInfusion(this);
             Abilities[(int)AbilityType.R] = new Wish(this);
         }
 

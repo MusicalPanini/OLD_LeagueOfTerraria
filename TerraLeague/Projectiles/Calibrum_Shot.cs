@@ -38,7 +38,24 @@ namespace TerraLeague.Projectiles
             }
 
             if (projectile.timeLeft == 575)
+            {
                 projectile.damage *= 2;
+                for (int i = 0; i < 36; i++)
+                {
+                    float XRad = 10;
+                    float YRad = 20;
+                    float rotation = projectile.velocity.ToRotation();
+                    float time = MathHelper.TwoPi * i / 36;
+
+                    double X = XRad * System.Math.Cos(time) * System.Math.Cos(rotation) - YRad * System.Math.Sin(time) * System.Math.Sin(rotation);
+                    double Y = XRad * System.Math.Cos(time) * System.Math.Sin(rotation) + YRad * System.Math.Sin(time) * System.Math.Cos(rotation);
+
+                    Vector2 pos = new Vector2((float)X, (float)Y) + projectile.Center;
+
+                    Dust dust = Dust.NewDustPerfect(pos, 111, Vector2.Zero, 0, default(Color), 1.5f);
+                    dust.noGravity = true;
+                }
+            }
 
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().SyncProjectileKill(projectile);
         }

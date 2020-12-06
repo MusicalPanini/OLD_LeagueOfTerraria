@@ -25,7 +25,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("SOUL TAINT") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee and ranged attack will deal " + percentMaxLifeDamage + "% of their max life as On Hit damage")
+            return TooltipName("Mist's edge") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee and ranged attack will deal " + percentMaxLifeDamage + "% of their max life as On Hit damage")
                 + "\n" + TerraLeague.CreateColorString(PassiveSubColor, "(Max damage: " + maxDamage + ")");
         }
 

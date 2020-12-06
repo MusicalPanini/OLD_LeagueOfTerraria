@@ -62,7 +62,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemType<HextechRevolver>(), 1);
+            recipe.AddIngredient(ItemType<HextechAlternator>(), 1);
             recipe.AddIngredient(ItemType<Kindlegem>(), 1);
             recipe.AddIngredient(ItemID.Jetpack, 1);
             recipe.AddIngredient(ItemType<HextechCore>(), 1);

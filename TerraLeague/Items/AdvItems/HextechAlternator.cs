@@ -8,11 +8,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.AdvItems
 {
-    public class HextechRevolver : LeagueItem
+    public class HextechAlternator : LeagueItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Hextech Revolver");
+            DisplayName.SetDefault("Hextech Alternator");
             Tooltip.SetDefault("4% increased magic and minion damage");
         }
 
@@ -27,7 +27,7 @@ namespace TerraLeague.Items.AdvItems
 
             Passives = new Passive[]
             {
-                new MagicBolt(20, 20, 60)
+                new MagicBolt(20, 20, 30)
             };
         }
 
@@ -41,8 +41,11 @@ namespace TerraLeague.Items.AdvItems
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<AmpTome>(), 2);
-            recipe.AddIngredient(ItemID.Revolver, 1);
-            recipe.AddIngredient(ItemID.SpaceGun, 1);
+            //recipe.AddIngredient(ItemID.Revolver, 1);
+            //recipe.AddIngredient(ItemID.SpaceGun, 1);
+            recipe.AddIngredient(ItemID.MeteoriteBar, 10);
+            recipe.AddIngredient(ItemID.Wire, 10);
+            recipe.AddIngredient(ItemID.FallenStar, 4);
             recipe.AddIngredient(ItemType<PrototypeHexCore>(), 1);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);

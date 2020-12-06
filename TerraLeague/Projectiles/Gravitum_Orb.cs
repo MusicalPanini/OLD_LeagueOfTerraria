@@ -23,7 +23,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 20;
             projectile.height = 20;
             projectile.alpha = 255;
-            projectile.timeLeft = 90;
+            projectile.timeLeft = 600;
             projectile.penetrate = -1;
             projectile.friendly = true;
             projectile.hostile = false;
@@ -35,9 +35,17 @@ namespace TerraLeague.Projectiles
         public override void AI()
         {
             AnimateProjectile();
-            Dust dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 71, 0f, 0f, 100, default(Color), 1.5f);
-            dust.noGravity = true;
-            dust.velocity *= 0.1f;
+
+            for (int i = 0; i < 3; i++)
+            {
+                Dust dust = Dust.NewDustDirect(projectile.position + Vector2.One * 4, projectile.width - 8, projectile.height- 8, 71, 0f, 0f, 100, default(Color), 1.5f);
+                dust.noGravity = true;
+                dust.velocity *= 0.3f;
+                dust.velocity += projectile.velocity * 0.3f;
+                //dust.position.X -= projectile.velocity.X / 10f * (float)i;
+                //dust.position.Y -= projectile.velocity.Y / 10f * (float)i;
+            }
+
             if (projectile.alpha > 0)
             {
                 projectile.alpha -= 15;
@@ -46,60 +54,10 @@ namespace TerraLeague.Projectiles
             {
                 projectile.alpha = 0;
             }
-
-            if (projectile.timeLeft < 90 - 10)
-            {
-                if ((int)projectile.ai[0] == -1)
-                {
-                    projectile.ai[0] = GetTarget();
-                }
-
-                if (projectile.ai[0] != -1)
-                {
-                    NPC target = Main.npc[(int)projectile.ai[0]];
-
-                    if (!target.active)
-                    {
-                        projectile.ai[0] = -1;
-                        return;
-                    }
-
-                    float velocity = (float)Math.Sqrt((double)(projectile.velocity.X * projectile.velocity.X + projectile.velocity.Y * projectile.velocity.Y));
-                    float num133 = projectile.localAI[0];
-                    if (num133 == 0f)
-                    {
-                        projectile.localAI[0] = velocity;
-                        num133 = velocity;
-                    }
-                    float num134 = projectile.position.X;
-                    float num135 = projectile.position.Y;
-                    bool flag3 = false;
-
-                    float num143 = target.position.X + (float)(target.width / 2);
-                    float num144 = target.position.Y + (float)(target.height / 2);
-                    if (Math.Abs(projectile.position.X + (float)(projectile.width / 2) - num143) + Math.Abs(projectile.position.Y + (float)(projectile.height / 2) - num144) < 1000f)
-                    {
-                        flag3 = true;
-                        num134 = target.position.X + (float)(target.width / 2);
-                        num135 = target.position.Y + (float)(target.height / 2);
-                    }
-
-                    if (flag3)
-                    {
-                        float num145 = num133;
-                        Vector2 vector10 = new Vector2(projectile.position.X + (float)projectile.width * 0.5f, projectile.position.Y + (float)projectile.height * 0.5f);
-                        float num146 = num134 - vector10.X;
-                        float num147 = num135 - vector10.Y;
-                        float num148 = (float)Math.Sqrt((double)(num146 * num146 + num147 * num147));
-                        num148 = num145 / num148;
-                        num146 *= num148;
-                        num147 *= num148;
-                        int num149 = 8;
-                        projectile.velocity.X = (projectile.velocity.X * (float)(num149 - 1) + num146) / (float)num149;
-                        projectile.velocity.Y = (projectile.velocity.Y * (float)(num149 - 1) + num147) / (float)num149;
-                    }
-                }
-            }
+            if (projectile.timeLeft < 590)
+                projectile.velocity.Y += 0.3f;
+            if (projectile.velocity.Y > 16)
+                projectile.velocity.Y = 16;
 
             if (projectile.timeLeft == 3)
             {

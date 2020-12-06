@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("GUINSOO'S RAGE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Every second in combat will grant a stack up to 6" +
+            return TooltipName("Seething strikes") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Every second in combat will grant a stack up to 6" +
                 "\nGain " + meleeRangedAttackSpeed + "% melee and ranged attack speed per stack" +
                 "\nAt max stacks, melee and ranged On Hit damage will deal 1.5x damage");
         }

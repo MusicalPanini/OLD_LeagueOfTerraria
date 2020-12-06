@@ -53,8 +53,9 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shoot = ProjectileID.SapphireBolt;
 
-            Abilities[(int)AbilityType.Q] = new BalefulStrike(this);
+            //Abilities[(int)AbilityType.Q] = new BalefulStrike(this);
             Abilities[(int)AbilityType.W] = new DarkMatter(this);
+            Abilities[(int)AbilityType.R] = new PrimordialBurst(this);
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

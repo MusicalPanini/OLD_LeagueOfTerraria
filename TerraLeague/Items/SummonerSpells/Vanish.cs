@@ -49,10 +49,11 @@ namespace TerraLeague.Items.SummonerSpells
         static public void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 11).WithPitchVariance(-1), player.Center);
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 8; i++)
             {
-                Gore gore = Gore.NewGoreDirect(new Vector2(player.position.X + (float)(player.width / 2) - 24f, player.position.Y + (float)(player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1.5f);
-                gore.velocity.Y = gore.velocity.Y + 1.5f;
+                //Gore.NewGorePerfect(new Vector2(player.position.X + (float)(player.width / 2) - 24f), new Vector2(2, 0).RotatedBy(MathHelper.TwoPi * i / 8f), Main.rand.Next(61, 64), 1.5f);
+                Gore gore = Gore.NewGoreDirect(new Vector2(player.position.X, player.position.Y + (float)(player.height / 2) - 24f), default(Vector2), Main.rand.Next(61, 64), 1.5f);
+                gore.velocity= new Vector2(2, 0).RotatedBy(MathHelper.TwoPi * i / 8f);
             }
         }
     }

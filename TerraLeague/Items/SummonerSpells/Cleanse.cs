@@ -48,11 +48,13 @@ namespace TerraLeague.Items.SummonerSpells
         static public void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.3f), player.Center);
-            for (int j = 0; j < 18; j++)
-            {
-                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));
-                dust.noGravity = true;
-            }
+            //for (int j = 0; j < 18; j++)
+            //{
+            //    Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));
+            //    dust.noGravity = true;
+            //}
+            TerraLeague.DustElipce(2, 2 / 4f, 0, player.MountedCenter, 111, new Color(0, 255, 255), 1.5f, 180, true, 10);
+            TerraLeague.DustElipce(2 / 4f, 2, 0, player.MountedCenter, 111, new Color(0, 255, 255), 1.5f, 180, true, 10);
         }
     }
 }

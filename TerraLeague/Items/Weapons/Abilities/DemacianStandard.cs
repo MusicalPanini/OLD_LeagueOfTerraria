@@ -73,7 +73,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override bool CanCurrentlyBeCast(Player player)
         {
-            return player.GetModPlayer<PLAYERGLOBAL>().calibrumAmmo < 10;
+            return true;
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -86,7 +86,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 2;
 
-                DoEfx(player, type);
+                //DoEfx(player, type);
                 Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);
             }

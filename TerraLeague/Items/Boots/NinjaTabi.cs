@@ -10,7 +10,7 @@ namespace TerraLeague.Items.Boots
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ninja Tabi");
+            DisplayName.SetDefault("Plated Steelcaps");
             Tooltip.SetDefault("");
         }
 

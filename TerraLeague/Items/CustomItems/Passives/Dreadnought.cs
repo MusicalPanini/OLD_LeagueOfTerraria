@@ -27,7 +27,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             return TerraLeague.CreateColorString(PassiveSubColor, "Moving will generate charge")
-                + "\n" + TooltipName("DREADNOUGHT") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 0.25% movespeed per 1% charge")
+                + "\n" + TooltipName("Shipwrecker") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 0.25% movespeed per 1% charge")
                 + "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "At full charge your next attack will deal ") + TerraLeague.CreateScalingTooltip(TerraLeague.ARMORColor, "ARM", modPlayer.armorLastStep + modPlayer.defenceLastStep, 200) + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra damage");
         }
 

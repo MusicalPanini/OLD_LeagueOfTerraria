@@ -10,7 +10,7 @@ namespace TerraLeague.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Celestial Frostbite");
-            Description.SetDefault("The weight of something much more has chilled you down to your core." +
+            Description.SetDefault("The mountains peak bares down on you with an immense chill" +
                 "\nYou are unable to fly, grapple, build, or use gravity potions");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;

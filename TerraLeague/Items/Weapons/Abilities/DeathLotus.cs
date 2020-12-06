@@ -26,7 +26,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            return "AbilityImages/DeathLotus";
+            return "AbilityImages/DeathBlossom";
         }
 
         public override string GetAbilityTooltip()
@@ -76,7 +76,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetBaseManaCost(), true))
             {
-                player.AddBuff(BuffType<RiteoftheArcane>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG));
+                player.AddBuff(BuffType<DeathBlossom>(), GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG));
                 SetCooldowns(player, type);
             }
         }

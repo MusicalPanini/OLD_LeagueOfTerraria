@@ -40,6 +40,8 @@ namespace TerraLeague.Projectiles
                     PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
                     int shieldAmount = modPlayer.ScaleValueWithHealPower(projectile.damage);
 
+                    TerraLeague.PlaySoundWithPitch(projectile.Center, 2, 8, 0);
+
                     for (int i = 0; i < effectRadius / 5; i++)
                     {
                         Vector2 pos = new Vector2(effectRadius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (effectRadius / 5f)))) + projectile.Center;

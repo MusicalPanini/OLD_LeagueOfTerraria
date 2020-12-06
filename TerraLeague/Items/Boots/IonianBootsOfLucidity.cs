@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Boots
         public override void SetDefaults()
         {
             item.width = 26;
-            item.height = 28;
+            item.height = 22;
             item.accessory = true;
         }
 

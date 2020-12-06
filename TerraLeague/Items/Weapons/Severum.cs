@@ -34,15 +34,15 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;
             item.channel = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 48;
-            item.height = 48;
+            item.width = 32;
+            item.height = 32;
             item.useAnimation = 14;
             item.useTime = 14;
             item.shootSpeed = 80;
             item.knockBack = 2;
             item.value = 310000 * 5;
             item.rare = ItemRarityID.Purple;
-            item.scale = 0.7f;
+            //item.scale = 0.7f;
             item.shoot = ProjectileType<Severum_Slash>();
             item.UseSound = null;
             item.autoReuse = true;
@@ -91,7 +91,7 @@ namespace TerraLeague.Items.Weapons
 
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(0, 10);
+            return new Vector2(4, 6);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace TerraLeague.Buffs
             if (player.buffTime[buffIndex] == 0)
                 damage = 0;
 
+            player.moveSpeed += 0.10f;
             player.GetModPlayer<PLAYERGLOBAL>().tidecallersBlessing = true;
 
             player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit += damage;

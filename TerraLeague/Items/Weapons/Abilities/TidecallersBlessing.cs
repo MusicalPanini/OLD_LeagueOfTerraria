@@ -28,8 +28,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetIconTexturePath()
         {
-            //return "AbilityImages/TidecallersBlessing";
-            return "AbilityImages/Template";
+            return "AbilityImages/TidecallersBlessing";
         }
 
         public override string GetAbilityTooltip()

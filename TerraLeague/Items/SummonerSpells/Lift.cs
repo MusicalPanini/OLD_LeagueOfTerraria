@@ -64,11 +64,28 @@ namespace TerraLeague.Items.SummonerSpells
         static public void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 25).WithPitchVariance(-0.3f), player.Center);
-            for (int j = 0; j < 18; j++)
-            {
-                Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 255, 0), Main.rand.Next(Main.rand.Next(2, 3)));
-                dust.noGravity = true;
-            }
+
+            //Vector2 TopPointA = player.Center + new Vector2(-64 * player.direction, -32);
+            //Vector2 MidPointA = player.Center + new Vector2(-48 * player.direction, 0);
+            //Vector2 BotPointA = player.Center + new Vector2(-32 * player.direction, 12);
+
+            Color color = new Color(199, 201, 164, 0);
+
+            Vector2 TopPointA = player.Center + new Vector2(-64, -32);
+            Vector2 MidPointA = player.Center + new Vector2(-48, 0);
+            Vector2 BotPointA = player.Center + new Vector2(-32, 12);
+
+            Vector2 TopPointB = player.Center + new Vector2(64, -32);
+            Vector2 MidPointB = player.Center + new Vector2(48, 0);
+            Vector2 BotPointB = player.Center + new Vector2(32, 12);
+
+            TerraLeague.DustLine(TopPointA, player.Center, 63, 1, 2.5f, color, true, -4, -2);
+            TerraLeague.DustLine(MidPointA, player.Center, 63, 1, 2.5f, color, true, -4, 0);
+            TerraLeague.DustLine(BotPointA, player.Center, 63, 1, 2.5f, color, true, -4, 1.5f);
+
+            TerraLeague.DustLine(TopPointB, player.Center, 63, 1, 2.5f, color, true, 4, -2);
+            TerraLeague.DustLine(MidPointB, player.Center, 63, 1, 2.5f, color, true, 4, 0);
+            TerraLeague.DustLine(BotPointB, player.Center, 63, 1, 2.5f, color, true, 4, 1.5f);
         }
     }
 }

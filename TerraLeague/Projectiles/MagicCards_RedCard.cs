@@ -17,8 +17,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 28;
-            projectile.height = 28;
+            projectile.width = 16;
+            projectile.height = 16;
             projectile.timeLeft = 300;
             projectile.penetrate = 100;
             projectile.aiStyle = 2;
@@ -30,8 +30,8 @@ namespace TerraLeague.Projectiles
         {
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 0, 0));
             dust.noGravity = true;
-            dust.scale = 1.4f;
-
+            dust.scale = 1f;
+            dust.velocity *= 0.1f;
             base.AI();
         }
 
@@ -44,16 +44,20 @@ namespace TerraLeague.Projectiles
         public override void Kill(int timeLeft)
         {
             Dust dust;
-            for (int i = 0; i < 24; i++)
+            TerraLeague.DustBorderRing(projectile.width / 2, projectile.Center, 6, default, 4, true, true, 0.5f);
+
+            for (int i = 0; i < 20; i++)
             {
                 dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 3f);
                 dust.noGravity = true;
                 dust.velocity *= 5f;
                 dust.color = new Color(255, 0, 220);
+                dust.noLight = true;
 
                 dust = Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 6, 0f, 0f, 100, default(Color), 2f);
                 dust.velocity *= 3f;
                 dust.color = new Color(255, 0, 220);
+                dust.noLight = true;
             }
 
             Main.PlaySound(new Terraria.Audio.LegacySoundStyle(2, 14, Terraria.Audio.SoundType.Sound), projectile.position);
@@ -74,16 +78,19 @@ namespace TerraLeague.Projectiles
 
         public void Prime()
         {
-            projectile.velocity = Vector2.Zero;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
-            projectile.width = 115;
-            projectile.height = 115;
-            projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
-            projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
-            projectile.timeLeft = 3;
+            if (projectile.width != 200)
+            {
+                projectile.velocity = Vector2.Zero;
+                projectile.tileCollide = false;
+                projectile.alpha = 255;
+                projectile.position.X = projectile.position.X + (float)(projectile.width / 2);
+                projectile.position.Y = projectile.position.Y + (float)(projectile.height / 2);
+                projectile.width = 200;
+                projectile.height = 200;
+                projectile.position.X = projectile.position.X - (float)(projectile.width / 2);
+                projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
+                projectile.timeLeft = 3;
+            }
         }
     }
 }

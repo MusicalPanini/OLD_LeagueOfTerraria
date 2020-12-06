@@ -41,6 +41,12 @@ namespace TerraLeague.Projectiles
                 Main.PlaySound(new LegacySoundStyle(2, 88), projectile.Center);
                 if (projectile.owner == Main.LocalPlayer.whoAmI)
                     projectile.netUpdate = true;
+
+                for (int i = 0; i < 3; i++)
+                {
+                    Gore gore = Gore.NewGoreDirect(projectile.Center, default(Vector2), Main.rand.Next(61, 64), 1f);
+                    gore.velocity.Y = gore.velocity.Y + 1.5f;
+                }
             }
             projectile.soundDelay = 100;
 

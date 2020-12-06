@@ -66,6 +66,54 @@ namespace TerraLeague.Items.SummonerSpells
         static public void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
+            Main.PlaySound(new LegacySoundStyle(2, 37), player.Center);
+
+            int border = 96;
+            int borderHeight = 88;
+            int smallLength = border / 3;
+            Color color = new Color(131, 234, 46, 0);
+            float scale = 2;
+
+            /*        -border
+               a ___ b       g ___ h
+                |   |___   ___|   |
+                |   c   d e   f   |   
+                |                 |   
+       -border  |                 |   +border
+                |                 |   
+                |                 |     
+                |_________________|
+              j       +border      i
+            */
+
+            Vector2 pointA = player.MountedCenter + new Vector2(-border, -borderHeight);
+            Vector2 pointB = player.MountedCenter + new Vector2(-border + smallLength, -borderHeight);
+            Vector2 pointC = player.MountedCenter + new Vector2(-border + smallLength, -borderHeight + smallLength);
+            Vector2 pointD = player.MountedCenter + new Vector2(-smallLength/2, -borderHeight + smallLength);
+            Vector2 pointE = player.MountedCenter + new Vector2(smallLength/2, -borderHeight + smallLength);
+            Vector2 pointF = player.MountedCenter + new Vector2(border - smallLength, -borderHeight + smallLength);
+            Vector2 pointG = player.MountedCenter + new Vector2(border - smallLength, -borderHeight);
+            Vector2 pointH = player.MountedCenter + new Vector2(border, -borderHeight);
+            Vector2 pointI = player.MountedCenter + new Vector2(border, borderHeight);
+            Vector2 pointJ = player.MountedCenter + new Vector2(-border, borderHeight);
+
+            Vector2 pointY = player.MountedCenter + new Vector2(0, -borderHeight * 2 + smallLength*1.3f);
+            Vector2 pointZ = player.MountedCenter + new Vector2(0, -borderHeight * 2.25f);
+
+
+
+            TerraLeague.DustLine(pointA, pointB, 261, 1, scale, color);
+            TerraLeague.DustLine(pointB, pointC, 261, 1, scale, color);
+            TerraLeague.DustLine(pointC, pointD, 261, 1, scale, color);
+            TerraLeague.DustLine(pointE, pointF, 261, 1, scale, color);
+            TerraLeague.DustLine(pointF, pointG, 261, 1, scale, color);
+            TerraLeague.DustLine(pointG, pointH, 261, 1, scale, color);
+            TerraLeague.DustLine(pointH, pointI, 261, 1, scale, color);
+            TerraLeague.DustLine(pointI, pointJ, 261, 1, scale, color);
+            TerraLeague.DustLine(pointJ, pointA, 261, 1, scale, color);
+
+            TerraLeague.DustLine(pointY, pointZ, 261, 1, scale, color, true, 0, 16);
+
             for (int j = 0; j < 18; j++)
             {
                 Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(131, 234, 46, 0), Main.rand.Next(2, 3));

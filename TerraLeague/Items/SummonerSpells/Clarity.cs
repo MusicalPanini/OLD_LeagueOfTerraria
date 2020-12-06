@@ -69,6 +69,22 @@ namespace TerraLeague.Items.SummonerSpells
         static public void Efx(Player player)
         {
             Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
+
+            float starRad = 96 * 1.5f;
+
+            Vector2 PointA = player.MountedCenter + new Vector2(0, -starRad);
+            Vector2 PointB = player.MountedCenter + new Vector2(0, -starRad).RotatedBy(MathHelper.Pi * 2 /5f);
+            Vector2 PointC = player.MountedCenter + new Vector2(0, -starRad).RotatedBy(MathHelper.Pi * 4 / 5f);
+            Vector2 PointD = player.MountedCenter + new Vector2(0, -starRad).RotatedBy(MathHelper.Pi * 6 / 5f);
+            Vector2 PointE = player.MountedCenter + new Vector2(0, -starRad).RotatedBy(MathHelper.Pi * 8 / 5f);
+
+            TerraLeague.DustLine(PointA, PointC, 113, 1, 2f, default, true, 0, 0);
+            TerraLeague.DustLine(PointC, PointE, 113, 1, 2f, default, true, 0, 0);
+            TerraLeague.DustLine(PointE, PointB, 113, 1, 2f, default, true, 0, 0);
+            TerraLeague.DustLine(PointB, PointD, 113, 1, 2f, default, true, 0, 0);
+            TerraLeague.DustLine(PointD, PointA, 113, 1, 2f, default, true, 0, 0);
+
+
             TerraLeague.DustRing(261, player, new Color(0, 0, 255, 0));
             TerraLeague.DustBorderRing(effectRadius, player.MountedCenter, 261, new Color(0, 0, 255, 0), 2);
         }

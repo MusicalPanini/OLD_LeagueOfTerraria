@@ -74,8 +74,8 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
             {
-                Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y - (Main.screenHeight / 2));
-                Vector2 velocity = new Vector2(0, 25);
+                Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y - 1000);
+                Vector2 velocity = new Vector2(0, 1000);
                 int projType = ProjectileType<CrystalStaff_DarkMatter>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 0;

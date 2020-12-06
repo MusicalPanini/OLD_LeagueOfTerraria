@@ -47,7 +47,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemType<LostChapter>(), 1);
-            recipe.AddIngredient(ItemType<HextechRevolver>(), 1);
+            recipe.AddIngredient(ItemType<HextechAlternator>(), 1);
             recipe.AddIngredient(ItemID.FrostStaff, 1);
             recipe.AddIngredient(ItemType<HextechCore>(), 1);
             recipe.AddIngredient(ItemType<TrueIceChunk>(), 2);

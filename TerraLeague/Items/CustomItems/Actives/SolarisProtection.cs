@@ -20,14 +20,14 @@ namespace TerraLeague.Items.CustomItems.Actives
             percentLifeShield = PercentLifeShield;
             effectRadius = EffectRadius;
             shieldDuration = ShieldDuration;
-            cooldownCount = Cooldown;
+            activeCooldown = Cooldown;
         }
 
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("SOLARI'S PROTECTION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give nearby allies a ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", modPlayer.maxLifeLastStep, percentLifeShield, true) + TerraLeague.CreateColorString(ActiveSecondaryColor, " Shield") +
+            return TooltipName("DEVOTION") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give nearby allies a ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", modPlayer.maxLifeLastStep, percentLifeShield, true) + TerraLeague.CreateColorString(ActiveSecondaryColor, " Shield") +
                  "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
@@ -66,9 +66,24 @@ namespace TerraLeague.Items.CustomItems.Actives
 
         override public void Efx(Player user)
         {
-            TerraLeague.DustRing(261, user, new Color(255, 106, 0, 0));
+            //TerraLeague.DustRing(261, user, new Color(255, 106, 0, 0));
             Main.PlaySound(new LegacySoundStyle(2, 28).WithPitchVariance(-0.3f), user.Center);
             TerraLeague.DustBorderRing(effectRadius, user.MountedCenter, 267, new Color(255, 106, 0, 0), 2);
+            List<int> players = TerraLeague.GetAllPlayersInRange(user.MountedCenter, effectRadius, -1, user.team);
+
+            for (int i = 0; i < players.Count; i++)
+            {
+                Player player = Main.player[players[i]];
+                TerraLeague.DustElipce(32, 32, 0, player.MountedCenter, 174, default, 2, 36, true, 0.02f);
+
+                if (user.whoAmI != players[i])
+                {
+                    Vector2 pointA = user.MountedCenter + TerraLeague.CalcVelocityToPoint(user.MountedCenter, player.MountedCenter, 128);
+                    Vector2 pointB = player.MountedCenter + TerraLeague.CalcVelocityToPoint(player.MountedCenter, user.MountedCenter, 128);
+
+                    TerraLeague.DustLine(pointA, pointB, 174, 0.5f, 2);
+                }
+            }
         }
     }
 }

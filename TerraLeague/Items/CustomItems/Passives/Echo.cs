@@ -29,8 +29,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             return TerraLeague.CreateColorString(PassiveSubColor, "Moving will generate charge")
-                + "\n" + TooltipName("ECHO") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Gain 0.25% movespeed per 1% charge")
-                + "\n" + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your next magic attack will deal ") +  TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, (int)magicScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra magic damage and launch 8 homing projectiles");
+                + "\n" + TooltipName("ECHO") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Your next magic attack will deal ") + baseDamage + " + " +  TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, (int)magicScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " extra magic damage and launch 8 homing projectiles");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)
@@ -54,7 +53,7 @@ namespace TerraLeague.Items.CustomItems.Passives
                 {
                     Projectile.NewProjectileDirect(target.position, new Vector2(14, 0).RotatedBy(MathHelper.ToRadians(45 * i)), ProjectileType<Item_Echo>(), bonusDamage, 0, player.whoAmI, target.whoAmI);
                 }
-                modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] = 0;
+                passiveStat = 0;
                 modPlayer.echo = false;
             }
 

@@ -55,10 +55,28 @@ namespace TerraLeague.Items.SummonerSpells
             }
             if (!pathBlocked)
             {
-                player.Teleport(new Vector2((int)(Main.mouseX + Main.screenPosition.X - 16), (int)(Main.mouseY + Main.screenPosition.Y - 24)), 1, 0);
+                Vector2 tp = new Vector2((int)(Main.mouseX + Main.screenPosition.X - 16), (int)(Main.mouseY + Main.screenPosition.Y - 24));
+
+                Efx(player.MountedCenter, Main.MouseWorld);
+                PacketHandler.SendFlash(-1, player.whoAmI, player.MountedCenter, Main.MouseWorld);
+
+                player.Teleport(tp, 10, 0);
                 NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, player.whoAmI, (int)(Main.mouseX + Main.screenPosition.X), (int)(Main.mouseY + Main.screenPosition.Y), 1, 0, 0);
 
                 SetCooldowns(player, spellSlot);
+            }
+        }
+
+        static public void Efx(Vector2 startPoint, Vector2 teleportPoint)
+        {
+            TerraLeague.DustLine(startPoint, teleportPoint, 228, 1, 2);
+            TerraLeague.PlaySoundWithPitch(teleportPoint, 2, 72, 0.5f);
+            for (int i = 0; i < 20; i++)
+            {
+                Dust dust = Dust.NewDustDirect(teleportPoint - (Vector2.One * 16), 32, 32, 228, 0, 0, 0, default, 4);
+                dust.noGravity = true;
+                dust.noLight = true;
+                dust.velocity *= 2;
             }
         }
     }

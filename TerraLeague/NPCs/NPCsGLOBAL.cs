@@ -235,9 +235,10 @@ namespace TerraLeague.NPCs
             }
             if (ignited)
             {
-                if (Main.rand.Next(0, 4) == 0)
+                if (Main.rand.Next(0, 2) == 0)
                 {
-                    Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color));
+                    dust = Dust.NewDustDirect(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, -12f, 100, default(Color), 6);
+                    dust.noGravity = true;
                 }
             }
             if (sunfire || weakSunfire)

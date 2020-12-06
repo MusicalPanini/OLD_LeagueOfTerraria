@@ -14,8 +14,7 @@ namespace TerraLeague.Items.Accessories
             DisplayName.SetDefault("Nightbloom Skull");
             Tooltip.SetDefault("Increase max number of minions by 1" +
                 "\nIncreases mana regeneration by 1" +
-                "\nWhile below 50% life increase mana regeneration by 3" +
-                "\nIncreases length of invincibility after taking damage");
+                "\nWhile below 50% life increase mana regeneration by 3");
             base.SetStaticDefaults();
         }
 

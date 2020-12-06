@@ -41,11 +41,6 @@ namespace TerraLeague.Projectiles
         {
             Player player = Main.player[projectile.owner];
 
-            if (projectile.timeLeft == 100)
-            {
-                TerraLeague.PlaySoundWithPitch(Main.player[projectile.owner].MountedCenter, 3, 8, -0.5f);
-            }
-
             projectile.scale = 3 + 2 * (int)projectile.ai[0];
             projectile.width = (int)(64 * projectile.scale);
             projectile.height = (int)(32 * projectile.scale);

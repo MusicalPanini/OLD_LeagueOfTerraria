@@ -692,6 +692,7 @@ namespace TerraLeague
         public bool critEdge = false;
         public bool spiritualRestur = false;
         public bool ardentsFrenzy = false;
+        public bool rapids = false;
         public bool bloodShield = false;
         public bool bloodPool = false;
         #endregion
@@ -746,6 +747,7 @@ namespace TerraLeague
             celestialFrostbite = false;
             chargerBlessing = false;
             scourgeBlessing = false;
+            rapids = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1181,7 +1183,6 @@ namespace TerraLeague
 
             if (ghosted)
             {
-                Dust.NewDustDirect(player.position, player.width, player.height, 16, 0, 0, 0);
                 player.accRunSpeed += 5;
                 player.maxRunSpeed *= 2;
                 player.moveSpeed *= 3;
@@ -1690,6 +1691,17 @@ namespace TerraLeague
             }
 
             // Dusts
+            if (ghosted)
+            {
+                for (int i = 0; i < player.velocity.Length()/7f; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, 111, 0, 0, 0, default, player.velocity.Length() / 5f);
+                    dust.noLight = true;
+                    dust.noGravity = true;
+                    dust.velocity *= 0.1f;
+                }
+                
+            }
             if (gathFire)
             {
                 player.armorEffectDrawOutlines = true;
@@ -2605,6 +2617,12 @@ namespace TerraLeague
                     player.AddBuff(BuffType<Frenzy>(), 240);
                 }
 
+                if (rapids)
+                {
+                    SendBuffPacket(BuffType<Buffs.Rapids>(), 240, healTarget, toWho, fromWho);
+                    player.AddBuff(BuffType<Buffs.Rapids>(), 240);
+                }
+
                 PacketHandler.SendHealing(toWho, fromWho, healAmount, healTarget);
             }
         }
@@ -2633,6 +2651,12 @@ namespace TerraLeague
                 {
                     SendBuffPacket(BuffType<Frenzy>(), 240, shieldTarget, toWho, fromWho);
                     player.AddBuff(BuffType<Frenzy>(), 240);
+                }
+
+                if (rapids)
+                {
+                    SendBuffPacket(BuffType<Buffs.Rapids>(), 240, shieldTarget, toWho, fromWho);
+                    player.AddBuff(BuffType<Buffs.Rapids>(), 240);
                 }
 
                 PacketHandler.SendShield(toWho, fromWho, shieldAmount, (int)shieldType, shieldDuration, shieldTarget, shieldColor);

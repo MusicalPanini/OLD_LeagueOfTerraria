@@ -49,7 +49,7 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item8;
             item.noMelee = true;
 
-            Abilities[(int)AbilityType.Q] = new Feast(this);
+            Abilities[(int)AbilityType.R] = new Feast(this);
         }
 
         public override bool CanUseItem(Player player)

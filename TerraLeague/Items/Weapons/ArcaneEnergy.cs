@@ -22,7 +22,8 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "Charge longer for strong attacks";
+            return "Gains 100% extra damage and range for each second you charge it" +
+                    "\nMax of 1000%";
         }
 
         public override string GetQuote()

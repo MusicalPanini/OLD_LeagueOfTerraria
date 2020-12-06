@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Luden's Echo");
+            DisplayName.SetDefault("Luden's Tempest");
             Tooltip.SetDefault("6% increased magic damage" +
                 "\nIncreases maximum mana by 20" +
                 "\nAbility cooldown reduced by 10%");
@@ -30,7 +30,8 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new Echo(40, 10),
+                new TempestEcho(40, 10, 16),
+                //new Echo(40, 10),
                 new Haste()
             };
         }
@@ -60,10 +61,22 @@ namespace TerraLeague.Items.CompleteItems
 
         public override string GetStatText()
         {
+            //if (Passives[0].currentlyActive)
+            //    return ((int)Passives[0].passiveStat).ToString() + "%";
+            //else
+            //    return "";
+
             if (Passives[0].currentlyActive)
-                return ((int)Passives[0].passiveStat).ToString() + "%";
-            else
-                return "";
+            {
+                if (Passives[0].cooldownCount > 0)
+                    return (Passives[0].cooldownCount / 60).ToString();
+            }
+            return "";
+        }
+
+        public override bool OnCooldown(Player player)
+        {
+            return (Passives[0].cooldownCount > 0);
         }
     }
 }

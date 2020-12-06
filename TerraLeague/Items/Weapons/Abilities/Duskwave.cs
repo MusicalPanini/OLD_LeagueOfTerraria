@@ -92,6 +92,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                     Projectile.NewProjectileDirect(position, new Vector2(16, 0).RotatedBy(MathHelper.TwoPi / 16 * i) * 0.75f, projType, damage, knockback, player.whoAmI, 0, 1);
                 }
 
+                player.GetModPlayer<PLAYERGLOBAL>().infernumAmmo -= 10;
                 SetAnimation(player, 30, 30, position + velocity);
                 DoEfx(player, type);
                 SetCooldowns(player, type);

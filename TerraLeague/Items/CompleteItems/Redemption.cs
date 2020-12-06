@@ -28,7 +28,8 @@ namespace TerraLeague.Items.CompleteItems
             item.rare = ItemRarityID.LightRed;
             item.accessory = true;
 
-            Active = new Rejuvenate(50, 500, 120);
+            Active = new Intervention(50, 120);
+            //Active = new Rejuvenate(50, 500, 120);
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

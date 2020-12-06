@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using TerraLeague.Projectiles;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
@@ -54,12 +55,16 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override void DoEffect(Player player, int spellSlot)
         {
-            var npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 600);
+            List<int> npcs = TerraLeague.GetAllNPCsInRange(player.MountedCenter, 600);
 
-            for (int i = 0; i < npcs.Count; i++)
+            if (npcs.Count != 0)
             {
-                Projectile.NewProjectile(player.Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, npcs[i]);
-                SetCooldowns(player, spellSlot);
+                Projectile.NewProjectileDirect(player.MountedCenter, Vector2.Zero, ProjectileType<Summoner_SyphonVisuals>(), 0, 0, player.whoAmI);
+                for (int i = 0; i < npcs.Count; i++)
+                {
+                    Projectile.NewProjectile(Main.npc[npcs[i]].Center, Vector2.Zero, ProjectileType<Summoner_Syphon>(), GetDamageStat(), 0, player.whoAmI, npcs[i]);
+                    SetCooldowns(player, spellSlot);
+                }
             }
         }
     }

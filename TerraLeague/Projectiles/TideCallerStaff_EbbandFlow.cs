@@ -16,7 +16,6 @@ namespace TerraLeague.Projectiles
     {
         int damage = 0;
         int healing = 0;
-        int hit = -1;
 
         public override void SetStaticDefaults()
         {

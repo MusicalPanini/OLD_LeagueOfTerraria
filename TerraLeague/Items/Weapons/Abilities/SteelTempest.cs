@@ -34,6 +34,18 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().gathering3)
             {
+                return "AbilityImages/GatheringStorm";
+            }
+            else
+            {
+                return "AbilityImages/SteelTempest";
+            }
+        }
+
+        public override string GetAbilityTooltip()
+        {
+            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().gathering3)
+            {
                 return "Uses 2 stacks" +
                     "\nLaunch a tornado that knocks up enemies" +
                     "\nCan Crit";
@@ -45,12 +57,6 @@ namespace TerraLeague.Items.Weapons.Abilities
                     "\nCreate a tornado at 2 stacks" +
                     "\nCan Crit";
             }
-        }
-
-        public override string GetAbilityTooltip()
-        {
-            return "Launch a void blast that applies 2 stacks of 'Caustic Wounds' to the hit enemy." +
-                    "\nAt [c/" + TerraLeague.MAGColor + ":50 MAG], Void Seeker will deal magic damage instead and apply 3 stacks.";
         }
 
         public override int GetAbilityBaseDamage(Player player)

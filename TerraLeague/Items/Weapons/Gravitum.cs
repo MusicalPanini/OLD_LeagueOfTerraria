@@ -34,16 +34,16 @@ namespace TerraLeague.Items.Weapons
             item.damage = 100;
             item.magic = true;
             item.useStyle = ItemUseStyleID.HoldingOut;
-            item.width = 82;
-            item.height = 48;
+            item.width = 66;
+            item.height = 38;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.shootSpeed = 8f;
+            item.shootSpeed = 12f;
             item.noMelee = true;
             item.knockBack = 2;
             item.value = 310000 * 5;
             item.rare = ItemRarityID.Purple;
-            item.scale = 0.8f;
+            //item.scale = 0.8f;
             item.shoot = ProjectileType<Gravitum_Orb>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 111);
             item.autoReuse = true;
@@ -90,7 +90,7 @@ namespace TerraLeague.Items.Weapons
 
         public override Vector2? HoldoutOffset()
         {
-            return new Vector2(-30, -10);
+            return new Vector2(-20, -10);
         }
     }
 }

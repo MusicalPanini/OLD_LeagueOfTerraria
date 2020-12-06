@@ -78,7 +78,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 95, -1f);
+            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 4, 13, -1f);
         }
 
         public static int GetMaxOnHit(PLAYERGLOBAL player)

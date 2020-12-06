@@ -37,8 +37,8 @@ namespace TerraLeague.Projectiles
         {
             if (projectile.soundDelay == 0)
             {
-                projectile.timeLeft = (int)projectile.ai[0];
-                projectile.extraUpdates = (int)projectile.ai[0] - 1;
+                projectile.timeLeft = (int)projectile.ai[0] / 2;
+                projectile.extraUpdates = projectile.timeLeft - 1;
             }
             projectile.soundDelay = 1000;
 

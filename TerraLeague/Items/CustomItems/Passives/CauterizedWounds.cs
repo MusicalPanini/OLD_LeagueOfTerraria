@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("CAUTERIZED WOUNDS") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Stores " + percentDamageReduction + "% of damage taken" +
+            return TooltipName("IGNORE PAIN") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Stores " + percentDamageReduction + "% of damage taken" +
                    "\nTake a third of the stored damage every second");
         }
 

@@ -70,13 +70,48 @@ namespace TerraLeague.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             target.AddBuff(BuffType<Exhausted>(), 600);
-
+            projectile.ai[1] = 1;
+            projectile.netUpdate = true;
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Dig, projectile.Center);
+            int type = 174;
+
+            int arrow1Height = 32;
+            int arrow1Width = 32;
+            int arrow1Dis = 16;
+
+            int arrow2Height = 24;
+            int arrow2Width = 24;
+            int arrow2Dis = 0;
+
+            int arrow3Height = 16;
+            int arrow3Width = 16;
+            int arrow3Dis = -16;
+
+            Vector2 Arrow1BottomLeft = projectile.Center + new Vector2(-arrow1Width, 0 + arrow1Dis);
+            Vector2 Arrow1BottomRight = projectile.Center + new Vector2(arrow1Width, 0 + arrow1Dis);
+            Vector2 Arrow1Top = projectile.Center + new Vector2(0, arrow1Height + arrow1Dis);
+
+            Vector2 Arrow2BottomLeft = projectile.Center + new Vector2(-arrow2Width, 0 + arrow2Dis);
+            Vector2 Arrow2BottomRight = projectile.Center + new Vector2(arrow2Width, 0 + arrow2Dis);
+            Vector2 Arrow2Top = projectile.Center + new Vector2(0, arrow2Height + arrow2Dis);
+
+            Vector2 Arrow3BottomLeft = projectile.Center + new Vector2(-arrow3Width, 0 + arrow3Dis);
+            Vector2 Arrow3BottomRight = projectile.Center + new Vector2(arrow3Width, 0 + arrow3Dis);
+            Vector2 Arrow3Top = projectile.Center + new Vector2(0, arrow3Height + arrow3Dis);
+
+            TerraLeague.DustLine(Arrow1BottomLeft, Arrow1Top, type, 1, 2, default, true, 0, 6);
+            TerraLeague.DustLine(Arrow1BottomRight, Arrow1Top, type, 1, 2, default, true, 0, 6);
+
+            TerraLeague.DustLine(Arrow2BottomLeft, Arrow2Top, type, 1, 2, default, true, 0, 6);
+            TerraLeague.DustLine(Arrow2BottomRight, Arrow2Top, type, 1, 2, default, true, 0, 6);
+
+            TerraLeague.DustLine(Arrow3BottomLeft, Arrow3Top, type, 1, 2, default, true, 0, 6);
+            TerraLeague.DustLine(Arrow3BottomRight, Arrow3Top, type, 1, 2, default, true, 0, 6);
 
             for (int i = 0; i < 10; i++)
             {

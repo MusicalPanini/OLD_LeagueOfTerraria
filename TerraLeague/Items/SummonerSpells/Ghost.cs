@@ -43,6 +43,20 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
+            int spacing = 48;
+            int type = 111;
+
+            TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(24, 0), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(-24, 0), type, 0.5f, 2);
+
+            TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(48, 0), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, 0), type, 0.5f, 2, default, true, -10, 0);
+            TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(-48, 0), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, 0), type, 0.5f, 2, default, true, 10, 0);
+
+            TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(16, spacing), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, spacing), type, 0.5f, 2, default, true, -5, 0);
+            TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(-32, spacing), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, spacing), type, 0.5f, 2, default, true, 5, 0);
+
+            TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(32, -spacing), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, -spacing), type, 0.5f, 2, default, true, -5, 0);
+            TerraLeague.DustLine(player.MountedCenter + new Microsoft.Xna.Framework.Vector2(-16, -spacing), player.MountedCenter + new Microsoft.Xna.Framework.Vector2(0, -spacing), type, 0.5f, 2, default, true, 5, 0);
+
             Main.PlaySound(new LegacySoundStyle(2, 117).WithPitchVariance(0.8f), player.Center);
         }
     }

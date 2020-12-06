@@ -76,14 +76,12 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetBaseManaCost(), true))
             {
-                Vector2 position = player.MountedCenter;
-                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 12);
-                int projType = ProjectileType<BrassShotgun_EndoftheLine>();
-                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.RNG);
+                Vector2 position = Main.MouseWorld;
+                Vector2 velocity = Vector2.Zero;
+                int projType = ProjectileType<ChainWardensScythe_Lantern>();
+                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MEL);
                 int knockback = 3;
 
-                SetAnimation(player, 20, 20, position + velocity);
-                DoEfx(player, type);
                 Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
                 SetCooldowns(player, type);
             }
@@ -91,7 +89,6 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override void Efx(Player player)
         {
-            Main.PlaySound(SoundID.Item8, player.Center);
         }
     }
 }

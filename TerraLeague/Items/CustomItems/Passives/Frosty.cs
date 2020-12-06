@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("FROSTY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Magic damage will slow enemies " + debuffDuration + " seconds");
+            return TooltipName("RIMEFROST") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Magic damage will slow enemies " + debuffDuration + " seconds");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

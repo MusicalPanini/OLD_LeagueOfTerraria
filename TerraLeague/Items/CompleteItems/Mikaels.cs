@@ -29,7 +29,7 @@ namespace TerraLeague.Items.CompleteItems
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
 
-            Active = new Purity(6, 60);
+            Active = new Purify(60);
             Passives = new Passive[]
             {
                 new Harmony(1, 30)

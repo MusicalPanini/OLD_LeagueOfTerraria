@@ -74,7 +74,17 @@ namespace TerraLeague.Projectiles
                 projectile.localAI[0]++;
                 if ((int)projectile.localAI[0] == 60)
                 {
-                    Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileType<HexCoreStaff_Storm>(), projectile.damage, projectile.knockBack, projectile.owner);
+                    //Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ProjectileType<HexCoreStaff_Storm>(), projectile.damage, projectile.knockBack, projectile.owner);\
+                    TerraLeague.DustBorderRing(224, projectile.Center, 226, default, 0.75f);
+                    List<int> npcs = TerraLeague.GetAllNPCsInRange(projectile.Center, 224, true);
+                    for (int i = 0; i < npcs.Count; i++)
+                    {
+                        NPC npc = Main.npc[npcs[i]];
+                        Projectile.NewProjectileDirect(projectile.Center, (npc.Center - projectile.Center) * 0.1f, ProjectileType<HexCoreStaff_ChaosStormZap>(), projectile.damage, projectile.knockBack, projectile.owner, npc.whoAmI);
+                    }
+
+                    if (npcs.Count > 0)
+                        TerraLeague.PlaySoundWithPitch(projectile.Center, 3, 53, 0);
 
                     projectile.localAI[0] = 0;
                 }

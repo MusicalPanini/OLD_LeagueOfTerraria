@@ -68,7 +68,10 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player)
         {
-            Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
+            //Main.PlaySound(new LegacySoundStyle(2, 29).WithPitchVariance(-0.5f), player.Center);
+            TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 70, 0.75f);
+
+            TerraLeague.DustElipce(128, 128, 0, player.MountedCenter, 174, default, 2, 180, true, 0.02f);
         }
 
         static public void ShieldBreak(Player player)

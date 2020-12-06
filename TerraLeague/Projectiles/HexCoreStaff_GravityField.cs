@@ -27,7 +27,7 @@ namespace TerraLeague.Projectiles
             projectile.timeLeft = 6 * 60;
             projectile.magic = true;
             projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 15;
+            projectile.localNPCHitCooldown = 600;
             projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell = true;
         }
 
@@ -54,7 +54,7 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Stunned>(), 30);
+            target.AddBuff(ModContent.BuffType<Stunned>(), projectile.timeLeft);
             base.OnHitNPC(target, damage, knockback, crit);
         }
 
@@ -89,7 +89,7 @@ namespace TerraLeague.Projectiles
         public override bool? CanHitNPC(NPC target)
         {
             if (projectile.friendly && !target.townNPC)
-                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, projectile.width / 2);
+                return TerraLeague.IsHitboxWithinRange(projectile.Center, target.Hitbox, radius);
             else
                 return false;
         }

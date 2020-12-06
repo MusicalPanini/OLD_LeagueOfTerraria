@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("VOID SHARPENED") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee attacks deal ") + baseDamage + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " On Hit damage");
+            return TooltipName("Icathian Bite") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee attacks deal ") + baseDamage + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, modPlayer.SUM, minionScaling) + TerraLeague.CreateColorString(PassiveSecondaryColor, " On Hit damage");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

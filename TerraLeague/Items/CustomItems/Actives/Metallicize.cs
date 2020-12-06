@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         public override string Tooltip(Player player, LeagueItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return TooltipName("METALLICIZE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Increase your health by 125% while lowering your attack for 10 seconds" +
+            return TooltipName("Monolith") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Increase your health by 125% while lowering your attack for 10 seconds" +
                 "\nIf STONE SKIN is active, also full heal") +
                  "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }

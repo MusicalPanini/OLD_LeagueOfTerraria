@@ -75,9 +75,9 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override bool CanCurrentlyBeCast(Player player)
         {
             if (player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo >= 10)
-                return false;
+                return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 999999, BuffType<GravitumMark>());
 
-            return TerraLeague.IsThereAnNPCInRange(player.MountedCenter, 999999, BuffType<GravitumMark>());
+            return false;
         }
 
         public override void DoEffect(Player player, AbilityType type)

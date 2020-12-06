@@ -984,6 +984,7 @@ namespace TerraLeague
         public const byte Revive = 12;
         public const byte Vanish = 13;
         public const byte Lift = 14;
+        public const byte Flash = 15;
         #endregion
 
         public SummonerSpellsPacketHandler(byte handlerType) : base(handlerType)
@@ -1035,6 +1036,9 @@ namespace TerraLeague
                     break;
                 case (Lift):
                     ReceiveLift(reader, fromWho);
+                    break;
+                case (Flash):
+                    ReceiveFlash(reader, fromWho);
                     break;
             }
 
@@ -1421,6 +1425,35 @@ namespace TerraLeague
             else
             {
                 //No Effect
+            }
+        }
+
+        // Flash
+        public void SendFlash(int toWho, int fromWho, Vector2 start, Vector2 end)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(Ignite, fromWho);
+                packet.WriteVector2(start);
+                packet.WriteVector2(end);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Flash", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveFlash(BinaryReader reader, int fromWho)
+        {
+            TerraLeague.Log("[DEBUG] - Received Flash", new Color(80, 80, 80));
+
+            Vector2 start = reader.ReadVector2();
+            Vector2 end = reader.ReadVector2();
+
+            if (Main.netMode == NetmodeID.Server)
+            {
+                SendFlash(-1, fromWho, start, end);
+            }
+            else
+            {
+                FlashRune.Efx(start, end);
             }
         }
     }

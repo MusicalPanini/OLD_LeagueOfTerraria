@@ -9,12 +9,13 @@ namespace TerraLeague.Items.CustomItems.Actives
     public class FleetFoot : Active
     {
         int effectRadius = 500;
-        int effectDuration;
+        int effectDuration = 6;
+        int onHitDamage = 20;
 
         public FleetFoot(int EffectRadius, int EffectDuration, int Cooldown)
         {
             effectRadius = EffectRadius;
-            effectDuration = EffectDuration;
+            //effectDuration = EffectDuration;
             activeCooldown = Cooldown;
         }
 
@@ -22,7 +23,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("FLEET FOOT") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give all nearby allies a speed boost for " + effectDuration + " seconds") +
+            return TooltipName("INSPIRE") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Give all nearby allies a speed boost and \n" + onHitDamage + " On Hit damage for " + effectDuration + " seconds") +
                  "\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown");
         }
 
@@ -37,7 +38,7 @@ namespace TerraLeague.Items.CustomItems.Actives
 
                 if (player.whoAmI == Main.myPlayer)
                 {
-                    player.AddBuff(BuffType<Buffs.FleetFoot>(), effectDuration * 60);
+                    player.AddBuff(BuffType<Buffs.FleetFoot>(), onHitDamage);
                 }
 
                 // For Server
@@ -50,7 +51,7 @@ namespace TerraLeague.Items.CustomItems.Actives
                     for (int i = 0; i < players.Count; i++)
                     {
                         Player healTarget = Main.player[players[i]];
-                        modPlayer.SendBuffPacket(BuffType<Buffs.FleetFoot>(), effectDuration * 60, healTarget.whoAmI, -1, player.whoAmI);
+                        modPlayer.SendBuffPacket(BuffType<Buffs.FleetFoot>(), onHitDamage, healTarget.whoAmI, -1, player.whoAmI);
                     }
                 }
             }

@@ -68,6 +68,8 @@ namespace TerraLeague.Projectiles
                 dust.velocity.X *= 2;
                 dust.velocity.Y = 0;
                 dust.scale = 0.8f;
+
+                TerraLeague.DustBorderRing(500, projectile.Center, 204, default, 2, true, true, 0.075f);
             }
 
             var players = TerraLeague.GetAllPlayersInRange(projectile.Center, 500, -1, Main.player[projectile.owner].team);

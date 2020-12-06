@@ -38,9 +38,13 @@ namespace TerraLeague.Buffs
             player.ChangeDir(player.oldDirection);
             player.GetModPlayer<PLAYERGLOBAL>().rightoftheArcaneChannel = true;
 
-            if (player.buffTime[buffIndex] % 10 == 0 && Main.LocalPlayer.whoAmI == player.whoAmI)
+            if (player.buffTime[buffIndex] % 5 == 0 && Main.LocalPlayer.whoAmI == player.whoAmI)
             {
-                Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(Main.rand.NextFloat(-8 + 7 * player.buffTime[buffIndex]/180f, 8 - 7 * player.buffTime[buffIndex] / 180f), -18), ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
+                Vector2 position = new Vector2(Main.rand.NextFloat(-400, 400) + player.MountedCenter.X, player.MountedCenter.Y - 700);
+                Vector2 velocity = new Vector2(Main.rand.NextFloat(-6, 6), 16);
+                Projectile proj = Projectile.NewProjectileDirect(position, velocity, ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
+
+                //Projectile proj = Projectile.NewProjectileDirect(player.MountedCenter, new Vector2(Main.rand.NextFloat(-8 + 7 * player.buffTime[buffIndex] / 180f, 8 - 7 * player.buffTime[buffIndex] / 180f), Main.rand.NextFloat(-18, -16)), ProjectileType<ArcaneEnergy_Artillery>(), damage, 2, player.whoAmI);
             }
 
             if (player.buffTime[buffIndex] == 0)

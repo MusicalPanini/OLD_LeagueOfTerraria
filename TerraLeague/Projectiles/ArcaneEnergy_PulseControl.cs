@@ -19,7 +19,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.width = 16;
             projectile.height = 16;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 900;
             projectile.friendly = false;
             projectile.magic = true;
             projectile.alpha = 255;
@@ -36,12 +36,25 @@ namespace TerraLeague.Projectiles
                 player.ChangeDir(dir);
                 projectile.ai[1] = (float)TerraLeague.CalcAngle(player.Center, Main.MouseWorld) - player.fullRotation;
                 projectile.netUpdate = true;
+
+                float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
+
+                //for (int i = 0; i < projectile.localAI[0] / 4; i++)
+                //{
+                //    Vector2 indicatorPos = player.MountedCenter + new Vector2((5 * projectile.localAI[0]) * (i/ (projectile.localAI[0] / 4f)), 0).RotatedBy(rot);
+                //    Dust dust = Dust.NewDustPerfect(indicatorPos, 113);
+                //    dust.velocity *= 0;
+                //}
+
+                //Vector2 indicatorPos = player.MountedCenter + new Vector2((5 * projectile.localAI[0]), 0).RotatedBy(rot);
+                //Dust dust = Dust.NewDustPerfect(indicatorPos, 113);
+                //dust.velocity *= 0;
             }
 
-            if (projectile.soundDelay == 0 && projectile.localAI[0] < 180)
+            if (projectile.soundDelay == 0 && projectile.localAI[0] < 600)
             {
                 projectile.soundDelay = 30;
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 15, -0.5f + projectile.localAI[0] / 360f);
+                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 15, -0.5f + projectile.localAI[0] / 600f);
             }
 
             if (player.channel)
@@ -61,7 +74,7 @@ namespace TerraLeague.Projectiles
                     dust.customData = player;
                 }
 
-                if (projectile.localAI[0] < 180)
+                if (projectile.localAI[0] < 600)
                     projectile.localAI[0]++;
                 player.itemTime = 24;
                 player.itemAnimation = 24;
@@ -86,7 +99,7 @@ namespace TerraLeague.Projectiles
             Player player = Main.player[projectile.owner];
 
             float rot = projectile.ai[1] + (player.direction == -1 ? MathHelper.Pi : 0) + player.fullRotation;
-            Projectile.NewProjectileDirect(projectile.Center, new Vector2(10, 0).RotatedBy(rot), ModContent.ProjectileType<ArcaneEnergy_Pulse>(), (int)(projectile.damage * (1 + projectile.localAI[0]/180f)), projectile.knockBack, projectile.owner, projectile.localAI[0]);
+            Projectile.NewProjectileDirect(projectile.Center, new Vector2(10, 0).RotatedBy(rot), ModContent.ProjectileType<ArcaneEnergy_Pulse>(), (int)(projectile.damage * (1 + projectile.localAI[0]/60f)), projectile.knockBack, projectile.owner, projectile.localAI[0]);
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 3, 53, -0.5f);
 
             base.Kill(timeLeft);

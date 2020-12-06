@@ -25,7 +25,7 @@ namespace TerraLeague.Items.CustomItems.Actives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("MANA SHIELD") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Consume ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, percentMana) 
+            return TooltipName("MANA Barrier") + TerraLeague.CreateColorString(ActiveSecondaryColor, "Consume ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, percentMana) 
                 + TerraLeague.CreateColorString(ActiveSecondaryColor, " mana\nGain a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, baseShield, 100, true) + " + " + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.ManaColor.Hex3(), "CUR MANA", modPlayer.manaLastStep, (int)(percentMana * manaScaling * 0.01), true)
                 + TerraLeague.CreateColorString(ActiveSecondaryColor, " shield for " + duration + " seconds")
                 +"\n" + TerraLeague.CreateColorString(ActiveSubColor, GetScaledCooldown(player) + " second cooldown"); ;

@@ -60,7 +60,12 @@ namespace TerraLeague.Items.SummonerSpells
         {
             Main.PlaySound(new LegacySoundStyle(2, 29), Main.LocalPlayer.MountedCenter);
 
-            TerraLeague.DustRing(261, player, new Color(0, 0, 255, 0));
+            TerraLeague.DustElipce(1.5f, 0.66f, 0, player.MountedCenter, 113, new Color(0, 0, 255), 1.5f, 180, true, 10);
+            TerraLeague.DustElipce(0.76f, 0.66f, 0, player.MountedCenter, 113, new Color(0, 0, 255), 1.5f, 180, true, 10);
+            TerraLeague.DustElipce(0, 0.45f, 0, player.MountedCenter, 113, new Color(0, 0, 255), 1.5f, 180, true, 10);
+
+
+            //TerraLeague.DustRing(261, player, new Color(0, 0, 255, 0));
         }
     }
 }

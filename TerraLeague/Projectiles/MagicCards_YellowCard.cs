@@ -16,8 +16,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 28;
-            projectile.height = 28;
+            projectile.width = 16;
+            projectile.height = 16;
             projectile.timeLeft = 300;
             projectile.penetrate = 1;
             projectile.aiStyle = 2;
@@ -29,7 +29,8 @@ namespace TerraLeague.Projectiles
         {
             Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(255, 255, 0));
             dust.noGravity = true;
-            dust.scale = 1.4f;
+            dust.scale = 1f;
+            dust.velocity *= 0.1f;
 
             base.AI();
         }

@@ -77,6 +77,12 @@ namespace TerraLeague.Projectiles
             }
             else
             {
+                if (sentry == null)
+                {
+                    projectile.Kill();
+                    return;
+                }
+
                 projectile.tileCollide = false;
                 float num51 = 12;
                 float num52 = 0.4f;

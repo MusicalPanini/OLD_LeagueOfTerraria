@@ -16,6 +16,7 @@ namespace TerraLeague.Items.Weapons
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hex Core Staff");
+            Tooltip.SetDefault("");
         }
 
         public override string GetWeaponTooltip()

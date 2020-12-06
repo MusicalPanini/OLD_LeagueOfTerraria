@@ -18,23 +18,23 @@ namespace TerraLeague.Items.Boots
         {
             if (Main.hardMode)
             {
-                return "[c/F892F8:Tier 5: Fastest Sprint + Rocket Boots + Ice Skates]\n8% increased movement speed\n" + Tier5Tip();
+                return TerraLeague.CreateColorString(TerraLeague.PulseText(TerraLeague.ConvertHexToColor("F892F8")), "Tier 5: Fastest Sprint + Rocket Boots + Ice Skates") + "\n8% increased movement speed\n" + Tier5Tip();
             }
             else if (NPC.downedBoss3)
             {
-                return "[c/F49090:Tier 4: Faster Sprint + Rocket Boots]\n8% increased movement speed\n" + Tier4Tip() + (withUpgradeText ? "\nDefeat The Wall of Flesh to upgrade" : "");
+                return TerraLeague.CreateColorString(TerraLeague.PulseText(TerraLeague.ConvertHexToColor("F49090")), "Tier 4: Faster Sprint + Rocket Boots") + "\n8% increased movement speed\n" + Tier4Tip() + (withUpgradeText ? "\nDefeat The Wall of Flesh to upgrade" : "");
             }
             else if (NPC.downedBoss2)
             {
-                return "[c/E8B688:Tier 3: Fast Sprint + Rocket Boots]\n" + Tier3Tip() + (withUpgradeText ? "\nDefeat Skeletron to upgrade" : "");
+                return TerraLeague.CreateColorString(TerraLeague.PulseText(TerraLeague.ConvertHexToColor("E8B688")), "Tier 3: Fast Sprint + Rocket Boots") + "\n" + Tier3Tip() + (withUpgradeText ? "\nDefeat Skeletron to upgrade" : "");
             }
             else if (NPC.downedBoss1)
             {
-                return "[c/92F892:Tier 2: Fast Sprint]\n" + Tier2Tip() + (withUpgradeText ? (Main.ActiveWorldFileData.HasCorruption ? "\nDefeat The Eater of Worlds to upgrade" : "\nDefeat The Brain of Cthulhu to upgrade") : "");
+                return TerraLeague.CreateColorString(TerraLeague.PulseText(TerraLeague.ConvertHexToColor("92F892")), "Tier 2: Fast Sprint") + "\n" + Tier2Tip() + (withUpgradeText ? (Main.ActiveWorldFileData.HasCorruption ? "\nDefeat The Eater of Worlds to upgrade" : "\nDefeat The Brain of Cthulhu to upgrade") : "");
             }
             else
             {
-                return "[c/8686E5:Tier 1: Slow Sprint]\n" + Tier1Tip() + (withUpgradeText ? "\nDefeat The Eye of Cthulhu to upgrade" : "");
+                return TerraLeague.CreateColorString(TerraLeague.PulseText(TerraLeague.ConvertHexToColor("8686E5")), "Tier 1: Slow Sprint") + "\n" + Tier1Tip() + (withUpgradeText ? "\nDefeat The Eye of Cthulhu to upgrade" : "");
             }
         }
 

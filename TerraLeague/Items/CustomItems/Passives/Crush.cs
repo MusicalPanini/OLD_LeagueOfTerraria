@@ -11,7 +11,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("CRUSH") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee attacks will reduce enemy defence by 6% stacking 6 times");
+            return TooltipName("CARVE") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Melee attacks will reduce enemy defence by 6% stacking 6 times");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

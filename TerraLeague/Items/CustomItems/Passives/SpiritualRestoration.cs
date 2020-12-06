@@ -7,7 +7,7 @@ namespace TerraLeague.Items.CustomItems.Passives
     {
         public override string Tooltip(Player player, ModItem modItem)
         {
-            return TooltipName("SPIRITUAL RESTORATION") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Increases all incoming healing by 30%");
+            return TooltipName("Boundless vitality") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Increases all incoming healing by 30%");
         }
 
         public override void UpdateAccessory(Player player, ModItem modItem)

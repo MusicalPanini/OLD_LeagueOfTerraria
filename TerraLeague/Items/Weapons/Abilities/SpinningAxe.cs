@@ -76,7 +76,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
             {
-                player.AddBuff(BuffType<Buffs.DarkinBuff>(), 60 * 4);
+                player.AddBuff(BuffType<Buffs.SpinningAxe>(), 60 * 4);
                 DoEfx(player, type);
                 SetCooldowns(player, type);
             }

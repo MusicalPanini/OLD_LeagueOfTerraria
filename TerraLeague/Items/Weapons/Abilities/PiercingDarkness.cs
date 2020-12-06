@@ -40,7 +40,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override int GetAbilityBaseDamage(Player player)
         {
             if (checkingForHealing)
-                return (int)(abilityItem.item.damage / 4);
+                return (int)(abilityItem.item.damage / 3);
             else
                 return (int)(abilityItem.item.damage * 2);
         }
@@ -51,11 +51,11 @@ namespace TerraLeague.Items.Weapons.Abilities
             {
                 case DamageType.RNG:
                     if (checkingForHealing)
-                        return 40;
+                        return 50;
                     else
-                        return 75;
+                        return 125;
                 case DamageType.MAG:
-                    return 25;
+                    return 35;
                 default:
                     return 0;
             }

@@ -77,6 +77,43 @@ namespace TerraLeague.Items.SummonerSpells
 
         static public void Efx(Player player, bool playSound = true)
         {
+            Color color = new Color(0, 255, 100);
+            TerraLeague.DustElipce(110, 110, 0, player.MountedCenter, 261, color, 2, 180, true, 0.02f);
+            int length = 80;
+
+            Vector2 PointA = player.MountedCenter + new Vector2(-length/4, -length);
+            Vector2 PointB = player.MountedCenter + new Vector2(length/4, -length);
+
+            Vector2 PointC = player.MountedCenter + new Vector2(length/4, -length / 4);
+
+            Vector2 PointD = player.MountedCenter + new Vector2(length, -length / 4);
+            Vector2 PointE = player.MountedCenter + new Vector2(length, length / 4);
+
+            Vector2 PointF = player.MountedCenter + new Vector2(length/4, length / 4);
+
+            Vector2 PointG = player.MountedCenter + new Vector2(length/4, length);
+            Vector2 PointH = player.MountedCenter + new Vector2(-length/4, length);
+
+            Vector2 PointI = player.MountedCenter + new Vector2(-length/4, length / 4);
+
+            Vector2 PointJ = player.MountedCenter + new Vector2(-length, length / 4);
+            Vector2 PointK = player.MountedCenter + new Vector2(-length, -length / 4);
+
+            Vector2 PointL = player.MountedCenter + new Vector2(-length/4, -length / 4);
+
+            TerraLeague.DustLine(PointA, PointB, 261, 1, 2, color);
+            TerraLeague.DustLine(PointB, PointC, 261, 1, 2, color);
+            TerraLeague.DustLine(PointC, PointD, 261, 1, 2, color);
+            TerraLeague.DustLine(PointD, PointE, 261, 1, 2, color);
+            TerraLeague.DustLine(PointE, PointF, 261, 1, 2, color);
+            TerraLeague.DustLine(PointF, PointG, 261, 1, 2, color);
+            TerraLeague.DustLine(PointG, PointH, 261, 1, 2, color);
+            TerraLeague.DustLine(PointH, PointI, 261, 1, 2, color);
+            TerraLeague.DustLine(PointI, PointJ, 261, 1, 2, color);
+            TerraLeague.DustLine(PointJ, PointK, 261, 1, 2, color);
+            TerraLeague.DustLine(PointK, PointL, 261, 1, 2, color);
+            TerraLeague.DustLine(PointL, PointA, 261, 1, 2, color);
+
             for (int j = 0; j < 18; j++)
             {
                 Dust dust = Dust.NewDustDirect(new Vector2(Main.rand.Next((int)player.position.X - 8, (int)player.position.X + 8), player.position.Y + 16), player.width, player.height, 261, 0, -Main.rand.Next(6, 18), 0, new Color(0, 255, 0, 0), Main.rand.Next(2, 3));

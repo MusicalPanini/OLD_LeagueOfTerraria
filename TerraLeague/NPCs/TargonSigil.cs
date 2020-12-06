@@ -22,6 +22,7 @@ namespace TerraLeague.NPCs
         public override void SetDefaults()
         {
             npc.townNPC = true;
+            npc.homeless = true;
             npc.lifeMax = 400;
             npc.defense = 0;
             npc.damage = 0;
@@ -36,6 +37,8 @@ namespace TerraLeague.NPCs
             npc.noTileCollide = true;
             npc.dontTakeDamage = true;
             npc.netAlways = true;
+            npc.dontTakeDamageFromHostiles = true;
+            npc.dontCountMe = true;
         }
 
         public override bool PreAI()
