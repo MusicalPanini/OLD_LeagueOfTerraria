@@ -319,19 +319,21 @@ namespace TerraLeague
                 }
             }
 
+            float distFromMid = 0.3f;
+
             for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
             {
-                if (Main.tile[xCord - width / 2, y].active())
+                if (Main.tile[(int)(xCord - width * distFromMid), y].active())
                 {
-                    leftBottom = new Vector2(xCord - (width * 0.5f), y);
+                    leftBottom = new Vector2(xCord - (width * distFromMid), y);
                     break;
                 }
             }
             for (int y = (int)(Main.worldSurface * 0.35); y < Main.worldSurface; y++)
             {
-                if (Main.tile[xCord + width / 2, y].active())
+                if (Main.tile[(int)(xCord - width * distFromMid), y].active())
                 {
-                    rightBottom = new Vector2(xCord + (width * 0.5f), y);
+                    rightBottom = new Vector2(xCord + (width * distFromMid), y);
                     break;
                 }
             }
@@ -339,13 +341,12 @@ namespace TerraLeague
             if (leftBottom != Vector2.Zero && rightBottom != Vector2.Zero)
             {
                 Vector2 digVelocity = rightBottom - leftBottom; // Vector2.UnitX;
-                digVelocity = digVelocity.SafeNormalize(Vector2.UnitX) * 2;
-                WorldGen.digTunnel(leftBottom.X, leftBottom.Y, digVelocity.X, digVelocity.Y, width, 6);
+                digVelocity = digVelocity.SafeNormalize(Vector2.UnitX) * 2f;
+                WorldGen.digTunnel(leftBottom.X, leftBottom.Y, digVelocity.X, digVelocity.Y, width/2, 3);
 
                 digVelocity = leftBottom - rightBottom; // Vector2.UnitX;
-                digVelocity = digVelocity.SafeNormalize(Vector2.UnitX) * 2;
-
-                WorldGen.digTunnel(rightBottom.X, rightBottom.Y, digVelocity.X, digVelocity.Y, width, 6);
+                digVelocity = digVelocity.SafeNormalize(Vector2.UnitX) * 2f;
+                WorldGen.digTunnel(rightBottom.X, rightBottom.Y, digVelocity.X, digVelocity.Y, width/2, 3);
             }
 
             TargonCenterX = xCord;
