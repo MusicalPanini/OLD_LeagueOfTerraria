@@ -590,16 +590,53 @@ namespace TerraLeague
             }
         }
 
-        internal static void DustBorderRing(int radius, Vector2 center, int dustType, Color color, float scale, bool noLight = true)
+        internal static void DustBorderRing(int radius, Vector2 center, int dustType, Color color, float scale, bool noLight = true, bool randomDis = true, float spacingScale = 0.2f)
         {
-            float dis = Main.rand.Next(360 / (radius / 5));
-            for (int i = 0; i < radius / 5 + 1; i++)
+            float dis = randomDis ? Main.rand.NextFloat(360f / (radius * spacingScale)) : 0;
+            for (int i = 0; i < (int)(radius * spacingScale) + 1; i++)
             {
-                Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius / 5f)) + dis)) + center;
+                Vector2 pos = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(360 * (i / (radius * spacingScale)) + dis)) + center;
 
                 Dust dustR = Dust.NewDustPerfect(pos, dustType, Vector2.Zero, 0, color, scale);
                 dustR.noGravity = true;
                 dustR.noLight = noLight;
+            }
+        }
+
+        internal static void DustElipce(float width, float height, float rotation,  Vector2 center, int dustType, Color color, float scale, int dustCount = 180, bool noLight = true, float pulseStrength = 0)
+        {
+            float avgRadius = (width + height) * 0.5f;
+
+
+            for (int i = 0; i < dustCount; i++)
+            {
+                float time = MathHelper.TwoPi * i / (dustCount + 1);
+
+                double X = width * Math.Cos(time) * Math.Cos(rotation) - height * Math.Sin(time) * Math.Sin(rotation);
+                double Y = width * Math.Cos(time) * Math.Sin(rotation) + height * Math.Sin(time) * Math.Cos(rotation);
+
+                Vector2 pos = new Vector2((float)X, (float)Y) + center;
+
+                Dust dust = Dust.NewDustPerfect(pos, dustType, (center - pos) * pulseStrength, 0, color, scale);
+                dust.noGravity = true;
+                dust.noLight = noLight;
+            }
+        }
+
+        internal static void DustLine(Vector2 pointA, Vector2 pointB, int dustType, float dustPerPoint, float scale = 1, Color color = default, bool noLight = true, float xSpeed = 0, float ySpeed = 0)
+        {
+            Vector2 velocity = new Vector2(xSpeed, ySpeed);
+            float xDif = pointB.X - pointA.X;
+            float yDif = pointB.Y - pointA.Y;
+            int dustCount = (int)(Vector2.Distance(pointA, pointB) * dustPerPoint);
+
+            for (int i = 0; i < dustCount; i++)
+            {
+                Vector2 position = new Vector2(pointA.X + (xDif * (i / (float)dustCount)), pointA.Y + (yDif * (i / (float)dustCount)));
+                Dust dust = Dust.NewDustPerfect(position, dustType, null, 0, color, scale);
+                dust.velocity = velocity;
+                dust.noGravity = true;
+                dust.noLight = noLight;
             }
         }
 
