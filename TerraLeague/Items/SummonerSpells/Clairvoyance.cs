@@ -37,6 +37,7 @@ namespace TerraLeague.Items.SummonerSpells
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             Efx(player);
+            PacketHandler.SendClairvoyance(-1, player.whoAmI, player.whoAmI);
             player.AddBuff(BuffType<Buffs.Clairvoyance>(), 300);
 
             // For Server
