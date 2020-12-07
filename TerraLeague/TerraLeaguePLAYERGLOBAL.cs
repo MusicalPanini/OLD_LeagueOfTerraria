@@ -1076,7 +1076,7 @@ namespace TerraLeague
                         player.AddBuff(BuffType<CelestialFrostbite>(), 2);
                     }
 
-                    if (Math.Abs(sigil.Center.X - player.MountedCenter.X) < Main.mapMaxX / 10 * 16 && Math.Abs(sigil.Center.Y - player.MountedCenter.Y) < Main.worldSurface * 16)
+                    if (Math.Abs(sigil.Center.X - player.MountedCenter.X) < Main.maxTilesX / 10 * 16 && Math.Abs(sigil.Center.Y - player.MountedCenter.Y) < Main.worldSurface * 16)
                     {
                         zoneTargon = true;
                     }
@@ -1441,7 +1441,7 @@ namespace TerraLeague
                 player.AddBuff(BuffType<Revived>(), ReviveRune.buffDuration * 60);
 
                 ReviveRune.Efx(player);
-                new ReviveRune().PacketHandler.SendRevive(-1, player.whoAmI, player.whoAmI);
+                SummonerSpell.PacketHandler.SendRevive(-1, player.whoAmI, player.whoAmI);
 
                 //player.ChangeSpawn((int)originalSpawn.X, (int)originalSpawn.Y);
                 reviving = false;
