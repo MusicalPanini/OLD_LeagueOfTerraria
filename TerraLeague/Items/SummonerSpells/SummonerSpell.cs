@@ -13,7 +13,7 @@ namespace TerraLeague.Items.SummonerSpells
 {
     abstract public class SummonerSpell : ModItem
     {
-        internal SummonerSpellsPacketHandler PacketHandler = new SummonerSpellsPacketHandler(6);
+        static internal SummonerSpellsPacketHandler PacketHandler = new SummonerSpellsPacketHandler(6);
 
         public override void SetDefaults()
         {

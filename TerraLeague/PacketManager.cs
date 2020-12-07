@@ -14,6 +14,7 @@ using TerraLeague.Items.Weapons;
 using static Terraria.ModLoader.ModContent;
 using System.Collections.Generic;
 using Terraria.Localization;
+using TerraLeague.UI;
 
 namespace TerraLeague
 {
@@ -985,6 +986,10 @@ namespace TerraLeague
         public const byte Vanish = 13;
         public const byte Lift = 14;
         public const byte Flash = 15;
+        public const byte Teleport = 16;
+        public const byte TeleportRequest = 17;
+        public const byte TeleportPosition = 18;
+        public const byte TeleportRequestPlayer = 19;
         #endregion
 
         public SummonerSpellsPacketHandler(byte handlerType) : base(handlerType)
@@ -1039,6 +1044,18 @@ namespace TerraLeague
                     break;
                 case (Flash):
                     ReceiveFlash(reader, fromWho);
+                    break;
+                case (Teleport):
+                    ReceiveTeleport(reader, fromWho);
+                    break;
+                case (TeleportRequest):
+                    ReceiveTeleportRequest(reader, fromWho);
+                    break;
+                case (TeleportPosition):
+                    ReceiveTeleportPosition(reader, fromWho);
+                    break;
+                case (TeleportRequestPlayer):
+                    ReceiveTeleportRequestPlayer(reader, fromWho);
                     break;
             }
 
@@ -1433,7 +1450,7 @@ namespace TerraLeague
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
-                ModPacket packet = GetPacket(Ignite, fromWho);
+                ModPacket packet = GetPacket(Flash, fromWho);
                 packet.WriteVector2(start);
                 packet.WriteVector2(end);
                 packet.Send(toWho, fromWho);
@@ -1454,6 +1471,127 @@ namespace TerraLeague
             else
             {
                 FlashRune.Efx(start, end);
+            }
+        }
+
+        public void SendTeleport(int toWho, int fromWho, Vector2 point)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(Teleport, fromWho);
+                packet.WriteVector2(point);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Teleport", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveTeleport(BinaryReader reader, int fromWho)
+        {
+            TerraLeague.Log("[DEBUG] - Received Teleport", new Color(80, 80, 80));
+
+            Vector2 point = reader.ReadVector2();
+
+            if (Main.netMode == NetmodeID.Server)
+            {
+                SendTeleport(-1, fromWho, point);
+            }
+            else
+            {
+                TeleportRune.Efx(point);
+            }
+        }
+
+        public void SendTeleportRequest(int toWho, int fromWho, int type)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(TeleportRequest, fromWho);
+                packet.Write(type);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Teleport Request", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveTeleportRequest(BinaryReader reader, int fromWho)
+        {
+            TerraLeague.Log("[DEBUG] - Received Request", new Color(80, 80, 80));
+
+            TeleportType type = (TeleportType)reader.ReadInt32();
+
+            if (Main.netMode == NetmodeID.Server)
+            {
+                Vector2 originalPosition = Main.player[fromWho].position;
+
+                switch (type)
+                {
+                    case TeleportType.LeftBeach:
+                        originalPosition = TeleportRune.LeftBeach();
+                        break;
+                    case TeleportType.RightBeach:
+                        originalPosition = TeleportRune.RightBeach();
+                        break;
+                    case TeleportType.Dungeon:
+                        originalPosition = TeleportRune.Dungeon();
+                        break;
+                    case TeleportType.Hell:
+                        originalPosition = TeleportRune.Hell(Main.player[fromWho]);
+                        break;
+                    case TeleportType.Random:
+                        originalPosition = TeleportRune.RandomTP();
+                        break;
+                    default:
+                        break;
+                }
+
+                SendTeleportPosition(-1, -1, originalPosition, fromWho);
+            }
+        }
+
+        public void SendTeleportRequestPlayer(int toWho, int fromWho, int type)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(TeleportRequestPlayer, fromWho);
+                packet.Write(type);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Teleport Request - Player", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveTeleportRequestPlayer(BinaryReader reader, int fromWho)
+        {
+            TerraLeague.Log("[DEBUG] - Received Request - Player", new Color(80, 80, 80));
+
+            Player player = Main.player[reader.ReadInt32()];
+
+            if (Main.netMode == NetmodeID.Server)
+            {
+                Vector2 originalPosition = Main.player[fromWho].position;
+
+                originalPosition = player.position;
+
+                SendTeleportPosition(-1, -1, originalPosition, fromWho);
+            }
+        }
+
+        public void SendTeleportPosition(int toWho, int fromWho, Vector2 position, int player)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(TeleportPosition, fromWho);
+                packet.WriteVector2(position);
+                packet.Write(player);
+                packet.Send(toWho, fromWho);
+                TerraLeague.Log("[DEBUG] - Sending Teleport Position", Color.LightSlateGray);
+            }
+        }
+        private void ReceiveTeleportPosition(BinaryReader reader, int fromWho)
+        {
+            TerraLeague.Log("[DEBUG] - Received Teleport Position", new Color(80, 80, 80));
+
+            Vector2 point = reader.ReadVector2();
+            int player = reader.ReadInt32();
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                TeleportRune.DoTP(Main.player[player], point);
             }
         }
     }

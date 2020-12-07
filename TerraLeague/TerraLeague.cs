@@ -57,6 +57,7 @@ namespace TerraLeague
         internal AbilityUI abilityUI;
         internal HealthbarUI healthbarUI;
         internal ToolTipUI tooltipUI;
+        internal TeleportUI teleportUI;
         internal bool canLog = false;
         internal bool debugMode = false;
         public static bool UseModResourceBar = false;
@@ -67,6 +68,7 @@ namespace TerraLeague
         private UserInterface userInterface3;
         public UserInterface HealthbarInterface;
         public UserInterface tooltipInterface;
+        public UserInterface teleportInterface;
         public static ModHotKey ToggleStats;
         public static ModHotKey Item1;
         public static ModHotKey Item2;
@@ -287,6 +289,11 @@ namespace TerraLeague
                 tooltipUI = new ToolTipUI();
                 //ToolTipUI.visible = true;
                 tooltipInterface.SetState(tooltipUI);
+
+                teleportInterface = new UserInterface();
+                teleportUI = new TeleportUI();
+                TeleportUI.visible = false;
+                teleportInterface.SetState(teleportUI);
             }
 
             Main.instance.GUIBarsDraw();
@@ -427,6 +434,19 @@ namespace TerraLeague
                 {
                     userInterface3.Update(Main._drawInterfaceGameTime);
                     abilityUI.Draw(Main.spriteBatch);
+                }
+                return true;
+            },
+            InterfaceScaleType.UI));
+
+            layers.Insert(resourseBar, new LegacyGameInterfaceLayer(
+            "TerraLeague: Teleport UI",
+            delegate
+            {
+                if (TeleportUI.visible)
+                {
+                    teleportInterface.Update(Main._drawInterfaceGameTime);
+                    teleportUI.Draw(Main.spriteBatch);
                 }
                 return true;
             },
