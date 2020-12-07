@@ -50,7 +50,7 @@ namespace TerraLeague.Items.SummonerSpells
         public override void DoEffect(Player player, int spellSlot)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            int healValue = modPlayer.ScaleValueWithHealPower(player.statLifeMax2 * GetPercentScalingAmount() * 0.01f);
+            int healValue = modPlayer.ScaleValueWithHealPower(modPlayer.GetRealHeathWithoutShield(true) * GetPercentScalingAmount() * 0.01f);
 
             modPlayer.lifeToHeal += healValue;
             player.AddBuff(BuffID.Swiftness, 360);
