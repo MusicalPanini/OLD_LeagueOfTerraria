@@ -74,12 +74,12 @@ namespace TerraLeague.Items.CustomItems.Actives
             for (int i = 0; i < players.Count; i++)
             {
                 Player player = Main.player[players[i]];
-                TerraLeague.DustElipce(32, 32, 0, player.MountedCenter, 174, default, 2, 36, true, 0.02f);
+                TerraLeague.DustElipce(32, 32, 0, player.MountedCenter, 174, default, 2, 36, true, 0f);
 
                 if (user.whoAmI != players[i])
                 {
-                    Vector2 pointA = user.MountedCenter + TerraLeague.CalcVelocityToPoint(user.MountedCenter, player.MountedCenter, 128);
-                    Vector2 pointB = player.MountedCenter + TerraLeague.CalcVelocityToPoint(player.MountedCenter, user.MountedCenter, 128);
+                    Vector2 pointA = user.MountedCenter + TerraLeague.CalcVelocityToPoint(user.MountedCenter, player.MountedCenter, 32);
+                    Vector2 pointB = player.MountedCenter + TerraLeague.CalcVelocityToPoint(player.MountedCenter, user.MountedCenter, 32);
 
                     TerraLeague.DustLine(pointA, pointB, 174, 0.5f, 2);
                 }
