@@ -69,27 +69,30 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             if (cooldownCount == 0)
             {
-                List<int> players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 200, player.whoAmI, player.team);
-
-                int lowestLife = 99999;
-                int chosen = -1;
-
-                for (int i = 0; i < players.Count; i++)
+                if (Main.LocalPlayer.whoAmI == player.whoAmI)
                 {
-                    Player target = Main.player[players[i]];
-                    int lifeCheck = target.GetModPlayer<PLAYERGLOBAL>().GetRealHeathWithoutShield();
-                    if (lifeCheck < lowestLife)
+                    List<int> players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 200, player.whoAmI, player.team);
+
+                    int lowestLife = 99999;
+                    int chosen = -1;
+
+                    for (int i = 0; i < players.Count; i++)
                     {
-                        lowestLife = lifeCheck;
-                        chosen = target.whoAmI;
+                        Player target = Main.player[players[i]];
+                        int lifeCheck = target.GetModPlayer<PLAYERGLOBAL>().GetRealHeathWithoutShield();
+                        if (lifeCheck < lowestLife)
+                        {
+                            lowestLife = lifeCheck;
+                            chosen = target.whoAmI;
+                        }
                     }
-                }
 
-                if (chosen != -1)
-                {
-                    PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-                    Projectile.NewProjectileDirect(player.MountedCenter, Vector2.Zero, ProjectileType<Item_Heal>(), modPlayer.ScaleValueWithHealPower(heal + (int)(heal * 0.01f * (scaling * ((int)passiveStat / 60)))), 0, chosen);
-                    SetCooldown(player);
+                    if (chosen != -1)
+                    {
+                        PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+                        Projectile.NewProjectileDirect(player.MountedCenter, Vector2.Zero, ProjectileType<Item_Heal>(), modPlayer.ScaleValueWithHealPower(heal + (int)(heal * 0.01f * (scaling * ((int)passiveStat / 60)))), 0, player.whoAmI, chosen);
+                        SetCooldown(player);
+                    }
                 }
             }
         }
