@@ -150,16 +150,19 @@ namespace TerraLeague.Projectiles
                 vector4.Normalize();
             }
 
-            for (int i = 0; i < Main.player.Length; i++)
+            if (projectile.owner == Main.LocalPlayer.whoAmI)
             {
-                if (!hitPlayers.Contains(i) && i != projectile.owner)
+                for (int i = 0; i < Main.player.Length; i++)
                 {
-                    if (projectile.Hitbox.Intersects(Main.player[i].Hitbox))
+                    if (!hitPlayers.Contains(i) && i != projectile.owner)
                     {
-                        if (Main.player[i].team == player.team && Main.player[i].active)
+                        if (projectile.Hitbox.Intersects(Main.player[i].Hitbox))
                         {
-                            player.GetModPlayer<PLAYERGLOBAL>().SendShieldPacket((int)projectile.ai[0], i, ShieldType.Basic, 120, -1, player.whoAmI, Color.Yellow);
-                            hitPlayers.Add(i);
+                            if (Main.player[i].team == player.team && Main.player[i].active)
+                            {
+                                player.GetModPlayer<PLAYERGLOBAL>().SendShieldPacket((int)projectile.ai[0], i, ShieldType.Basic, 120, -1, player.whoAmI, Color.Yellow);
+                                hitPlayers.Add(i);
+                            }
                         }
                     }
                 }
