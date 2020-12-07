@@ -25,6 +25,7 @@ namespace TerraLeague.Projectiles
             projectile.hostile = false;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
+            projectile.alpha = 255;
         }
 
         public override void AI()
@@ -75,7 +76,7 @@ namespace TerraLeague.Projectiles
         public void HitPlayer(Player player)
         {
             TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 4, 0);
-            Main.PlaySound(new LegacySoundStyle(2, 21), player.Center);
+            //Main.PlaySound(new LegacySoundStyle(2, 21), player.Center);
 
             projectile.netUpdate = true;
             if (projectile.owner == Main.LocalPlayer.whoAmI)
@@ -91,7 +92,6 @@ namespace TerraLeague.Projectiles
             {
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 137, 0, 0, 50, new Color(0, 255, 100), 1.2f);
                 dust.noGravity = true;
-                Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
             }
 
             projectile.velocity.Y = -8;
