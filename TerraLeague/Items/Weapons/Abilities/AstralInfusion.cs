@@ -33,6 +33,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override string GetAbilityTooltip()
         {
             return "Costs 10% of your Max Life per cast" +
+                "\nCan't be cast below 15% life." +
                 "\nTarget an ally and heal them.";
         }
 
@@ -76,7 +77,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return modPlayer.GetRealHeathWithoutShield() / (float)modPlayer.GetRealHeathWithoutShield(true) > 0.1f;
+            return modPlayer.GetRealHeathWithoutShield() / (float)modPlayer.GetRealHeathWithoutShield(true) > 0.15f;
         }
 
         public override void DoEffect(Player player, AbilityType type)
@@ -86,6 +87,8 @@ namespace TerraLeague.Items.Weapons.Abilities
             {
                 if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
                 {
+                    player.statLife -= player.GetModPlayer<PLAYERGLOBAL>().GetRealHeathWithoutShield(true) / 10;
+
                     Vector2 position = player.position;
                     Vector2 velocity = new Vector2(0, 0);
                     int projType = ProjectileType<Item_Heal>();
