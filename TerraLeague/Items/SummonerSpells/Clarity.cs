@@ -53,20 +53,20 @@ namespace TerraLeague.Items.SummonerSpells
                 {
                     Player target = Main.player[players[i]];
                     modPlayer.SendManaPacket(target.statManaMax2, target.whoAmI, -1, player.whoAmI);
-                    PacketHandler.SendClarity(-1, player.whoAmI, target.whoAmI);
-                    Efx(target);
+                    PacketHandler.SendClarity(-1, player.whoAmI, target.whoAmI, false);
+                    Efx(target, false);
                 }
             }
 
             player.ManaEffect((int)(player.statManaMax2));
             player.statMana += player.statManaMax2;
-            Efx(player);
-            PacketHandler.SendClarity(-1, player.whoAmI, player.whoAmI);
+            Efx(player, true);
+            PacketHandler.SendClarity(-1, player.whoAmI, player.whoAmI, true);
 
             SetCooldowns(player, spellSlot);
         }
 
-        static public void Efx(Player player)
+        static public void Efx(Player player, bool drawRing)
         {
             Main.PlaySound(new LegacySoundStyle(2, 29), player.Center);
 
@@ -84,9 +84,11 @@ namespace TerraLeague.Items.SummonerSpells
             TerraLeague.DustLine(PointB, PointD, 113, 1, 2f, default, true, 0, 0);
             TerraLeague.DustLine(PointD, PointA, 113, 1, 2f, default, true, 0, 0);
 
-
-            TerraLeague.DustRing(261, player, new Color(0, 0, 255, 0));
-            TerraLeague.DustBorderRing(effectRadius, player.MountedCenter, 261, new Color(0, 0, 255, 0), 2);
+            if (drawRing)
+            {
+                TerraLeague.DustRing(261, player, new Color(0, 0, 255, 0));
+                TerraLeague.DustBorderRing(effectRadius, player.MountedCenter, 261, new Color(0, 0, 255, 0), 2);
+            }
         }
     }
 }

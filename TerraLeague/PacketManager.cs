@@ -1149,12 +1149,13 @@ namespace TerraLeague
         }
 
         // Clarity
-        public void SendClarity(int toWho, int fromWho, int user)
+        public void SendClarity(int toWho, int fromWho, int user, bool drawRing)
         {
             if (Main.netMode != NetmodeID.SinglePlayer)
             {
                 ModPacket packet = GetPacket(Clarity, fromWho);
                 packet.Write(user);
+                packet.Write(drawRing);
                 packet.Send(toWho, fromWho);
                 TerraLeague.Log("[DEBUG] - Sending Clarity", Color.LightSlateGray);
             }
@@ -1164,14 +1165,15 @@ namespace TerraLeague
             TerraLeague.Log("[DEBUG] - Received Clarity", new Color(80, 80, 80));
 
             int target = reader.ReadInt32();
+            bool drawRing = reader.ReadBoolean();
 
             if (Main.netMode == NetmodeID.Server)
             {
-                SendClarity(-1, fromWho, target);
+                SendClarity(-1, fromWho, target, drawRing);
             }
             else
             {
-                ClarityRune.Efx(Main.player[target]);
+                ClarityRune.Efx(Main.player[target], drawRing);
             }
         }
 
