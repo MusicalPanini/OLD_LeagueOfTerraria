@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
             DisplayName.SetDefault("Glacial Shroud");
             Tooltip.SetDefault("Increases maximum mana by 20" +
                 "\nIncreases armor by 3" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nGrants immunity to knockback");
         }
 
@@ -31,7 +31,7 @@ namespace TerraLeague.Items.AdvItems
         {
             player.GetModPlayer<PLAYERGLOBAL>().armor += 3;
             player.statManaMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.noKnockback = true;
         }
 

@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("Increases resist by 4" +
                 "\nIncreases mana regeneration by 30%" +
                 "\n10% increased healing power" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nImmunity to Curse");
         }
 
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.3;
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

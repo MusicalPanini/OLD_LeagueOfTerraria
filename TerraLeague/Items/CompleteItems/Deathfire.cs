@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Deathfire Grasp");
             Tooltip.SetDefault("12% increased magic damage" +
-               "\nAbility cooldown reduced by 10%");
+               "\nIncreases ability haste by 15");
         }
 
         public override void SetDefaults()
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.magicDamage += 0.12f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;
             base.UpdateAccessory(player, hideVisual);
         }
 

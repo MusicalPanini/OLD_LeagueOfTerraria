@@ -12,7 +12,7 @@ namespace TerraLeague.Items.Armor
         {
             DisplayName.SetDefault("Hextech Evolution Mask");
             Tooltip.SetDefault("15% increased magic damage" +
-                "\n10% increased cooldown reduction");
+                "\nIncreases ability haste by 10");
             base.SetStaticDefaults();
         }
 
@@ -28,7 +28,7 @@ namespace TerraLeague.Items.Armor
         public override void UpdateEquip(Player player)
         {
             player.magicDamage += 0.15f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

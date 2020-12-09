@@ -723,8 +723,11 @@ namespace TerraLeague.UI
             }
             else if (CDRStats.IsMouseHovering)
             {
-                text = TerraLeague.CreateColorString(TerraLeague.CDRColor, "Cooldown Reduction") +
-                    "\nThe percentage reduction for abilities and summoner spells (Max 40%)";
+                text = TerraLeague.CreateColorString(TerraLeague.CDRColor, "Haste") +
+                    "\nThe percent increase in spell/item casts" +
+                    "\nAbility Haste: " + modPlayer.abilityHaste + " (" +  Math.Round(100 - (modPlayer.Cdr* 100), 2) + "% reduction)"+
+                    "\nItem Haste: " + modPlayer.itemHaste + " (" + Math.Round(100 - (modPlayer.ItemCdr * 100), 2) + "% reduction)" +
+                    "\nSummoner Spell Haste: " + modPlayer.summonerHaste + " (" + Math.Round(100 - (modPlayer.SummonerCdr * 100), 2) + "% reduction)";
             }
             else if (ammoStats.IsMouseHovering)
             {
@@ -762,7 +765,7 @@ namespace TerraLeague.UI
             {
                 ammoStats.SetText("ATS: " + (Math.Round(modPlayer.rangedAttackSpeed * 100)).ToString() + "%");
                 healStats.SetText("HEAL: " + (modPlayer.healPower * 100).ToString() + "%");
-                CDRStats.SetText("CDR: " + ((1 - modPlayer.Cdr) * 100).ToString() + "%");
+                CDRStats.SetText("HST: " + modPlayer.abilityHaste);
                 manaStats.SetText("MANA: " + ((int)((1 - modPlayer.player.manaCost) * 100)).ToString() + "%");
             }
             else

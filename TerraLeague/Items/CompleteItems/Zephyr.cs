@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("4% increased melee and ranged damage" +
                 "\n5% increased melee and ranged attack speed" +
                 "\n10% increased movement speed" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nImmunity to Slow and Chilled");
         }
 
@@ -42,7 +42,7 @@ namespace TerraLeague.Items.CompleteItems
             player.moveSpeed += 0.1f;
             player.meleeSpeed += 0.05f;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed += 0.05;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
 
             player.buffImmune[BuffID.Slow] = true;
             player.buffImmune[BuffID.Chilled] = true;

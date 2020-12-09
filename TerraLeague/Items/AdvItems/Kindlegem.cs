@@ -12,7 +12,7 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Kindlegem");
             Tooltip.SetDefault("Increases maximum life by 20" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

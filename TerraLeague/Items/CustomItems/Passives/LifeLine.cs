@@ -31,26 +31,26 @@ namespace TerraLeague.Items.CustomItems.Passives
             if (modItem.item.type == ItemType<Maw>())
             {
                 text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next projectile damage you take while below 30% life, and summon a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 200, 100, true) + TerraLeague.CreateColorString(PassiveSecondaryColor, " Magic Shield") +
-                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown\nTriggering LIFELINE grants LIFEGRIP") +
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown\nTriggering LIFELINE grants LIFEGRIP") +
                     "\n" + TooltipName("LIFEGRIP") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Grants 5% life steal, melee and ranged damage, and 5 resist");
             }
             else if (modItem.item.type == ItemType<Steraks>())
             {
                 text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next damage you take while below 30% life, and summon a ") + TerraLeague.CreateScalingTooltip(UI.HealthbarUI.RedHealthColor.Hex3(), "LIFE", modPlayer.GetRealHeathWithoutShield(true), 50, true) + TerraLeague.CreateColorString(PassiveSecondaryColor," Shield") +
-                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown\nTriggering LIFELINE grants STERAK'S FURY") +
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown\nTriggering LIFELINE grants STERAK'S FURY") +
                     "\n" + TooltipName("STERAK'S FURY") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Grants 20 defence and immunity to most debuffs");
 
             }
             else if (modItem.item.type == ItemType<Hexdrinker>())
             {
                 text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next projectile damage you take while below 30% life and summon a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 80, 100, true) + TerraLeague.CreateColorString(PassiveSecondaryColor, " Magic Shield") +
-                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown");
 
             }
             else if (modItem.item.type == ItemType<PhantomDancer>())
             {
                 text += TerraLeague.CreateColorString(PassiveSecondaryColor, "Negate the next damage you take while below 30% life and summon a ") + TerraLeague.CreateScalingTooltip(DamageType.NONE, 100, 100, true) + TerraLeague.CreateColorString(PassiveSecondaryColor, "Shield") +
-                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.cdrLastStep) + " second cooldown");
+                    "\n" + TerraLeague.CreateColorString(PassiveSubColor, (int)(cooldown * modPlayer.ItemCdrLastStep) + " second cooldown");
             }
 
             return text;

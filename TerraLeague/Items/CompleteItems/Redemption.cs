@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\nIncreases life regeneration by 2" +
                 "\nIncreases mana regeneration by 50%" +
                 "\n10% increased healing power" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -35,7 +35,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
             player.lifeRegen += 2;

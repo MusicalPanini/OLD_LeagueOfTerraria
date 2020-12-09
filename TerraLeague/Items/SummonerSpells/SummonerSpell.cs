@@ -89,7 +89,7 @@ namespace TerraLeague.Items.SummonerSpells
         /// <returns></returns>
         virtual public int GetCooldown()
         {
-            return (int)(GetRawCooldown() * (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().cdrLastStep - Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().extraSumCDRLastStep));
+            return (int)(GetRawCooldown() * (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SummonerCdrLastStep));
         }
 
         /// <summary>

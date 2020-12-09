@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Pox Arcana");
             Tooltip.SetDefault("4% increased magic and minion damage" +
                 "\nIncreases mana regeneration by 60%" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.magicDamage += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

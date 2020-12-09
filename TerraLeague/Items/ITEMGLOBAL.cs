@@ -347,7 +347,7 @@ namespace TerraLeague.Items
             // Prefixes
             if (Transedent)
             {
-                player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.05;
+                player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
             }
             else if (Armor > 0)
             {

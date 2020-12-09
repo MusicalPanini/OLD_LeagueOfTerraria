@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Luden's Tempest");
             Tooltip.SetDefault("6% increased magic damage" +
                 "\nIncreases maximum mana by 20" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.magicDamage += 0.06f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.statManaMax2 += 20;
 
             base.UpdateAccessory(player, hideVisual);

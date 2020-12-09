@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Archangel's Staff");
             Tooltip.SetDefault("5% increased magic and minion damage" +
                 "\nIncreases maximum mana by 25" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nIf MANA CHARGE is fully stacked, this will upgrade into Seraph's Embrase" +
                 "\nCan only have one AWE item equiped at a time");
         }
@@ -55,7 +55,7 @@ namespace TerraLeague.Items.CompleteItems
 
             player.magicDamage += 0.05f;
             modPlayer.TrueMinionDamage += 0.05;
-            modPlayer.Cdr -= 0.1;
+            modPlayer.abilityHaste += 10;
             player.statManaMax2 += 25;
             modPlayer.manaCharge = true;
 

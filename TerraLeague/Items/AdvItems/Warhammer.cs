@@ -12,7 +12,7 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Caulfield's Warhammer");
             Tooltip.SetDefault("4% increased melee and ranged damage" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace TerraLeague.Items.AdvItems
         {
             player.meleeDamage += 0.04f;
             player.rangedDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

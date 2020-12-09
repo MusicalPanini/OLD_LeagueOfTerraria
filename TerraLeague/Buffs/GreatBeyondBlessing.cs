@@ -9,7 +9,7 @@ namespace TerraLeague.Buffs
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Blessing of The Great Beyond");
-            Description.SetDefault("20% increased cooldown reduction");
+            Description.SetDefault("+20 Ability Haste");
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = false;
             Main.persistentBuff[Type] = true;
@@ -17,7 +17,7 @@ namespace TerraLeague.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            modPlayer.Cdr -= 0.2;
+            modPlayer.abilityHaste += 20;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

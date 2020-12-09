@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("Increases maximum life by 30" +
                 "\nIncreases maximum mana by 30" +
                 "\nIncreases resist by 5" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().resist += 5;
             player.statLifeMax2 += 30;
             player.statManaMax2 += 30;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
 
             base.UpdateAccessory(player, hideVisual);
         }

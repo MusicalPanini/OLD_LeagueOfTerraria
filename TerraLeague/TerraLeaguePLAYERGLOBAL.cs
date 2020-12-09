@@ -188,30 +188,56 @@ namespace TerraLeague
 
         public double rangedAttackSpeed = 1;
 
-        private double cdr = 1;
+        public int abilityHaste = 0;
         /// <summary>
         /// Cooldown multiplier. Can't be less than 0.6
         /// </summary>
-        public double Cdr
+        public float Cdr
         {
-            get
-            {
-                if (cdr < 0.6)
-                {
-                    return 0.6;
-                }
-                else
-                {
-                    return cdr;
-                }
-            }
-            set { cdr = value; }
+            get { return 100/(abilityHaste + 100f); }
         }
         /// <summary>
-        /// <para>The Cdr last frame.</para>
+        /// <para>The Ability Haste last frame.</para>
         /// Used for tooltips or situations where you may not have calculated everything on the current frame
         /// </summary>
-        public double cdrLastStep = 1;
+        public int abilityHasteLastStep = 0;
+        public float CdrLastStep
+        {
+            get { return 100 / (abilityHasteLastStep + 100f); }
+        }
+
+        public int itemHaste = 0;
+        public float ItemCdr
+        {
+            get { return 100 / (itemHaste + 100f); }
+        }
+        public int itemHasteLastStep = 0;
+        public float ItemCdrLastStep
+        {
+            get { return 100 / (itemHasteLastStep + 100f); }
+        }
+
+        public int summonerHaste = 0;
+        public float SummonerCdr
+        {
+            get { return 100 / (summonerHaste + 100f); }
+        }
+        public int summonerHasteLastStep = 0;
+        public float SummonerCdrLastStep
+        {
+            get { return 100 / (itemHasteLastStep + 100f); }
+        }
+
+        public int ultHaste = 0;
+        public float UltCdr
+        {
+            get { return 100 / (ultHaste + 100f); }
+        }
+        public int ultHasteLastStep = 0;
+        public float UltCdrLastStep
+        {
+            get { return 100 / (ultHasteLastStep + 100f); }
+        }
 
         // Healpower Stuff
         /// <summary>
@@ -881,7 +907,10 @@ namespace TerraLeague
             TrueMinionDamage = 0;
             consumeAmmo = 0;
             rangedAttackSpeed = 1;
-            Cdr = 1;
+            abilityHaste = 0;
+            itemHaste = 0;
+            summonerHaste = 0;
+            ultHaste = 0;
             healPower = 1;
             armor = 0;
             resist = 0;
@@ -1998,7 +2027,10 @@ namespace TerraLeague
             defenceLastStep = player.statDefense;
             armorLastStep = armor;
             resistLastStep = resist;
-            cdrLastStep = Math.Round(Cdr, 2);
+            abilityHasteLastStep = abilityHaste;
+            itemHasteLastStep = itemHaste;
+            summonerHasteLastStep = summonerHaste;
+            ultHasteLastStep = ultHaste;
             extraSumCDRLastStep = Math.Round(extraSumCDR, 2);
             maxMinionsLastStep = player.maxMinions;
             maxLifeLastStep = GetRealHeathWithoutShield(true);

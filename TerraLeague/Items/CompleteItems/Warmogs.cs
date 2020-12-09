@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Warmog's Armor");
             Tooltip.SetDefault("Increases maximum life by 50" +
                 "\nIncreases life regeneration by 50%" +
-                "\nAbility cooldown reduced by 10%"); 
+                "\nIncreases ability haste by 10"); 
         }
 
         public override void SetDefaults()
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statLifeMax2 += 50;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

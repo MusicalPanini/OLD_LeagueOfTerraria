@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Hextech Protobelt-01");
             Tooltip.SetDefault("7% increased magic and minion damage" +
                 "\nIncreases maximum life by 20" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nAllows flight and slow fall" +
                 "\nPress UP to rocket faster");
         }
@@ -36,7 +36,7 @@ namespace TerraLeague.Items.CompleteItems
             player.statLifeMax2 += 20;
             player.magicDamage += 0.07f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.07;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
 
             player.wingTimeMax = 120;
             player.wings = 4;

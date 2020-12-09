@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("Increases maximum life by 40" +
                 "\nIncreases armor by 6" +
                 "\nIncreases life regeneration by 3" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nIncreases your max number of sentries" +
                 "\n8% increased movement speed");
         }
@@ -42,7 +42,7 @@ namespace TerraLeague.Items.CompleteItems
             player.lifeRegen += 3;
             player.maxTurrets += 1;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
 
             base.UpdateAccessory(player, hideVisual);
         }

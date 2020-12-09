@@ -85,7 +85,7 @@ namespace TerraLeague.Items.CustomItems
         internal int GetScaledCooldown(Player player)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            return (int)(activeCooldown * modPlayer.cdrLastStep);
+            return (int)(activeCooldown * modPlayer.ItemCdrLastStep);
         }
 
         internal void SetCooldown(Player player)

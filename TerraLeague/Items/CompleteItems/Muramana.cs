@@ -19,7 +19,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Muramana");
             Tooltip.SetDefault("5% increased melee and ranged damage" +
                 "\nIncreases maximum mana by 100" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 15" +
                 "\nCan only have one AWE item equiped at a time");
         }
 
@@ -57,7 +57,7 @@ namespace TerraLeague.Items.CompleteItems
 
             player.meleeDamage += 0.05f;
             player.rangedDamage += 0.05f;
-            modPlayer.Cdr -= 0.1;
+            modPlayer.abilityHaste += 15;
             player.statManaMax2 += 100;
 
             base.UpdateAccessory(player, hideVisual);

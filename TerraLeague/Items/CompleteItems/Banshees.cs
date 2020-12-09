@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Banshee's Veil");
             Tooltip.SetDefault("6% increased magic and minion damage" +
                 "\nIncreases resist by 4" +
-                "\nAbility cooldown reduced by 10% " +
+                "\nIncreases ability haste by 10" +
                 "\nImmunity to Silence and Curse");
         }
 
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.magicDamage += 0.06f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.06;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             
             player.buffImmune[BuffID.Silenced] = true;

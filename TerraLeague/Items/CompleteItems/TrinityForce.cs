@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\n7% increased movement speed" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases maximum mana by 30" +
-                "\nAbility cooldown reduced by 20%");
+                "\nIncreases ability haste by 20");
         }
 
         public override void SetDefaults()
@@ -43,7 +43,7 @@ namespace TerraLeague.Items.CompleteItems
             player.moveSpeed += 0.07f;
             player.statLifeMax2 += 20;
             player.statManaMax2 += 30;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
 
             base.UpdateAccessory(player, hideVisual);
         }

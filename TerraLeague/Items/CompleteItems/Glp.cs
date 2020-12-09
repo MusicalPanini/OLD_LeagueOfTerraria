@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Hextech GLP-800");
             Tooltip.SetDefault("7% increased magic and minion damage" +
                 "\nIncreases maximum mana by 40" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
             player.statManaMax2 += 40;
             player.magicDamage += 0.07f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.07;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             base.UpdateAccessory(player, hideVisual);
         }
 

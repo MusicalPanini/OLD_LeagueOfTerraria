@@ -16,7 +16,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("4% increased magic and minion damage" +
                 "\nIncreases resist by 4" +
                 "\nIncreases mana regeneration by 30%" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -35,7 +35,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.3;
             player.magicDamage += 0.04f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.04;

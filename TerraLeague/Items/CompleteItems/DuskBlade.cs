@@ -14,7 +14,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             DisplayName.SetDefault("Duskblade of Draktharr");
             Tooltip.SetDefault("10% increased melee damage" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nIncreases melee armor penetration by 7");
         }
 
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeDamage += 0.1f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
 
             base.UpdateAccessory(player, hideVisual);

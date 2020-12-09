@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Iceborn Gauntlet");
             Tooltip.SetDefault("Increases armor by 7" +
                 "\nIncreases maximum mana by 40" +
-                "\nAbility cooldown reduced by 20%" +
+                "\nIncreases ability haste by 15" +
                 "\nIncreases melee knockback" +
                 "\nGrants immunity to knockback");
         }
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.GetModPlayer<PLAYERGLOBAL>().armor += 7;
             player.statManaMax2 += 40;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.noKnockback = true;
             player.kbGlove = true;
 

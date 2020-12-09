@@ -10,13 +10,13 @@ namespace TerraLeague.Buffs
         {
             DisplayName.SetDefault("Crest of Insight");
             Description.SetDefault("Greatly increased Max Mana" +
-                "\n+10% Cooldown Reduction");
+                "\n+10 Ability Haste");
             Main.buffNoSave[Type] = true;
         }
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.statManaMax2 += 120;
             player.manaRegenBonus += 100;
         }

@@ -12,7 +12,8 @@ namespace TerraLeague.Items.Armor
         {
             DisplayName.SetDefault("Spiritual Head Piece");
             Tooltip.SetDefault("Increases maximum mana by 30" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10" +
+                "\nIncreases item haste by 15");
             base.SetStaticDefaults();
         }
 
@@ -28,7 +29,8 @@ namespace TerraLeague.Items.Armor
         public override void UpdateEquip(Player player)
         {
             player.statManaMax2 += 30;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().itemHaste += 15;
         }
 
         public override void AddRecipes()

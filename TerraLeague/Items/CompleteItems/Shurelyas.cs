@@ -18,7 +18,7 @@ namespace TerraLeague.Items.CompleteItems
                 "\n5% increased movement speed" +
                 "\nIncreases maximum life by 20" +
                 "\nIncreases mana regeneration by 60%" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 15");
         }
 
         public override void SetDefaults()
@@ -46,7 +46,7 @@ namespace TerraLeague.Items.CompleteItems
             player.moveSpeed += 0.05f;
             player.statLifeMax2 += 20;
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.6;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 15;
         }
 
         public override void AddRecipes()

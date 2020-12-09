@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Frozen Heart");
             Tooltip.SetDefault("Increases mana by 40" +
                 "\nIncreases armor by 10" +
-                 "\nAbility cooldown reduced by 20%" +
+                 "\nIncreases ability haste by 25" +
                  "\nGrants immunity to knockback");
         }
 
@@ -38,7 +38,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.statManaMax2 += 40;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 10;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.noKnockback = true;
         }
 

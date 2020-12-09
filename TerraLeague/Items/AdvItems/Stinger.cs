@@ -12,7 +12,7 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Stinger");
             Tooltip.SetDefault("15% increased melee speed" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -28,7 +28,7 @@ namespace TerraLeague.Items.AdvItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.meleeSpeed += 0.15f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

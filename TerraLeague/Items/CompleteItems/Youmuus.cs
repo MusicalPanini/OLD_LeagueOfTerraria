@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Youmuu's Ghostblade");
             Tooltip.SetDefault("8% increased melee and ranged damage" +
                 "\n8% increased movement speed" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
                 "\nIncreases melee armor penetration by 15");
         }
 
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.meleeDamage += 0.08f;
             player.rangedDamage += 0.08f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().meleeArmorPen += 7;
             player.moveSpeed += 0.08f;
         }

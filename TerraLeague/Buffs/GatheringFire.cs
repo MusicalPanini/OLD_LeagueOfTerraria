@@ -14,7 +14,7 @@ namespace TerraLeague.Buffs
                 "\n+6 defence" +
                 "\n+1 life regeneration" +
                 "\n+4 mana regeneration" +
-                "\n+10% cooldown reduction" +
+                "\n+10 Ability Haste" +
                 "\n+10% movement speed");
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
@@ -25,7 +25,7 @@ namespace TerraLeague.Buffs
             player.magicDamage += 0.07f;
             player.magicCrit += 7;
             player.statDefense += 6;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().gathFire = true;
             player.moveSpeed += 0.1f;
             player.lifeRegen += 1;

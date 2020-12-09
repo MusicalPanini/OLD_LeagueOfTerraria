@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Nashor's Tooth");
             Tooltip.SetDefault("7% increased minion damage" +
                 "\n25% increased melee speed" +
-                "\nAbility cooldown reduced by 20%");
+                "\nIncreases ability haste by 20");
         }
 
         public override void SetDefaults()
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.07;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.meleeSpeed += 0.25f;
             base.UpdateAccessory(player, hideVisual);
         }

@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Essence Reaver");
             Tooltip.SetDefault("4% increased melee and ranged damage" +
                 "\n6% increased melee and ranged critical strike chance" +
-                "\nAbility cooldown reduced by 20%");
+                "\nIncreases ability haste by 20");
         }
 
         public override void SetDefaults()
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.rangedCrit += 6;
             player.meleeDamage += 0.04f;
             player.rangedDamage += 0.04f;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             base.UpdateAccessory(player, hideVisual);
         }
 

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.AdvItems
         {
             DisplayName.SetDefault("Sheen");
             Tooltip.SetDefault("Increases maximum mana by 30" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -35,7 +35,7 @@ namespace TerraLeague.Items.AdvItems
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statManaMax2 += 30;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.GetModPlayer<PLAYERGLOBAL>().spellblade = true;
 
             base.UpdateAccessory(player, hideVisual);

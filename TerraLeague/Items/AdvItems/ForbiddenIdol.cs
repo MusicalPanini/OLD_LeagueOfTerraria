@@ -13,7 +13,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Forbidden Idol");
-            Tooltip.SetDefault("Ability cooldown reduced by 5%" +
+            Tooltip.SetDefault("Increases ability haste by 10" +
                 "\nIncreases mana regeneration by 15%"+
                 "\n5% increased healing power");
         }
@@ -32,7 +32,7 @@ namespace TerraLeague.Items.AdvItems
         {
             player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.15;
             player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.05;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.05;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
         }
 
         public override void AddRecipes()

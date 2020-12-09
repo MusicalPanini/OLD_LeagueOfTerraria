@@ -16,7 +16,8 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("Increases armor by 6" +
                 "\nIncreases resist by 4" +
                 "\nIncreases maximum mana by 20" +
-                "\nAbility cooldown reduced by 10%" +
+                "\nIncreases ability haste by 10" +
+                "\nIncreases item haste by 10" +
                 "\nGrants immunity to knockback and fire blocks");
         }
 
@@ -36,7 +37,8 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().armor += 6;
             player.GetModPlayer<PLAYERGLOBAL>().resist += 4;
             player.statManaMax2 += 20;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().itemHaste += 10;
             player.noKnockback = true;
             player.fireWalk = true;
             base.UpdateAccessory(player, hideVisual);

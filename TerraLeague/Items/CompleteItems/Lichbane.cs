@@ -16,8 +16,8 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Lich Bane");
             Tooltip.SetDefault("15% increased minion damage" +
                 "\n7% increased movement speed" +
-                "\nAbility cooldown reduced by 10%" +
                 "\nIncreases maximum mana by 30" +
+                "\nIncreases ability haste by 10" +
                 "\nIncreases your max number of minions");
         }
 
@@ -41,7 +41,7 @@ namespace TerraLeague.Items.CompleteItems
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.15;
             player.moveSpeed += 0.07f;
             player.statManaMax2 += 30;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.maxMinions += 1;
 
             base.UpdateAccessory(player, hideVisual);

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("Knight's Vow");
             Tooltip.SetDefault("Increases health by 40" +
                 "\nIncreases armor by 8" +
-                 "\nAbility cooldown reduced by 10%" +
+                 "\nIncreases ability haste by 10" +
                  "\nAbsorbs 25% of damage done to players on your team" +
                  "\nOnly active above 25% life");
         }
@@ -39,7 +39,7 @@ namespace TerraLeague.Items.CompleteItems
         {
             player.statLifeMax2 += 40;
             player.GetModPlayer<PLAYERGLOBAL>().armor += 8;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.hasPaladinShield = true;
         }
 

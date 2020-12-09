@@ -15,7 +15,7 @@ namespace TerraLeague.Items.CompleteItems
             DisplayName.SetDefault("The Black Cleaver");
             Tooltip.SetDefault("15% increased melee damage" +
                 "\nIncreases health by 40" +
-                "\nAbility cooldown reduced by 20%");
+                "\nIncreases ability haste by 20");
         }
 
         public override void SetDefaults()
@@ -34,7 +34,7 @@ namespace TerraLeague.Items.CompleteItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.2;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 20;
             player.meleeDamage += 0.15f;
             player.statLifeMax2 += 40;
         }

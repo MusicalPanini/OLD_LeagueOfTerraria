@@ -17,7 +17,7 @@ namespace TerraLeague.Items.CompleteItems
             Tooltip.SetDefault("8% increased damage" +
                 "\n8% increased crit chance" +
                 "\nIncreases maximum mana by 40" +
-                "\nAbility cooldown reduced by 10%");
+                "\nIncreases ability haste by 10");
         }
 
         public override void SetDefaults()
@@ -40,7 +40,7 @@ namespace TerraLeague.Items.CompleteItems
             player.rangedDamage += 0.08f;
             player.magicDamage += 0.08f;
             player.GetModPlayer<PLAYERGLOBAL>().TrueMinionDamage += 0.08;
-            player.GetModPlayer<PLAYERGLOBAL>().Cdr -= 0.1;
+            player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 10;
             player.statManaMax2 += 40;
 
             base.UpdateAccessory(player, hideVisual);
