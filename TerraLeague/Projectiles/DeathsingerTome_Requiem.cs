@@ -83,10 +83,23 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(24, 86, 69, 255), 1.5f);
-                    dust.velocity *= 0f;
+                    Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
+                    int dustBoxWidth = projectile.width - 12;
+                    int dustBoxHeight = projectile.height - 12;
+                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 261, 0f, 0f, 100, new Color(24, 86, 69, 255), 1.5f);
                     dust.noGravity = true;
+                    dust.velocity *= 0.1f;
+                    dust.velocity += projectile.velocity * 0.1f;
+                    dust.position.X -= projectile.velocity.X / 3f * (float)i;
+                    dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
                 }
+
+                //for (int i = 0; i < 3; i++)
+                //{
+                //    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(24, 86, 69, 255), 1.5f);
+                //    dust.velocity *= 0f;
+                //    dust.noGravity = true;
+                //}
                 Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(24, 86, 69, 255), 1.5f);
                 dust2.noGravity = true;
                 dust2.velocity *= 3f;
