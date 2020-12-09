@@ -184,7 +184,7 @@ namespace TerraLeague.Items
             {
                 if (Transedent)
                 {
-                    TooltipLine line = new TooltipLine(mod, "PrefixCDR", "+5% cooldown reduction")
+                    TooltipLine line = new TooltipLine(mod, "PrefixCDR", "+5 ability, item, and summoner spell haste")
                     {
                         isModifier = true
                     };
@@ -348,6 +348,8 @@ namespace TerraLeague.Items
             if (Transedent)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
+                player.GetModPlayer<PLAYERGLOBAL>().itemHaste += 5;
+                player.GetModPlayer<PLAYERGLOBAL>().summonerHaste += 5;
             }
             else if (Armor > 0)
             {
