@@ -1691,6 +1691,21 @@ namespace TerraLeague
             }
 
             // Dusts
+            if (tidecallersBlessing)
+            {
+                if ((Main.time % 2) == 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 pos = new Vector2(32, 0).RotatedBy((MathHelper.TwoPi * i / 3) + (MathHelper.TwoPi * (Main.time % 120) / 120));
+
+                        Dust dust = Dust.NewDustPerfect(player.MountedCenter + pos, DustType<Dusts.BubbledBubble>(), null, 0, default, 1.5f);
+                        dust.noLight = true;
+                        dust.noGravity = true;
+                        dust.velocity *= 0.0f;
+                    }
+                }
+            }
             if (ghosted)
             {
                 for (int i = 0; i < player.velocity.Length()/7f; i++)

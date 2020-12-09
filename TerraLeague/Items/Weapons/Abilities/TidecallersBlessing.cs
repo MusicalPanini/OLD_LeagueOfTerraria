@@ -104,6 +104,15 @@ namespace TerraLeague.Items.Weapons.Abilities
             Main.PlaySound(new LegacySoundStyle(2, 21).WithPitchVariance(-0.5f), player.Center);
             TerraLeague.DustBorderRing(300, player.MountedCenter, DustType<BubbledBubble>(), default(Color), 2);
             TerraLeague.DustRing(DustType<BubbledBubble>(), player, default(Color));
+
+            var players = TerraLeague.GetAllPlayersInRange(player.MountedCenter, 300, -1, player.team);
+            for (int i = 0; i < players.Count; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustType<BubbledBubble>(), 0, -2, 0, default, 1);
+                }
+            }
         }
     }
 }
