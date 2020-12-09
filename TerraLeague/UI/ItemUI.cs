@@ -592,7 +592,7 @@ namespace TerraLeague.UI
             CDRStats = new UIText("CDR: 40%", 0.65f);
             CDRStats.Left.Pixels = 8;
             CDRStats.Top.Pixels = 54;
-            CDRStats.TextColor = Color.White;
+            CDRStats.TextColor = TerraLeague.ConvertHexToColor(TerraLeague.CDRColor);
 
             healStats = new UIText("HEAL: 000%", 0.65f);
             healStats.Left.Pixels = 80;

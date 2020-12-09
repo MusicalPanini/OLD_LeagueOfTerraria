@@ -36,7 +36,7 @@ namespace TerraLeague
         internal static string ARMORColor = "FFFF00";
         internal static string RESISTColor = "B0C4DE";
         internal static string HEALColor = "008000";
-        internal static string CDRColor = "FFFFFF";
+        internal static string CDRColor = "E51647";
         internal static string RNGATSColor = "808080";
         internal static string MANAREDUCTColor = "4169E1";
         internal static string MINIONMAXColor = "4682b4";
