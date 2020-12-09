@@ -56,8 +56,11 @@ namespace TerraLeague.Items.Weapons
             if (player.GetModPlayer<PLAYERGLOBAL>().spinningAxe)
             {
                 type = ProjectileType<DarksteelThrowingAxe_SpinningAxe>();
-                damage += Abilities[(int)AbilityType.Q].GetAbilityBaseDamage(player);
-                damage += Abilities[(int)AbilityType.Q].GetAbilityScaledDamage(player, DamageType.RNG);
+                if (Abilities[(int)AbilityType.Q] != null)
+                {
+                    damage += Abilities[(int)AbilityType.Q].GetAbilityBaseDamage(player);
+                    damage += Abilities[(int)AbilityType.Q].GetAbilityScaledDamage(player, DamageType.RNG);
+                }
                 Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY) * 1.2f, type, damage, knockBack + 1.5f, player.whoAmI, 1, player.velocity.X);
                 player.ClearBuff(BuffType<Buffs.SpinningAxe>());
                 return false;
