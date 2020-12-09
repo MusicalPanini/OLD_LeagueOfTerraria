@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.NPCs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -175,19 +176,27 @@ namespace TerraLeague.Projectiles
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
             projectile.netUpdate = true;
-            for (int i = 0; i < 12; i++)
-            {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 137, 0,0, 50, new Color(100, 100, 255), 1.2f);
-                dust.noGravity = true;
-                Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
-            }
 
-            projectile.velocity.Y = -8;
-            projectile.timeLeft = 90;
-            projectile.ai[0] = 1;
-            projectile.ai[1] = target.whoAmI;
-            projectile.friendly = false;
-            projectile.tileCollide = false;
+            if (target.GetGlobalNPC<NPCsGLOBAL>().stunned || target.GetGlobalNPC<NPCsGLOBAL>().bubbled)
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 137, 0, 0, 50, new Color(100, 100, 255), 1.2f);
+                    dust.noGravity = true;
+                    Dust.NewDustDirect(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 211, projectile.velocity.X * 0.25f, projectile.velocity.Y * 0.25f, 0, default(Color), 1f);
+                }
+
+                projectile.velocity.Y = -8;
+                projectile.timeLeft = 90;
+                projectile.ai[0] = 1;
+                projectile.ai[1] = target.whoAmI;
+                projectile.friendly = false;
+                projectile.tileCollide = false;
+            }
+            else
+            {
+                projectile.Kill();
+            }
         }
 
         public void HitPlayer(Player player)

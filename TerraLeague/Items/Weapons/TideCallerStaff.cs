@@ -36,7 +36,7 @@ namespace TerraLeague.Items.Weapons
 
         public override string GetWeaponTooltip()
         {
-            return "Create a flow of water that will ebb off the first stuck enemy and heal the nearest player" +
+            return "Hititng a stunned or bubbled enemy will heal a nearby ally" +
                 "\nAfter healing, it will then strike another enemy";
         }
 
