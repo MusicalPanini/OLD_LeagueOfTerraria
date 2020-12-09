@@ -31,7 +31,7 @@ namespace TerraLeague.Items.CompleteItems
 
             Passives = new Passive[]
             {
-                new StarlitGrace(20, 25, 4, 4)
+                new StarlitGrace(12, 25, 4, 4)
             };
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
