@@ -62,5 +62,12 @@ namespace TerraLeague.Items.Weapons
         {
             return true;
         }
+
+        public override void OnCraft(Recipe recipe)
+        {
+            Main.LocalPlayer.QuickSpawnItem(ItemID.ManaCrystal, 1);
+
+            base.OnCraft(recipe);
+        }
     }
 }
