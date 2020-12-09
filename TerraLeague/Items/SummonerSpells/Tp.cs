@@ -67,6 +67,7 @@ namespace TerraLeague.Items.SummonerSpells
             {
 				player.TeleportationPotion();
 				Efx(player.position);
+				SetTPCooldown();
 				PacketHandler.SendTeleport(-1, player.whoAmI, player.position);
             }
 			else if (Main.netMode == NetmodeID.MultiplayerClient)
