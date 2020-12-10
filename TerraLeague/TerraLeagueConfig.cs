@@ -47,6 +47,12 @@ namespace TerraLeague
         public bool UseCustomManaRegen;
 
         [DefaultValue(true)]
+        [BackgroundColor(100, 100, 100)]
+        [Label("Convert defence into armor and resist")]
+        [Tooltip("This will cause defence to not block any damage")]
+        public bool UseCustomDefenceStat;
+
+        [DefaultValue(true)]
         [BackgroundColor(19, 122, 113)]
         [Slider]
         [Label("Use the custom resource bar")]
@@ -69,6 +75,7 @@ namespace TerraLeague
             TerraLeague.fogIntensity = drawMist;
             TerraLeague.UseModResourceBar = UseModResourceBar;
             TerraLeague.UseCustomManaRegen = UseCustomManaRegen;
+            TerraLeague.UseCustomDefenceStat = UseCustomDefenceStat;
 
             base.OnChanged();
         }

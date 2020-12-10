@@ -256,51 +256,49 @@ namespace TerraLeague
         public bool hasSpiritualRestorationLastStep = false;
 
         /// <summary>
-        /// Players armor stat
-        /// </summary>
-        private int statArmor = 0;
-        /// <summary>
         /// <para>Total amount of armor.</para>
         /// Armor is defence against contact damage
         /// </summary>
-        public int armor
+        public int armor = 0;
+        public float ArmorDamageReduction
         {
             get
             {
-                if (statArmor < 0)
+                if (TerraLeague.UseCustomDefenceStat)
+                    armor += player.statDefense;
+
+                if (armor >= 0)
                 {
-                    return 0;
+                    return 100 / (100f + armor);
                 }
                 else
                 {
-                    return statArmor;
+                    return 2 - (100 / (100f - armor));
                 }
             }
-            set { statArmor = value; }
         }
 
-        /// <summary>
-        /// Players resist stat
-        /// </summary>
-        private int statResist = 0;
         /// <summary>
         /// <para>Total amount of resist.</para>
         /// Resist is defence against projectile
         /// </summary>
-        public int resist
+        public int resist = 0;
+        public float ResistDamageReduction
         {
             get
             {
-                if (statResist < 0)
+                if (TerraLeague.UseCustomDefenceStat)
+                    resist += player.statDefense;
+
+                if (resist >= 0)
                 {
-                    return 0;
+                    return 100 / (100f + resist);
                 }
                 else
                 {
-                    return statResist;
+                    return 2 - (100 / (100f - resist));
                 }
             }
-            set { statResist = value; }
         }
 
         /// <summary>
@@ -2471,11 +2469,12 @@ namespace TerraLeague
                 // Runs OnHitByProjectile(npc) for all equiped LeagueItems
                 LeagueItem.RunEnabled_OnHitByProjectile(player, npc, ref damage, ref crit);
 
-                // Reduces the projectile damage based on Players resist stat
-                if (Main.expertMode)
-                    damage -= (int)(resist * 0.75);
-                else
-                    damage -= (int)(resist * 0.5);
+                ArmorResistScaledDamage(ref damage, false);
+                //// Reduces the projectile damage based on Players resist stat
+                //if (Main.expertMode)
+                //    damage -= (int)(resist * 0.75);
+                //else
+                //    damage -= (int)(resist * 0.5);
             }
             else
             {
@@ -2484,11 +2483,12 @@ namespace TerraLeague
                 // Runs OnHitByNPC() for all equiped LeagueItems
                 LeagueItem.RunEnabled_OnHitByNPC(player, npc, ref damage, ref crit);
 
-                // Reduces the contact damage based on Players armor stat
-                if (Main.expertMode)
-                    damage -= (int)(armor * 0.75);
-                else
-                    damage -= (int)(armor * 0.5);
+                ArmorResistScaledDamage(ref damage, true);
+                //// Reduces the contact damage based on Players armor stat
+                //if (Main.expertMode)
+                //    damage -= (int)(armor * 0.75);
+                //else
+                //    damage -= (int)(armor * 0.5);
             }
 
             OnHitByEnemy(npc, ref damage, crit);
@@ -2515,15 +2515,27 @@ namespace TerraLeague
             if (greymark)
                 player.AddBuff(BuffType<GreymarkBuff>(), 4 * 60);
 
+            ArmorResistScaledDamage(ref damage, false);
             // Reduces the projectile damage based on Players resist stat
-            if (Main.expertMode)
-                damage -= (int)(resist * 0.75) / 4;
-            else
-                damage -= (int)(resist * 0.5) / 2;
+            //if (Main.expertMode)
+            //    damage -= (int)(resist * 0.75) / 4;
+            //else
+            //    damage -= (int)(resist * 0.5) / 2;
 
 
-                OnHitByEnemy(Main.npc[0], ref damage, crit);
+            OnHitByEnemy(Main.npc[0], ref damage, crit);
             base.ModifyHitByProjectile(proj, ref damage, ref crit);
+        }
+
+        void ArmorResistScaledDamage(ref int damage, bool armor = true)
+        {
+            if (TerraLeague.UseCustomDefenceStat)
+                player.statDefense = 0;
+
+            if (armor)
+                damage = (int)(damage * ArmorDamageReduction);
+            else
+                damage = (int)(damage * ResistDamageReduction);
         }
 
         /// <summary>

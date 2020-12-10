@@ -62,6 +62,7 @@ namespace TerraLeague
         internal bool debugMode = false;
         public static bool UseModResourceBar = false;
         public static bool UseCustomManaRegen = false;
+        public static bool UseCustomDefenceStat = false;
         internal int SumCurrencyID;
         private UserInterface userInterface1;
         private UserInterface userInterface2;

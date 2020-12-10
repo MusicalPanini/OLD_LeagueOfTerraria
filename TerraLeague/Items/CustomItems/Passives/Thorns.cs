@@ -11,14 +11,14 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            return TooltipName("THORNS") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Enemies who melee attack you will take ") +  TerraLeague.CreateScalingTooltip(TerraLeague.ARMORColor, "ARM", modPlayer.armorLastStep + modPlayer.defenceLastStep, 100) + TerraLeague.CreateColorString(PassiveSecondaryColor, " damage and gain 'Grievous Wounds'");
+            return TooltipName("THORNS") + TerraLeague.CreateColorString(PassiveSecondaryColor, "Enemies who melee attack you will take ") +  TerraLeague.CreateScalingTooltip(TerraLeague.ARMORColor, "ARM", modPlayer.armorLastStep, 100) + TerraLeague.CreateColorString(PassiveSecondaryColor, " damage and gain 'Grievous Wounds'");
         }
 
         public override void OnHitByNPC(NPC npc, ref int damage, ref bool crit, Player player, ModItem modItem)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            player.ApplyDamageToNPC(npc, (modPlayer.armor + player.statDefense), 0, 0, false);
+            player.ApplyDamageToNPC(npc, (modPlayer.armor), 0, 0, false);
             npc.AddBuff(BuffType<GrievousWounds>(), 180);
 
             base.OnHitByNPC(npc, ref damage, ref crit, player, modItem);

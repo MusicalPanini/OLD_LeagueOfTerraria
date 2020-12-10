@@ -663,18 +663,20 @@ namespace TerraLeague.UI
             if (armorStats.IsMouseHovering)
             {
                 text = TerraLeague.CreateColorString(TerraLeague.ARMORColor, "Armor") +
-                    "\nReduces damage from contact by " + (Main.expertMode ? "0.75" : "0.5") + " damage per point" +
+                    "\nReduces damage from contact by " + Math.Round(100 - (modPlayer.ArmorDamageReduction * 100f), 2) + "%" +
                     "\nCurrent Armor consists of" +
-                    "\n" + TerraLeague.CreateColorString(TerraLeague.ARMORColor, "From Armor increases: " + modPlayer.armorLastStep) +
-                    "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
+                    "\n" + TerraLeague.CreateColorString(TerraLeague.ARMORColor, "From Armor increases: " + modPlayer.armorLastStep);
+                if (TerraLeague.UseCustomDefenceStat)
+                    text += "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
             }
             else if (resistStats.IsMouseHovering)
             {
                 text = TerraLeague.CreateColorString(TerraLeague.RESISTColor, "Resist") +
-                    "\nReduces damage from projectiles by " + (Main.expertMode ? "0.75" : "0.5") + " damage per point" +
+                    "\nReduces damage from projectiles by " + Math.Round(100 - (modPlayer.ResistDamageReduction * 100f), 2) + "%" +
                     "\nCurrent Resist consists of" +
-                    "\n" + TerraLeague.CreateColorString(TerraLeague.RESISTColor, "From Resist increases: " + modPlayer.resistLastStep) +
-                    "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
+                    "\n" + TerraLeague.CreateColorString(TerraLeague.RESISTColor, "From Resist increases: " + modPlayer.resistLastStep);
+                if (TerraLeague.UseCustomDefenceStat)
+                    text += "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
             }
             else if (meleeStats.IsMouseHovering)
             {
@@ -754,8 +756,8 @@ namespace TerraLeague.UI
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
 
-            armorStats.SetText("ARM: " + (modPlayer.armor + modPlayer.player.statDefense));
-            resistStats.SetText("RST: " + (modPlayer.resist + modPlayer.player.statDefense));
+            armorStats.SetText("ARM: " + (modPlayer.armor));
+            resistStats.SetText("RST: " + (modPlayer.resist));
             meleeStats.SetText("MEL: " + modPlayer.MEL);
             rangedStats.SetText("RNG: " + modPlayer.RNG);
             magicStats.SetText("MAG: " + modPlayer.MAG);
