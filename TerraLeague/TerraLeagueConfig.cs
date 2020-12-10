@@ -19,8 +19,8 @@ using Terraria.UI;
 namespace TerraLeague
 {
     [BackgroundColor(4, 74, 26)]
-    [Label("Config")]
-    public class TerraLeagueConfig : ModConfig
+    [Label("Client Config")]
+    public class TerraLeagueClientConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
@@ -49,7 +49,7 @@ namespace TerraLeague
         [DefaultValue(true)]
         [BackgroundColor(100, 100, 100)]
         [Label("Convert defence into armor and resist")]
-        [Tooltip("This will cause defence to not block any damage")]
+        [Tooltip("This will cause defence to not block any damage, but turn it into armor and resist instead")]
         public bool UseCustomDefenceStat;
 
         [DefaultValue(true)]
@@ -66,16 +66,60 @@ namespace TerraLeague
         [Label("Set the intensity of the Black Mist effect")]
         public float drawMist;
 
-        
-
         public override void OnChanged()
         {
             UI.ResourceBar.healthBarDividerDistance = healthBarDividerSpacing;
             UI.ResourceBar.manaBarDividerDistance = manaBarDividerSpacing;
             TerraLeague.fogIntensity = drawMist;
             TerraLeague.UseModResourceBar = UseModResourceBar;
-            TerraLeague.UseCustomManaRegen = UseCustomManaRegen;
-            TerraLeague.UseCustomDefenceStat = UseCustomDefenceStat;
+            if (Main.netMode == NetmodeID.SinglePlayer)
+            {
+                TerraLeague.UseCustomManaRegen = UseCustomManaRegen;
+                TerraLeague.UseCustomDefenceStat = UseCustomDefenceStat;
+            }
+
+            base.OnChanged();
+        }
+    }
+
+    [BackgroundColor(4, 74, 26)]
+    [Label("Server Config Config")]
+    public class TerraLeagueServerConfig : ModConfig
+    {
+        public override ConfigScope Mode => ConfigScope.ServerSide;
+
+        [DefaultValue(true)]
+        [BackgroundColor(51, 150, 183)]
+        [Label("Use mana regen overhaul for server")]
+        [Tooltip("WARNING: The mod was not built around the vanilla system")]
+        public bool UseCustomManaRegen;
+
+        [DefaultValue(true)]
+        [BackgroundColor(100, 100, 100)]
+        [Label("Convert defence into armor and resist for server")]
+        [Tooltip("This will cause defence to not block any damage, but turn it into armor and resist instead")]
+        public bool UseCustomDefenceStat;
+
+        public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref string message)
+        {
+            //if (Main.player == NetmodeID.Server)
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+                message = "You are not the server, you cannot change the server settings";
+                return false;
+            //}
+        }
+
+        public override void OnChanged()
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                TerraLeague.UseCustomManaRegen = UseCustomManaRegen;
+                TerraLeague.UseCustomDefenceStat = UseCustomDefenceStat;
+            }
 
             base.OnChanged();
         }
