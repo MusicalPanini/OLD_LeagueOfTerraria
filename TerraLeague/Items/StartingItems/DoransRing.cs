@@ -14,7 +14,7 @@ namespace TerraLeague.Items.StartingItems
             Tooltip.SetDefault("+2 magic and minion damage" +
                 "\nIncreases health by 5" +
                 "\nIncreases mana regeneration by 1" +
-                "\nRestore 20 mana on kill");
+                "\nRestore 5 mana on kill");
         }
 
         public override void SetDefaults()
