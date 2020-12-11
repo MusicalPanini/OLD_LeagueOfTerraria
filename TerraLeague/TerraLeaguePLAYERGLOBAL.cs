@@ -1103,7 +1103,7 @@ namespace TerraLeague
                         player.AddBuff(BuffType<CelestialFrostbite>(), 2);
                     }
 
-                    if (Math.Abs(sigil.Center.X - player.MountedCenter.X) < Main.maxTilesX / 10 * 16 && Math.Abs(sigil.Center.Y - player.MountedCenter.Y) < Main.worldSurface * 16)
+                    if (Math.Abs(sigil.Center.X - player.MountedCenter.X) < Main.maxTilesX / 21 * 16 && Math.Abs(sigil.Center.Y - player.MountedCenter.Y) < Main.worldSurface * 16)
                     {
                         zoneTargon = true;
                     }
@@ -2613,8 +2613,8 @@ namespace TerraLeague
                 // Gives mana if Dorans Ring is equiped
                 if (dring && player.statMana < player.statManaMax2)
                 {
-                    player.ManaEffect(20);
-                    player.statMana += 20;
+                    player.ManaEffect(5);
+                    player.statMana += 5;
                 }
 
                 // Gives the Excited buff if holding the Pow Pow or Fish Bones weapons
