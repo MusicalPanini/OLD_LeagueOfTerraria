@@ -25,6 +25,13 @@ namespace TerraLeague
 {
     public class WORLDGLOBAL : ModWorld
     {
+        int[] floatingIslandHouse_XCord = new int[30];
+        int[] floatingIslandHouse_YCord = new int[30];
+        bool[] skyLake = new bool[30];
+
+        int numIslandHouses = 0;
+        int skyLakes = 1;
+
         internal WorldPacketHandler PacketHandler = ModNetHandler.worldHandler;
 
         public static bool BlackMistEvent = false;
@@ -102,6 +109,12 @@ namespace TerraLeague
             if (genIndex != -1)
             {
                 tasks[floatingIslands] = new PassLegacy("Modified Floating Islands", GenerateFloatingIslands);
+            }
+
+            int floatingIslandHouse = tasks.FindIndex(genpass => genpass.Name.Equals("Floating Island Houses"));
+            if (genIndex != -1)
+            {
+                tasks[floatingIslandHouse] = new PassLegacy("Modified Floating Island Houses", GenerateFloatingIslandHouse);
             }
         }
 
@@ -1035,12 +1048,13 @@ namespace TerraLeague
 
         private void GenerateFloatingIslands(GenerationProgress progress)
         {
-            int[] floatingIslandHouse_XCord = new int[30];
-            int[] floatingIslandHouse_YCord = new int[30];
-            bool[] skyLake = new bool[30];
+            floatingIslandHouse_XCord = new int[30];
+            floatingIslandHouse_YCord = new int[30];
+            skyLake = new bool[30];
 
-            int numIslandHouses = 0;
-            int skyLakes = 1;
+            numIslandHouses = 0;
+            skyLakes = 1;
+
             if (Main.maxTilesX > 8000)
             {
                 skyLakes++;
@@ -1107,6 +1121,17 @@ namespace TerraLeague
                             numIslandHouses++;
                         }
                     }
+                }
+            }
+        }
+
+        private void GenerateFloatingIslandHouse(GenerationProgress progress)
+        {
+            for (int i = 0; i < numIslandHouses; i++)
+            {
+                if (!skyLake[i])
+                {
+                    WorldGen.IslandHouse(floatingIslandHouse_XCord[i], floatingIslandHouse_YCord[i]);
                 }
             }
         }
