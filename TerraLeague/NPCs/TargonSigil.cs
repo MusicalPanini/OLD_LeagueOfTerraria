@@ -43,6 +43,7 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI()
         {
+            npc.homeless = true;
             return base.PreAI();
         }
 
@@ -219,6 +220,11 @@ namespace TerraLeague.NPCs
                     break;
                 }
             }
+        }
+
+        public override bool CheckConditions(int left, int right, int top, int bottom)
+        {
+            return false;
         }
 
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
