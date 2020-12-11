@@ -31,12 +31,12 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Call down a lump of dark matter to fall from the sky and explode on impact with the ground";
+            return "Call down a lump of dark matter to fall from the sky and explode";
         }
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 3);
+            return (int)(abilityItem.item.damage * 2.5f);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -44,7 +44,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             switch (dam)
             {
                 case DamageType.MAG:
-                    return 100;
+                    return 60;
                 default:
                     return 0;
             }
@@ -57,7 +57,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetBaseManaCost()
         {
-            return 6;
+            return 20;
         }
 
         public override string GetDamageTooltip(Player player)
@@ -74,8 +74,8 @@ namespace TerraLeague.Items.Weapons.Abilities
         {
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetScaledManaCost(), true))
             {
-                Vector2 position = new Vector2(Main.MouseWorld.X, player.position.Y - 1000);
-                Vector2 velocity = new Vector2(0, 1000);
+                Vector2 position = new Vector2(Main.MouseWorld.X, Main.MouseWorld.Y/*player.position.Y - 1000*/);
+                Vector2 velocity = new Vector2(0, 0);
                 int projType = ProjectileType<CrystalStaff_DarkMatter>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
                 int knockback = 0;

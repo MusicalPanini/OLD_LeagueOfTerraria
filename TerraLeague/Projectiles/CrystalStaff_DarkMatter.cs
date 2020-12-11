@@ -21,7 +21,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.width = 34;
             projectile.height = 34;
-            projectile.timeLeft = 360;
+            projectile.timeLeft = 100;
             projectile.penetrate = 100;
             projectile.friendly = false;
             projectile.magic = true;
@@ -35,15 +35,15 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (projectile.ai[1] == 0f && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
-            {
-                projectile.ai[1] = 1f;
-                projectile.netUpdate = true;
-            }
-            if (projectile.ai[1] != 0f)
-            {
-                projectile.tileCollide = true;
-            }
+                //if (projectile.ai[1] == 0f && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height))
+                //{
+                //    projectile.ai[1] = 1f;
+                //    projectile.netUpdate = true;
+                //}
+                //if (projectile.ai[1] != 0f)
+                //{
+                //    projectile.tileCollide = true;
+                //}
 
             if (projectile.ai[0] > 60)
             {
@@ -51,7 +51,7 @@ namespace TerraLeague.Projectiles
 
                 for (int i = 0; i < 2; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 172, 0, 3, 0, default, 3f);
+                    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 113, 0, 3, 0, default, 3f);
                     dust.noGravity = true;
                     dust.noLight = true;
                     dust.velocity *= 0.3f;
@@ -59,8 +59,8 @@ namespace TerraLeague.Projectiles
             }
             else
             {
-                TerraLeague.DustLine(projectile.Center, projectile.Center - (Vector2.UnitY * 1000), projectile.ai[0] % 2 == 0 ? 112 : 172, 0.2f, projectile.ai[0] / 45f);
-                TerraLeague.DustBorderRing(radius, projectile.Center, projectile.ai[0] % 2 == 0 ? 112 : 172, default, projectile.ai[0] / 45f);
+                TerraLeague.DustLine(projectile.Center, projectile.Center - (Vector2.UnitY * 1000), projectile.ai[0] % 2 == 0 ? 112 : 113, 0.2f, projectile.ai[0] / 45f);
+                TerraLeague.DustBorderRing(radius, projectile.Center, projectile.ai[0] % 2 == 0 ? 112 : 113, default, projectile.ai[0] / 45f);
 
                 projectile.ai[0]++;
 
@@ -71,9 +71,17 @@ namespace TerraLeague.Projectiles
                     projectile.tileCollide = false;
                     projectile.friendly = true;
                     projectile.extraUpdates = 4;
+                    projectile.timeLeft = 1000 / 25;
+                    //projectile.ai[1] = 0f;
                 }
             }
-            
+
+            if (projectile.timeLeft == 1 && projectile.ai[1] == 0)
+            {
+                Prime();
+                projectile.ai[1] = 1;
+            }
+
             base.AI();
         }
 
