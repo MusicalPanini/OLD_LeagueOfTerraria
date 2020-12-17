@@ -22,6 +22,7 @@ using Terraria.GameContent.Shaders;
 using TerraLeague.Shaders;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Audio;
+using TerraLeague.Items.Accessories;
 
 namespace TerraLeague
 {
@@ -306,7 +307,53 @@ namespace TerraLeague
             Mod bossChecklist = ModLoader.GetMod("BossChecklist");
             if (bossChecklist != null)
             {
-                bossChecklist.Call("AddBossWithInfo", "The Celestial Gate Keeper", 3.1f, (Func<bool>)(() => WORLDGLOBAL.TargonArenaDefeated), "Climb Mount Targon and accept its challenge at the peak");
+                bossChecklist.Call(
+                    "AddBoss",  // Call
+                    3.1f,       // Boss Progresion
+                    new List<int>() { ModContent.NPCType<TargonBoss>() }, // NPC Types
+                    this, // Mod
+                    "The Celestial Gate Keeper", // Name
+                    (Func<bool>)(() => WORLDGLOBAL.TargonArenaDefeated), // Completion Check
+                    0, // Spawn Item 
+                    0, // Collection Items
+                    0, // Drops
+                    "Climb Mount Targon and accept the challenge at its peak", // Spawn Info
+                    "",
+                    "TerraLeague/NPCs/TargonBoss_Checklist",
+                    "TerraLeague/NPCs/TargonBoss_Head");
+
+
+                bossChecklist.Call(
+                    "AddEvent",  // Call
+                    2.8f,       // Boss Progresion
+                    new List<int>() { ModContent.NPCType<TheUndying_1>(), ModContent.NPCType<TheUndying_Archer>(), ModContent.NPCType<TheUndying_Necromancer>(), ModContent.NPCType<BansheeHive>(), ModContent.NPCType<EtherealRemitter>(), ModContent.NPCType<FallenCrimera>(), ModContent.NPCType<MistEater>(), ModContent.NPCType<SoulBoundSlime>(), ModContent.NPCType<SpectralBitter>(), ModContent.NPCType<UnleashedSpirit>() }, // NPC Types
+                    this, // Mod
+                    "The Harrowing", // Name
+                    (Func<bool>)(() => WORLDGLOBAL.BlackMistDefeated), // Completion Check
+                    0, // Spawn Item 
+                    0, // Collection Items
+                    new List<int>() { ModContent.ItemType<EternalFlame>(), ModContent.ItemType<Items.Tools.FadingMemories>(), ModContent.ItemType<Nightbloom>(), ModContent.ItemType<Items.Armor.NecromancersHood>(), ModContent.ItemType<Items.Armor.NecromancersRobe>(), ModContent.ItemType<Items.DamnedSoul>() }, // Drops
+                    "The Black Mist creeps upon the oceans during new moons, but there is a chance every night it may reach further inland and start The Harrowing", // Spawn Info
+                    "",
+                    "TerraLeague/NPCs/BlackMist_Checklist",
+                    "TerraLeague/Gores/MistPuff_1"
+                    );
+
+                bossChecklist.Call(
+                    "AddEvent",  // Call
+                    2.8f,       // Boss Progresion
+                    new List<int>() { ModContent.NPCType<Scuttlegeist>(), ModContent.NPCType<TheUndying_2>(), ModContent.NPCType<MistDevourer_Head>(), ModContent.NPCType<ShelledHorror>(), ModContent.NPCType<SpectralShark>(), ModContent.NPCType<Mistwraith>(), ModContent.NPCType<ShadowArtilery>()}, // NPC Types
+                    this, // Mod
+                    "The Harrowing (Hardmode)", // Name
+                    (Func<bool>)(() => WORLDGLOBAL.BlackMistDefeated), // Completion Check
+                    0, // Spawn Item 
+                    0, // Collection Items
+                    new List<int>() { ModContent.ItemType<EternalFlame>(), ModContent.ItemType<Items.Tools.FadingMemories>(), ModContent.ItemType<Nightbloom>(), ModContent.ItemType<Items.Armor.NecromancersHood>(), ModContent.ItemType<Items.Armor.NecromancersRobe>(), ModContent.ItemType<Items.DamnedSoul>() }, // Drops
+                    "The Black Mist creeps upon the oceans during new moons, but there is a chance every night it may reach further inland and start The Harrowing", // Spawn Info
+                    "",
+                    "TerraLeague/NPCs/BlackMist_Checklist",
+                    "TerraLeague/Gores/MistPuff_1"
+                    );
             }
         }
 

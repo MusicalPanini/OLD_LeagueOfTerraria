@@ -5,6 +5,7 @@ using Terraria.ID;
 using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -30,6 +31,9 @@ namespace TerraLeague.NPCs
             base.SetDefaults();
 
             npc.frame.Y = Main.rand.Next(0, 2) * 48;
+
+            banner = headType;
+            bannerItem = ItemType<MistDevourerBanner>();
         }
 
         public override bool PreAI()

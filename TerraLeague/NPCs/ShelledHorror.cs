@@ -5,6 +5,7 @@ using Terraria.ID;
 using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -32,6 +33,8 @@ namespace TerraLeague.NPCs
             base.SetDefaults();
             npc.npcSlots = 3;
             npc.scale = 1f;
+            banner = npc.type;
+            bannerItem = ItemType<ShelledHorrorBanner>();
         }
 
         public override bool PreAI()

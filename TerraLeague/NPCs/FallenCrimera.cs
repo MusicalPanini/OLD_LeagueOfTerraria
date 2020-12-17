@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Items;
+using TerraLeague.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -31,6 +32,8 @@ namespace TerraLeague.NPCs
             animationType = NPCID.Crimera;
             npc.scale = 1f;
             npc.value = 100;
+            banner = npc.type;
+            bannerItem = ItemType<FallenCrimeraBanner>();
             base.SetDefaults();
         }
 

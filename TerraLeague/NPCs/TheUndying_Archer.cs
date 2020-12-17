@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items.Accessories;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -13,7 +14,7 @@ namespace TerraLeague.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Undying");
+            DisplayName.SetDefault("Undying Archer");
             Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.SkeletonArcher];
         }
         public override void SetDefaults()
@@ -34,6 +35,8 @@ namespace TerraLeague.NPCs
             animationType = NPCID.SkeletonArcher;
             npc.scale = 1f;
             base.SetDefaults();
+            banner = npc.type;
+            bannerItem = ItemType<UndyingArcherBanner>();
         }
 
         public override bool PreAI()

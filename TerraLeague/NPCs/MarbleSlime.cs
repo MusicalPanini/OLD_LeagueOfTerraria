@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraLeague.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,6 +34,8 @@ namespace TerraLeague.NPCs
             animationType = NPCID.BlueSlime;
             base.SetDefaults();
             npc.scale = 1.3f;
+            banner = npc.type;
+            bannerItem = ModContent.ItemType<MarbleSlimeBanner>();
         }
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {

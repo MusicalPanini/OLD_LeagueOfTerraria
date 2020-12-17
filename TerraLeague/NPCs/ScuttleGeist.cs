@@ -5,6 +5,7 @@ using Terraria.ID;
 using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -20,8 +21,8 @@ namespace TerraLeague.NPCs
             npc.width = 44;
             npc.height = 34;
             npc.damage = 10;
-            npc.defense = 14;
-            npc.lifeMax = 70;
+            npc.defense = 30;
+            npc.lifeMax = 50;
             npc.aiStyle = 3;
             npc.HitSound = SoundID.NPCHit33;
             npc.DeathSound = SoundID.NPCDeath36;
@@ -31,6 +32,8 @@ namespace TerraLeague.NPCs
             animationType = NPCID.AnomuraFungus;
             base.SetDefaults();
             npc.scale = 1f;
+            banner = npc.type;
+            bannerItem = ItemType<ScuttlegiestBanner>();
         }
 
         public override bool PreAI()

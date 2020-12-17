@@ -6,6 +6,7 @@ using Terraria.ID;
 using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -22,9 +23,9 @@ namespace TerraLeague.NPCs
             npc.height = 40;
             npc.alpha = 110;
             npc.aiStyle = 0;
-            npc.damage = 50;
-            npc.defense = 20;
-            npc.lifeMax = 360;
+            npc.damage = 40;
+            npc.defense = 0;
+            npc.lifeMax = 75;
             npc.behindTiles = true;
             npc.noGravity = true;
             npc.noTileCollide = true;
@@ -33,9 +34,11 @@ namespace TerraLeague.NPCs
             aiType = NPCID.Shark;
             animationType = NPCID.SandShark;
             npc.value = 400;
-            npc.knockBackResist = 0.9f;
+            npc.knockBackResist = 0f;
             npc.scale = 1f;
             base.SetDefaults();
+            banner = npc.type;
+            bannerItem = ItemType<SpectralSharkBanner>();
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)

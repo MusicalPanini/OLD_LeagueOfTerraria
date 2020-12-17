@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Items;
+using TerraLeague.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,6 +33,8 @@ namespace TerraLeague.NPCs
             aiType = NPCID.Wraith;
             animationType = NPCID.Wraith;
             npc.scale = 1f;
+            banner = npc.type;
+            bannerItem = ItemType<EtheralRemitterBanner>();
             base.SetDefaults();
         }
 

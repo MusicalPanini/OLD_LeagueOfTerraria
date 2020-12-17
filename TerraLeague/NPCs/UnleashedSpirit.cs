@@ -5,6 +5,7 @@ using TerraLeague.Gores;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -29,6 +30,8 @@ namespace TerraLeague.NPCs
             aiType = NPCID.BloodZombie;
             animationType = NPCID.BloodZombie;
             npc.scale = 1f;
+            banner = npc.type;
+            bannerItem = ItemType<UnleashedSpiritBanner>();
             base.SetDefaults();
         }
 

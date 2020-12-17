@@ -6,6 +6,7 @@ using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using TerraLeague.Items.Accessories;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -13,7 +14,7 @@ namespace TerraLeague.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Undying");
+            DisplayName.SetDefault("Undying");
             Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.BlueArmoredBonesMace];
         }
         public override void SetDefaults()
@@ -31,6 +32,8 @@ namespace TerraLeague.NPCs
             animationType = NPCID.BlueArmoredBonesMace;
             npc.scale = 1f;
             base.SetDefaults();
+            banner = npc.type;
+            bannerItem = ItemType<UndyingBanner>();
         }
 
         public override bool PreAI()

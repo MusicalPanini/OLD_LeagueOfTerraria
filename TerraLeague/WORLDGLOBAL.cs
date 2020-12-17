@@ -49,6 +49,7 @@ namespace TerraLeague
         public static bool VoidOreSpawned = false;
         public static bool TargonUnlocked = false;
         public static bool CelestialMeteorCanSpawn = false;
+        public static bool BlackMistDefeated = false;
         public static int marbleBlocks = 0;
         public static int targonMarker = 0;
         public int startingFrames = 0;
@@ -65,6 +66,7 @@ namespace TerraLeague
             CelestialMeteorCanSpawn = false;
             TargonUnlocked = false;
             TargonArenaDefeated = false;
+            BlackMistDefeated = false;
 
             BlackMistEvent = false;
             TargonCenterX = 0;
@@ -592,6 +594,7 @@ namespace TerraLeague
             if (NPC.downedGolemBoss) OreSpawned.Add("CelestialMeteorCanSpawn");
             if (TargonUnlocked) OreSpawned.Add("TargonUnlockedSpawned");
             if (TargonArenaDefeated) OreSpawned.Add("TargonArena");
+            if (BlackMistDefeated) OreSpawned.Add("BlackMistDefeated");
 
             return new TagCompound {
                 {"OreSpawned", OreSpawned},
@@ -610,6 +613,7 @@ namespace TerraLeague
             CelestialMeteorCanSpawn = OreSpawned.Contains("CelestialMeteorCanSpawn");
             TargonUnlocked = OreSpawned.Contains("TargonUnlockedSpawned");
             TargonArenaDefeated = OreSpawned.Contains("TargonArena");
+            BlackMistDefeated = OreSpawned.Contains("BlackMistDefeated");
 
             BlackMistEvent = tag.GetBool("BlackMistEvent");
             TargonCenterX = tag.GetInt("TargonXCord");
@@ -624,6 +628,8 @@ namespace TerraLeague
             var flags = new BitsByte();
             flags[0] = BlackMistEvent;
             flags[1] = TargonArenaDefeated;
+            flags[2] = BlackMistDefeated;
+            flags[3] = TargonUnlocked;
             writer.Write(flags);
             writer.Write(TargonCenterX);
             writer.Write(TargonWidthFromCenter);
@@ -635,6 +641,8 @@ namespace TerraLeague
             BitsByte flags = reader.ReadByte();
             BlackMistEvent = flags[0];
             TargonArenaDefeated = flags[1];
+            BlackMistDefeated = flags[2];
+            TargonUnlocked = flags[3];
             TargonCenterX = reader.ReadInt32();
             TargonWidthFromCenter = reader.ReadInt32();
             base.NetReceive(reader);
@@ -674,6 +682,7 @@ namespace TerraLeague
             if (Main.dayTime && BlackMistEvent && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 BlackMistEvent = false;
+                BlackMistDefeated = true;
                 //NetMessage.SendData(MessageID.WorldData);
                 //NetSend(new BinaryWriter(mod.GetPacket().BaseStream));
                 if (Main.netMode == NetmodeID.Server)

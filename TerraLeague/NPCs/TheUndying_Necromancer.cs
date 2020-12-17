@@ -2,6 +2,7 @@
 using System;
 using TerraLeague.Items;
 using TerraLeague.Items.Accessories;
+using TerraLeague.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,7 +14,7 @@ namespace TerraLeague.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("The Undying");
+            DisplayName.SetDefault("Undying Necromancer");
             Main.npcFrameCount[npc.type] = Main.npcFrameCount[NPCID.Necromancer];
         }
         public override void SetDefaults()
@@ -31,6 +32,8 @@ namespace TerraLeague.NPCs
             npc.value = 100f;
             animationType = NPCID.Necromancer;
             npc.scale = 1f;
+            banner = npc.type;
+            bannerItem = ItemType<UndyingNecromancerBanner>();
             base.SetDefaults();
         }
 
@@ -186,7 +189,7 @@ namespace TerraLeague.NPCs
                         {
                             Vector2 boyPos = new Vector2(((randX * 16f) - (float)(npc.width / 2) + 8f), (int)(i * 16f));
 
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            if (Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCType<Ghoul>()) < 12)
                             {
                                 NPC.NewNPC((int)boyPos.X, (int)boyPos.Y, NPCType<Ghoul>());
                             }

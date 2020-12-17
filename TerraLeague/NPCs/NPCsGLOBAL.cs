@@ -869,6 +869,7 @@ namespace TerraLeague.NPCs
                 }
                 else
                 {
+                    npc.HitEffect(hitDirection, num);
                     npc.checkDead();
                 }
                 return num;

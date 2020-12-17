@@ -40,7 +40,7 @@ namespace TerraLeague.NPCs
         public static int MorgDamage = 30/2;
         public static int LeonaDamage = 24/2;
         public static int DianaDamage = 50/2;
-        public static int ZoeDamage = 20/2;
+        public static int ZoeDamage = 30/2;
 
         int starGoreLifeExt = 30;
 

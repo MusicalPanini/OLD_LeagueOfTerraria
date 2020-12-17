@@ -25,8 +25,8 @@ namespace TerraLeague.NPCs
         {
             npc.width = 20;
             npc.height = 42;
-            npc.defense = 20;
-            npc.lifeMax = 5;
+            npc.defense = 0;
+            npc.lifeMax = 10;
 
             npc.HitSound = new LegacySoundStyle(3, 5);
             npc.DeathSound = new LegacySoundStyle(2, 27);
@@ -52,8 +52,8 @@ namespace TerraLeague.NPCs
                 npc.width = 40;
                 npc.height = 84;
                 npc.defense = 20;
-                npc.lifeMax = 50;
-                npc.life = 50;
+                npc.lifeMax = 50 * (Main.expertMode ? 2 : 1);
+                npc.life = npc.lifeMax;
                 npc.netUpdate = true;
                 npc.ai[0] = 2;
             }

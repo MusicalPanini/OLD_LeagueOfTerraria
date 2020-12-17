@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
                 dust.noGravity = true;
             }
 
-            projectile.rotation += 0.05f * projectile.velocity.Length();
+            projectile.rotation += 0.02f * projectile.velocity.Length();
 
             base.AI();
         }

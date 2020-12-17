@@ -5,6 +5,7 @@ using Terraria.ID;
 using TerraLeague.Gores;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Banners;
 
 namespace TerraLeague.NPCs
 {
@@ -29,6 +30,8 @@ namespace TerraLeague.NPCs
 
             tail = true;
 
+            banner = headType;
+            bannerItem = ItemType<MistDevourerBanner>();
             base.SetDefaults();
         }
 

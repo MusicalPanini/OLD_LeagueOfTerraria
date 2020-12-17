@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Items;
+using TerraLeague.Items.Banners;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,6 +31,8 @@ namespace TerraLeague.NPCs
             aiType = NPCID.EaterofSouls;
             animationType = NPCID.EaterofSouls;
             npc.scale = 1f;
+            banner = npc.type;
+            bannerItem = ItemType<MistEaterBanner>();
             base.SetDefaults();
         }
 
