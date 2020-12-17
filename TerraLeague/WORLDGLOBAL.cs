@@ -1249,42 +1249,45 @@ namespace TerraLeague
 
         public static void ToggleTargonArena()
         {
-            if (targonBossActive && TargonArenaActive)
+            if (TargonCenterX > 0)
             {
-                return;
-            }
-            else if (targonBossActive && !TargonArenaActive)
-            {
-                //TargonArenaSave = new Tile[100, 100];
-                for (int i = 0; i < Main.player.Length; i++)
+                if (targonBossActive && TargonArenaActive)
                 {
-                    if (Main.player[i].active && !Main.player[i].dead)
-                    {
-                        Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
-
-                        Main.player[i].Teleport(teleportPos, 1, 0);
-                        NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);
-                    }
+                    return;
                 }
-
-                TargonArenaActive = true;
-            }
-            else if (!targonBossActive && TargonArenaActive)
-            {
-                for (int i = 0; i < Main.player.Length; i++)
+                else if (targonBossActive && !TargonArenaActive)
                 {
-                    if (Main.player[i].active && !Main.player[i].dead)
+                    //TargonArenaSave = new Tile[100, 100];
+                    for (int i = 0; i < Main.player.Length; i++)
                     {
-                        if (Main.player[i].GetModPlayer<PLAYERGLOBAL>().targonArena)
+                        if (Main.player[i].active && !Main.player[i].dead)
                         {
-                            Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, 50 * 16);
+                            Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
 
                             Main.player[i].Teleport(teleportPos, 1, 0);
                             NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);
                         }
                     }
+
+                    TargonArenaActive = true;
                 }
-                TargonArenaActive = false;
+                else if (!targonBossActive && TargonArenaActive)
+                {
+                    for (int i = 0; i < Main.player.Length; i++)
+                    {
+                        if (Main.player[i].active && !Main.player[i].dead)
+                        {
+                            if (Main.player[i].GetModPlayer<PLAYERGLOBAL>().targonArena)
+                            {
+                                Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, 50 * 16);
+
+                                Main.player[i].Teleport(teleportPos, 1, 0);
+                                NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);
+                            }
+                        }
+                    }
+                    TargonArenaActive = false;
+                }
             }
         }
     }
