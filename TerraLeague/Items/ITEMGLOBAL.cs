@@ -505,7 +505,9 @@ namespace TerraLeague.Items
             if (set == "Pirate")
             {
                 player.GetModPlayer<PLAYERGLOBAL>().pirateSet = true;
-                player.setBonus = "Ranged damage cause enemies to drop coins";
+                player.GetModPlayer<PLAYERGLOBAL>().rangedOnHit += 10;
+                player.setBonus = "+10 ranged On Hit damage" +
+                    "\nRanged damage cause enemies to drop coins";
             }
             if (set == "Cannoneer")
             {

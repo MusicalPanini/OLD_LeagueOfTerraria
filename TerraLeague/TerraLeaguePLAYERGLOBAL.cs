@@ -264,16 +264,18 @@ namespace TerraLeague
         {
             get
             {
-                if (TerraLeague.UseCustomDefenceStat)
-                    armor += player.statDefense;
+                int trueArmor = armor;
 
-                if (armor >= 0)
+                if (TerraLeague.UseCustomDefenceStat)
+                    trueArmor += player.statDefense;
+
+                if (trueArmor >= 0)
                 {
-                    return 100 / (100f + armor);
+                    return 100 / (100f + trueArmor);
                 }
                 else
                 {
-                    return 2 - (100 / (100f - armor));
+                    return 2 - (100 / (100f - trueArmor));
                 }
             }
         }
@@ -287,16 +289,18 @@ namespace TerraLeague
         {
             get
             {
-                if (TerraLeague.UseCustomDefenceStat)
-                    resist += player.statDefense;
+                int trueResist = resist;
 
-                if (resist >= 0)
+                if (TerraLeague.UseCustomDefenceStat)
+                    trueResist += player.statDefense;
+
+                if (trueResist >= 0)
                 {
-                    return 100 / (100f + resist);
+                    return 100 / (100f + trueResist);
                 }
                 else
                 {
-                    return 2 - (100 / (100f - resist));
+                    return 2 - (100 / (100f - trueResist));
                 }
             }
         }
@@ -581,6 +585,7 @@ namespace TerraLeague
         public bool celestialFrostbite = false;
         public bool chargerBlessing = false;
         public bool scourgeBlessing = false;
+        public bool targonArena = false;
 
         // Lifeline Garbage
         public bool LifeLineHex = false;
@@ -772,6 +777,7 @@ namespace TerraLeague
             chargerBlessing = false;
             scourgeBlessing = false;
             rapids = false;
+            targonArena = false;
 
             pirateSet = false;
             cannonSet = false;
@@ -1098,7 +1104,7 @@ namespace TerraLeague
                 if (sigil != null)
                 {
                     zoneTargonPeak = sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.3 * 16;
-                    if (sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.4 * 16 && !Main.hardMode)
+                    if (sigil.Distance(player.MountedCenter) <= Main.worldSurface * 0.4 * 16 && !Main.hardMode && NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
                     {
                         player.AddBuff(BuffType<CelestialFrostbite>(), 2);
                     }
@@ -1121,6 +1127,18 @@ namespace TerraLeague
             if (zoneBlackMist)
             {
                 player.blind = true;
+            }
+
+
+            if (Main.tile[(int)player.MountedCenter.X / 16, (int)player.MountedCenter.Y / 16].wall == (ushort)WallType<Walls.TargonStoneWall_Arena>())
+            {
+                player.AddBuff(BuffType<InTargonArena>(), 5);
+            }
+            else if (player.HasBuff(BuffType<InTargonArena>()) && NPC.CountNPCS(NPCType<TargonBoss>()) > 0)
+            {
+                var ded = new PlayerDeathReason();
+                ded.SourceCustomReason = player.name + " tried to run from Targon's Challenge";
+                player.KillMe(ded, 999999, 0);
             }
         }
 
@@ -1263,6 +1281,14 @@ namespace TerraLeague
                     player.lifeRegen -= 20;
                 else
                     player.lifeRegen = -20;
+            }
+            if (targonArena && !WORLDGLOBAL.TargonArenaDefeated && NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+            {
+                player.lifeRegenTime = 0;
+                if (player.lifeRegen < 0)
+                    player.lifeRegen -= 100;
+                else
+                    player.lifeRegen = -100;
             }
 
             if (invincible && player.lifeRegen < 0)
@@ -2529,13 +2555,29 @@ namespace TerraLeague
 
         void ArmorResistScaledDamage(ref int damage, bool armor = true)
         {
-            if (TerraLeague.UseCustomDefenceStat)
-                player.statDefense = 0;
-
             if (armor)
-                damage = (int)(damage * ArmorDamageReduction);
+                damage = (int)Math.Round(damage * ArmorDamageReduction, 0);
             else
-                damage = (int)(damage * ResistDamageReduction);
+                damage = (int)Math.Round(damage * ResistDamageReduction, 0);
+
+            if (TerraLeague.UseCustomDefenceStat)
+            {
+                if (armor)
+                {
+                    if (Main.expertMode)
+                        damage += (int)Math.Round(player.statDefense * 0.75);
+                    else
+                        damage += (int)Math.Round(player.statDefense * 0.5);
+                }
+                else
+                {
+                    if (Main.expertMode)
+                        damage += (int)Math.Round(player.statDefense * 0.75) / 4;
+                    else
+                        damage += (int)Math.Round(player.statDefense * 0.5) / 2;
+                }
+            }
+
         }
 
         /// <summary>

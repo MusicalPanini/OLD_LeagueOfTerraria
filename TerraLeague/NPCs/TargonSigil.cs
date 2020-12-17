@@ -22,7 +22,6 @@ namespace TerraLeague.NPCs
         public override void SetDefaults()
         {
             npc.townNPC = true;
-            npc.homeless = true;
             npc.lifeMax = 400;
             npc.defense = 0;
             npc.damage = 0;
@@ -49,6 +48,9 @@ namespace TerraLeague.NPCs
 
         public override void AI()
         {
+            if (NPC.CountNPCS(NPCType<TargonSigil>()) > 1)
+                npc.active = false;
+
             if (Main.dayTime && Main.time == 0)
                 rerolls = 3;
 
@@ -61,7 +63,7 @@ namespace TerraLeague.NPCs
             }
 
             npc.spriteDirection = -1;
-            npc.Center = new Vector2(WORLDGLOBAL.TargonCenterX*16, 45*16);
+            npc.Center = new Vector2(WORLDGLOBAL.TargonCenterX * 16, 45 * 16);
             npc.position.Y += (float)System.Math.Sin(Main.time * 0.1);
 
             Lighting.AddLight(npc.Center, 0, 0.3f, 1f);
@@ -80,22 +82,35 @@ namespace TerraLeague.NPCs
 
         public override void HitEffect(int hitDirection, double damage)
         {
-           
+
             base.HitEffect(hitDirection, damage);
         }
 
         public override void NPCLoot()
         {
-            NPC.NewNPC(WORLDGLOBAL.TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
+            if (Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCType<NPCs.TargonSigil>()) == 0)
+                NPC.NewNPC(WORLDGLOBAL.TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
             base.NPCLoot();
         }
 
         public override string GetChat()
         {
             string text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
-            if (!NPC.downedBoss1)
+            if (!WORLDGLOBAL.TargonUnlocked)
             {
-                return text + "\n\nThe wispers tell you that you are yet to impress them. Defeat the Eye of Cthulhu to gain their favor.";
+                return text + "\n\nYou are not worthy of their challenge just yet.";
+            }
+            else if (!WORLDGLOBAL.TargonArenaDefeated)
+            {
+                if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+                {
+                    return text + "\n\nThe whispers offer you a challenge with rewards of strength." +
+                        "\n\n(Accepting the challenge will teleport all players into the Targon Arena)";
+                }
+                else
+                {
+                    return text + "\n\nThe challenge is currently in progress.";
+                }
             }
             else
             {
@@ -115,13 +130,15 @@ namespace TerraLeague.NPCs
 
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
+            if (WORLDGLOBAL.TargonUnlocked && !WORLDGLOBAL.TargonArenaDefeated)
             {
-                if (NPC.downedBoss1)
-                {
-                    button = "Receive Blessing";
-                    button2 = "Reroll Blessing (" + rerolls + " remaining)";
-                }
+                if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+                    button = "Accept Challenge";
+            }
+            else if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
+            {
+                button = "Receive Blessing";
+                button2 = "Reroll Blessing (" + rerolls + " remaining)";
             }
             else
             {
@@ -133,7 +150,21 @@ namespace TerraLeague.NPCs
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
-            if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
+            if (NPC.downedBoss1 && !WORLDGLOBAL.TargonArenaDefeated)
+            {
+                if (firstButton)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.NewNPC((int)npc.position.X, (int)npc.position.Y + 64, NPCType<TargonBoss>());
+                    }
+                    else
+                    {
+                        npc.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
+                    }
+                }
+            }
+            else if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
             {
                 if (firstButton)
                 {
@@ -222,30 +253,9 @@ namespace TerraLeague.NPCs
             }
         }
 
-        public override bool CheckConditions(int left, int right, int top, int bottom)
+        public override bool CheckActive()
         {
             return false;
-        }
-
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor)
-        {
-            //Texture2D texture = mod.GetTexture("NPCs/TargonSigil_Glow");
-            //spriteBatch.Draw
-            //(
-            //    texture,
-            //    new Vector2
-            //    (
-            //        npc.position.X - Main.screenPosition.X + npc.width * 0.5f,
-            //        npc.position.Y - Main.screenPosition.Y + npc.height * 0.5f
-            //    ),
-            //    new Rectangle(0, 0, texture.Width, texture.Height),
-            //    Color.White,
-            //    npc.rotation,
-            //    new Vector2(texture.Width, texture.Width) * 0.5f,
-            //    npc.scale,
-            //    SpriteEffects.None,
-            //    0f
-            //);
         }
     }
 }

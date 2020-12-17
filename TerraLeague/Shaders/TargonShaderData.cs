@@ -13,6 +13,30 @@ namespace TerraLeague.Shaders
     {
         private Vector2 _texturePosition = Vector2.Zero;
 
+        float red
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        float green
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        float blue
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
         public TargonShaderData(string passName)
             : base(passName)
         {

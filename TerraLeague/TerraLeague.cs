@@ -301,6 +301,15 @@ namespace TerraLeague
             base.Load();
         }
 
+        public override void PostSetupContent()
+        {
+            Mod bossChecklist = ModLoader.GetMod("BossChecklist");
+            if (bossChecklist != null)
+            {
+                bossChecklist.Call("AddBossWithInfo", "The Celestial Gate Keeper", 3.1f, (Func<bool>)(() => WORLDGLOBAL.TargonArenaDefeated), "Climb Mount Targon and accept its challenge at the peak");
+            }
+        }
+
         /// <summary>
         /// <para>Runs when disabling the mod.</para>
         /// Be sure to unload any static variables in the mod instance as they are not unloaded automaticly and will cause crashes
@@ -461,6 +470,11 @@ namespace TerraLeague
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active)
             {
                 return;
+            }
+            if (Main.LocalPlayer.HasBuff(ModContent.BuffType<InTargonArena>()) && NPC.CountNPCS(ModContent.NPCType<TargonBoss>()) > 0)
+            {
+                music = MusicID.Boss2;
+                priority = MusicPriority.BossHigh;
             }
             if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().zoneBlackMist)
             {

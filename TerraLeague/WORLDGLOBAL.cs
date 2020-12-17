@@ -9,6 +9,7 @@ using TerraLeague.Items;
 using TerraLeague.Items.AdvItems;
 using TerraLeague.Items.BasicItems;
 using TerraLeague.Items.SummonerSpells;
+using TerraLeague.NPCs;
 using TerraLeague.Projectiles;
 using TerraLeague.Tiles;
 using TerraLeague.Walls;
@@ -25,6 +26,13 @@ namespace TerraLeague
 {
     public class WORLDGLOBAL : ModWorld
     {
+        public static bool targonBossActive = false;
+        static bool TargonArenaActive = false;
+        static public bool TargonArenaDefeated = false;
+        static int targonArenaWidth = 100;
+        static int targonArenaHeight = 100;
+        static Tile[,] TargonArenaSave = new Tile[100, 100];
+
         int[] floatingIslandHouse_XCord = new int[30];
         int[] floatingIslandHouse_YCord = new int[30];
         bool[] skyLake = new bool[30];
@@ -51,6 +59,17 @@ namespace TerraLeague
 
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight)
         {
+            TargonOreSpawned = false;
+            ManaOreSpawned = false;
+            VoidOreSpawned = false;
+            CelestialMeteorCanSpawn = false;
+            TargonUnlocked = false;
+            TargonArenaDefeated = false;
+
+            BlackMistEvent = false;
+            TargonCenterX = 0;
+            TargonWidthFromCenter = 0;
+
             //int TerrainIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Rock Layer Caves"));
             int TerrainIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Mount Caves"));
             if (TerrainIndex != -1)
@@ -116,6 +135,13 @@ namespace TerraLeague
             {
                 tasks[floatingIslandHouse] = new PassLegacy("Modified Floating Island Houses", GenerateFloatingIslandHouse);
             }
+
+            int microBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
+            if (genIndex == -1)
+            {
+                return;
+            }
+            tasks.Insert(microBiome + 1, new PassLegacy("Targon Arena", GenerateTargonArena));
         }
 
         private void GenerateFerrospike(GenerationProgress progress)
@@ -564,7 +590,8 @@ namespace TerraLeague
             if (NPC.downedBoss2) OreSpawned.Add("ManaOreSpawned");
             if (NPC.downedBoss3) OreSpawned.Add("VoidOreSpawned");
             if (NPC.downedGolemBoss) OreSpawned.Add("CelestialMeteorCanSpawn");
-            if (NPC.downedBoss1) OreSpawned.Add("TargonUnlockedSpawned");
+            if (TargonUnlocked) OreSpawned.Add("TargonUnlockedSpawned");
+            if (TargonArenaDefeated) OreSpawned.Add("TargonArena");
 
             return new TagCompound {
                 {"OreSpawned", OreSpawned},
@@ -576,26 +603,27 @@ namespace TerraLeague
 
         public override void Load(TagCompound tag)
         {
-
             var OreSpawned = tag.GetList<string>("OreSpawned");
             TargonOreSpawned = OreSpawned.Contains("TargonOreSpawned");
             ManaOreSpawned = OreSpawned.Contains("ManaOreSpawned");
             VoidOreSpawned = OreSpawned.Contains("VoidOreSpawned");
             CelestialMeteorCanSpawn = OreSpawned.Contains("CelestialMeteorCanSpawn");
             TargonUnlocked = OreSpawned.Contains("TargonUnlockedSpawned");
+            TargonArenaDefeated = OreSpawned.Contains("TargonArena");
 
             BlackMistEvent = tag.GetBool("BlackMistEvent");
             TargonCenterX = tag.GetInt("TargonXCord");
             TargonWidthFromCenter = tag.GetInt("TargonWidth");
-
-            if (TargonCenterX != 0)
-                NPC.NewNPC(TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
+            
+            if (TargonCenterX != 0 && Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCType<NPCs.TargonSigil>()) == 0)
+                NPC.NewNPC(TargonCenterX * 16, 45 * 16, NPCType<TargonSigil>());
         }
 
         public override void NetSend(BinaryWriter writer)
         {
             var flags = new BitsByte();
             flags[0] = BlackMistEvent;
+            flags[1] = TargonArenaDefeated;
             writer.Write(flags);
             writer.Write(TargonCenterX);
             writer.Write(TargonWidthFromCenter);
@@ -606,6 +634,7 @@ namespace TerraLeague
         {
             BitsByte flags = reader.ReadByte();
             BlackMistEvent = flags[0];
+            TargonArenaDefeated = flags[1];
             TargonCenterX = reader.ReadInt32();
             TargonWidthFromCenter = reader.ReadInt32();
             base.NetReceive(reader);
@@ -613,6 +642,9 @@ namespace TerraLeague
 
         public override void PostUpdate()
         {
+            ToggleTargonArena();
+            targonBossActive = false;
+
             if (!Main.dayTime && Main.time == 1 && !Main.bloodMoon && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 for (int i = 0; i < Main.player.Length; i++)
@@ -656,7 +688,7 @@ namespace TerraLeague
                 }
             }
 
-            if (NPC.downedBoss1)
+            if (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3 || NPC.downedQueenBee || Main.hardMode)
             {
                 if (!TargonUnlocked)
                 {
@@ -667,12 +699,14 @@ namespace TerraLeague
                         if (Main.netMode == NetmodeID.SinglePlayer)
                         {
                             Main.NewText("You have attracted the attention of The Celestials.", 0, 200, 255);
-                            Main.NewText("You can now scale Mount Targon without taking damage!", 0, 200, 255);
+                            Main.NewText("You can now scale Mount Targon without taking damage.", 0, 200, 255);
+                            Main.NewText("Climb to the highest peak to accept their challenge.", 0, 200, 255);
                         }
                         else if (Main.netMode == NetmodeID.Server)
                         {
                             NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You have attracted the attention of The Celestials."), new Color(0, 200, 255), -1);
                             NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("You can now scale Mount Targon without taking damage!"), new Color(0, 200, 255), -1);
+                            NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Climb to the highest peak to accept their challenge."), new Color(0, 200, 255), -1);
                             NetMessage.SendData(MessageID.WorldData);
                         }
                     }
@@ -1133,6 +1167,124 @@ namespace TerraLeague
                 {
                     WorldGen.IslandHouse(floatingIslandHouse_XCord[i], floatingIslandHouse_YCord[i]);
                 }
+            }
+        }
+
+        private void GenerateTargonArena(GenerationProgress progress)
+        {
+            int[] PlatformX = new int[] { 0, 17, 34, 55, 72, 89};
+            int[] PlatformY = new int[] { 10, 20, 30, 40, 50, 60, 70, 80 };
+
+            for (int x = 0; x < targonArenaWidth; x++)
+            {
+                for (int y = 0; y < targonArenaHeight; y++)
+                {
+                    targonArenaWidth = 100;
+                    targonArenaHeight = 100;
+                    int worldX = (TargonCenterX) - (targonArenaWidth / 2) + x;
+                    int worldY = (int)(Main.worldSurface) + y;
+
+                    //Tile tile = Main.tile[worldX, worldY];
+
+                    //TargonArenaSave[x, y] = (Tile)Main.tile[worldX, worldY].Clone();
+
+                    int wallThickness = 5;
+                    if (x < wallThickness || x > targonArenaHeight - (1 + wallThickness) || y < wallThickness || y > targonArenaHeight - (1 + wallThickness))
+                    {
+                        Main.tile[worldX, worldY].type = (ushort)TileType<TargonStone>();
+                        Main.tile[worldX, worldY].active(true);
+                        Main.tile[worldX, worldY].slope((byte)0);
+                        Main.tile[worldX, worldY].halfBrick(false);
+                    }
+                    else
+                    {
+                        bool onXLine = PlatformX.Contains(x - wallThickness);
+                        bool onYLine = PlatformY.Contains(y - wallThickness);
+
+                        if (onXLine || onYLine)
+                        {
+                            Main.tile[worldX, worldY].type = TileID.Platforms;
+                            Main.tile[worldX, worldY].active(true);
+                            Main.tile[worldX, worldY].slope((byte)0);
+                            Main.tile[worldX, worldY].frameY = 29 * 18;
+                            Main.tile[worldX, worldY].halfBrick(false);
+
+                            if (onXLine && !onYLine)
+                            {
+                                if (x - wallThickness == 0)
+                                    Main.tile[worldX, worldY].frameX = 6 * 18;
+                                else if (x - wallThickness == 89)
+                                    Main.tile[worldX, worldY].frameX = 7 * 18;
+                                else
+                                    Main.tile[worldX, worldY].frameX = 5 * 18;
+                            }
+                            else if (!onXLine && onYLine)
+                            {
+                                Main.tile[worldX, worldY].frameX = 0;
+                            }
+                            else
+                            {
+                                if (x - wallThickness == 0)
+                                    Main.tile[worldX, worldY].frameX = 3 * 18;
+                                else if (x - wallThickness == 89)
+                                    Main.tile[worldX, worldY].frameX = 4 * 18;
+                                else
+                                    Main.tile[worldX, worldY].frameX = 0;
+                            }
+
+                        }
+                        else
+                        {
+                            Main.tile[worldX, worldY].type = (ushort)0;
+                            Main.tile[worldX, worldY].active(false);
+                        }
+
+                    }
+
+                    Main.tile[worldX, worldY].wall = (ushort)WallType<TargonStoneWall_Arena>();
+                    Main.tile[worldX, worldY].liquid = 0;
+                }
+            }
+        }
+
+        public static void ToggleTargonArena()
+        {
+            if (targonBossActive && TargonArenaActive)
+            {
+                return;
+            }
+            else if (targonBossActive && !TargonArenaActive)
+            {
+                //TargonArenaSave = new Tile[100, 100];
+                for (int i = 0; i < Main.player.Length; i++)
+                {
+                    if (Main.player[i].active && !Main.player[i].dead)
+                    {
+                        Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, (60 * 16) + (float)(Main.worldSurface * 16));
+
+                        Main.player[i].Teleport(teleportPos, 1, 0);
+                        NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);
+                    }
+                }
+
+                TargonArenaActive = true;
+            }
+            else if (!targonBossActive && TargonArenaActive)
+            {
+                for (int i = 0; i < Main.player.Length; i++)
+                {
+                    if (Main.player[i].active && !Main.player[i].dead)
+                    {
+                        if (Main.player[i].GetModPlayer<PLAYERGLOBAL>().targonArena)
+                        {
+                            Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, 50 * 16);
+
+                            Main.player[i].Teleport(teleportPos, 1, 0);
+                            NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);
+                        }
+                    }
+                }
+                TargonArenaActive = false;
             }
         }
     }

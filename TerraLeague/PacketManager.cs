@@ -520,6 +520,7 @@ namespace TerraLeague
         public const byte CreateVessel = 4;
         public const byte SyncVessel = 5;
         public const byte AddBuff = 6;
+        public const byte SpawnNpcOnServer = 7;
         #endregion
 
         public NPCPacketHandler(byte handlerType) : base(handlerType)
@@ -547,6 +548,9 @@ namespace TerraLeague
                     break;
                 case (SyncVessel):
                     ReceiveSyncVessel(reader, fromWho);
+                    break;
+                case (SpawnNpcOnServer):
+                    ReceiveSpawnNPC(reader, fromWho);
                     break;
             }
         }
@@ -755,6 +759,27 @@ namespace TerraLeague
             Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTimer = 420;
 
             TerraLeague.Log("[DEBUG] - Recieved Vessel Sync for " + Main.npc[vessel].FullName, Color.White);
+        }
+
+        public void SendSpawnNPC(int toWho, int fromWho, int npcType, Vector2 position)
+        {
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                ModPacket packet = GetPacket(SpawnNpcOnServer, fromWho);
+                packet.Write(npcType);
+                packet.WriteVector2(position);
+                packet.Send(toWho, fromWho);
+            }
+        }
+
+        public void ReceiveSpawnNPC(BinaryReader reader, int fromWho)
+        {
+            int npcType = reader.ReadInt32();
+            Vector2 position = reader.ReadVector2();
+
+            NPC.NewNPC((int)position.X, (int)position.Y, npcType);
+
+            TerraLeague.Log("[DEBUG] - Spawned npc type: " + npcType, Color.White);
         }
     }
 

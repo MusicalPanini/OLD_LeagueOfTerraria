@@ -461,7 +461,8 @@ namespace TerraLeague.UI
 
         public override void MouseUp(UIMouseEvent evt)
         {
-            TeleportRune.AttemptTP(Main.LocalPlayer, playerNum);
+            if (playerNum != -1)
+                TeleportRune.AttemptTP(Main.LocalPlayer, playerNum);
 
             base.MouseUp(evt);
         }

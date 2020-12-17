@@ -756,8 +756,8 @@ namespace TerraLeague.UI
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
 
-            armorStats.SetText("ARM: " + (modPlayer.armor + (TerraLeague.UseCustomDefenceStat ? modPlayer.player.statDefense : 0)));
-            resistStats.SetText("RST: " + (modPlayer.resist + (TerraLeague.UseCustomDefenceStat ? modPlayer.player.statDefense : 0)));
+            armorStats.SetText("ARM: " + (modPlayer.armor + (TerraLeague.UseCustomDefenceStat ? modPlayer.defenceLastStep : 0)));
+            resistStats.SetText("RST: " + (modPlayer.resist + (TerraLeague.UseCustomDefenceStat ? modPlayer.defenceLastStep : 0)));
             meleeStats.SetText("MEL: " + modPlayer.MEL);
             rangedStats.SetText("RNG: " + modPlayer.RNG);
             magicStats.SetText("MAG: " + modPlayer.MAG);

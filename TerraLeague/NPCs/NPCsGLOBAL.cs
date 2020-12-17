@@ -631,7 +631,10 @@ namespace TerraLeague.NPCs
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-
+            if (modPlayer.targonArena)
+            {
+                maxSpawns = 0;
+            }
             if (modPlayer.zoneBlackMist)
             {
                 maxSpawns =(int)(maxSpawns * 2);

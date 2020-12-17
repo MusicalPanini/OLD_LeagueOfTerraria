@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -32,6 +33,13 @@ namespace TerraLeague.Tiles
                 return base.SaplingGrowthType(type, ref style);
 
             }
+        }
+
+        public override bool CanPlace(int i, int j, int type)
+        {
+            if (Main.tile[i, j].wall == WallType<Walls.TargonStoneWall_Arena>() && !WORLDGLOBAL.TargonArenaDefeated)
+                return false;
+            return base.CanPlace(i, j, type);
         }
     }
 }
