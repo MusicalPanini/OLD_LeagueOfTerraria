@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 0.35);
+            return (int)(abilityItem.item.damage * 1.4);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -45,9 +45,9 @@ namespace TerraLeague.Items.Weapons.Abilities
             switch (dam)
             {
                 case DamageType.SUM:
-                    return 30;
+                    return 70;
                 case DamageType.MAG:
-                    return 30;
+                    return 70;
                 default:
                     return 0;
             }
