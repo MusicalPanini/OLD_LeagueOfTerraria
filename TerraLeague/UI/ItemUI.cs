@@ -9,6 +9,8 @@ using Terraria.ID;
 using TerraLeague.Items.SummonerSpells;
 using TerraLeague.Items.CustomItems;
 using TerraLeague.Items.Boots;
+using static Terraria.ModLoader.ModContent;
+using TerraLeague.Items.Weapons;
 
 namespace TerraLeague.UI
 {
@@ -33,7 +35,7 @@ namespace TerraLeague.UI
             
             ItemPanel = new UIItemPanel(99,0,149,101, new Color(10, 100, 50));
             SummonerPanel = new UISummonerPanel(0, 47,99,54, new Color(10, 100, 50));
-            StatPanel = new UIStatPanel(66, Main.screenHeight - (int)(58 + 48), 150, 54, new Color(10, 100, 50));
+            StatPanel = new UIStatPanel(66f / Main.screenWidth, (Main.screenHeight - (int)(58 + 48)) / (float)Main.screenHeight, 150, 54, new Color(10, 100, 50));
 
             MainPanel.Append(SummonerPanel);
             MainPanel.Append(ItemPanel);
@@ -74,6 +76,240 @@ namespace TerraLeague.UI
             if (MainPanel.ContainsPoint(MousePosition))
             {
                 Main.LocalPlayer.mouseInterface = true;
+            }
+
+            Player player = Main.LocalPlayer;
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            if (player.GetModPlayer<PLAYERGLOBAL>().currentGun != 0 && !Main.playerInventory)
+            {
+                int left = (int)(Main.screenWidth - 92);
+                int top = (int)(Main.screenHeight - 386);
+                Rectangle destRec = new Rectangle(left, top, 48, 232);
+
+                Texture2D texture = TerraLeague.instance.GetTexture("UI/LunariAmmoBar");
+                Rectangle sourRec = new Rectangle(0, 0, 48, 232);
+                spriteBatch.Draw(texture, destRec, sourRec, Color.White);
+
+                Texture2D texture2 = TerraLeague.instance.GetTexture("UI/SmallBlank_V");
+                Rectangle sourRec2 = new Rectangle(0, 0, 8, 8);
+                Color color;
+                Rectangle ammoBarPos;
+                int ammoBarHeight = 0;
+
+                // Calibrum
+                color = new Color(141, 252, 245);
+                ammoBarHeight = (int)(216 * (modPlayer.calibrumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 4, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(216, 0, 32);
+                ammoBarHeight = (int)(216 * (modPlayer.severumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 12, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(200, 37, 255);
+                ammoBarHeight = (int)(216 * (modPlayer.gravitumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 20, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(0, 148, 255);
+                ammoBarHeight = (int)(216 * (modPlayer.infernumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 28, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+
+                color = new Color(255, 255, 255);
+                ammoBarHeight = (int)(216 * (modPlayer.crescendumAmmo / 100f));
+                ammoBarPos = new Rectangle(left + 36, top + 8 + (216 - ammoBarHeight), 8, ammoBarHeight);
+                spriteBatch.Draw(texture2, ammoBarPos, sourRec2, color);
+            }
+            if (player.HeldItem.type == ItemType<Whisper>() && Main.myPlayer == player.whoAmI)
+            {
+                Texture2D texture = null;
+                int frame = 0;
+
+                switch (modPlayer.WhisperShotsLeft)
+                {
+                    case 4:
+                        texture = TerraLeague.instance.GetTexture("UI/Ammo1");
+                        break;
+                    case 3:
+                        texture = TerraLeague.instance.GetTexture("UI/Ammo2");
+                        break;
+                    case 2:
+                        texture = TerraLeague.instance.GetTexture("UI/Ammo3");
+                        break;
+                    case 1:
+                        texture = TerraLeague.instance.GetTexture("UI/Ammo4");
+                        frame = ((int)Main.time % 10);
+                        frame = frame > 5 ? 0 : 1;
+                        break;
+                    case 0:
+                        texture = TerraLeague.instance.GetTexture("UI/AmmoNone");
+                        break;
+                    default:
+                        break;
+                }
+
+                if (texture != null)
+                {
+                    Main.spriteBatch.Draw
+                       (
+                           texture,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath && player.lavaMax == player.lavaTime && TerraLeague.UseModResourceBar ? 32 : 40) - 21), 64, 16),
+                           new Rectangle(0, frame * 16, 64, 16),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+                }
+            }
+
+            if (player.HeldItem.type == ItemType<BrassShotgun>() && Main.myPlayer == player.whoAmI)
+            {
+                Texture2D texture = null;
+                switch (modPlayer.DestinyShotsLeft)
+                {
+                    case 2:
+                        texture = TerraLeague.instance.GetTexture("UI/ShotgunAmmo2");
+                        break;
+                    case 1:
+                        texture = TerraLeague.instance.GetTexture("UI/ShotgunAmmo1");
+                        break;
+                    case 0:
+                        texture = TerraLeague.instance.GetTexture("UI/ShotgunAmmoNone");
+                        break;
+                    default:
+                        break;
+                }
+
+                if (texture != null)
+                {
+                    Main.spriteBatch.Draw
+                       (
+                           texture,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 32), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (player.breathMax == player.breath && player.lavaMax == player.lavaTime && TerraLeague.UseModResourceBar ? 32 : 40) - 21), 64, 16),
+                           new Rectangle(0, 0, 64, 16),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+                }
+            }
+
+            if (player.HeldItem.type == ItemType<EchoingFlameCannon>() && Main.myPlayer == player.whoAmI)
+            {
+                Texture2D textureLT = TerraLeague.instance.GetTexture("UI/EchoingFlames_LT");
+                Texture2D textureLM = TerraLeague.instance.GetTexture("UI/EchoingFlames_LM"); ;
+                Texture2D textureLB = TerraLeague.instance.GetTexture("UI/EchoingFlames_LB"); ;
+                Texture2D textureRB = TerraLeague.instance.GetTexture("UI/EchoingFlames_RB"); ;
+                Texture2D textureRM = TerraLeague.instance.GetTexture("UI/EchoingFlames_RM"); ;
+                Texture2D textureRT = TerraLeague.instance.GetTexture("UI/EchoingFlames_RT"); ;
+
+
+                if (modPlayer.echoingFlames_LT <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureLT,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureLT.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureLT.Height / 2)), textureLT.Width, textureLT.Height),
+                           new Rectangle(0, 0, textureLT.Width, textureLT.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (modPlayer.echoingFlames_LM <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureLM,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureLM.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureLM.Height / 2)), textureLM.Width, textureLM.Height),
+                           new Rectangle(0, 0, textureLM.Width, textureLM.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (modPlayer.echoingFlames_LB <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureLB,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureLB.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureLB.Height / 2)), textureLB.Width, textureLB.Height),
+                           new Rectangle(0, 0, textureLB.Width, textureLB.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (modPlayer.echoingFlames_RB <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureRB,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureRB.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureRB.Height / 2)), textureRB.Width, textureRB.Height),
+                           new Rectangle(0, 0, textureRB.Width, textureRB.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (modPlayer.echoingFlames_RM <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureRM,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureRM.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureRM.Height / 2)), textureRM.Width, textureRM.Height),
+                           new Rectangle(0, 0, textureRM.Width, textureRM.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+
+                if (modPlayer.echoingFlames_RT <= 0)
+                    Main.spriteBatch.Draw
+                       (
+                           textureRT,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - (textureRT.Width / 2)), (int)(player.MountedCenter.Y - Main.screenPosition.Y - (textureRT.Height / 2)), textureRT.Width, textureRT.Height),
+                           new Rectangle(0, 0, textureRT.Width, textureRT.Height),
+                           Color.White,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+            }
+
+            if (modPlayer.onslaught)
+            {
+                Texture2D texture = TerraLeague.instance.GetTexture("UI/OnslaughtRange");
+
+                if (texture != null)
+                {
+                    Color c = Color.White;
+                    c.A = 255;
+
+                    Main.spriteBatch.Draw
+                       (
+                           texture,
+                           new Rectangle((int)(player.MountedCenter.X - Main.screenPosition.X - 300), (int)(player.MountedCenter.Y - Main.screenPosition.Y - 300), 600, 600),
+                           new Rectangle(0, 0, 600, 600),
+                           c,
+                           0,
+                           Vector2.Zero,
+                           SpriteEffects.None,
+                           0f
+                       );
+                }
             }
         }
         
@@ -531,6 +767,12 @@ namespace TerraLeague.UI
 
     class UIStatPanel : UIState
     {
+        bool moveMode = false;
+        float mouseXOri = 0;
+        float mouseYOri = 0;
+        public float LeftPercent = 0;
+        public float TopPercent = 0;
+
         public bool extraStats = false;
 
         UIText meleeStats;
@@ -549,11 +791,13 @@ namespace TerraLeague.UI
 
         Texture2D _backgroundTexture;
 
-        public UIStatPanel(int left, int top, int width, int height, Color color)
+        public UIStatPanel(float left, float top, int width, int height, Color color)
         {
             SetPadding(0);
-            Left.Set(left, 0f);
-            Top.Set(top, 0f);
+            Left.Set(0, left);
+            Top.Set(0, top);
+            LeftPercent = left;
+            TopPercent = top;
             Width.Set(width, 0f);
             Height.Set(height, 0f);
             if (_backgroundTexture == null)
@@ -630,6 +874,37 @@ namespace TerraLeague.UI
         public override void Update(GameTime gameTime)
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+
+            if (moveMode)
+            {
+                Left.Set(0, LeftPercent + ((Main.MouseScreen.X - mouseXOri) / (float)Main.screenWidth));
+                Top.Set(0, TopPercent + ((Main.MouseScreen.Y - mouseYOri) / (float)Main.screenHeight));
+            }
+            else
+            {
+                var dimentions = this.GetDimensions();
+                if (dimentions.X < 0)
+                {
+                    LeftPercent = 0;
+                    Left.Set(0, LeftPercent);
+                }
+                if (dimentions.X + Width.Pixels > Main.screenWidth)
+                {
+                    LeftPercent = (Main.screenWidth - Width.Pixels) / (float)Main.screenWidth;
+                    Left.Set(0, LeftPercent);
+                }
+                if (dimentions.Y < 0)
+                {
+                    TopPercent = 0;
+                    Top.Set(0, TopPercent);
+                }
+                if (dimentions.Y + Height.Pixels > Main.screenHeight)
+                {
+                    TopPercent = (Main.screenHeight - Height.Pixels) / (float)Main.screenHeight;
+                    Top.Set(0, TopPercent);
+                }
+            }
+
             armorStats.Width.Set(30,0);
             resistStats.Width.Set(30,0);
             meleeStats.Width.Set(30,0);
@@ -656,100 +931,122 @@ namespace TerraLeague.UI
                 Height.Set(58, 0f);
                 GetStats();
             }
-            Top.Set(Main.screenHeight - (Height.Pixels + 44), 0f);
 
             string text = "";
 
-            if (armorStats.IsMouseHovering)
+            if (!moveMode)
             {
-                text = TerraLeague.CreateColorString(TerraLeague.ARMORColor, "Armor") +
-                    "\nReduces damage from contact by " + Math.Round(100 - (modPlayer.ArmorDamageReduction * 100f), 2) + "%" +
-                    "\nCurrent Armor consists of" +
-                    "\n" + TerraLeague.CreateColorString(TerraLeague.ARMORColor, "From Armor increases: " + modPlayer.armorLastStep);
-                if (TerraLeague.UseCustomDefenceStat)
-                    text += "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
-            }
-            else if (resistStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.RESISTColor, "Resist") +
-                    "\nReduces damage from projectiles by " + Math.Round(100 - (modPlayer.ResistDamageReduction * 100f), 2) + "%" +
-                    "\nCurrent Resist consists of" +
-                    "\n" + TerraLeague.CreateColorString(TerraLeague.RESISTColor, "From Resist increases: " + modPlayer.resistLastStep);
-                if (TerraLeague.UseCustomDefenceStat)
-                    text += "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
-            }
-            else if (meleeStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.MELColor, "Melee Damage") + 
-                    "\nUsed for Abilities and Items scaling damage. Gain a flat amount that increases throughout the game plus 1.5 per 1% melee damage" +
-                    "\nMelee Weapons Deal " + (int)(modPlayer.meleeDamageLastStep * 100) + "% damage." +
-                    "\nExtra Damage: +" + modPlayer.meleeFlatDamage +
-                    "\nCrit Chance: +" + (modPlayer.player.meleeCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealMelee) +
-                    "\nFlat On Hit: " + modPlayer.meleeOnHit +
-                    "\nArmor Penetration: " + (modPlayer.meleeArmorPen + modPlayer.player.armorPenetration);
-            }
-            else if (rangedStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.RNGColor, "Ranged Damage") +
-                    "\nUsed for Abilities and Items scaling damage. Gain 2 per 1% ranged damage" +
-                    "\nRanged Weapons Deal " + (int)(modPlayer.rangedDamageLastStep * 100) + "% damage." +
-                    "\nExtra Damage: +" + modPlayer.rangedFlatDamage +
-                    "\nCrit Chance: +" + (modPlayer.player.rangedCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealRange) +
-                    "\nFlat On Hit: " + modPlayer.rangedOnHit +
-                    "\nArmor Penetration: " + (modPlayer.rangedArmorPen + modPlayer.player.armorPenetration);
-            }
-            else if (magicStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.MAGColor, "Magic Damage") +
-                    "\nUsed for Abilities and Items scaling damage. Gain 2.5 per 1% magic damage" +
-                    "\nMagic Weapons Deal " + (int)(modPlayer.magicDamageLastStep * 100) + "% damage." +
-                    "\nExtra Damage: +" + modPlayer.magicFlatDamage +
-                    "\nCrit Chance: +" + (modPlayer.player.magicCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealMagic) +
-                    "\nFlat On Hit: " + modPlayer.magicOnHit +
-                    "\nArmor Penetration: " + (modPlayer.magicArmorPen + modPlayer.player.armorPenetration);
-            }
-            else if (summonStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.SUMColor, "Summon Damage") +
-                    "\nUsed for Abilities and Items scaling damage. Gain 1.75 per 1% minion damage" +
-                    "\nSummoner Weapons Deal " + (int)(modPlayer.minionDamageLastStep * 100) + "% damage." +
-                    "\nExtra Damage: +" + modPlayer.minionFlatDamage +
-                    "\nLife Steal: " + (int)(modPlayer.lifeStealMinion) +
-                    "\nFlat On Hit: " + modPlayer.meleeOnHit +
-                    "\nArmor Penetration: " + (modPlayer.minionArmorPen + modPlayer.player.armorPenetration) +
-                    "\nMinions: " + (modPlayer.player.maxMinions) +
-                    " ~ Sentries: " + (modPlayer.player.maxTurrets);
-            }
-            else if (CDRStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.CDRColor, "Haste") +
-                    "\nThe percent increase in spell/item casts" +
-                    "\nAbility Haste: " + modPlayer.abilityHaste + " (" +  Math.Round(100 - (modPlayer.Cdr* 100), 2) + "% reduction)"+
-                    "\nItem Haste: " + modPlayer.itemHaste + " (" + Math.Round(100 - (modPlayer.ItemCdr * 100), 2) + "% reduction)" +
-                    "\nSummoner Spell Haste: " + modPlayer.summonerHaste + " (" + Math.Round(100 - (modPlayer.SummonerCdr * 100), 2) + "% reduction)";
-            }
-            else if (ammoStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.RNGATSColor, "Ranged Attack Speed") +
-                    "\nThe percent increase in ranged weapons attack speed";
-            }
-            else if (healStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.HEALColor, "Heal Power") +
-                    "\nThe percent increase in all your outgoing healing and shielding";
-            }
-            else if (manaStats.IsMouseHovering)
-            {
-                text = TerraLeague.CreateColorString(TerraLeague.MANAREDUCTColor, "Mana Cost Reduction") +
-                    "\nThe percent reduction of all mana costs";
+                if (armorStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.ARMORColor, "Armor") +
+                        "\nReduces damage from contact by " + Math.Round(100 - (modPlayer.ArmorDamageReduction * 100f), 2) + "%" +
+                        "\nCurrent Armor consists of" +
+                        "\n" + TerraLeague.CreateColorString(TerraLeague.ARMORColor, "From Armor increases: " + modPlayer.armorLastStep);
+                    if (TerraLeague.UseCustomDefenceStat)
+                        text += "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
+                }
+                else if (resistStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.RESISTColor, "Resist") +
+                        "\nReduces damage from projectiles by " + Math.Round(100 - (modPlayer.ResistDamageReduction * 100f), 2) + "%" +
+                        "\nCurrent Resist consists of" +
+                        "\n" + TerraLeague.CreateColorString(TerraLeague.RESISTColor, "From Resist increases: " + modPlayer.resistLastStep);
+                    if (TerraLeague.UseCustomDefenceStat)
+                        text += "\n" + TerraLeague.CreateColorString(TerraLeague.DEFColor, "From Defence increases: " + modPlayer.defenceLastStep);
+                }
+                else if (meleeStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.MELColor, "Melee Damage") +
+                        "\nUsed for Abilities and Items scaling damage. Gain a flat amount that increases throughout the game plus 1.5 per 1% melee damage" +
+                        "\nMelee Weapons Deal " + (int)(modPlayer.meleeDamageLastStep * 100) + "% damage." +
+                        "\nExtra Damage: +" + modPlayer.meleeFlatDamage +
+                        "\nCrit Chance: +" + (modPlayer.player.meleeCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
+                        "\nLife Steal: " + (int)(modPlayer.lifeStealMelee) +
+                        "\nFlat On Hit: " + modPlayer.meleeOnHit +
+                        "\nArmor Penetration: " + (modPlayer.meleeArmorPen + modPlayer.player.armorPenetration);
+                }
+                else if (rangedStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.RNGColor, "Ranged Damage") +
+                        "\nUsed for Abilities and Items scaling damage. Gain 2 per 1% ranged damage" +
+                        "\nRanged Weapons Deal " + (int)(modPlayer.rangedDamageLastStep * 100) + "% damage." +
+                        "\nExtra Damage: +" + modPlayer.rangedFlatDamage +
+                        "\nCrit Chance: +" + (modPlayer.player.rangedCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
+                        "\nLife Steal: " + (int)(modPlayer.lifeStealRange) +
+                        "\nFlat On Hit: " + modPlayer.rangedOnHit +
+                        "\nArmor Penetration: " + (modPlayer.rangedArmorPen + modPlayer.player.armorPenetration);
+                }
+                else if (magicStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.MAGColor, "Magic Damage") +
+                        "\nUsed for Abilities and Items scaling damage. Gain 2.5 per 1% magic damage" +
+                        "\nMagic Weapons Deal " + (int)(modPlayer.magicDamageLastStep * 100) + "% damage." +
+                        "\nExtra Damage: +" + modPlayer.magicFlatDamage +
+                        "\nCrit Chance: +" + (modPlayer.player.magicCrit - modPlayer.player.HeldItem.crit - 4) + "%" +
+                        "\nLife Steal: " + (int)(modPlayer.lifeStealMagic) +
+                        "\nFlat On Hit: " + modPlayer.magicOnHit +
+                        "\nArmor Penetration: " + (modPlayer.magicArmorPen + modPlayer.player.armorPenetration);
+                }
+                else if (summonStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.SUMColor, "Summon Damage") +
+                        "\nUsed for Abilities and Items scaling damage. Gain 1.75 per 1% minion damage" +
+                        "\nSummoner Weapons Deal " + (int)(modPlayer.minionDamageLastStep * 100) + "% damage." +
+                        "\nExtra Damage: +" + modPlayer.minionFlatDamage +
+                        "\nLife Steal: " + (int)(modPlayer.lifeStealMinion) +
+                        "\nFlat On Hit: " + modPlayer.meleeOnHit +
+                        "\nArmor Penetration: " + (modPlayer.minionArmorPen + modPlayer.player.armorPenetration) +
+                        "\nMinions: " + (modPlayer.player.maxMinions) +
+                        " ~ Sentries: " + (modPlayer.player.maxTurrets);
+                }
+                else if (CDRStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.CDRColor, "Haste") +
+                        "\nThe percent increase in spell/item casts" +
+                        "\nAbility Haste: " + modPlayer.abilityHaste + " (" + Math.Round(100 - (modPlayer.Cdr * 100), 2) + "% reduction)" +
+                        "\nItem Haste: " + modPlayer.itemHaste + " (" + Math.Round(100 - (modPlayer.ItemCdr * 100), 2) + "% reduction)" +
+                        "\nSummoner Spell Haste: " + modPlayer.summonerHaste + " (" + Math.Round(100 - (modPlayer.SummonerCdr * 100), 2) + "% reduction)";
+                }
+                else if (ammoStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.RNGATSColor, "Ranged Attack Speed") +
+                        "\nThe percent increase in ranged weapons attack speed";
+                }
+                else if (healStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.HEALColor, "Heal Power") +
+                        "\nThe percent increase in all your outgoing healing and shielding";
+                }
+                else if (manaStats.IsMouseHovering)
+                {
+                    text = TerraLeague.CreateColorString(TerraLeague.MANAREDUCTColor, "Mana Cost Reduction") +
+                        "\nThe percent reduction of all mana costs";
+                }
             }
 
             if (text != "")
                 TerraLeague.instance.tooltipUI.DrawText(text.Split('\n'));
             base.Update(gameTime);
+        }
+
+        public override void RightMouseDown(UIMouseEvent evt)
+        {
+            moveMode = true;
+
+            mouseXOri = Main.MouseScreen.X;
+            mouseYOri = Main.MouseScreen.Y;
+
+            base.RightMouseDown(evt);
+        }
+
+        public override void RightMouseUp(UIMouseEvent evt)
+        {
+            moveMode = false;
+
+            LeftPercent = Left.Percent;
+            TopPercent = Top.Percent;
+
+            base.RightMouseUp(evt);
         }
 
         public void GetStats(bool extra = false)
