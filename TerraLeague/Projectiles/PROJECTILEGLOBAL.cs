@@ -45,7 +45,7 @@ namespace TerraLeague.Projectiles
                     Item.NewItem(target.getRect(), ItemID.CopperCoin);
                 if (Main.rand.Next(0, 50) == 0)
                     Item.NewItem(target.getRect(), ItemID.SilverCoin);
-                if (Main.rand.Next(0, 500) == 0)
+                if (Main.rand.Next(0, 5000) == 0)
                     Item.NewItem(target.getRect(), ItemID.GoldCoin);
                 if (Main.rand.Next(0, 500000) == 0)
                     Item.NewItem(target.getRect(), ItemID.PlatinumCoin);
