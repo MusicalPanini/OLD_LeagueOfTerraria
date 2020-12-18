@@ -17,8 +17,18 @@ namespace TerraLeague.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier -= 0.05f;
+            if (player.GetModPlayer<PLAYERGLOBAL>().bottleOfStardust)
+                player.GetModPlayer<PLAYERGLOBAL>().damageTakenModifier -= 0.05f;
         }
-
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "Take 10% reduced damage";
+            else
+                tip = "Take 5% reduced damage";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

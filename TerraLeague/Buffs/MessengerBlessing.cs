@@ -32,8 +32,24 @@ namespace TerraLeague.Buffs
             player.accStopwatch = true;
             player.accOreFinder = true;
             player.accDreamCatcher = true;
-        }
 
+            if (modPlayer.bottleOfStardust)
+            {
+                player.dangerSense = true;
+                player.nightVision = true;
+                player.detectCreature = true;
+            }
+        }
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "You have access to a bunch of information" +
+                    "\nYour eyes can see more";
+            else
+                tip = "You have access to a bunch of information";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

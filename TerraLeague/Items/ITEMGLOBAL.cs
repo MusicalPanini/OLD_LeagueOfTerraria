@@ -261,7 +261,11 @@ namespace TerraLeague.Items
             if (modPlayer.windPower)
                 num += 0.1f;
             if (modPlayer.chargerBlessing)
+            {
                 num += 0.1f;
+                if (modPlayer.bottleOfStardust)
+                    num += 0.1f;
+            }
 
             if (item.ranged)
             {

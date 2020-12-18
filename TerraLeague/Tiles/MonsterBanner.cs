@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TerraLeague.Items.Banners;
 using TerraLeague.NPCs;
 using Terraria;
 using Terraria.DataStructures;
@@ -33,20 +34,72 @@ namespace TerraLeague.Tiles
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY)
 		{
-			int style = frameX / 18;
-			string item;
+			BannerType style = (BannerType)(frameX / 18);
+			int item = 0;
 			switch (style)
 			{
-				case 0:
-					item = "SarcophagusBanner";
+				case BannerType.MarbleSlime:
+					item = ItemType<MarbleSlimeBanner>();
 					break;
-				case 1:
-					item = "OctopusBanner";
+				case BannerType.MountainSlime:
+					item = ItemType<MountainSlimeBanner>();
 					break;
-				default:
-					return;
+				case BannerType.SoulBoundSlime:
+					item = ItemType<SoulBoundSlimeBanner>();
+					break;
+				case BannerType.Undying:
+					item = ItemType<UndyingBanner>();
+					break;
+				case BannerType.UndyingArcher:
+					item = ItemType<UndyingArcherBanner>();
+					break;
+				case BannerType.UndyingNecro:
+					item = ItemType<UndyingNecromancerBanner>();
+					break;
+				case BannerType.UnleashedSpirit:
+					item = ItemType<UnleashedSpiritBanner>();
+					break;
+				case BannerType.MistEater:
+					item = ItemType<MistEaterBanner>();
+					break;
+				case BannerType.MistDevor:
+					item = ItemType<MistDevourerBanner>();
+					break;
+				case BannerType.FallenCrimera:
+					item = ItemType<FallenCrimeraBanner>();
+					break;
+				case BannerType.HMCrimson_UNUSED:
+					break;
+				case BannerType.SpectralBiter:
+					item = ItemType<MistBitterBanner>();
+					break;
+				case BannerType.ShelledHorror:
+					item = ItemType<ShelledHorrorBanner>();
+					break;
+				case BannerType.PHMOcean_UNUSED:
+					break;
+				case BannerType.SpectralShark:
+					item = ItemType<SpectralSharkBanner>();
+					break;
+				case BannerType.Scuttlegeist:
+					item = ItemType<ScuttlegiestBanner>();
+					break;
+				case BannerType.EtherealRemitter:
+					item = ItemType<EtheralRemitterBanner>();
+					break;
+				case BannerType.Mistwraith:
+					item = ItemType<MistwraithBanner>();
+					break;
+				case BannerType.PHMDesert_UNUSED:
+					break;
+				case BannerType.ShadowArtilery:
+					item = ItemType<ShadowArtileryBanner>();
+					break;
+				case BannerType.BansheeHive:
+					item = ItemType<BansheeHiveBanner>();
+					break;
 			}
-			Item.NewItem(i * 16, j * 16, 16, 48, mod.ItemType(item));
+			Item.NewItem(i * 16, j * 16, 16, 48, item);
 		}
 
 		public override void NearbyEffects(int i, int j, bool closer)

@@ -66,6 +66,7 @@ namespace TerraLeague
         internal bool zoneBlackMist = false;
         internal bool zoneTargonPeak = false;
         internal bool zoneTargon = false;
+        internal bool zoneTargonMonolith = false;
         /// <summary>
         /// Has the player hit an enemy with current melee swing
         /// </summary>
@@ -585,6 +586,8 @@ namespace TerraLeague
         public bool celestialFrostbite = false;
         public bool chargerBlessing = false;
         public bool scourgeBlessing = false;
+        public bool bottleOfStardust = false;
+        public bool bottleOfStarDustBuffer = false;
         public bool targonArena = false;
 
         // Lifeline Garbage
@@ -731,6 +734,7 @@ namespace TerraLeague
             ResetShieldStuff();
             ResetCustomStats();
 
+
             #region Buffs
             bioBarrage = false;
             crushingBlows = false;
@@ -776,6 +780,8 @@ namespace TerraLeague
             celestialFrostbite = false;
             chargerBlessing = false;
             scourgeBlessing = false;
+            bottleOfStardust = bottleOfStarDustBuffer;
+            bottleOfStarDustBuffer = false;
             rapids = false;
             targonArena = false;
 
@@ -1469,6 +1475,8 @@ namespace TerraLeague
                 gravitumAmmo = 100;
                 infernumAmmo = 100;
                 crescendumAmmo = 100;
+
+                blessingCooldown = 0;
             }
 
             if (player.itemTime <= 1 && oldUsedInventorySlot != -1)
@@ -2088,8 +2096,12 @@ namespace TerraLeague
         {
             //bool useVoidMonolith = voidMonolith && !usePurity && !NPC.AnyNPCs(NPCID.MoonLordCore);
             //if (TerraLeague.DrawBlackMistFog)
-            player.ManageSpecialBiomeVisuals("TerraLeague:Targon", zoneTargonPeak, player.Center);
+            //player.ManageSpecialBiomeVisuals("TerraLeague:Targon", zoneTargonMonolith, player.Center);
+
+            bool doTargonEFX = (zoneTargonPeak || zoneTargonMonolith);
+            player.ManageSpecialBiomeVisuals("TerraLeague:Targon", doTargonEFX, player.Center);
             player.ManageSpecialBiomeVisuals("TerraLeague:TheBlackMist", zoneBlackMist, player.Center);
+
             base.UpdateBiomeVisuals();
         }
 
@@ -2259,7 +2271,11 @@ namespace TerraLeague
                 if (flameHarbinger)
                     target.AddBuff(BuffType<HarbingersInferno>(), 180);
                 if (scourgeBlessing)
+                {
                     target.AddBuff(BuffID.ShadowFlame, 120);
+                    if (bottleOfStardust)
+                        target.AddBuff(BuffType<GrievousWounds>(), 120);
+                }
                 if (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().noOnHitEffects)
                     FlashOfBrillianceEffect(player, damage, target);
 
@@ -2375,7 +2391,11 @@ namespace TerraLeague
 
             // Damage Buffs
             if (scourgeBlessing)
+            {
                 target.AddBuff(BuffID.ShadowFlame, 120);
+                if (bottleOfStardust)
+                    target.AddBuff(BuffType<GrievousWounds>(), 120);
+            }
             if (excessiveForce)
                 meleeModifer += 3;
 

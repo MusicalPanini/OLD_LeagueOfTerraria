@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace TerraLeague.Tiles
 {
-    public class TargonStone : ModTile
+    public class TargonStone_Arena : ModTile
     {
         public override void SetDefaults()
         {
@@ -20,7 +20,8 @@ namespace TerraLeague.Tiles
             soundType = SoundID.Tink;
             dustType = 1;
             drop = ItemType<TargonStoneBlock>(); 
-            AddMapEntry(new Color(172, 154, 138)); 
+            ModTranslation name = CreateMapEntryName();
+            AddMapEntry(new Color(172, 154, 138), name); 
             minPick = 100; 
         }
 
@@ -35,7 +36,7 @@ namespace TerraLeague.Tiles
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
-            return WORLDGLOBAL.TargonArenaDefeated && Main.hardMode;
+            return false;
         }
     }
 }

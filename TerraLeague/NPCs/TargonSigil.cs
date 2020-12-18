@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using Microsoft.Xna.Framework.Graphics;
 using TerraLeague.Buffs;
+using TerraLeague.Items.BossBags;
 
 namespace TerraLeague.NPCs
 {
@@ -38,6 +39,7 @@ namespace TerraLeague.NPCs
             npc.netAlways = true;
             npc.dontTakeDamageFromHostiles = true;
             npc.dontCountMe = true;
+            bossBag = ItemType<TargonBossBag>();
         }
 
         public override bool PreAI()
@@ -114,11 +116,14 @@ namespace TerraLeague.NPCs
             }
             else
             {
+                string tip = Lang.GetBuffDescription(GetBuffID());
+                int rare = 0;
+                GetModBuff(GetBuffID()).ModifyBuffTip(ref tip, ref rare);
                 text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
                 if (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown <= 0)
                 {
                     return text + "\n\nThe whipsers offer: The " + Lang.GetBuffName(GetBuffID())
-                    + "\n" + Lang.GetBuffDescription(GetBuffID());
+                    + "\n" + tip;
                 }
                 else
                 {
@@ -145,6 +150,7 @@ namespace TerraLeague.NPCs
                 string seconds = "" + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown % 3600 / 60;
                 seconds = seconds.Length == 1 ? "0" + seconds : seconds;
                 button = "Time Remaining: " + Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().blessingCooldown / 3600 + ":" + seconds;
+                button2 = "Challenge Arena Again";
             }
         }
 
@@ -193,8 +199,22 @@ namespace TerraLeague.NPCs
             }
             else
             {
-                shop = false;
-                Main.npcChatText = GetChat();
+                if (!firstButton)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.NewNPC((int)npc.position.X, (int)npc.position.Y + 64, NPCType<TargonBoss>());
+                    }
+                    else
+                    {
+                        npc.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
+                    }
+                }
+                else
+                {
+                    shop = false;
+                    Main.npcChatText = GetChat();
+                }
             }
         }
 
@@ -254,6 +274,16 @@ namespace TerraLeague.NPCs
         }
 
         public override bool CheckActive()
+        {
+            return false;
+        }
+
+        public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+        {
+            return false;
+        }
+
+        public override bool CheckConditions(int left, int right, int top, int bottom)
         {
             return false;
         }

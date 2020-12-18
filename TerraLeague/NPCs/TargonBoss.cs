@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 using TerraLeague.Buffs;
 using TerraLeague.Items;
 using Terraria;
@@ -221,6 +222,28 @@ namespace TerraLeague.NPCs
 
         public override void NPCLoot()
         {
+            NPC dropnpc = Main.npc.First(x => x.type == NPCType<TargonSigil>());
+            if (dropnpc != null)
+            {
+                int choice = Main.rand.Next(10);
+                if (choice == 0)
+                    Item.NewItem(dropnpc.getRect(), ItemType<Items.Placeable.TargonBossTrophy>());
+
+                if (Main.expertMode)
+                {
+                    dropnpc.DropBossBags();
+                }
+                else
+                {
+                    choice = Main.rand.Next(10);
+                    if (choice == 0)
+                    {
+                        Item.NewItem(dropnpc.getRect(), ItemType<Items.Placeable.TargonMonolith>());
+                    }
+                    Item.NewItem(dropnpc.getRect(), ItemType<Items.CelestialBar>(), Main.rand.Next(2, 8));
+                }
+            }
+
             if (Main.netMode == NetmodeID.Server)
                 NetMessage.SendData(MessageID.WorldData);
             base.NPCLoot();
@@ -308,6 +331,11 @@ namespace TerraLeague.NPCs
             WORLDGLOBAL.TargonArenaDefeated = true;
 
             return base.CheckDead();
+        }
+
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            base.BossLoot(ref name, ref potionType);
         }
     }
 }

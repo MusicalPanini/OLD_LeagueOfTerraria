@@ -18,8 +18,18 @@ namespace TerraLeague.Buffs
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             player.manaCost -= 0.1f;
+            if (modPlayer.bottleOfStardust)
+                player.manaCost -= 0.05f;
         }
-
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "15% decreased mana costs";
+            else
+                tip = "10% decreased mana costs";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

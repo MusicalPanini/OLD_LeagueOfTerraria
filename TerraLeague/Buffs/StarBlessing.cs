@@ -16,9 +16,20 @@ namespace TerraLeague.Buffs
         }
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.1;
+            PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+            modPlayer.healPower += 0.1;
+            if (modPlayer.bottleOfStardust)
+                modPlayer.healPower += 0.05;
         }
-
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "15% increased heal power";
+            else
+                tip = "10% increased heal power";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

@@ -816,6 +816,8 @@ namespace TerraLeague
 
         public override void ResetNearbyTileEffects()
         {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            modPlayer.zoneTargonMonolith = false;
             marbleBlocks = 0;
         }
 
@@ -1200,7 +1202,7 @@ namespace TerraLeague
                     int wallThickness = 5;
                     if (x < wallThickness || x > targonArenaHeight - (1 + wallThickness) || y < wallThickness || y > targonArenaHeight - (1 + wallThickness))
                     {
-                        Main.tile[worldX, worldY].type = (ushort)TileType<TargonStone>();
+                        Main.tile[worldX, worldY].type = (ushort)TileType<TargonStone_Arena>();
                         Main.tile[worldX, worldY].active(true);
                         Main.tile[worldX, worldY].slope((byte)0);
                         Main.tile[worldX, worldY].halfBrick(false);
@@ -1288,7 +1290,7 @@ namespace TerraLeague
                         {
                             if (Main.player[i].GetModPlayer<PLAYERGLOBAL>().targonArena)
                             {
-                                Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, 50 * 16);
+                                Vector2 teleportPos = new Vector2((TargonCenterX * 16) - 16, 40 * 16);
 
                                 Main.player[i].Teleport(teleportPos, 1, 0);
                                 NetMessage.SendData(MessageID.Teleport, -1, -1, null, 0, i, teleportPos.X, teleportPos.Y, 1, 0, 0);

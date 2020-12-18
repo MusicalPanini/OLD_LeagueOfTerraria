@@ -19,8 +19,20 @@ namespace TerraLeague.Buffs
         {
             player.moveSpeed += 0.25f;
             player.jumpBoost = true;
+            if (player.GetModPlayer<PLAYERGLOBAL>().bottleOfStardust)
+                player.moveSpeed += 0.75f;
         }
-
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "100% increased movement speed" +
+                "\nIncreased jump height";
+            else
+                tip = "25% increased movement speed" +
+                "\nIncreased jump height";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

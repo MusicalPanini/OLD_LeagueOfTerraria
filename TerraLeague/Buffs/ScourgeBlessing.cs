@@ -19,7 +19,15 @@ namespace TerraLeague.Buffs
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
             modPlayer.scourgeBlessing = true;
         }
-
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "Your attacks will apply 'Shadowflame' and 'Grievous Wounds'";
+            else
+                tip = "Your attacks will apply 'Shadowflame'";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

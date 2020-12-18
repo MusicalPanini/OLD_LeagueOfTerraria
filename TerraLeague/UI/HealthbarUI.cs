@@ -673,54 +673,66 @@ namespace TerraLeague.UI
             
             if (IsMouseHovering)
             {
-                string buffDescription = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
-                    "\n" + Lang.GetBuffDescription(Main.LocalPlayer.buffType[buffNumber]);
+                string buffDescription = "";
 
-
-                if (Main.LocalPlayer.buffType[buffNumber] == Terraria.ID.BuffID.MonsterBanner)
+                ModBuff buffType = ModContent.GetModBuff(Main.LocalPlayer.buffType[buffNumber]);
+                if (buffType != null)
                 {
-                    string name1 = "";
-                    string name2 = "";
-
-                    for (int i = 0; i < Main.LocalPlayer.NPCBannerBuff.Count(); i++)
+                    string tip = Lang.GetBuffDescription(Main.LocalPlayer.buffType[buffNumber]);
+                    int num = 0;
+                    ModContent.GetModBuff(Main.LocalPlayer.buffType[buffNumber]).ModifyBuffTip(ref tip, ref num);
+                    buffDescription = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
+                        "\n" + tip;
+                }
+                else
+                {
+                    buffDescription = TerraLeague.CreateColorString(TerraLeague.TooltipHeadingColor, Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber])) +
+                    "\n" + Lang.GetBuffDescription(Main.LocalPlayer.buffType[buffNumber]);
+                    if (Main.LocalPlayer.buffType[buffNumber] == Terraria.ID.BuffID.MonsterBanner)
                     {
-                        if (Item.BannerToNPC(i) != 0 && Main.player[Main.myPlayer].NPCBannerBuff[i])
+                        string name1 = "";
+                        string name2 = "";
+
+                        for (int i = 0; i < Main.LocalPlayer.NPCBannerBuff.Count(); i++)
                         {
-                            if (name1 == "")
-                                name1 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
-                            else if (name2 == "")
-                                name2 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
-                            else
+                            if (Item.BannerToNPC(i) != 0 && Main.player[Main.myPlayer].NPCBannerBuff[i])
                             {
-                                string name3 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                if (name1 == "")
+                                    name1 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                else if (name2 == "")
+                                    name2 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                else
+                                {
+                                    string name3 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
 
-                                int spaces = 18 - name1.Length;
+                                    int spaces = 18 - name1.Length;
 
-                                buffDescription += "\n" + name1 + " ~ " + name2 + " ~ " + name3;
+                                    buffDescription += "\n" + name1 + " ~ " + name2 + " ~ " + name3;
 
-                                name1 = "";
-                                name2 = "";
+                                    name1 = "";
+                                    name2 = "";
+                                }
                             }
                         }
+
+                        if (name1 != "")
+                            buffDescription += "\n" + name1;
+                    }
+                    else if (Main.LocalPlayer.buffType[buffNumber] == Terraria.ID.BuffID.ManaSickness)
+                    {
+                        buffDescription += (int)(Main.LocalPlayer.manaSickReduction * 100) + "%";
                     }
 
-                    if (name1 != "")
-                        buffDescription += "\n" + name1;
+                    //buffText.SetText(buffDescription);
                 }
-                else if (Main.LocalPlayer.buffType[buffNumber] == Terraria.ID.BuffID.ManaSickness)
-                {
-                    buffDescription += (int)(Main.LocalPlayer.manaSickReduction * 100) + "%";
-                }
-
-                //buffText.SetText(buffDescription);
 
                 if (Lang.GetBuffName(Main.LocalPlayer.buffType[buffNumber]) != "")
                     TerraLeague.instance.tooltipUI.DrawText(buffDescription.Split('\n'));
 
-                
+
                 if (rightMouseDownLastStep && !Main.mouseRight && !Main.debuff[Main.LocalPlayer.buffType[buffNumber]])
                     Main.LocalPlayer.ClearBuff(Main.LocalPlayer.buffType[buffNumber]);
-                    
+
                 rightMouseDownLastStep = Main.mouseRight;
             }
 

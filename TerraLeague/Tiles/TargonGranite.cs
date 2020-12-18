@@ -23,7 +23,7 @@ namespace TerraLeague.Tiles
             dustType = 172;
             drop = ItemType<TargonGraniteBlock>(); 
             ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Celsital Silicate");
+            name.SetDefault("Celstial Silicate");
             AddMapEntry(new Color(0, 200, 255), name); 
             minPick = 100; 
         }

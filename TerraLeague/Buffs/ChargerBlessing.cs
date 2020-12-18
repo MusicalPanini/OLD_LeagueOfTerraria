@@ -20,6 +20,16 @@ namespace TerraLeague.Buffs
             modPlayer.chargerBlessing = true;
         }
 
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "20% increased attack speed";
+            else
+                tip = "10% increased attack speed";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
+
         public override void Update(NPC npc, ref int buffIndex)
         {
         }

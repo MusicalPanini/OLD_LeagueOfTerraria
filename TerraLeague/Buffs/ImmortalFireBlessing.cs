@@ -18,10 +18,20 @@ namespace TerraLeague.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-            player.longInvince = true;
             player.pStone = true;
+            if (modPlayer.bottleOfStardust)
+                player.longInvince = true;
         }
-
+        public override void ModifyBuffTip(ref string tip, ref int rare)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            if (modPlayer.bottleOfStardust)
+                tip = "Reduced cooldown of healing potions" +
+                "\nIncreased length of invincibility after taking damage";
+            else
+                tip = "Reduced cooldown of healing potions";
+            base.ModifyBuffTip(ref tip, ref rare);
+        }
         public override void Update(NPC npc, ref int buffIndex)
         {
         }
