@@ -11,7 +11,7 @@ namespace TerraLeague.Items.Placeable
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Petrified Seeds Ore");
+            DisplayName.SetDefault("Petrified Seeds");
         }
 
         public override void SetDefaults()
