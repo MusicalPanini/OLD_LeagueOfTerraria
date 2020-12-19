@@ -1015,7 +1015,8 @@ namespace TerraLeague.UI
                     Item item = Main.LocalPlayer.HeldItem;
                     if (item.ranged)
                     {
-                        text += "\n" + item.Name + " fires " + Math.Round((item.useTime * item.GetGlobalItem<Items.ITEMGLOBAL>().UseTimeMultiplier(item, Main.LocalPlayer) / 60) * 100/ 60f, 2) + " times per second";
+                        float useTimeMulti = item.GetGlobalItem<Items.ITEMGLOBAL>().UseTimeMultiplier(item, Main.LocalPlayer);
+                        text += "\n" + item.Name + " fires " + Math.Round(60f / (item.useTime * (2 - useTimeMulti)), 2) + " times per second";
                     }
                     else
                     {
