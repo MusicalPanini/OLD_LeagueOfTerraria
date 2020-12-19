@@ -1011,6 +1011,16 @@ namespace TerraLeague.UI
                 {
                     text = TerraLeague.CreateColorString(TerraLeague.RNGATSColor, "Ranged Attack Speed") +
                         "\nThe percent increase in ranged weapons attack speed";
+
+                    Item item = Main.LocalPlayer.HeldItem;
+                    if (item.ranged)
+                    {
+                        text += "\n" + item.Name + " fires " + Math.Round((item.useTime * item.GetGlobalItem<Items.ITEMGLOBAL>().UseTimeMultiplier(item, Main.LocalPlayer) / 60) * 100/ 60f, 2) + " times per second";
+                    }
+                    else
+                    {
+                        text += "\nHold a Ranged Weapon to see its fire rate";
+                    }
                 }
                 else if (healStats.IsMouseHovering)
                 {

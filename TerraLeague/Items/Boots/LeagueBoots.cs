@@ -49,27 +49,27 @@ namespace TerraLeague.Items.Boots
                 tt.text = BuildFullTooltip();
                 if (Main.hardMode)
                 {
-                    item.value = 350000;
+                    //item.value = 350000;
                     item.rare = ItemRarityID.Pink;
                 }
                 else if (NPC.downedBoss3)
                 {
-                    item.value = 240000;
+                    //item.value = 240000;
                     item.rare = ItemRarityID.LightRed;
                 }
                 else if (NPC.downedBoss2)
                 {
-                    item.value = 100000;
+                    //item.value = 100000;
                     item.rare = ItemRarityID.Orange;
                 }
                 else if (NPC.downedBoss1)
                 {
-                    item.value = 50000;
+                    //item.value = 50000;
                     item.rare = ItemRarityID.Green;
                 }
                 else
                 {
-                    item.value = 25000;
+                    //item.value = 25000;
                     item.rare = ItemRarityID.Blue;
                 }
             }
@@ -80,6 +80,7 @@ namespace TerraLeague.Items.Boots
             item.width = 32;
             item.height = 32;
             item.accessory = true;
+            item.value = 100000;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -95,10 +96,11 @@ namespace TerraLeague.Items.Boots
 
         public void Update(Player player)
         {
+            item.value = 100000;
             if (Main.hardMode)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().T5Boots = true;
-                item.value = 350000;
+                //item.value = 350000;
                 item.rare = ItemRarityID.Pink;
                 Tier5Update(player);
                 player.rocketBoots = 3;
@@ -108,7 +110,7 @@ namespace TerraLeague.Items.Boots
             else if (NPC.downedBoss3)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().T4Boots = true;
-                item.value = 240000;
+                //item.value = 240000;
                 item.rare = ItemRarityID.LightRed;
                 Tier4Update(player);
                 player.rocketBoots = 2;
@@ -117,7 +119,7 @@ namespace TerraLeague.Items.Boots
             else if (NPC.downedBoss2)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().T3Boots = true;
-                item.value = 100000;
+                //item.value = 100000;
                 item.rare = ItemRarityID.Orange;
                 Tier3Update(player);
                 player.rocketBoots = 2;
@@ -125,14 +127,14 @@ namespace TerraLeague.Items.Boots
             else if (NPC.downedBoss1)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().T2Boots = true;
-                item.value = 50000;
+                //item.value = 50000;
                 item.rare = ItemRarityID.Green;
                 Tier2Update(player);
             }
             else
             {
                 player.GetModPlayer<PLAYERGLOBAL>().T1Boots = true;
-                item.value = 25000;
+                //item.value = 25000;
                 item.rare = ItemRarityID.Blue;
                 Tier1Update(player);
             }

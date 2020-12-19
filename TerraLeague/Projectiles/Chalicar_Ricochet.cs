@@ -12,8 +12,8 @@ namespace TerraLeague.Projectiles
 {
     public class Chalicar_Ricochet : ModProjectile
     {
-        public int[] HaveHit = new int[] { -1,-1,-1,-1,-1,-1,-1,-1,-1, -1, -1, -1, -1, -1, -1 };
-        public int hitCounter = 15;
+        public int[] HaveHit = new int[] { -1,-1,-1,-1,-1,-1 };
+        public int hitCounter = 6;
 
         public override void SetStaticDefaults()
         {
@@ -25,7 +25,7 @@ namespace TerraLeague.Projectiles
             projectile.width = 36;
             projectile.height = 36;
             projectile.timeLeft = 60;
-            projectile.penetrate = 15;
+            projectile.penetrate = 6;
             projectile.friendly = true;
             projectile.ranged = true;
             projectile.hostile = false;

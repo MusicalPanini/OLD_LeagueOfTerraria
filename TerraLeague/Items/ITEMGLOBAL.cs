@@ -509,14 +509,14 @@ namespace TerraLeague.Items
             if (set == "Pirate")
             {
                 player.GetModPlayer<PLAYERGLOBAL>().pirateSet = true;
-                player.GetModPlayer<PLAYERGLOBAL>().rangedOnHit += 10;
-                player.setBonus = "+10 ranged On Hit damage" +
+                player.GetModPlayer<PLAYERGLOBAL>().rangedOnHit += 5;
+                player.setBonus = "+5 ranged On Hit damage" +
                     "\nRanged damage cause enemies to drop coins";
             }
             if (set == "Cannoneer")
             {
                 player.GetModPlayer<PLAYERGLOBAL>().cannonSet = true;
-                player.setBonus = "Ranged weapons periodically fire a cannon ball dealing [c/" + TerraLeague.SUMColor + ":" + (int)(player.GetModPlayer<PLAYERGLOBAL>().RNG * 1.5) + "] ranged damage";
+                player.setBonus = "Ranged weapons periodically fire a cannon ball dealing " + TerraLeague.CreateScalingTooltip(DamageType.RNG, player.GetModPlayer<PLAYERGLOBAL>().RNG, 150) + " ranged damage";
             }
             if (set == "Spiritual")
             {

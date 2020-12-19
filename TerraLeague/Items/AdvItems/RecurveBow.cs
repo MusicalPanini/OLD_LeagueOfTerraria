@@ -11,7 +11,7 @@ namespace TerraLeague.Items.AdvItems
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Recurve Bow");
-            Tooltip.SetDefault("10 melee and ranged On Hit Damage" +
+            Tooltip.SetDefault("5 melee and ranged On Hit Damage" +
                 "\n10% increased melee and ranged attack speed");
         }
 
@@ -25,8 +25,8 @@ namespace TerraLeague.Items.AdvItems
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit += 10;
-            player.GetModPlayer<PLAYERGLOBAL>().rangedOnHit += 10;
+            player.GetModPlayer<PLAYERGLOBAL>().meleeOnHit += 5;
+            player.GetModPlayer<PLAYERGLOBAL>().rangedOnHit += 5;
             player.meleeSpeed += 0.10f;
             player.GetModPlayer<PLAYERGLOBAL>().rangedAttackSpeed *= 1.10;
         }

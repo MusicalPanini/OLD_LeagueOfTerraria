@@ -33,7 +33,7 @@ namespace TerraLeague.NPCs
             npc.height = 128;
             npc.damage = 20;
             npc.defense = 10;
-            npc.lifeMax = 5000;
+            npc.lifeMax = 5500;
             npc.HitSound = new Terraria.Audio.LegacySoundStyle(3, 5);
             npc.DeathSound = new Terraria.Audio.LegacySoundStyle(4, 7);
             npc.scale = 1f;
@@ -222,7 +222,7 @@ namespace TerraLeague.NPCs
 
         public override void NPCLoot()
         {
-            NPC dropnpc = Main.npc.First(x => x.type == NPCType<TargonSigil>());
+            NPC dropnpc = Main.npc.FirstOrDefault(x => x.type == NPCType<TargonSigil>());
             if (dropnpc != null)
             {
                 int choice = Main.rand.Next(10);

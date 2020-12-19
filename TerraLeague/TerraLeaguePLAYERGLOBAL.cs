@@ -2272,7 +2272,7 @@ namespace TerraLeague
                     target.AddBuff(BuffType<HarbingersInferno>(), 180);
                 if (scourgeBlessing)
                 {
-                    target.AddBuff(BuffID.ShadowFlame, 120);
+                    target.AddBuff(BuffID.CursedInferno, 120);
                     if (bottleOfStardust)
                         target.AddBuff(BuffType<GrievousWounds>(), 120);
                 }
@@ -2575,10 +2575,28 @@ namespace TerraLeague
 
         void ArmorResistScaledDamage(ref int damage, bool armor = true)
         {
+            TerraLeague.Log(armor ? "--CONTACT--" : "--PROJECTILE--", Color.HotPink);
+            
             if (armor)
-                damage = (int)Math.Round(damage * ArmorDamageReduction, 0);
+            {
+                TerraLeague.Log("Inital: " + damage, Color.MediumSlateBlue);
+            }
             else
+            {
+                TerraLeague.Log("Inital: " + damage * (Main.expertMode ? 4 : 2), Color.MediumSlateBlue);
+            }
+
+
+            if (armor)
+            {
+                damage = (int)Math.Round(damage * ArmorDamageReduction, 0);
+                TerraLeague.Log("Reduction: " + damage + " ~ Percent: " + ArmorDamageReduction, Color.MediumSlateBlue);
+            }
+            else
+            {
                 damage = (int)Math.Round(damage * ResistDamageReduction, 0);
+                TerraLeague.Log("Reduction: " + damage * (Main.expertMode ? 4 : 2) + " ~ Percent: " + ResistDamageReduction, Color.MediumSlateBlue);
+            }
 
             if (TerraLeague.UseCustomDefenceStat)
             {
@@ -2588,6 +2606,10 @@ namespace TerraLeague
                         damage += (int)Math.Round(player.statDefense * 0.75);
                     else
                         damage += (int)Math.Round(player.statDefense * 0.5);
+
+                    TerraLeague.Log("PostDef: " + damage + " ~ Added Damage: " + (int)Math.Round(player.statDefense * (Main.expertMode ? 0.75 : 0.5)), Color.MediumSlateBlue);
+                    TerraLeague.Log("Expected Result: " + (damage - (int)Math.Round(player.statDefense * (Main.expertMode ? 0.75 : 0.5))), Color.DarkGreen);
+
                 }
                 else
                 {
@@ -2595,7 +2617,13 @@ namespace TerraLeague
                         damage += (int)Math.Round(player.statDefense * 0.75) / 4;
                     else
                         damage += (int)Math.Round(player.statDefense * 0.5) / 2;
+
+                    double addedDamage = player.statDefense * (Main.expertMode ? 0.75 : 0.5);
+
+                    TerraLeague.Log("PostDef: " + (damage * (Main.expertMode ? 4 : 2)) + " ~ Added Damage: " + (int)Math.Round(addedDamage), Color.MediumSlateBlue);
+                    TerraLeague.Log("Expected Result: " + ((damage * (Main.expertMode ? 4 : 2)) - (int)Math.Round(addedDamage)), Color.Green);
                 }
+
             }
 
         }

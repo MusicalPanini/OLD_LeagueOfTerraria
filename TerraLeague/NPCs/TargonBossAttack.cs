@@ -135,10 +135,10 @@ namespace TerraLeague.NPCs
             if (GetState() == State_Idle)
             {
                 if (GetStateTimer() < 60)
-                    npc.ai[positionTimer] += 2 * (GetStateTimer() / 60f);
+                    npc.ai[positionTimer] += (2 + (2 - (2 * GetMainBoss().life / (float)GetMainBoss().lifeMax))) * (GetStateTimer() / 60f);
                 else
                 {
-                    npc.ai[positionTimer] += 2;
+                    npc.ai[positionTimer] += (2 + (2 - (2 * GetMainBoss().life / (float)GetMainBoss().lifeMax)));
                 }
                 if (npc.ai[positionTimer] >= 360 * 10)
                     npc.ai[positionTimer] -= 360 * 10;
@@ -322,7 +322,9 @@ namespace TerraLeague.NPCs
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        npc.ai[stateTimer] = Main.rand.Next(210, 360);
+                        var bossnpc = GetMainBoss();
+                        float healthScale = ((Main.expertMode ? 1.25f : 1.5f) - (1 - (bossnpc.life / (float)bossnpc.lifeMax)));
+                        npc.ai[stateTimer] = (int)(Main.rand.Next(140, 240) * healthScale);
                         npc.netUpdate = true;
                     }
                 }
