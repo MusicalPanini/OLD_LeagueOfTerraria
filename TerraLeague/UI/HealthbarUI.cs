@@ -692,6 +692,7 @@ namespace TerraLeague.UI
                     {
                         string name1 = "";
                         string name2 = "";
+                        string name3 = "";
 
                         for (int i = 0; i < Main.LocalPlayer.NPCBannerBuff.Count(); i++)
                         {
@@ -701,16 +702,19 @@ namespace TerraLeague.UI
                                     name1 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
                                 else if (name2 == "")
                                     name2 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                else if (name3 == "")
+                                    name3 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
                                 else
                                 {
-                                    string name3 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
+                                    string name4 = TerraLeague.CreateColorString(Color.LightGreen, Lang.GetNPCNameValue(Item.BannerToNPC(i)));
 
                                     int spaces = 18 - name1.Length;
 
-                                    buffDescription += "\n" + name1 + " ~ " + name2 + " ~ " + name3;
+                                    buffDescription += "\n" + name1 + " ~ " + name2 + " ~ " + name3 + " ~ " + name4;
 
                                     name1 = "";
                                     name2 = "";
+                                    name3 = "";
                                 }
                             }
                         }
