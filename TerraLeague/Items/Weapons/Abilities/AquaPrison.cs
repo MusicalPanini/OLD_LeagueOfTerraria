@@ -9,13 +9,14 @@ using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons.Abilities
 {
     public class AquaPrison : Ability
     {
-        public AquaPrison(AbilityItem item) : base(item)
+        public AquaPrison(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }
@@ -91,7 +92,7 @@ namespace TerraLeague.Items.Weapons.Abilities
         public override void Efx(Player player)
         {
             Main.PlaySound(SoundID.Item20, player.Center);
-            Main.PlaySound(new LegacySoundStyle(2, 21, SoundType.Sound), player.position);
+            Main.PlaySound(new LegacySoundStyle(2, 21), player.position);
         }
     }
 }

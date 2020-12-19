@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Calibrum : AbilityItem
+    public class Calibrum : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,16 +18,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Uses 5% Calibrum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
                 "\nDeals more damage to far away enemies";
-        }
-
-        public override string GetQuote()
-        {
-            return "Moonlight will guide your aim";
         }
 
         public override void SetDefaults()
@@ -49,8 +44,12 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 75);
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new Moonshot(this);
-            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Cal);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new Moonshot(this));
+            abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Cal));
+            abilityItem.ChampQuote = "Moonlight will guide your aim";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

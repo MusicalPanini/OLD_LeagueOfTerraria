@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class PiercingLight : Ability
     {
-        public PiercingLight(AbilityItem item) : base(item)
+        public PiercingLight(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

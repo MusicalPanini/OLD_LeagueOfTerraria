@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class SteelTempest : Ability
     {
-        public SteelTempest(AbilityItem item) : base(item)
+        public SteelTempest(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

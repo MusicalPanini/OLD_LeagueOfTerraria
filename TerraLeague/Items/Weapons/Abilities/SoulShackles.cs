@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Weapons.Abilities
     {
         public static int range = 550;
 
-        public SoulShackles(AbilityItem item) : base(item)
+        public SoulShackles(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

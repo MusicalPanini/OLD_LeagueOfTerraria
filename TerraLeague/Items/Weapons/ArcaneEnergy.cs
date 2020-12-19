@@ -11,7 +11,7 @@ using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class ArcaneEnergy : AbilityItem
+    public class ArcaneEnergy : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,15 +20,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Gains 100% extra damage and range for each second you charge it" +
                     "\nMax of 1000%";
-        }
-
-        public override string GetQuote()
-        {
-            return "Behold my power";
         }
 
         public override void SetDefaults()
@@ -52,8 +47,12 @@ namespace TerraLeague.Items.Weapons
             item.channel = true;
             item.noMelee = true;
 
-            Abilities[2] = new ShockingOrb(this);
-            Abilities[3] = new RiteOfTheArcane(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new ShockingOrb(this));
+            abilityItem.SetAbility(AbilityType.R, new RiteOfTheArcane(this));
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.ChampQuote = "Behold my power";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

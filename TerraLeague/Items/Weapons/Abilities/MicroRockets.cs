@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class MicroRockets : Ability
     {
-        public MicroRockets(AbilityItem item) : base(item)
+        public MicroRockets(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

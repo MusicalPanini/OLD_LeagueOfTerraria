@@ -14,22 +14,12 @@ using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class BurningVengance : AbilityItem
+    public class BurningVengance : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Burning Vengance");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "The inferno begins";
         }
 
         public override void SetDefaults()
@@ -51,8 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<BurningVengance_Flame>();
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.W] = new PillarOfFlame(this);
-            Abilities[(int)AbilityType.R] = new Pyroclasm(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new PillarOfFlame(this));
+            abilityItem.SetAbility(AbilityType.R, new Pyroclasm(this));
+            abilityItem.ChampQuote = "The inferno begins";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

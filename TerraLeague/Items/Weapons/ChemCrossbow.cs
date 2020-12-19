@@ -5,11 +5,12 @@ using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class ChemCrossbow : AbilityItem
+    public class ChemCrossbow : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,15 +19,10 @@ namespace TerraLeague.Items.Weapons
             base.SetStaticDefaults();
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Fires toxic arrows that apply 'Deadly Venom'" +
                 "\n'Deadly Venom' stacks 5 times dealing more damage over time per stack";
-        }
-
-        public override string GetQuote()
-        {
-            return "I dealt it! It was meeee!";
         }
 
         public override void SetDefaults()
@@ -47,8 +43,12 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item5;
             item.useAmmo = AmmoID.Arrow;
 
-            Abilities[(int)AbilityType.W] = new ToxicCask(this);
-            Abilities[(int)AbilityType.E] = new Contaminate(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new ToxicCask(this));
+            abilityItem.SetAbility(AbilityType.E, new Contaminate(this));
+            abilityItem.ChampQuote = "I dealt it! It was meeee!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

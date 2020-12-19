@@ -8,22 +8,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class LightPistol : AbilityItem
+    public class LightPistol : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Light Pistol");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Everybody deserves a second shot";
         }
 
         public override void SetDefaults()
@@ -46,7 +36,10 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new PiercingLight(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new PiercingLight(this));
+            abilityItem.ChampQuote = "Everybody deserves a second shot";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

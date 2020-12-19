@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Infernum : AbilityItem
+    public class Infernum : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,16 +16,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Uses 5% Infernum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
                 "\nYour attacks will create a splash of flame";
-        }
-
-        public override string GetQuote()
-        {
-            return "Cosmic flame will fill the night";
         }
 
         public override void SetDefaults()
@@ -42,13 +37,16 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 2;
             item.value = 310000 * 5;
             item.rare = ItemRarityID.Purple;
-            //item.scale = 0.8f;
             item.shoot = ProjectileType<Infernum_Flame>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 45);
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new Duskwave(this);
-            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Inf);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new Duskwave(this));
+            abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Inf));
+            abilityItem.ChampQuote = "Cosmic flame will fill the night";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

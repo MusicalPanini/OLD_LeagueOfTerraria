@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class UmbralTrespass : Ability
     {
-        public UmbralTrespass(AbilityItem item) : base(item)
+        public UmbralTrespass(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

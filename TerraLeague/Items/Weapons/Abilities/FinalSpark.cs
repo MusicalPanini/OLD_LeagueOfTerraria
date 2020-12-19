@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class FinalSpark : Ability
     {
-        public FinalSpark(AbilityItem item) : base(item)
+        public FinalSpark(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class LucentSingularity : Ability
     {
-        public LucentSingularity(AbilityItem item) : base(item)
+        public LucentSingularity(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

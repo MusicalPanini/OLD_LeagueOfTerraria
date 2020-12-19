@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class PlasmaFission : Ability
     {
-        public PlasmaFission(AbilityItem item) : base(item)
+        public PlasmaFission(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

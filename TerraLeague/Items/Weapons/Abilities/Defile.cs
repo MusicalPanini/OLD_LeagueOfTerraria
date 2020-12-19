@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Defile : Ability
     {
-        public Defile(AbilityItem item) : base(item)
+        public Defile(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class TwilightShroud : Ability
     {
-        public TwilightShroud(AbilityItem item) : base(item)
+        public TwilightShroud(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

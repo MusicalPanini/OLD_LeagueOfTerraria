@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class EssenceFlux : Ability
     {
-        public EssenceFlux(AbilityItem item) : base(item)
+        public EssenceFlux(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

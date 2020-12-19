@@ -9,7 +9,7 @@ using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class LastBreath : AbilityItem
+    public class LastBreath : ModItem
     {
 
         public override void SetStaticDefaults()
@@ -17,17 +17,6 @@ namespace TerraLeague.Items.Weapons
             DisplayName.SetDefault("Last Breath");
             Tooltip.SetDefault("");
         }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "No cure for fools";
-        }
-
         public override void SetDefaults()
         {
             item.damage = 22;
@@ -45,7 +34,10 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shootSpeed = 8f;
 
-            Abilities[(int)AbilityType.Q] = new SteelTempest(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new SteelTempest(this));
+            abilityItem.ChampQuote = "No cure for fools";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void AddRecipes()

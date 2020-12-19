@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using TerraLeague.Buffs;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class StarForgersCore : AbilityItem
+    public class StarForgersCore : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,14 +18,9 @@ namespace TerraLeague.Items.Weapons
             base.SetStaticDefaults();
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Become the center of the Universe!";
-        }
-
-        public override string GetQuote()
-        {
-            return "Now we're playing with star fire!";
         }
 
         public override void SetDefaults()
@@ -45,12 +40,16 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<StarForgersCore_ForgedStar>();
 
-            Abilities[(int)AbilityType.W] = new Abilities.CelestialExpansion(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new CelestialExpansion(this));
+            abilityItem.ChampQuote = "Now we're playing with star fire!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            player.AddBuff(BuffType<CenterOfTheUniverse>(), 3);
+            player.AddBuff(BuffType<Buffs.CenterOfTheUniverse>(), 3);
             position = player.MountedCenter;
             Projectile.NewProjectileDirect(position, Vector2.Zero, type, damage, knockBack, player.whoAmI, player.ownedProjectileCounts[type] + 1);
 

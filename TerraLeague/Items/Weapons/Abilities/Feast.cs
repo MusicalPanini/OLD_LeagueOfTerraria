@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Feast : Ability
     {
-        public Feast(AbilityItem item) : base(item)
+        public Feast(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

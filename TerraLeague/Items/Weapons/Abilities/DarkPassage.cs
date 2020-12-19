@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DarkPassage : Ability
     {
-        public DarkPassage(AbilityItem item) : base(item)
+        public DarkPassage(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

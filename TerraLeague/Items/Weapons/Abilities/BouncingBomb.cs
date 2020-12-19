@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class BouncingBomb : Ability
     {
-        public BouncingBomb(AbilityItem item) : base(item)
+        public BouncingBomb(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

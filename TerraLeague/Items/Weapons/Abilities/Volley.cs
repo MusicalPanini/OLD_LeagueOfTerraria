@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Volley : Ability
     {
-        public Volley(AbilityItem item) : base(item)
+        public Volley(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

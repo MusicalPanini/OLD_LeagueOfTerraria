@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class StaticField : Ability
     {
-        public StaticField(AbilityItem item) : base(item)
+        public StaticField(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

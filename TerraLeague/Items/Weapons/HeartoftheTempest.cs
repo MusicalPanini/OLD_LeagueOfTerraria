@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class HeartoftheTempest : AbilityItem
+    public class HeartoftheTempest : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,14 +19,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Create a Slicing Maelstrom after hitting 3 times";
-        }
-
-        public override string GetQuote()
-        {
-            return "I am the wind!";
         }
 
         public override void SetDefaults()
@@ -48,7 +43,11 @@ namespace TerraLeague.Items.Weapons
             item.channel = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.E] = new LightningRush(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new LightningRush(this));
+            abilityItem.ChampQuote = "I am the wind!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class StarfireSpellblades : AbilityItem
+    public class StarfireSpellblades : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,16 +17,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Gains attack speed and damage each half second in combat" +
                 "\nAfter 6 seconds, the sword will ascend and fire waves of starfire" +
                 "\nThe wave deals " + (int)(item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
-        }
-
-        public override string GetQuote()
-        {
-            return "As evil grows, so shall I";
         }
 
         public override void SetDefaults()
@@ -44,7 +39,11 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.R] = new DivineJudgement(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new DivineJudgement(this));
+            abilityItem.ChampQuote = "As evil grows, so shall I";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)
@@ -59,7 +58,7 @@ namespace TerraLeague.Items.Weapons
             if (player.GetModPlayer<PLAYERGLOBAL>().AscensionStacks >= 6)
             {
                 byte prefix = item.prefix;
-                item.SetDefaults(ModContent.ItemType<StarfireSpellbladesAscended>());
+                item.SetDefaults(ItemType<StarfireSpellbladesAscended>());
                 item.prefix = prefix;
             }
 

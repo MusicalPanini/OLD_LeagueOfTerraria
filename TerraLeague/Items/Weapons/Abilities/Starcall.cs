@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Starcall : Ability
     {
-        public Starcall(AbilityItem item) : base(item)
+        public Starcall(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class HeightenedSenses : Ability
     {
-        public HeightenedSenses(AbilityItem item) : base(item)
+        public HeightenedSenses(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

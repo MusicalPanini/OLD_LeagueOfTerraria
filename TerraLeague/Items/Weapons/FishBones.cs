@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class FishBones : AbilityItem
+    public class FishBones : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,15 +18,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Kills grant 'EXCITED!'" +
                 "\nEXCITED increase firerate";
-        }
-
-        public override string GetQuote()
-        {
-            return "BYE BYE";
         }
 
         public override void SetDefaults()
@@ -48,7 +43,11 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 6;
             item.useAmmo = AmmoID.Rocket;
 
-            Abilities[(int)AbilityType.R] = new SuperMegaDeathRocket(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new SuperMegaDeathRocket(this));
+            abilityItem.ChampQuote = "BYE BYE";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)
@@ -71,22 +70,6 @@ namespace TerraLeague.Items.Weapons
         public override Vector2? HoldoutOffset()
         {
             return new Vector2(-65, -15);
-        }
-
-        public void SetStatsPostShoot(Player player)
-        {
-            if (player.GetModPlayer<PLAYERGLOBAL>().excited)
-            {
-                item.damage = (int)(15 * 1.5);
-                item.useAnimation = 15;
-                item.useTime = 15;
-            }
-            else
-            {
-                item.useAnimation = 35;
-                item.useTime = 35;
-                item.damage = (int)(15);
-            }
         }
 
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat)

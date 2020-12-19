@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class MouthoftheAbyss : AbilityItem
+    public class MouthoftheAbyss : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,14 +16,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "33% chance to not consume ammo";
-        }
-
-        public override string GetQuote()
-        {
-            return "Hunger never sleep";
         }
 
         public override void SetDefaults()
@@ -45,7 +40,11 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 13f;
             item.useAmmo = AmmoID.Bullet;
 
-            Abilities[(int)AbilityType.W] = new BioArcaneBarrage(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new BioArcaneBarrage(this));
+            abilityItem.ChampQuote = "Hunger never sleep";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

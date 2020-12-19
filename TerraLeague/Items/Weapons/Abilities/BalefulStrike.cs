@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class BalefulStrike : Ability
     {
-        public BalefulStrike(AbilityItem item) : base(item)
+        public BalefulStrike(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

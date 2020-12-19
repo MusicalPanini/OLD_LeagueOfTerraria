@@ -8,23 +8,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class NezuksGauntlet : AbilityItem
+    public class NezuksGauntlet : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ne'Zuk's Gauntlet");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "The gauntlet's for show... the talent's all me.";
         }
 
         public override void SetDefaults()
@@ -46,8 +36,11 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 73);
             item.shoot = ProjectileType<NezuksGauntlet_MysticShot>();
 
-            Abilities[(int)AbilityType.W] = new EssenceFlux(this);
-            Abilities[(int)AbilityType.E] = new ArcaneShift(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new EssenceFlux(this));
+            abilityItem.SetAbility(AbilityType.E, new ArcaneShift(this));
+            abilityItem.ChampQuote = "The gauntlet's for show... the talent's all me";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

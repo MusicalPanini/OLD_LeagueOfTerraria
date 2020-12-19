@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class EchoingFlameCannon : AbilityItem
+    public class EchoingFlameCannon : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,16 +18,11 @@ namespace TerraLeague.Items.Weapons
             base.SetStaticDefaults();
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "You are surrounded by 6 markers." +
                 "\nShooting towards one will fire a shotgun of cursed flame." +
                 "\nEach mark recharges every 7 seconds";
-        }
-
-        public override string GetQuote()
-        {
-            return "You cannot know strength... Until you are broken.";
         }
 
         public override void SetDefaults()
@@ -49,7 +44,11 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileID.Bullet;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new CorrosiveCharge(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new CorrosiveCharge(this));
+            abilityItem.ChampQuote = "You cannot know strength... Until you are broken";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

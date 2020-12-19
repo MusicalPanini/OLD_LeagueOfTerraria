@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class LightCannon : AbilityItem
+    public class LightCannon : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,14 +16,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Deals an additional " + TerraLeague.CreateScalingTooltip(DamageType.RNG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().RNG, 100) + " damage";
-        }
-
-        public override string GetQuote()
-        {
-            return "I don't carry this to compromise";
         }
 
         public override void SetDefaults()
@@ -44,7 +39,11 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<LightCannon_BeamControl>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 13);
 
-            Abilities[(int)AbilityType.Q] = new PiercingDarkness(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new PiercingDarkness(this));
+            abilityItem.ChampQuote = "I don't carry this to compromise";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

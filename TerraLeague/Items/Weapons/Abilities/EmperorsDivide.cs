@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class EmperorsDivide : Ability
     {
-        public EmperorsDivide(AbilityItem item) : base(item)
+        public EmperorsDivide(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

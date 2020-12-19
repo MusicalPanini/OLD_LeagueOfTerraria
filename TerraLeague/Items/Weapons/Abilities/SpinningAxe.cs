@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class SpinningAxe : Ability
     {
-        public SpinningAxe(AbilityItem item) : base(item)
+        public SpinningAxe(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

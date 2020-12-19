@@ -8,13 +8,14 @@ using TerraLeague.Buffs;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons.Abilities
 {
     public class RiteOfTheArcane : Ability
     {
-        public RiteOfTheArcane(AbilityItem item) : base(item)
+        public RiteOfTheArcane(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

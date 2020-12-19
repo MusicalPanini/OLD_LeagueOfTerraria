@@ -10,7 +10,7 @@ using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class EyeOfTheVoid : AbilityItem
+    public class EyeOfTheVoid : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,14 +18,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Fire a lifeform disintegration ray!";
-        }
-
-        public override string GetQuote()
-        {
-            return "Knowledge through... disintegration";
         }
 
         public override void SetDefaults()
@@ -46,7 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 10;
             item.shoot = ProjectileType<EyeOfTheVoid_Lazer>();
 
-            Abilities[(int)AbilityType.Q] = new PlasmaFission(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new PlasmaFission(this));
+            abilityItem.ChampQuote = "Knowledge through... disintegration";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

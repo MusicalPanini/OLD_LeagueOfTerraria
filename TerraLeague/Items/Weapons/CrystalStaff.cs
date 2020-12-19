@@ -14,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class CrystalStaff : AbilityItem
+    public class CrystalStaff : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,16 +22,6 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
             Item.staff[item.type] = true;
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "You deny the darkness in your soul. You deny your power!";
         }
 
         public override void SetDefaults()
@@ -53,9 +43,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shoot = ProjectileID.SapphireBolt;
 
-            //Abilities[(int)AbilityType.Q] = new BalefulStrike(this);
-            Abilities[(int)AbilityType.W] = new DarkMatter(this);
-            Abilities[(int)AbilityType.R] = new PrimordialBurst(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new DarkMatter(this));
+            abilityItem.SetAbility(AbilityType.R, new PrimordialBurst(this));
+            abilityItem.ChampQuote = "You deny the darkness in your soul. You deny your power!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

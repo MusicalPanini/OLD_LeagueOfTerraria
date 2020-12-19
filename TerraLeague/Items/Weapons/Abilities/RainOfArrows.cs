@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class RainOfArrows : Ability
     {
-        public RainOfArrows(AbilityItem item) : base(item)
+        public RainOfArrows(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

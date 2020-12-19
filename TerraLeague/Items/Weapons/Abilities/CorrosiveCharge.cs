@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class CorrosiveCharge : Ability
     {
-        public CorrosiveCharge(AbilityItem item) : base(item)
+        public CorrosiveCharge(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

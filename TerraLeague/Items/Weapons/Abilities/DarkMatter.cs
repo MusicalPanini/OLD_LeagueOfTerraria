@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DarkMatter : Ability
     {
-        public DarkMatter(AbilityItem item) : base(item)
+        public DarkMatter(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class TestOfSpirit : Ability
     {
-        public TestOfSpirit(AbilityItem item) : base(item)
+        public TestOfSpirit(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

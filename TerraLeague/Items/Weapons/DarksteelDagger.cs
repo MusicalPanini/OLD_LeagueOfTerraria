@@ -10,22 +10,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarksteelDagger : AbilityItem
+    public class DarksteelDagger : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Darksteel Dagger");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Better dead than dull";
         }
 
         public override void SetDefaults()
@@ -49,7 +39,10 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.R] = new DeathLotus(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new DeathLotus(this));
+            abilityItem.ChampQuote = "Better dead than dull";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

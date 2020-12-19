@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class BindingEclipse : Ability
     {
-        public BindingEclipse(AbilityItem item) : base(item)
+        public BindingEclipse(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

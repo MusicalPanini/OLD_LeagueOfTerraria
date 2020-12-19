@@ -9,12 +9,17 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-	public class StoneweaversStaff : AbilityItem
+	public class StoneweaversStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Stoneweaver's Staff");
             Tooltip.SetDefault("");
+        }
+
+        string GetWeaponTooltip()
+        {
+            return "Uses Stone as ammo";
         }
 
         public override void SetDefaults()
@@ -35,17 +40,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.useAmmo = ItemType<BlackIceChunk>();
 
-            Abilities[(int)AbilityType.Q] = new ThreadedVolley(this);
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "Uses Stone as ammo";
-        }
-
-        public override string GetQuote()
-        {
-            return "Throw another rock!";
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new ThreadedVolley(this));
+            abilityItem.ChampQuote = "Throw another rock!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class TrueIceBow : AbilityItem
+    public class TrueIceBow : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,14 +17,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Fires a flurry of slowing arrows after every shot that deal 30% of the original arrow's damage";
-        }
-
-        public override string GetQuote()
-        {
-            return "Right between the eyes";
         }
 
         public override void SetDefaults()
@@ -47,7 +42,11 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileID.PurificationPowder;
             item.useAmmo = AmmoID.Arrow;
 
-            Abilities[(int)AbilityType.W] = new Volley(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new Volley(this));
+            abilityItem.ChampQuote = "Right between the eyes";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

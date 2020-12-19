@@ -8,22 +8,12 @@ using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarkIceTome : AbilityItem
+    public class DarkIceTome : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Dark Ice Tome");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "Launch a shard of ice that splits on hit";
-        }
-
-        public override string GetQuote()
-        {
-            return "I will bury the world in ice";
         }
 
         public override void SetDefaults()
@@ -44,7 +34,10 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 16;
             item.shoot = ProjectileType<DarkIceTome_IceShard>();
 
-            Abilities[(int)AbilityType.W] = new RingOfFrost(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new RingOfFrost(this));
+            abilityItem.ChampQuote = "I will bury the world in ice";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void AddRecipes()

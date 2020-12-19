@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarkinBow : AbilityItem
+    public class DarkinBow : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,15 +16,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Charge an arrow that gains damage and velocity the longer you charge, up to 1.5 seconds";
         }
 
-        public override string GetQuote()
-        {
-            return "The guilty will know agony";
-        }
 
         public override void SetDefaults()
         {
@@ -44,7 +40,11 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<DarkinBow_ArrowControl>();
             item.useAmmo = AmmoID.Arrow;
 
-            Abilities[(int)AbilityType.E] = new RainOfArrows(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new RainOfArrows(this));
+            abilityItem.ChampQuote = "The guilty will know agony";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

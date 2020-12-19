@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class LightningRush : Ability
     {
-        public LightningRush(AbilityItem item) : base(item)
+        public LightningRush(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

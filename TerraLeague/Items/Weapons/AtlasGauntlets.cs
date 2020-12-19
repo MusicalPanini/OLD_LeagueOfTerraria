@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using TerraLeague.Buffs;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
@@ -9,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class AtlasGauntlets : AbilityItem
+    public class AtlasGauntlets : ModItem
     {
         public override bool OnlyShootOnSwing => false;
 
@@ -19,16 +18,6 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Here comes the punch line!";
-        }
-        
         public override void SetDefaults()
         {
             item.damage = 70;
@@ -47,7 +36,10 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.E] = new Abilities.ExcessiveForce(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new DeathFromBelow(this));
+            abilityItem.ChampQuote = "Here comes the punch line!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

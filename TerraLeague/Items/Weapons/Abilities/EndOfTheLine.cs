@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class EndOfTheLine : Ability
     {
-        public EndOfTheLine(AbilityItem item) : base(item)
+        public EndOfTheLine(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

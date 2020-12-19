@@ -14,24 +14,17 @@ using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class TheFallenCelestialsDarkMagic : AbilityItem
+    public class TheFallenCelestialsDarkMagic : ModItem
     {
-        public static int range = 550;
-
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Fallen Celestials Dark Magic");
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Deals increased damage the lower the enemies life";
-        }
-
-        public override string GetQuote()
-        {
-            return "I am bound, but I will not Break";
         }
 
         public override void SetDefaults()
@@ -51,7 +44,11 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.shoot = ProjectileType<TheFallenCelestialsDarkMagic_TormentedShadow>();
 
-            Abilities[(int)AbilityType.R] = new SoulShackles(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new SoulShackles(this));
+            abilityItem.ChampQuote = "I am bound, but I will not break";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

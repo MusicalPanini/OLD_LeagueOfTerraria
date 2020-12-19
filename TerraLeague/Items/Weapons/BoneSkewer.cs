@@ -14,22 +14,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class BoneSkewer : AbilityItem
+    public class BoneSkewer : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Bone Skewer");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "There’s plenty of room for everyone at the bottom of the sea...";
         }
 
         public override void SetDefaults()
@@ -46,7 +36,10 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Green;
             item.UseSound = SoundID.Item1;
 
-            Abilities[(int)AbilityType.R] = new DeathFromBelow(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new DeathFromBelow(this));
+            abilityItem.ChampQuote = "There’s plenty of room for everyone at the bottom of the sea...";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

@@ -1680,12 +1680,13 @@ namespace TerraLeague
             {
                 TerraLeague.Log("[DEBUG] - Received Efx (Caster: " + Caster + " | ItemID: " + CastItem + " | Ability Type: " + AbilityType + ")", new Color(200, 200, 0));
 
-                AbilityItem abilityItem = GetModItem(CastItem) as AbilityItem;
+                ModItem moditem = GetModItem(CastItem);
 
-                if (abilityItem != null)
+                if (moditem != null)
                 {
-                    abilityItem.SetDefaults();
-                    abilityItem.Abilities[(int)AbilityType].Efx(Main.player[Caster]);
+                    moditem.SetDefaults();
+                    AbilityItemGLOBAL abilityItem = moditem.item.GetGlobalItem<AbilityItemGLOBAL>();
+                    abilityItem.GetAbility(AbilityType).Efx(Main.player[Caster]);
                 }
             }
         }

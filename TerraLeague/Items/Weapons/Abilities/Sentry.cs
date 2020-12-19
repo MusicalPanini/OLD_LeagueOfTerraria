@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Sentry : Ability
     {
-        public Sentry(AbilityItem item) : base(item)
+        public Sentry(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -8,22 +8,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarkinBlade : AbilityItem
+    public class DarkinBlade : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Darkin Blade");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "I am oblivion, I am destruction... I am doom";
         }
 
         public override void SetDefaults()
@@ -42,7 +32,10 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.UseSound = SoundID.Item1;
 
-            Abilities[(int)AbilityType.R] = new WorldEnder(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new WorldEnder(this));
+            abilityItem.ChampQuote = "I am oblivion, I am destruction... I am doom";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void AddRecipes()

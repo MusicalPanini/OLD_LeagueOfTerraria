@@ -7,14 +7,13 @@ using System.Linq;
 using TerraLeague.NPCs;
 using TerraLeague.Projectiles;
 using Microsoft.Xna.Framework;
-using TerraLeague.Buffs;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Audio;
 using TerraLeague.Items.Weapons.Abilities;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DeathsingerTome : AbilityItem
+    public class DeathsingerTome : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -22,15 +21,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Detonate the targeted area after 0.5 seconds" +
                 "\nIf you only hit 1 enemy, the damage is doubled";
-        }
-
-        public override string GetQuote()
-        {
-            return "I am the Nightbringer~";
         }
 
         public override void SetDefaults()
@@ -49,8 +43,12 @@ namespace TerraLeague.Items.Weapons
             item.useStyle = ItemUseStyleID.HoldingOut;
             item.shoot = ProjectileType<DeathsingerTome_LayWaste>();
 
-            Abilities[(int)AbilityType.E] = new Defile(this);
-            Abilities[(int)AbilityType.R] = new Abilities.Requiem(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new Defile(this));
+            abilityItem.SetAbility(AbilityType.R, new Requiem(this));
+            abilityItem.ChampQuote = "I am the Nightbringer~";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

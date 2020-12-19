@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class EvolvedWings : Ability
     {
-        public EvolvedWings(AbilityItem item) : base(item)
+        public EvolvedWings(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

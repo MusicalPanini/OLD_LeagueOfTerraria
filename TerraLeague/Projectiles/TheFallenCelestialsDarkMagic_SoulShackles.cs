@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
             NPC npc = Main.npc[(int)projectile.ai[0]];
             Player player = Main.player[projectile.owner];
 
-            if (!npc.active || projectile.Distance(player.Center) > Items.Weapons.TheFallenCelestialsDarkMagic.range)
+            if (!npc.active || projectile.Distance(player.Center) > Items.Weapons.Abilities.SoulShackles.range)
             {
                 ChainBreak(player.Center);
                 projectile.Kill();
@@ -205,7 +205,7 @@ namespace TerraLeague.Projectiles
             origin = new Vector2((float)texture.Width * 0.5f, (float)texture.Height * 0.5f);
             Vector2 BorderVector =  position - mountedCenter;
             BorderVector.Normalize();
-            BorderVector = BorderVector * Items.Weapons.TheFallenCelestialsDarkMagic.range;
+            BorderVector = BorderVector * Items.Weapons.Abilities.SoulShackles.range;
             BorderVector += mountedCenter;
             Main.spriteBatch.Draw(texture, BorderVector - Main.screenPosition, sourceRectangle, Color.White, rotation + (float)Math.PI/2f, origin, 1f, SpriteEffects.None, 0.0f);
 

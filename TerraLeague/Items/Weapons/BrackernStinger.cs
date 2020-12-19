@@ -9,17 +9,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class BrackernStinger : AbilityItem
+    public class BrackernStinger : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Brackern Stinger");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetQuote()
-        {
-            return "Feel my sting!";
         }
 
         public override void SetDefaults()
@@ -40,7 +35,10 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.W] = new CrystallineExoskeleton(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new CrystallineExoskeleton(this));
+            abilityItem.ChampQuote = "Feel my sting!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

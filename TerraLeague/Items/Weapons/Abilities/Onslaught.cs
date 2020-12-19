@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Onslaught : Ability
     {
-        public Onslaught(AbilityItem item) : base(item)
+        public Onslaught(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

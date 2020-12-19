@@ -8,22 +8,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class ChainWardensScythe : AbilityItem
+    public class ChainWardensScythe : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("The Chain Warden's Scythe");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "What delightful agony we shall inflict";
         }
 
         public override void SetDefaults()
@@ -46,7 +36,10 @@ namespace TerraLeague.Items.Weapons
             item.channel = true;
             item.shoot = ProjectileType<ChainWardensScythe_Scythe>();
 
-            Abilities[(int)AbilityType.W] = new DarkPassage(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new DarkPassage(this));
+            abilityItem.ChampQuote = "What delightful agony we shall inflict";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

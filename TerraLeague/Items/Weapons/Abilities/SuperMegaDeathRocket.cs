@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class SuperMegaDeathRocket : Ability
     {
-        public SuperMegaDeathRocket(AbilityItem item) : base(item)
+        public SuperMegaDeathRocket(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

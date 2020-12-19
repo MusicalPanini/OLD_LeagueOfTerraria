@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarksteelBattleaxe : AbilityItem
+    public class DarksteelBattleaxe : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,15 +18,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Struck enemies will start to 'Hemorrhage'" +
                 "\nHemorrage stacks up to 5 times";
-        }
-
-        public override string GetQuote()
-        {
-            return "Death by my hand";
         }
 
         public override void SetDefaults()
@@ -46,7 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.scale = 1.2f;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new Decimate(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new Decimate(this));
+            abilityItem.ChampQuote = "Death by my hand";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)

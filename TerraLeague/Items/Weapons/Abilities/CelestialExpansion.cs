@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class CelestialExpansion : Ability
     {
-        public CelestialExpansion(AbilityItem item) : base(item)
+        public CelestialExpansion(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

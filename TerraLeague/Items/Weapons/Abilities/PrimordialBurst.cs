@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class PrimordialBurst : Ability
     {
-        public PrimordialBurst(AbilityItem item) : base(item)
+        public PrimordialBurst(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

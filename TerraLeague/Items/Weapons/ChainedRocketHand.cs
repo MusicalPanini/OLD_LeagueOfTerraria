@@ -8,22 +8,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class ChainedRocketHand : AbilityItem
+    public class ChainedRocketHand : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chained Rocket Hand");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Metal is harder than flesh.";
         }
 
         public override void SetDefaults()
@@ -46,7 +36,10 @@ namespace TerraLeague.Items.Weapons
             item.melee = true;
             item.shoot = ProjectileType<ChainedRocketHand_RobotFist>();
 
-            Abilities[(int)AbilityType.R] = new StaticField(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new StaticField(this));
+            abilityItem.ChampQuote = "Metal is harder than flesh";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

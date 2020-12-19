@@ -10,9 +10,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-	public class TideCallerStaff : AbilityItem
+	public class TideCallerStaff : ModItem
 	{
-        int healing = 0;
+        int healing = 5;
 
 		public override void SetStaticDefaults()
 		{
@@ -34,15 +34,10 @@ namespace TerraLeague.Items.Weapons
             }
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Hititng a stunned or bubbled enemy will heal a nearby ally" +
                 "\nAfter healing, it will then strike another enemy";
-        }
-
-        public override string GetQuote()
-        {
-            return "I decide what the tide will bring";
         }
 
         public override void SetDefaults()
@@ -61,10 +56,15 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<TideCallerStaff_EbbandFlow>();
             //item.shoot = ProjectileType<TideCallerStaff_WaterShot>();
             item.shootSpeed = 11f;
-            healing = 5;
-            Abilities[(int)AbilityType.Q] = new AquaPrison(this);
-            //Abilities[(int)AbilityType.W] = new EbbAndFlow(this);
-            Abilities[(int)AbilityType.E] = new TidecallersBlessing(this);
+
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new AquaPrison(this));
+            abilityItem.SetAbility(AbilityType.E, new TidecallersBlessing(this));
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.ChampQuote = "I decide what the tide will bring";
+            abilityItem.IsAbilityItem = true;
+
+            base.SetDefaults();
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class ReapingSlash : Ability
     {
-        public ReapingSlash(AbilityItem item) : base(item)
+        public ReapingSlash(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

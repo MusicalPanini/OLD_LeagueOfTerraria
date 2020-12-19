@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class MaleficVisions : Ability
     {
-        public MaleficVisions(AbilityItem item) : base(item)
+        public MaleficVisions(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

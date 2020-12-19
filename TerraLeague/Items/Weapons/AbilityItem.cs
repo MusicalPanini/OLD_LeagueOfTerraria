@@ -16,15 +16,21 @@ namespace TerraLeague.Items.Weapons
     /// <para>Each cycle, the game will check the players hand and inventory for one of each of the ability type that may exist within them using the DoesAbilityExist(AbilityType) Method.</para>
     /// <para>If this method returns true, it will mark the player with this item and grab the abilty when needed.</para>
     /// </summary>
+    [Obsolete]
     abstract public class AbilityItem : ModItem
     {
+        public virtual void SetAbilityDefaults()
+        {
+
+        }
+
         internal AbilitiesPacketHandler PacketHandler = new AbilitiesPacketHandler(7);
 
         public Ability[] Abilities = new Ability[Enum.GetNames(typeof(AbilityType)).Length];
         static string AbilityNameColor = "5cd65c";
         static string AbilityButtonColor = "2eb82e";
         static string QuoteColor = "2eb82e";
-
+        
 
         /// <summary>
         /// <para>Modifies the Items tooltip</para>

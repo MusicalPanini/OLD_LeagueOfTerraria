@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Contaminate : Ability
     {
-        public Contaminate(AbilityItem item) : base(item)
+        public Contaminate(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

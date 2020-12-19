@@ -8,22 +8,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class ToxicBlowgun : AbilityItem
+    public class ToxicBlowgun : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Toxic Blowgun");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Never underestimate the power of the Scout's code";
         }
 
         public override void SetDefaults()
@@ -43,8 +33,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shoot = ProjectileID.PurificationPowder;
 
-            Abilities[(int)AbilityType.E] = new ToxicShot(this);
-            Abilities[(int)AbilityType.R] = new NoxiousTrap(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new ToxicShot(this));
+            abilityItem.SetAbility(AbilityType.R, new NoxiousTrap(this));
+            abilityItem.ChampQuote = "Never underestimate the power of the Scout's code";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

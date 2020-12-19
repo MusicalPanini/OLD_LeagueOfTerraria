@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class StrangleThornsTome : AbilityItem
+    public class StrangleThornsTome : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,17 +17,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Enemies hit with Strangle Thorns have a chance to drop a seed on death." +
                 "\nIf Strangle Thorns passes near a bulb it will grow into a Thorn Spitter, attacking near by enemies" +
                 "\n(WIP)";
-                
-        }
-
-        public override string GetQuote()
-        {
-            return "Feel the thorns embrace";
         }
 
         public override void SetDefaults()
@@ -48,7 +42,11 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 32;
             item.shoot = ProjectileType<StrangleThornsTome_StrangleThorns>();
 
-            Abilities[(int)AbilityType.W] = new RampantGrowth(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new RampantGrowth(this));
+            abilityItem.ChampQuote = "Feel the thorns embrace";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void AddRecipes()

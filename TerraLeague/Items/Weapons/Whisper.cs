@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Whisper : AbilityItem
+    public class Whisper : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,15 +20,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Fire 4 shots before having to reload" +
                 "\nThe 4th shot will deal 2x damage and crit";
-        }
-
-        public override string GetQuote()
-        {
-            return "Prepare... for your finale";
         }
 
         public override void SetDefaults()
@@ -49,7 +44,11 @@ namespace TerraLeague.Items.Weapons
             item.useAmmo = AmmoID.Bullet;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new DancingGrenade(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new DancingGrenade(this));
+            abilityItem.ChampQuote = "Prepare... for your finale";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

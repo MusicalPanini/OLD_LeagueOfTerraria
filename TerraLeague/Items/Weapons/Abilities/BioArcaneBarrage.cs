@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class BioArcaneBarrage : Ability
     {
-        public BioArcaneBarrage(AbilityItem item) : base(item)
+        public BioArcaneBarrage(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

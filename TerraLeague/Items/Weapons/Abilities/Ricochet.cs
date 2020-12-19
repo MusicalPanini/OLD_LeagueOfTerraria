@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Ricochet : Ability
     {
-        public Ricochet(AbilityItem item) : base(item)
+        public Ricochet(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

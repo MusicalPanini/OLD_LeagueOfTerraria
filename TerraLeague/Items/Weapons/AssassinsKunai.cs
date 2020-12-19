@@ -9,22 +9,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class AssassinsKunai : AbilityItem
+    public class AssassinsKunai : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Assassin's Kunai");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Fear the assassin with no master";
         }
 
         public override void SetDefaults()
@@ -48,7 +38,10 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.W] = new TwilightShroud(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new TwilightShroud(this));
+            abilityItem.ChampQuote = "Fear the assassin with no master";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Pyroclasm : Ability
     {
-        public Pyroclasm(AbilityItem item) : base(item)
+        public Pyroclasm(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -13,7 +13,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Courage : Ability
     {
-        public Courage(AbilityItem item) : base(item)
+        public Courage(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class ThreadedVolley : Ability
     {
-        public ThreadedVolley(AbilityItem item) : base(item)
+        public ThreadedVolley(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

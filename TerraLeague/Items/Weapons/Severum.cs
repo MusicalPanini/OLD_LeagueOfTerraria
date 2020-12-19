@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Severum : AbilityItem
+    public class Severum : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,16 +16,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Uses 2% Severum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
                 "\n+2 melee life steal while attacking";
-        }
-
-        public override string GetQuote()
-        {
-            return "Harvest death for life";
         }
 
         public override void SetDefaults()
@@ -42,14 +37,17 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 2;
             item.value = 310000 * 5;
             item.rare = ItemRarityID.Purple;
-            //item.scale = 0.7f;
             item.shoot = ProjectileType<Severum_Slash>();
             item.UseSound = null;
             item.autoReuse = true;
             item.noMelee = true;
 
-            Abilities[(int)AbilityType.Q] = new Onslaught(this);
-            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Sev);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new Onslaught(this));
+            abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Sev));
+            abilityItem.ChampQuote = "Harvest death for life";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)
@@ -78,15 +76,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            else if (type == AbilityType.W)
-                return true;
-            return base.GetIfAbilityExists(type);
         }
 
         public override Vector2? HoldoutOffset()

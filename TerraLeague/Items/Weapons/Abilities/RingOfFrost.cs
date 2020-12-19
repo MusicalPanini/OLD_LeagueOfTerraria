@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class RingOfFrost : Ability
     {
-        public RingOfFrost(AbilityItem item) : base(item)
+        public RingOfFrost(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

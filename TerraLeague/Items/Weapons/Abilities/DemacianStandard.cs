@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DemacianStandard : Ability
     {
-        public DemacianStandard(AbilityItem item) : base(item)
+        public DemacianStandard(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

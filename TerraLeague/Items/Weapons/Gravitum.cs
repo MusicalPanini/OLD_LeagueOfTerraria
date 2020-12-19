@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Gravitum : AbilityItem
+    public class Gravitum : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,16 +17,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Uses 5% Gravitum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
                 "\nYour attacks mark and slow your target";
-        }
-
-        public override string GetQuote()
-        {
-            return "Darkness will weigh upon them";
         }
 
         public override void SetDefaults()
@@ -43,13 +38,16 @@ namespace TerraLeague.Items.Weapons
             item.knockBack = 2;
             item.value = 310000 * 5;
             item.rare = ItemRarityID.Purple;
-            //item.scale = 0.8f;
             item.shoot = ProjectileType<Gravitum_Orb>();
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 111);
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.Q] = new BindingEclipse(this);
-            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Grv);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new BindingEclipse(this));
+            abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Grv));
+            abilityItem.ChampQuote = "Darkness will weigh upon them";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

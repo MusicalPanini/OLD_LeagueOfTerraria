@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class HexsplosiveMineField : Ability
     {
-        public HexsplosiveMineField(AbilityItem item) : base(item)
+        public HexsplosiveMineField(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class RampantGrowth : Ability
     {
-        public RampantGrowth(AbilityItem item) : base(item)
+        public RampantGrowth(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

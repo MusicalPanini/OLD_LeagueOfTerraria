@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class VoidSeeker : Ability
     {
-        public VoidSeeker(AbilityItem item) : base(item)
+        public VoidSeeker(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

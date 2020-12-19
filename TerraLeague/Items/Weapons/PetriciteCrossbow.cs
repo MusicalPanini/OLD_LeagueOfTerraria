@@ -7,23 +7,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class PetriciteCrossbow : AbilityItem
+    public class PetriciteCrossbow : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Petricite Crossbow");
             Tooltip.SetDefault("");
             base.SetStaticDefaults();
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Valor, to me";
         }
 
         public override void SetDefaults()
@@ -45,7 +35,10 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileID.PurificationPowder;
             item.useAmmo = AmmoID.Arrow;
 
-            Abilities[(int)AbilityType.W] = new HeightenedSenses(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new HeightenedSenses(this));
+            abilityItem.ChampQuote = "Valor, to me!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override Vector2? HoldoutOffset()

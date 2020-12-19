@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class ToxicCask : Ability
     {
-        public ToxicCask(AbilityItem item) : base(item)
+        public ToxicCask(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class CrystalineVoidEnergy : AbilityItem
+    public class CrystalineVoidEnergy : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,18 +17,13 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
 
             return "Shots apply stacks of 'Caustic Wounds'" +
                 "\nAt 5 stacks, the enemy will take 25% of their missing life as magic damage" +
-                "\n(Capped at 50 + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, 100) + ")";
-        }
-
-        public override string GetQuote()
-        {
-            return "Exploit their weakness";
+                "\n(Capped at 50 + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, modPlayer.MAG, 100) + ")";
         }
 
         public override void SetDefaults()
@@ -49,12 +44,16 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.shoot = ProjectileType<CrystalineVoidEnergy_VoidEnergy>();
 
-            Abilities[(int)AbilityType.W] = new VoidSeeker(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new VoidSeeker(this));
+            abilityItem.ChampQuote = "Exploit their weakness";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            position.Y = position.Y + 4;
+            position.Y += 4;
             
             return true;
         }

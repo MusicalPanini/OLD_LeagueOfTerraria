@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class GravityField : Ability
     {
-        public GravityField(AbilityItem item) : base(item)
+        public GravityField(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

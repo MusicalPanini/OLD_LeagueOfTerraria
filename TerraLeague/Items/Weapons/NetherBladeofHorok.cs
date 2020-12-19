@@ -10,24 +10,13 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class NetherBladeofHorok : AbilityItem
+    public class NetherBladeofHorok : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Nether Blade of Horok");
             Tooltip.SetDefault("");
         }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "You are null and void";
-        }
-
         public override void SetDefaults()
         {
             item.damage = 74;
@@ -47,7 +36,10 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 7;
             item.GetGlobalItem<ITEMGLOBAL>().meleeProjCooldown = true;
 
-            Abilities[(int)AbilityType.R] = new Riftwalk(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new Riftwalk(this));
+            abilityItem.ChampQuote = "You are null and void";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

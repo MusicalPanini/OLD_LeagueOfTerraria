@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class AstralInfusion : Ability
     {
-        public AstralInfusion(AbilityItem item) : base(item)
+        public AstralInfusion(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

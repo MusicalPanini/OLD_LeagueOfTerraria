@@ -12,22 +12,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class WujuBlade : AbilityItem
+    public class WujuBlade : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Highlander Ring Sword");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Keep up!";
         }
 
         public override void SetDefaults()
@@ -45,7 +35,10 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.R] = new Highlander(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new Highlander(this));
+            abilityItem.ChampQuote = "Keep up!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void AddRecipes()

@@ -13,22 +13,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class TerrorOfTheVoid : AbilityItem
+    public class TerrorOfTheVoid : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Terror of the Void");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Your souls will feed the void";
         }
 
         public override void SetDefaults()
@@ -49,12 +39,14 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = SoundID.Item8;
             item.noMelee = true;
 
-            Abilities[(int)AbilityType.R] = new Feast(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new Feast(this));
+            abilityItem.ChampQuote = "Your souls will feed the void";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)
         {
-            //if (player.ownedProjectileCounts[ProjectileType<TerrorOfTheVoid_RuptureSpike>()] > 0)
             if (player.ownedProjectileCounts[ProjectileType<TerrorOfTheVoid_RuptureControl>()] > 0)
                 return false;
             return base.CanUseItem(player);

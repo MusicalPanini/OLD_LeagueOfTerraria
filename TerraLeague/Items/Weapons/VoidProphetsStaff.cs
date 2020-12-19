@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class VoidProphetsStaff : AbilityItem
+    public class VoidProphetsStaff : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,14 +16,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Summon a gate way from the void";
-        }
-
-        public override string GetQuote()
-        {
-            return "Bow to the void! Or be consumed by it!";
         }
 
         public override void SetDefaults()
@@ -46,7 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 113);
             item.autoReuse = false;
 
-            Abilities[(int)AbilityType.E] = new MaleficVisions(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new MaleficVisions(this));
+            abilityItem.ChampQuote = "Bow to the void! Or be consumed by it!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

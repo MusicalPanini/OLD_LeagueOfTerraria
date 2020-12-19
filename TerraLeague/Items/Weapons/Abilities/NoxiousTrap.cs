@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class NoxiousTrap : Ability
     {
-        public NoxiousTrap(AbilityItem item) : base(item)
+        public NoxiousTrap(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

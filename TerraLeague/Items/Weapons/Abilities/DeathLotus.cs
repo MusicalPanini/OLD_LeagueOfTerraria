@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DeathLotus : Ability
     {
-        public DeathLotus(AbilityItem item) : base(item)
+        public DeathLotus(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

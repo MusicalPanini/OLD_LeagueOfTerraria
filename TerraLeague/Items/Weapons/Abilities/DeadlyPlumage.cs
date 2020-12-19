@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DeadlyPlumage : Ability
     {
-        public DeadlyPlumage(AbilityItem item) : base(item)
+        public DeadlyPlumage(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

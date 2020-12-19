@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class StarfireSpellbladesAscended : AbilityItem
+    public class StarfireSpellbladesAscended : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,15 +17,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
-            return "You have ascended" +
+            return "You have ascended!" +
                 "\nFire a wave of starfire that deals " + (int)(item.damage * 0.75) + " + " + TerraLeague.CreateScalingTooltip(DamageType.MEL, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MEL, 30) + " + " + TerraLeague.CreateScalingTooltip(DamageType.SUM, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SUM, 50) + " melee damage";
-        }
-
-        public override string GetQuote()
-        {
-            return "As evil grows, so shall I";
         }
 
         public override void SetDefaults()
@@ -42,10 +37,14 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Yellow;
             item.UseSound = SoundID.Item1;
             item.autoReuse = true;
-            item.shoot = ModContent.ProjectileType<StarfireSpellblades_Firewave>();
+            item.shoot = ProjectileType<StarfireSpellblades_Firewave>();
             item.shootSpeed = 8;
 
-            Abilities[(int)AbilityType.R] = new DivineJudgement(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new DivineJudgement(this));
+            abilityItem.ChampQuote = "Behold, the righteous flame!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -100,13 +99,6 @@ namespace TerraLeague.Items.Weapons
             item.prefix = prefix;
 
             base.Update(ref gravity, ref maxFallSpeed);
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.R)
-                return true;
-            return base.GetIfAbilityExists(type);
         }
     }
 }

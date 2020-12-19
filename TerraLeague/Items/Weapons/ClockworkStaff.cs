@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Linq;
-using TerraLeague.Buffs;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
@@ -11,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class ClockworkStaff : AbilityItem
+    public class ClockworkStaff : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,15 +19,10 @@ namespace TerraLeague.Items.Weapons
             base.SetStaticDefaults();
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Uses 3 minion slots" +
                 "\nCan only have one";
-        }
-
-        public override string GetQuote()
-        {
-            return "Time tick-ticks away";
         }
 
         public override void SetDefaults()
@@ -48,7 +42,11 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<ClockworkStaff_TheBall>();
 
-            Abilities[(int)AbilityType.Q] = new Abilities.CommandProtect(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new CommandProtect(this));
+            abilityItem.ChampQuote = "Time tick-ticks away";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool AltFunctionUse(Player player)
@@ -85,7 +83,7 @@ namespace TerraLeague.Items.Weapons
             }
             else
             {
-                player.AddBuff(BuffType<TheBall>(), 2);
+                player.AddBuff(BuffType<Buffs.TheBall>(), 2);
             }
             return base.CanUseItem(player);
         }

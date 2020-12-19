@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class TrueIceFlail : AbilityItem
+    public class TrueIceFlail : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,17 +16,12 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Chance to slow enemies on hit." +
                 "\nIf enemy is already slow, freeze them instead." +
                 "\nMelee attacks shatter frozen enemies, dealing 10% of their max life as extra damage (Max 200)" +
                 "\nShattered enemies cannot be frozen again for 5 seconds";
-        }
-
-        public override string GetQuote()
-        {
-            return "The cold does not forgive";
         }
 
         public override void SetDefaults()
@@ -49,7 +44,11 @@ namespace TerraLeague.Items.Weapons
             item.channel = true;
             item.shoot = ProjectileType<TrueIceFlail_Ball>();
 
-            Abilities[(int)AbilityType.R] = new GlacialPrison(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new GlacialPrison(this));
+            abilityItem.ChampQuote = "The cold does not forgive";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void AddRecipes()

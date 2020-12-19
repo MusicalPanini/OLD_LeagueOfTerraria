@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class ToxicShot : Ability
     {
-        public ToxicShot(AbilityItem item) : base(item)
+        public ToxicShot(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

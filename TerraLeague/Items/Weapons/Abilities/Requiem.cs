@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Requiem : Ability
     {
-        public Requiem(AbilityItem item) : base(item)
+        public Requiem(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

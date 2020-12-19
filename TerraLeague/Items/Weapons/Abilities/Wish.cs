@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Wish : Ability
     {
-        public Wish(AbilityItem item) : base(item)
+        public Wish(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

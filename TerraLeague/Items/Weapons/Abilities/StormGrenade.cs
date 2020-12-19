@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class StormGrenade : Ability
     {
-        public StormGrenade(AbilityItem item) : base(item)
+        public StormGrenade(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

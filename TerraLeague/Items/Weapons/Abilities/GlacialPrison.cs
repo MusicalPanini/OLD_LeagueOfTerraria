@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class GlacialPrison : Ability
     {
-        public GlacialPrison(AbilityItem item) : base(item)
+        public GlacialPrison(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -9,22 +9,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Hexplosives : AbilityItem
+    public class Hexplosives : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Hexplosives");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "This'll be a blast!";
         }
 
         public override void SetDefaults()
@@ -48,8 +38,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.Q] = new BouncingBomb(this);
-            Abilities[(int)AbilityType.E] = new HexsplosiveMineField(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new BouncingBomb(this));
+            abilityItem.SetAbility(AbilityType.E, new HexsplosiveMineField(this));
+            abilityItem.ChampQuote = "This'll be a blast!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

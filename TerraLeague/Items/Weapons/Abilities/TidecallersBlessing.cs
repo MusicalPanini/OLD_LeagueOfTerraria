@@ -10,13 +10,14 @@ using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons.Abilities
 {
     public class TidecallersBlessing : Ability
     {
-        public TidecallersBlessing(AbilityItem item) : base(item)
+        public TidecallersBlessing(ModItem item)
         {
             abilityItem = item;
         }

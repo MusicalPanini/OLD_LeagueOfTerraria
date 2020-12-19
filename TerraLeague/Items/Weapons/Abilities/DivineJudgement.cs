@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DivineJudgement : Ability
     {
-        public DivineJudgement(AbilityItem item) : base(item)
+        public DivineJudgement(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

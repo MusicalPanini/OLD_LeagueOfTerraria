@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class EyeofGod : AbilityItem
+    public class EyeofGod : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,14 +16,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Summon a tentacle of Nagakabouros to fight for you";
-        }
-
-        public override string GetQuote()
-        {
-            return "There are kind and gentle gods. Mine isn't one of those.";
         }
 
         public override void SetDefaults()
@@ -46,7 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 8);
             item.autoReuse = false;
 
-            Abilities[(int)AbilityType.E] = new TestOfSpirit(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new TestOfSpirit(this));
+            abilityItem.ChampQuote = "There are kind and gentle gods. Mine isn't one of those";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

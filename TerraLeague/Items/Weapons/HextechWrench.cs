@@ -5,11 +5,12 @@ using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class HextechWrench : AbilityItem
+    public class HextechWrench : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,14 +19,9 @@ namespace TerraLeague.Items.Weapons
             base.SetStaticDefaults();
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Create a H-28G Evolution Turret to fight for you!";
-        }
-
-        public override string GetQuote()
-        {
-            return "Stand back! I am about to do...science!";
         }
 
         public override void SetDefaults()
@@ -46,8 +42,12 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<HextechWrench_EvolutionTurret>();
 
-            Abilities[(int)AbilityType.W] = new MicroRockets(this);
-            Abilities[(int)AbilityType.E] = new StormGrenade(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new MicroRockets(this));
+            abilityItem.SetAbility(AbilityType.E, new StormGrenade(this));
+            abilityItem.ChampQuote = "Stand back! I am about to do...science!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

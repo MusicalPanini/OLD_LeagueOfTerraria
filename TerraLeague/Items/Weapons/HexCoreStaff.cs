@@ -11,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class HexCoreStaff : AbilityItem
+    public class HexCoreStaff : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,14 +19,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Control a Chaos Storm";
-        }
-
-        public override string GetQuote()
-        {
-            return "Join the glorious evolution";
         }
 
         public override void SetDefaults()
@@ -49,7 +44,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = false;
             item.mana = 40;
 
-            Abilities[(int)AbilityType.W] = new GravityField(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new GravityField(this));
+            abilityItem.ChampQuote = "Join the glorious evolution";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

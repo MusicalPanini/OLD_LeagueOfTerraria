@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class MagicCards : AbilityItem
+    public class MagicCards : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,17 +17,12 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Has a chance to throw a special card" +
-                "\n[c/0066ff:Blue Card] - Restore 25 mana on hit" +
-                "\n[c/ffff4d:Yellow Card] - Applies 'Stunned'" +
-                "\n[c/ff1a1a:Red Card] - Explodes on contact";
-        }
-
-        public override string GetQuote()
-        {
-            return "Lady luck is smilin'";
+                "\n" + TerraLeague.CreateColorString("0066ff", "Blue Card") + " - Restore 25 mana on hit" +
+                "\n" + TerraLeague.CreateColorString("ffff4d", "Yellow Card") + " - Applies 'Stunned'" +
+                "\n" + TerraLeague.CreateColorString("ff1a1a", "Red Card") + " - Explodes on contact";
         }
 
         public override void SetDefaults()
@@ -51,7 +46,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.Q] = new WildCards(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new WildCards(this));
+            abilityItem.ChampQuote = "Lady luck is smilin'";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

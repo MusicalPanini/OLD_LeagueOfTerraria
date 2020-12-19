@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Zap : Ability
     {
-        public Zap(AbilityItem item) : base(item)
+        public Zap(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

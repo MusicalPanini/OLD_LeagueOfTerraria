@@ -13,7 +13,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class ExcessiveForce : Ability
     {
-        public ExcessiveForce(AbilityItem item) : base(item)
+        public ExcessiveForce(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

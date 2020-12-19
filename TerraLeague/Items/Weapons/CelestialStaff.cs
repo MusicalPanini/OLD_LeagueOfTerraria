@@ -11,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-	public class CelestialStaff : AbilityItem
+	public class CelestialStaff : ModItem
 	{
         static readonly float baseRejuvChance = 0.1f;
 
@@ -38,11 +38,15 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 12f;
             item.autoReuse = true;
 
-            Abilities[(int)AbilityType.W] = new AstralInfusion(this);
-            Abilities[(int)AbilityType.R] = new Wish(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new AstralInfusion(this));
+            abilityItem.SetAbility(AbilityType.R, new Wish(this));
+            abilityItem.ChampQuote = "Stars, hear me";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Call down stars that have a chance to drop Rejuvenation Hearts on hit" +
                 "\nDrop Chance: " + TerraLeague.CreateScalingTooltip(DamageType.NONE, (int)(baseRejuvChance * 100), 100, true, "%") + " + " + TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, 15, true, "%");
@@ -55,14 +59,8 @@ namespace TerraLeague.Items.Weapons
             return modPlayer.ScaleValueWithHealPower((baseRejuvChance + (modPlayer.MAG * 0.15f * 0.01f)) * 100, true) * 0.01f; //(100 - baseRejuvChance) / (100 + modPlayer.ScaleValueWithHealPower(modPlayer.MAG, true));
         }
 
-        public override string GetQuote()
-        {
-            return "Stars, hear me";
-        }
-
         public override bool CanUseItem(Player player)
         {
-
             return true;
         }
 

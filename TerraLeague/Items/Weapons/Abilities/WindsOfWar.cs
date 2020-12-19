@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class WindsOfWar : Ability
     {
-        public WindsOfWar(AbilityItem item) : base(item)
+        public WindsOfWar(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

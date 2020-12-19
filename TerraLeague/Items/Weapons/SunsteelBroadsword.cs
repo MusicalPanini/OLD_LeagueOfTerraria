@@ -2,26 +2,17 @@
 using TerraLeague.Items.Weapons.Abilities;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class SunsteelBroadsword : AbilityItem
+    public class SunsteelBroadsword : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Sunsteel Broadsword");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "DEMACIA!";
         }
 
         public override void SetDefaults()
@@ -38,8 +29,11 @@ namespace TerraLeague.Items.Weapons
             item.rare = ItemRarityID.Blue;
             item.UseSound = SoundID.Item1;
 
-            Abilities[(int)AbilityType.Q] = new DecisiveStrike(this);
-            Abilities[(int)AbilityType.W] = new Courage(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new DecisiveStrike(this));
+            abilityItem.SetAbility(AbilityType.W, new Courage(this));
+            abilityItem.ChampQuote = "DEMACIA!";
+            abilityItem.IsAbilityItem = true;
         }
     }
 }

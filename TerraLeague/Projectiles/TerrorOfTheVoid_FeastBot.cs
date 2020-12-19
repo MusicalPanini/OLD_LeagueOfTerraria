@@ -104,7 +104,7 @@ namespace TerraLeague.Projectiles
             {
                 Player player = Main.player[projectile.owner];
 
-                Feast feast = new Feast(GetModItem(ItemType<TerrorOfTheVoid>()) as AbilityItem);
+                Feast feast = new Feast(GetModItem(ItemType<TerrorOfTheVoid>()));
 
                 if (feast != null)
                 {

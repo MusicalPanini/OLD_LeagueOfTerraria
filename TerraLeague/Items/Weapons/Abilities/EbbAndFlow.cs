@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Weapons.Abilities
     {
         bool checkingForHealing = false;
 
-        public EbbAndFlow(AbilityItem item) : base(item)
+        public EbbAndFlow(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -17,7 +17,7 @@ namespace TerraLeague.Items.Weapons.Abilities
     {
         bool checkingForHealing = false;
 
-        public PiercingDarkness(AbilityItem item) : base(item)
+        public PiercingDarkness(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

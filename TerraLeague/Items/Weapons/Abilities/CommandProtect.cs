@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class CommandProtect : Ability
     {
-        public CommandProtect(AbilityItem item) : base(item)
+        public CommandProtect(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

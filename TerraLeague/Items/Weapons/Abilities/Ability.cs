@@ -7,19 +7,15 @@ using System.Threading.Tasks;
 using TerraLeague.Buffs;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons.Abilities
 {
     public abstract class Ability
     {
-        internal AbilityItem abilityItem;
+        internal ModItem abilityItem;
         internal AbilitiesPacketHandler PacketHandler = new AbilitiesPacketHandler(7);
-
-        public Ability(AbilityItem item)
-        {
-            abilityItem = item;
-        }
 
         virtual public string GetTooltip()
         {
@@ -252,12 +248,13 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         }
 
-        protected int GetPositionOfAbilityInArray(AbilityItem item)
+        protected int GetPositionOfAbilityInArray(ModItem modItem)
         {
-            for (int i = 0; i < item.Abilities.Length; i++)
+            var abilityItem = modItem.item.GetGlobalItem<AbilityItemGLOBAL>();
+            for (int i = 0; i < 4; i++)
             {
-                if (item.Abilities[i] != null)
-                    if (item.Abilities[i].GetType() == GetType())
+                if (abilityItem.GetAbility((AbilityType)i) != null)
+                    if (abilityItem.GetAbility((AbilityType)i).GetType() == GetType())
                         return i;
             }
             return -1;

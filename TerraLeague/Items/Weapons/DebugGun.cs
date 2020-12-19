@@ -7,7 +7,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DebugGun : AbilityItem
+    public class DebugGun : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -15,14 +15,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "You probably shouldn't have this";
+            return "Does whatever I say it does";
         }
 
         public override void SetDefaults()
@@ -43,6 +38,15 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<SolariSet_SolarSigil>();
             //item.UseSound = new Terraria.Audio.LegacySoundStyle(2, 12);
             item.autoReuse = false;
+
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            //abilityItem.SetAbility(AbilityType.Q, new Defile(this));
+            //abilityItem.SetAbility(AbilityType.W, new Defile(this));
+            //abilityItem.SetAbility(AbilityType.E, new Defile(this));
+            //abilityItem.SetAbility(AbilityType.R, new Requiem(this));
+            abilityItem.ChampQuote = "You probably shouldn't have this";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -52,13 +56,6 @@ namespace TerraLeague.Items.Weapons
             speedY = 0;
             item.channel = false;
             return true;
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.E)
-                return false;
-            return base.GetIfAbilityExists(type);
         }
 
         public override Vector2? HoldoutOffset()

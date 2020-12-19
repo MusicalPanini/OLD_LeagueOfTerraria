@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class FoxFire : Ability
     {
-        public FoxFire(AbilityItem item) : base(item)
+        public FoxFire(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -9,22 +9,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Chalicar : AbilityItem
+    public class Chalicar : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Chalicar of Setaka");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetQuote()
-        {
-            return "Better duck!";
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
         }
 
         public override void SetDefaults()
@@ -47,12 +37,15 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.W] = new Ricochet(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new Ricochet(this));
+            abilityItem.ChampQuote = "Better duck!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)
         {
-            if (player.ownedProjectileCounts[ProjectileType<Projectiles.Chalicar_Disk>()] < 1)
+            if (player.ownedProjectileCounts[ProjectileType<Chalicar_Disk>()] < 1)
                 return base.CanUseItem(player);
             else
                 return false;
@@ -60,7 +53,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-
             return true;
         }
 

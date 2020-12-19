@@ -13,7 +13,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DecisiveStrike : Ability
     {
-        public DecisiveStrike(AbilityItem item) : base(item)
+        public DecisiveStrike(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

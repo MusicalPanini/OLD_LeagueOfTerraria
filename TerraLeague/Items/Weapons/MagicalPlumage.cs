@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class MagicalPlumage : AbilityItem
+    public class MagicalPlumage : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -17,14 +17,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Uses Razor Feathers as ammo";
-        }
-
-        public override string GetQuote()
-        {
-            return "Feathers fly!";
         }
 
         public override void SetDefaults()
@@ -48,7 +43,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.W] = new DeadlyPlumage(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new DeadlyPlumage(this));
+            abilityItem.ChampQuote = "Feathers fly!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void AddRecipes()

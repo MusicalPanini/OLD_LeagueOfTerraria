@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Crescendum : AbilityItem
+    public class Crescendum : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,16 +16,11 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Uses 1% Crescendum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
                 "\nThrow up to " + Main.LocalPlayer.maxMinions + " + 5 returning chakrams";
-        }
-
-        public override string GetQuote()
-        {
-            return "An orbit of blades";
         }
 
         public override void SetDefaults()
@@ -47,8 +42,13 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.Q] = new Sentry(this);
-            Abilities[(int)AbilityType.W] = new Phase(this, LunariGunType.Cre);
+            
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new Sentry(this));
+            abilityItem.SetAbility(AbilityType.W, new Phase(this, LunariGunType.Cre));
+            abilityItem.ChampQuote = "An orbit of blades";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons.Abilities
 {
     public class ShockingOrb : Ability
     {
-        public ShockingOrb(AbilityItem item) : base(item)
+        public ShockingOrb(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

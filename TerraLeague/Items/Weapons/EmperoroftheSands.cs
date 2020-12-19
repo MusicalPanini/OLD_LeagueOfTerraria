@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class EmperoroftheSands : AbilityItem
+    public class EmperoroftheSands : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,14 +19,9 @@ namespace TerraLeague.Items.Weapons
             base.SetStaticDefaults();
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Create a solder of sand to fight for you!";
-        }
-
-        public override string GetQuote()
-        {
-            return "Your emperor shall return";
         }
 
         public override void SetDefaults()
@@ -46,7 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<EmperoroftheSands_SandSolder>();
 
-            Abilities[(int)AbilityType.R] = new EmperorsDivide(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new EmperorsDivide(this));
+            abilityItem.ChampQuote = "Your emperor shall return";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool AltFunctionUse(Player player)

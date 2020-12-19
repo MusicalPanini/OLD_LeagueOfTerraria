@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TerraLeague.Buffs;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -9,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarkSovereignsStaff : AbilityItem
+    public class DarkSovereignsStaff : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,14 +19,9 @@ namespace TerraLeague.Items.Weapons
             base.SetStaticDefaults();
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Create a sphere of pure negative emotions to fight for you";
-        }
-
-        public override string GetQuote()
-        {
-            return "I will not be restrained";
         }
 
         public override void SetDefaults()
@@ -45,7 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.UseSound = new LegacySoundStyle(2, 113);
             item.shoot = ProjectileType<DarkSovereignsStaff_DarkSphere>();
 
-            Abilities[(int)AbilityType.R] = new Abilities.UnleashedPower(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new UnleashedPower(this));
+            abilityItem.ChampQuote = "I will not be restrained";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool AltFunctionUse(Player player)

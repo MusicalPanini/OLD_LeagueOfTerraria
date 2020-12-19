@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using TerraLeague.Buffs;
 using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
@@ -11,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarkinScythe : AbilityItem
+    public class DarkinScythe : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -19,14 +18,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Attacks will mark enemies";
-        }
-
-        public override string GetQuote()
-        {
-            return "From the shadow comes the slaughter";
         }
 
         public override void SetDefaults()
@@ -45,8 +39,12 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.useTurn = true;
 
-            Abilities[(int)AbilityType.Q] = new ReapingSlash(this);
-            Abilities[(int)AbilityType.R] = new Abilities.UmbralTrespass(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new ReapingSlash(this));
+            abilityItem.SetAbility(AbilityType.R, new UmbralTrespass(this));
+            abilityItem.ChampQuote = "From the shadow comes the slaughter";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)

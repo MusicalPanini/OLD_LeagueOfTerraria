@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DeathFromBelow : Ability
     {
-        public DeathFromBelow(AbilityItem item) : base(item)
+        public DeathFromBelow(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

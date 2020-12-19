@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class PowPow : AbilityItem
+    public class PowPow : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,15 +16,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Kills grant 'EXCITED!'" +
                 "\nEXCITED increases firerate and damage";
-        }
-
-        public override string GetQuote()
-        {
-            return "SAY HELLO TO MY FRIENDS OF VARYING SIZES!";
         }
 
         public override void SetDefaults()
@@ -47,7 +42,11 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 13f;
             item.useAmmo = AmmoID.Bullet;
 
-            Abilities[(int)AbilityType.E] = new Zap(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new Zap(this));
+            abilityItem.ChampQuote = "SAY HELLO TO MY FRIENDS OF VARYING SIZES!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

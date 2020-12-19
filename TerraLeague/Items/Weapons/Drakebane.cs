@@ -9,17 +9,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class Drakebane : AbilityItem
+    public class Drakebane : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Drakebane");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetQuote()
-        {
-            return "Righteous retribution!";
         }
 
         public override void SetDefaults()
@@ -40,7 +35,10 @@ namespace TerraLeague.Items.Weapons
             item.noMelee = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.E] = new DemacianStandard(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new DemacianStandard(this));
+            abilityItem.ChampQuote = "Righteous retribution!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

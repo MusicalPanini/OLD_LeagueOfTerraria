@@ -2909,39 +2909,50 @@ namespace TerraLeague
             {
                 bool[] Found = new bool[Abilities.Length];
 
-                AbilityItem heldItem = player.HeldItem.modItem as AbilityItem;
+                //AbilityItem heldItem = player.HeldItem.modItem as AbilityItem;
+                Item currentItem = player.HeldItem;
 
-                if (heldItem != null)
+                if (currentItem.type != ItemID.None)
                 {
-                    heldItem.SetDefaults();
-                    for (int i = 0; i < Abilities.Length; i++)
+                    AbilityItemGLOBAL heldItem = currentItem.GetGlobalItem<AbilityItemGLOBAL>();
+                    //heldItem.SetDefaults();
+                    if (heldItem.IsAbilityItem)
                     {
-                        if (heldItem.GetIfAbilityExists((AbilityType)i))
+
+                        for (int i = 0; i < Abilities.Length; i++)
                         {
-                            Abilities[i] = heldItem.Abilities[i];
-                            Found[i] = true;
+                            if (heldItem.GetIfAbilityExists((AbilityType)i))
+                            {
+                                Abilities[i] = heldItem.GetAbility((AbilityType)i);
+                                Found[i] = true;
+                            }
                         }
                     }
                 }
 
                 foreach (var item in player.inventory)
                 {
-                    AbilityItem curItem = item.modItem as AbilityItem;
+                    //AbilityItem curItem = item.modItem as AbilityItem;
 
-                    if (curItem != null)
+                    if (item.type != ItemID.None)
                     {
-                        curItem.SetDefaults();
-                        for (int i = 0; i < Abilities.Length; i++)
+                        AbilityItemGLOBAL curItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+                        //curItem.SetDefaults();
+                        if (curItem.IsAbilityItem)
                         {
-                            if (curItem.GetIfAbilityExists((AbilityType)i) && !Found[i])
-                            {
-                                Abilities[i] = curItem.Abilities[i];
-                                Found[i] = true;
-                            }
-                        }
 
-                        if (Found.Where(x => x).Count() == Found.Length)
-                            break;
+                            for (int i = 0; i < Abilities.Length; i++)
+                            {
+                                if (curItem.GetIfAbilityExists((AbilityType)i) && !Found[i])
+                                {
+                                    Abilities[i] = curItem.GetAbility((AbilityType)i);
+                                    Found[i] = true;
+                                }
+                            }
+
+                            if (Found.Where(x => x).Count() == Found.Length)
+                                break;
+                        }
                     }
                 }
 
@@ -3590,9 +3601,9 @@ namespace TerraLeague
         public int ScaleValueWithHealPower(float value, bool useLastFrameValue = false)
         {
             if (useLastFrameValue)
-                return (int)(value * healPowerLastStep);
+                return (int)Math.Round(value * healPowerLastStep, 0);
             else
-                return (int)(value * healPower);
+                return (int)Math.Round(value * healPower, 0);
         }
     }
 }

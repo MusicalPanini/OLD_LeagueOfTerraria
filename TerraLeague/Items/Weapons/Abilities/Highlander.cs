@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Highlander : Ability
     {
-        public Highlander(AbilityItem item) : base(item)
+        public Highlander(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

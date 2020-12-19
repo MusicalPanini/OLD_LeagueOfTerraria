@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Moonshot : Ability
     {
-        public Moonshot(AbilityItem item) : base(item)
+        public Moonshot(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

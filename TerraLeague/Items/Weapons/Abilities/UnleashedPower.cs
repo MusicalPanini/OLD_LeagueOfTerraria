@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class UnleashedPower : Ability
     {
-        public UnleashedPower(AbilityItem item) : base(item)
+        public UnleashedPower(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

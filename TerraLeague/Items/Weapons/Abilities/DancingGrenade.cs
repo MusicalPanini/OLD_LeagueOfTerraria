@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class DancingGrenade : Ability
     {
-        public DancingGrenade(AbilityItem item) : base(item)
+        public DancingGrenade(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

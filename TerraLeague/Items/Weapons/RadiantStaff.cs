@@ -11,9 +11,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class RadiantStaff : AbilityItem
+    public class RadiantStaff : ModItem
     {
-        int shielding = 0;
+        int shielding = 20;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Radiant Staff");
@@ -34,17 +34,12 @@ namespace TerraLeague.Items.Weapons
             }
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             string magic = TerraLeague.CreateScalingTooltip(DamageType.MAG, Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().MAG, 20);
             return "Send out a returning refraction of your staff, shielding allies and damaging enemies" +
                 "\nHas a chance to apply 'Illuminated' to enemies" +
                 "\n'Illuminated' enemies take 40 + " + magic + " magic On Hit damage from Radiant Staff";
-        }
-
-        public override string GetQuote()
-        {
-            return "Shine with me";
         }
 
         public override void SetDefaults()
@@ -63,9 +58,13 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<RadiantStaff_PrismaticBarrier>();
             item.shootSpeed = 12f;
             item.autoReuse = true;
-            shielding = 20;
-            Abilities[(int)AbilityType.E] = new LucentSingularity(this);
-            Abilities[(int)AbilityType.R] = new FinalSpark(this);
+
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.E, new LucentSingularity(this));
+            abilityItem.SetAbility(AbilityType.R, new FinalSpark(this));
+            abilityItem.ChampQuote = "Shine with me";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

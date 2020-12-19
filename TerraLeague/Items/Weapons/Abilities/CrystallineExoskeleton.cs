@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class CrystallineExoskeleton : Ability
     {
-        public CrystallineExoskeleton(AbilityItem item) : base(item)
+        public CrystallineExoskeleton(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

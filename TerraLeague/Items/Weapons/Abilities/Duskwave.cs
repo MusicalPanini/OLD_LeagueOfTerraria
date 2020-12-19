@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Duskwave : Ability
     {
-        public Duskwave(AbilityItem item) : base(item)
+        public Duskwave(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

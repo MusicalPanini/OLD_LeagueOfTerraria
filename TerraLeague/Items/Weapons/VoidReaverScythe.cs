@@ -8,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class VoidReaverScythe : AbilityItem
+    public class VoidReaverScythe : ModItem
     {
         public override bool OnlyShootOnSwing => false;
 
@@ -16,16 +16,6 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Voidreaver Scythe");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Fear the Void";
         }
 
         public override void SetDefaults()
@@ -47,7 +37,10 @@ namespace TerraLeague.Items.Weapons
             item.scale = 1.3f;
             item.GetGlobalItem<ITEMGLOBAL>().meleeProjCooldown = true;
 
-            Abilities[(int)AbilityType.R] = new EvolvedWings(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.R, new EvolvedWings(this));
+            abilityItem.ChampQuote = "Fear the Void";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)

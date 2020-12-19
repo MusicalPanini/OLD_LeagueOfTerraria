@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class BrassShotgun : AbilityItem
+    public class BrassShotgun : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -18,15 +18,10 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetQuote()
+        string GetWeaponTooltip()
         {
-            return "Dead man walkin'";
+            return "Holds 2 shots before needing to reload";
         }
-
-        //public override string GetWeaponTooltip()
-        //{
-        //    return "Holds 2 shots before needing to reload";
-        //}
 
         public override void SetDefaults()
         {
@@ -46,7 +41,11 @@ namespace TerraLeague.Items.Weapons
             item.shootSpeed = 6f;
             item.useAmmo = AmmoID.Bullet;
 
-            Abilities[(int)AbilityType.Q] = new EndOfTheLine(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new EndOfTheLine(this));
+            abilityItem.ChampQuote = "Dead man walkin'";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class Decimate : Ability
     {
-        public Decimate(AbilityItem item) : base(item)
+        public Decimate(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

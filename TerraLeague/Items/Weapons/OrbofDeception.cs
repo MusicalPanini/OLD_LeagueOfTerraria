@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class OrbofDeception : AbilityItem
+    public class OrbofDeception : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -20,14 +20,9 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
-        public override string GetWeaponTooltip()
+        string GetWeaponTooltip()
         {
             return "Send out a returning orb of magic that crits on the way back";
-        }
-
-        public override string GetQuote()
-        {
-            return "Let's have some real fun";
         }
 
         public override void SetDefaults()
@@ -51,7 +46,11 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.W] = new FoxFire(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.W, new FoxFire(this));
+            abilityItem.ChampQuote = "Let's have some real fun";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)

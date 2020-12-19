@@ -14,7 +14,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class WorldEnder : Ability
     {
-        public WorldEnder(AbilityItem item) : base(item)
+        public WorldEnder(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -9,13 +9,14 @@ using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons.Abilities
 {
     public class ArcaneShift : Ability
     {
-        public ArcaneShift(AbilityItem item) : base(item)
+        public ArcaneShift(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

@@ -15,7 +15,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 {
     public class WildCards : Ability
     {
-        public WildCards(AbilityItem item) : base(item)
+        public WildCards(Terraria.ModLoader.ModItem item)
         {
             abilityItem = item;
         }

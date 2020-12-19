@@ -8,22 +8,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class DarksteelThrowingAxe : AbilityItem
+    public class DarksteelThrowingAxe : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Darksteel Throwing Axe");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Welcome to the League of Draaaaven";
         }
 
         public override void SetDefaults()
@@ -46,7 +36,10 @@ namespace TerraLeague.Items.Weapons
             item.useTurn = true;
             item.noUseGraphic = true;
 
-            Abilities[(int)AbilityType.Q] = new SpinningAxe(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new SpinningAxe(this));
+            abilityItem.ChampQuote = "Welcome to the League of Draaaaven";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -56,10 +49,11 @@ namespace TerraLeague.Items.Weapons
             if (player.GetModPlayer<PLAYERGLOBAL>().spinningAxe)
             {
                 type = ProjectileType<DarksteelThrowingAxe_SpinningAxe>();
-                if (Abilities[(int)AbilityType.Q] != null)
+                AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+                if (abilityItem.GetAbility(AbilityType.Q) != null)
                 {
-                    damage += Abilities[(int)AbilityType.Q].GetAbilityBaseDamage(player);
-                    damage += Abilities[(int)AbilityType.Q].GetAbilityScaledDamage(player, DamageType.RNG);
+                    damage += abilityItem.GetAbility(AbilityType.Q).GetAbilityBaseDamage(player);
+                    damage += abilityItem.GetAbility(AbilityType.Q).GetAbilityScaledDamage(player, DamageType.RNG);
                 }
                 Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY) * 1.2f, type, damage, knockBack + 1.5f, player.whoAmI, 1, player.velocity.X);
                 player.ClearBuff(BuffType<Buffs.SpinningAxe>());
@@ -78,13 +72,6 @@ namespace TerraLeague.Items.Weapons
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
             recipe.AddRecipe();
-        }
-
-        public override bool GetIfAbilityExists(AbilityType type)
-        {
-            if (type == AbilityType.Q)
-                return true;
-            return base.GetIfAbilityExists(type);
         }
     }
 }

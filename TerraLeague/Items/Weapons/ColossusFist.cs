@@ -9,22 +9,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items.Weapons
 {
-    public class ColossusFist : AbilityItem
+    public class ColossusFist : ModItem
     {
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Colossus Fist");
             Tooltip.SetDefault("");
-        }
-
-        public override string GetWeaponTooltip()
-        {
-            return "";
-        }
-
-        public override string GetQuote()
-        {
-            return "Time to make an impact!";
         }
 
         public override void SetDefaults()
@@ -48,7 +38,10 @@ namespace TerraLeague.Items.Weapons
             item.noUseGraphic = true;
             item.shoot = ProjectileType<ColossusFist_Fist>();
 
-            Abilities[(int)AbilityType.Q] = new WindsOfWar(this);
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new WindsOfWar(this));
+            abilityItem.ChampQuote = "Time to make an impact!";
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
