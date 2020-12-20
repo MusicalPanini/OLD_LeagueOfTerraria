@@ -415,10 +415,7 @@ namespace TerraLeague.UI
                 sumImage.SetImage(TerraLeague.instance.GetTexture(spell.GetIconTexturePath()));
                 sumImage.ImageScale = 1;
 
-                if (modPlayer.sumCooldowns[slotNum - 1] == 0)
-                    sumCD.SetText("");
-                else
-                    sumCD.SetText((modPlayer.sumCooldowns[slotNum - 1] / 60 + 1).ToString());
+                sumCD.SetText(GetCooldown(slotNum));
 
                 sumCD.Left.Pixels = 0;
                 sumCD.Width.Pixels = this.Width.Pixels;
@@ -454,6 +451,31 @@ namespace TerraLeague.UI
             int height = (int)Math.Ceiling(dimensions.Height);
             spriteBatch.Draw(_backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
             base.DrawSelf(spriteBatch);
+        }
+
+        string GetCooldown(int slot)
+        {
+            PLAYERGLOBAL modPlayer = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>();
+            float cooldown = modPlayer.sumCooldowns[slot - 1];
+
+            if (cooldown > 0)
+            {
+                if (cooldown > 10 * 60)
+                {
+                    return (cooldown / 60).ToString().Split('.')[0];
+                }
+                else
+                {
+                    string text = (Math.Round(cooldown / 60, 1)).ToString();
+                    if (text.Length == 1)
+                        text += ".0";
+                    return text;
+                }
+            }
+            else
+            {
+                return "";
+            }
         }
     }
 

@@ -87,9 +87,9 @@ namespace TerraLeague.Items.SummonerSpells
         /// Gets the Cooldown of the spell adjusted with cooldown reduction
         /// </summary>
         /// <returns></returns>
-        virtual public int GetCooldown()
+        virtual public float GetCooldown()
         {
-            return (int)(GetRawCooldown() * (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SummonerCdrLastStep));
+            return (float)Math.Round(GetRawCooldown() * (Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().SummonerCdrLastStep), 1);
         }
 
         /// <summary>

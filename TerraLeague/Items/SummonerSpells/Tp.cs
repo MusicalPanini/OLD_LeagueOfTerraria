@@ -205,7 +205,7 @@ namespace TerraLeague.Items.SummonerSpells
 			{
 				if (modPlayer.sumSpells[i].Name == "TeleportRune")
 				{
-					modPlayer.sumCooldowns[i] = modPlayer.sumSpells[i].GetCooldown() * 60;
+					modPlayer.sumCooldowns[i] = (int)(modPlayer.sumSpells[i].GetCooldown() * 60);
 					return;
 				}
 			}

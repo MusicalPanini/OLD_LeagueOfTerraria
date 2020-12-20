@@ -122,9 +122,9 @@ namespace TerraLeague.Items.Weapons.Abilities
             return "";
         }
 
-        virtual public int GetCooldown()
+        virtual public float GetCooldown()
         {
-            int cooldown = (int)(GetRawCooldown() * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().CdrLastStep);
+            float cooldown = (float)Math.Round(GetRawCooldown() * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().CdrLastStep, 1);
 
             return cooldown < 1 ? 1 : cooldown;
         }
@@ -179,7 +179,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
             PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
 
-            modPlayer.AbilityCooldowns[(int)type] = (GetCooldown() * 60);
+            modPlayer.AbilityCooldowns[(int)type] = (int)(GetCooldown() * 60);
         }
 
         virtual public void DoEffect(Player player, AbilityType type)

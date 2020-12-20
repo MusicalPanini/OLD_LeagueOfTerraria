@@ -222,6 +222,7 @@ namespace TerraLeague.UI
 
             slotCD.SetText(GetCooldown(abilityType));
             slotCD.Left.Pixels = 0;
+            slotCD.Top.Pixels = 12;
             slotCD.Width.Pixels = this.Width.Pixels;
             slotCD.HAlign = 0.5f;
 
@@ -292,12 +293,26 @@ namespace TerraLeague.UI
 
         string GetCooldown(AbilityType type)
         {
-            int cooldown = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().AbilityCooldowns[(int)type];
+            float cooldown = Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().AbilityCooldowns[(int)type];
 
             if (cooldown > 0)
-                return (cooldown / 60 + 1).ToString();
+            {
+                if (cooldown > 10 * 60)
+                {
+                    return (cooldown / 60).ToString().Split('.')[0];
+                }
+                else
+                {
+                    string text = (Math.Round(cooldown / 60, 1)).ToString();
+                    if (text.Length == 1)
+                        text += ".0";
+                    return text;
+                }
+            }
             else
+            {
                 return "";
+            }
         }
 
         bool GetIfAbilityExists(AbilityType type)
