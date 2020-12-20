@@ -36,9 +36,9 @@ namespace TerraLeague.Items.Ammo
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(GetInstance<ManaBar>(), 1);
-            recipe.AddIngredient(ItemID.Feather, 10);
+            recipe.AddIngredient(ItemID.Feather, 1);
             recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this, 200);
+            recipe.SetResult(this, 100);
             recipe.AddRecipe();
         }
     }
