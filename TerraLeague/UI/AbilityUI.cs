@@ -221,7 +221,9 @@ namespace TerraLeague.UI
             slotNum.SetText(slotNumText);
 
             slotCD.SetText(GetCooldown(abilityType));
-            slotCD.Left.Pixels = 18 - (slotCD.Text.Length * 2);
+            slotCD.Left.Pixels = 0;
+            slotCD.Width.Pixels = this.Width.Pixels;
+            slotCD.HAlign = 0.5f;
 
             if (GetIfAbilityExists(abilityType))
             {

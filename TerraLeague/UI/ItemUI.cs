@@ -420,7 +420,9 @@ namespace TerraLeague.UI
                 else
                     sumCD.SetText((modPlayer.sumCooldowns[slotNum - 1] / 60 + 1).ToString());
 
-                sumCD.Left.Pixels = 18 - (sumCD.Text.Length * 4);
+                sumCD.Left.Pixels = 0;
+                sumCD.Width.Pixels = this.Width.Pixels;
+                sumCD.HAlign = 0.5f;
             }
             else
             {
@@ -512,6 +514,7 @@ namespace TerraLeague.UI
         Texture2D _backgroundTexture = null;
         Texture2D placeholderArt = Main.buffTexture[BuffID.Oiled];
         UIImage itemImage;
+        UIText itemCooldown;
         UIText itemStat;
         UIText itemKey;
         int slotNum;
@@ -538,6 +541,13 @@ namespace TerraLeague.UI
             itemStat.Left.Pixels = 8;
             itemStat.Top.Pixels = 24;
             Append(itemStat);
+
+            itemCooldown = new UIText("", 1);
+            itemCooldown.Width.Pixels = dimentions;
+            itemCooldown.Height.Pixels = dimentions;
+            itemCooldown.HAlign = 0.5f;
+            itemCooldown.VAlign = 0.5f;
+            Append(itemCooldown);
 
             itemKey = new UIText(slotNum.ToString(), 0.75f);
             itemKey.Left.Pixels = 2;
@@ -577,7 +587,16 @@ namespace TerraLeague.UI
 
             if (legItem != null)
             {
-                itemStat.SetText(legItem.GetStatText());
+                if (legItem.OnCooldown(Main.LocalPlayer))
+                {
+                    itemCooldown.SetText(legItem.GetStatText());
+                    itemStat.SetText("");
+                }
+                else
+                {
+                    itemCooldown.SetText("");
+                    itemStat.SetText(legItem.GetStatText());
+                }
 
                 if (legItem.OnCooldown(Main.LocalPlayer))
                 {
@@ -608,6 +627,8 @@ namespace TerraLeague.UI
                 itemStat.Left.Pixels = 16;
                 itemStat.Top.Pixels = 30;
                 itemImage.ImageScale = 1;
+                itemCooldown.HAlign = 0.5f;
+                itemCooldown.Top.Pixels = 12;
             }
             else
             {
