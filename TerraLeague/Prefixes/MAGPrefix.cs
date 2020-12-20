@@ -50,7 +50,7 @@ namespace TerraLeague.Prefixes
 
         public override void Apply(Item item)
         {
-            item.GetGlobalItem<ITEMGLOBAL>().MAG = MAG;
+            item.GetGlobalItem<TerraLeaguePrefixGLOBAL>().MAG = MAG;
             if (MAG == 2)
                 item.rare += 2;
             else

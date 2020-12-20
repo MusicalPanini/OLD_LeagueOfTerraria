@@ -22,7 +22,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().calibrumMark = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().calibrumMark = true;
         }
     }
 }

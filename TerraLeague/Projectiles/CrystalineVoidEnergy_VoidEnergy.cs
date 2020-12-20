@@ -49,7 +49,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            NPCsGLOBAL modNPC = target.GetGlobalNPC<NPCsGLOBAL>();
+            TerraLeagueNPCsGLOBAL modNPC = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>();
             PLAYERGLOBAL modPlayer = Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>();
 
 
@@ -57,7 +57,7 @@ namespace TerraLeague.Projectiles
             modNPC.CausticWounds = true;
             modNPC.CausticStacks++;
 
-            int stacks = target.GetGlobalNPC<NPCsGLOBAL>().CausticStacks;
+            int stacks = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CausticStacks;
             if (stacks == 5)
             {
                 projectile.magic = true;

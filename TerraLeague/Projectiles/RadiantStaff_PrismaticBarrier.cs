@@ -172,7 +172,7 @@ namespace TerraLeague.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             projectile.localAI[0] = 1f;
-            if (target.GetGlobalNPC<NPCs.NPCsGLOBAL>().illuminated)
+            if (target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().illuminated)
                 Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().magicOnHit += 40 + (int)(Main.player[projectile.owner].GetModPlayer<PLAYERGLOBAL>().MAG * 0.2);
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

@@ -35,7 +35,7 @@ namespace TerraLeague.Tiles
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)
         {
-            return WORLDGLOBAL.TargonArenaDefeated && Main.hardMode;
+            return TerraLeagueWORLDGLOBAL.TargonArenaDefeated && Main.hardMode;
         }
     }
 }

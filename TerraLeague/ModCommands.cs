@@ -133,7 +133,7 @@ namespace TerraLeague
                 Main.time = 0;
             }
 
-            WORLDGLOBAL.BlackMistEvent = true;
+            TerraLeagueWORLDGLOBAL.BlackMistEvent = true;
         }
     }
 }

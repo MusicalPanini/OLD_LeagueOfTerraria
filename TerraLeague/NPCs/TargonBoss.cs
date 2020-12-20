@@ -46,7 +46,7 @@ namespace TerraLeague.NPCs
 
         public override bool PreAI()
         {
-            if (WORLDGLOBAL.TargonCenterX != 0)
+            if (TerraLeagueWORLDGLOBAL.TargonCenterX != 0)
             {
                 npc.ai[2] += 1f;
                 if (npc.ai[2] > 360)
@@ -54,7 +54,7 @@ namespace TerraLeague.NPCs
                     npc.ai[2] -= 360;
                     npc.netUpdate = true;
                 }
-                npc.Center = new Vector2(WORLDGLOBAL.TargonCenterX * 16, (float)(Main.worldSurface + 50) * 16);
+                npc.Center = new Vector2(TerraLeagueWORLDGLOBAL.TargonCenterX * 16, (float)(Main.worldSurface + 50) * 16);
                 npc.position.Y += 16 * (float)System.Math.Sin(MathHelper.ToRadians(npc.ai[2]));
 
             }
@@ -102,7 +102,7 @@ namespace TerraLeague.NPCs
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                WORLDGLOBAL.targonBossActive = true;
+                TerraLeagueWORLDGLOBAL.targonBossActive = true;
             }
             return base.PreAI();
         }
@@ -328,7 +328,7 @@ namespace TerraLeague.NPCs
 
         public override bool CheckDead()
         {
-            WORLDGLOBAL.TargonArenaDefeated = true;
+            TerraLeagueWORLDGLOBAL.TargonArenaDefeated = true;
 
             return base.CheckDead();
         }

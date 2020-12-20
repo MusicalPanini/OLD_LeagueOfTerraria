@@ -313,7 +313,7 @@ namespace TerraLeague
                     new List<int>() { ModContent.NPCType<TargonBoss>() }, // NPC Types
                     this, // Mod
                     "The Celestial Gate Keeper", // Name
-                    (Func<bool>)(() => WORLDGLOBAL.TargonArenaDefeated), // Completion Check
+                    (Func<bool>)(() => TerraLeagueWORLDGLOBAL.TargonArenaDefeated), // Completion Check
                     0, // Spawn Item 
                     new List<int>() { ModContent.ItemType<Items.Placeable.TargonBossTrophy>() }, // Collection Items
                     new List<int>() { ModContent.ItemType<Items.CelestialBar>(), ModContent.ItemType<Items.Placeable.TargonMonolith>(), ModContent.ItemType<Items.Accessories.BottleOfStardust>() }, // Drops
@@ -329,7 +329,7 @@ namespace TerraLeague
                     new List<int>() { ModContent.NPCType<TheUndying_1>(), ModContent.NPCType<TheUndying_Archer>(), ModContent.NPCType<TheUndying_Necromancer>(), ModContent.NPCType<BansheeHive>(), ModContent.NPCType<EtherealRemitter>(), ModContent.NPCType<FallenCrimera>(), ModContent.NPCType<MistEater>(), ModContent.NPCType<SoulBoundSlime>(), ModContent.NPCType<SpectralBitter>(), ModContent.NPCType<UnleashedSpirit>(), ModContent.NPCType<Scuttlegeist>(), ModContent.NPCType<MistDevourer_Head>(), ModContent.NPCType<ShelledHorror>(), ModContent.NPCType<SpectralShark>(), ModContent.NPCType<Mistwraith>(), ModContent.NPCType<ShadowArtilery>() }, // NPC Types
                     this, // Mod
                     "The Harrowing", // Name
-                    (Func<bool>)(() => WORLDGLOBAL.BlackMistDefeated), // Completion Check
+                    (Func<bool>)(() => TerraLeagueWORLDGLOBAL.BlackMistDefeated), // Completion Check
                     0, // Spawn Item 
                     0, // Collection Items
                     new List<int>() { ModContent.ItemType<EternalFlame>(), ModContent.ItemType<Items.Tools.FadingMemories>(), ModContent.ItemType<Nightbloom>(), ModContent.ItemType<Items.Armor.NecromancersHood>(), ModContent.ItemType<Items.Armor.NecromancersRobe>(), ModContent.ItemType<Items.DamnedSoul>() }, // Drops
@@ -839,7 +839,7 @@ namespace TerraLeague
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
                 {
-                    npc.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendRemoveBuff(-1, Main.myPlayer, buffType, target);
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendRemoveBuff(-1, Main.myPlayer, buffType, target);
                 }
             }
         }

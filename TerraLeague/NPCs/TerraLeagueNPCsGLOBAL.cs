@@ -13,7 +13,7 @@ using TerraLeague.Items.SummonerSpells;
 
 namespace TerraLeague.NPCs
 {
-    public class NPCsGLOBAL : GlobalNPC
+    public class TerraLeagueNPCsGLOBAL : GlobalNPC
     {
         internal NPCPacketHandler PacketHandler = new NPCPacketHandler(2);
         public float initialSpeed = 1;
@@ -684,9 +684,9 @@ namespace TerraLeague.NPCs
                     Player player = Main.player[projectile.owner];
                     int vessel = NPC.NewNPC((int)player.Bottom.X + (64 * player.direction), (int)player.Bottom.Y, npc.type);
                     Main.npc[vessel].life = npc.life;
-                    Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTarget = npc.whoAmI;
-                    Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vessel = true;
-                    Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTimer = 420;
+                    Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTarget = npc.whoAmI;
+                    Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vessel = true;
+                    Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTimer = 420;
                 }
                 //Main.npc[vessel].AddBuff(ModContent.BuffType<Vessel>(), 60 * 7);
             }

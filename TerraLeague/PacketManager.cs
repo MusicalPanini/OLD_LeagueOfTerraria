@@ -692,20 +692,20 @@ namespace TerraLeague
             {
                 case 1:
                     npc.AddBuff(BuffType<CausticWounds>(), 240);
-                    npc.GetGlobalNPC<NPCsGLOBAL>().CausticWounds = true;
-                    npc.GetGlobalNPC<NPCsGLOBAL>().CausticStacks = num;
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CausticWounds = true;
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CausticStacks = num;
                     break;
                 case 2:
-                    npc.GetGlobalNPC<NPCsGLOBAL>().CleavedStacks = num;
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks = num;
                     break;
                 case 3:
-                    npc.GetGlobalNPC<NPCsGLOBAL>().DeadlyVenomStacks = num;
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks = num;
                     break;
                 case 4:
-                    npc.GetGlobalNPC<NPCsGLOBAL>().HemorrhageStacks = num;
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().HemorrhageStacks = num;
                     break;
                 case 5:
-                    npc.GetGlobalNPC<NPCsGLOBAL>().PoxStacks = num;
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks = num;
                     break;
                 default:
                     break;
@@ -731,9 +731,9 @@ namespace TerraLeague
 
             int vessel = NPC.NewNPC((int)Main.player[player].Bottom.X + (64 * Main.player[player].direction), (int)Main.player[player].Bottom.Y, npc.type);
             Main.npc[vessel].life = npc.life;
-            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTarget = npc.whoAmI;
-            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vessel = true;
-            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTimer = 420;
+            Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTarget = npc.whoAmI;
+            Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vessel = true;
+            Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTimer = 420;
 
             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, vessel);
 
@@ -754,9 +754,9 @@ namespace TerraLeague
             int vessel = reader.ReadInt32();
             int vesselTarget = reader.ReadInt32();
 
-            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTarget = vesselTarget;
-            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vessel = true;
-            Main.npc[vessel].GetGlobalNPC<NPCsGLOBAL>().vesselTimer = 420;
+            Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTarget = vesselTarget;
+            Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vessel = true;
+            Main.npc[vessel].GetGlobalNPC<TerraLeagueNPCsGLOBAL>().vesselTimer = 420;
 
             TerraLeague.Log("[DEBUG] - Recieved Vessel Sync for " + Main.npc[vessel].FullName, Color.White);
         }
@@ -1788,7 +1788,7 @@ namespace TerraLeague
             bool active = reader.ReadBoolean();
             TerraLeague.Log("Recieved Global Black Mist is now set to " + active, Color.SeaGreen);
 
-            WORLDGLOBAL.BlackMistEvent = active;
+            TerraLeagueWORLDGLOBAL.BlackMistEvent = active;
         }
     }
 }

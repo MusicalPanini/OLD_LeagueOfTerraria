@@ -175,7 +175,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (target.GetGlobalNPC<NPCsGLOBAL>().ablaze)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().ablaze)
             {
                 damage *= 2;
                 Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<BurningVengance_PyroclasmExplosion>(), projectile.damage / 2, 5, projectile.owner);

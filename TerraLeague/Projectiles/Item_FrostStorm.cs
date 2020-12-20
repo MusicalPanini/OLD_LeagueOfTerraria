@@ -61,7 +61,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.GetGlobalNPC<NPCsGLOBAL>().harbingersInferno)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().harbingersInferno)
             {
                 if (target.townNPC)
                     return false;

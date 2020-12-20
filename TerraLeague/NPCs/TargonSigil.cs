@@ -65,7 +65,7 @@ namespace TerraLeague.NPCs
             }
 
             npc.spriteDirection = -1;
-            npc.Center = new Vector2(WORLDGLOBAL.TargonCenterX * 16, 45 * 16);
+            npc.Center = new Vector2(TerraLeagueWORLDGLOBAL.TargonCenterX * 16, 45 * 16);
             npc.position.Y += (float)System.Math.Sin(Main.time * 0.1);
 
             Lighting.AddLight(npc.Center, 0, 0.3f, 1f);
@@ -91,18 +91,18 @@ namespace TerraLeague.NPCs
         public override void NPCLoot()
         {
             if (Main.netMode != NetmodeID.MultiplayerClient && NPC.CountNPCS(NPCType<NPCs.TargonSigil>()) == 0)
-                NPC.NewNPC(WORLDGLOBAL.TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
+                NPC.NewNPC(TerraLeagueWORLDGLOBAL.TargonCenterX * 16, 45 * 16, NPCType<NPCs.TargonSigil>());
             base.NPCLoot();
         }
 
         public override string GetChat()
         {
             string text = "From the greater beyond you can hear whispers in a language you do not know, but strangly can understand.";
-            if (!WORLDGLOBAL.TargonUnlocked)
+            if (!TerraLeagueWORLDGLOBAL.TargonUnlocked)
             {
                 return text + "\n\nYou are not worthy of their challenge just yet.";
             }
-            else if (!WORLDGLOBAL.TargonArenaDefeated)
+            else if (!TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
             {
                 if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
                 {
@@ -135,7 +135,7 @@ namespace TerraLeague.NPCs
 
         public override void SetChatButtons(ref string button, ref string button2)
         {
-            if (WORLDGLOBAL.TargonUnlocked && !WORLDGLOBAL.TargonArenaDefeated)
+            if (TerraLeagueWORLDGLOBAL.TargonUnlocked && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
             {
                 if (NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
                     button = "Accept Challenge";
@@ -156,7 +156,7 @@ namespace TerraLeague.NPCs
 
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
-            if (NPC.downedBoss1 && !WORLDGLOBAL.TargonArenaDefeated)
+            if (NPC.downedBoss1 && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
             {
                 if (firstButton)
                 {
@@ -166,7 +166,7 @@ namespace TerraLeague.NPCs
                     }
                     else
                     {
-                        npc.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
+                        npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
                     }
                 }
             }
@@ -207,7 +207,7 @@ namespace TerraLeague.NPCs
                     }
                     else
                     {
-                        npc.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
+                        npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSpawnNPC(-1, Main.LocalPlayer.whoAmI, NPCType<TargonBoss>(), new Vector2((int)npc.position.X, (float)(Main.worldSurface * 16) + 64));
                     }
                 }
                 else

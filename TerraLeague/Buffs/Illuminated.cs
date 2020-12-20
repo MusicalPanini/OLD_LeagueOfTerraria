@@ -21,7 +21,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().illuminated = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().illuminated = true;
         }
     }
 }

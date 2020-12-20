@@ -1122,13 +1122,13 @@ namespace TerraLeague
                 }
             }
 
-            zoneSurfaceMarble = (WORLDGLOBAL.marbleBlocks > 300);
+            zoneSurfaceMarble = (TerraLeagueWORLDGLOBAL.marbleBlocks > 300);
             if (zoneSurfaceMarble)
             {
                 nPCSpawnInfo.marble = true;
             }
 
-            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 4) || (WORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
+            zoneBlackMist = ((player.ZoneBeach && !Main.dayTime && Main.moonPhase == 4) || (TerraLeagueWORLDGLOBAL.BlackMistEvent && player.ZoneOverworldHeight));
 
             if (zoneBlackMist)
             {
@@ -1288,7 +1288,7 @@ namespace TerraLeague
                 else
                     player.lifeRegen = -20;
             }
-            if (targonArena && !WORLDGLOBAL.TargonArenaDefeated && NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
+            if (targonArena && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated && NPC.CountNPCS(NPCType<TargonBoss>()) <= 0)
             {
                 player.lifeRegenTime = 0;
                 if (player.lifeRegen < 0)
@@ -2170,7 +2170,7 @@ namespace TerraLeague
             }
             else
             {
-                NPCsGLOBAL modNPC = target.GetGlobalNPC<NPCsGLOBAL>();
+                TerraLeagueNPCsGLOBAL modNPC = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>();
 
                 int onhitdamage = 0;
 
@@ -2258,7 +2258,7 @@ namespace TerraLeague
                 }
                 if (proj.melee)
                 {
-                    if (target.GetGlobalNPC<NPCsGLOBAL>().frozen)
+                    if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().frozen)
                     {
                         ShatterEnemy(target, ref damage);
                     }
@@ -2359,7 +2359,7 @@ namespace TerraLeague
                 {
                     if (proj.melee)
                         onhitdamage = (int)(onhitdamage * 0.75);
-                    target.GetGlobalNPC<NPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, (guinsoosRage && (proj.ranged || proj.melee)));
+                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, (guinsoosRage && (proj.ranged || proj.melee)));
                     player.addDPS(onhitdamage);
                 }
 
@@ -2407,7 +2407,7 @@ namespace TerraLeague
             damage = (int)(damage * meleeModifer);
             damage += meleeFlatDamage;
 
-            if (target.GetGlobalNPC<NPCsGLOBAL>().frozen)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().frozen)
             {
                 ShatterEnemy(target, ref damage);
             }
@@ -2488,7 +2488,7 @@ namespace TerraLeague
             // On Hit Damage Calculation
             if (onhitdamage > 0 && Main.rand.NextBool(4))
             {
-                target.GetGlobalNPC<NPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, guinsoosRage);
+                target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().OnHitDamage(target, player, onhitdamage, 0, 0, guinsoosRage);
                 player.addDPS(onhitdamage);
             }
 
@@ -2637,7 +2637,7 @@ namespace TerraLeague
         /// <returns></returns>
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
-            if (npc.GetGlobalNPC<NPCsGLOBAL>().bubbled || invincible || contactDodge)
+            if (npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled || invincible || contactDodge)
             {
                 return false;
             }

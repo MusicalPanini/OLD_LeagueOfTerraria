@@ -20,10 +20,10 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-                npc.GetGlobalNPC<NPCsGLOBAL>().frozen = true;
+                npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().frozen = true;
             if (!npc.boss)
             {
-                npc.GetGlobalNPC<NPCsGLOBAL>().stunned = true;
+                npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().stunned = true;
             }
         }
     }

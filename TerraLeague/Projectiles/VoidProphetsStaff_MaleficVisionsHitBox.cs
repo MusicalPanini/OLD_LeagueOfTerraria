@@ -71,7 +71,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (target.GetGlobalNPC<NPCsGLOBAL>().grievousWounds)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().grievousWounds)
                 damage = (int)(damage * 1.5);
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

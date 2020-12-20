@@ -23,8 +23,8 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().requiem = true;
-            npc.GetGlobalNPC<NPCsGLOBAL>().requiemTime = npc.buffTime[buffIndex];
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().requiem = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().requiemTime = npc.buffTime[buffIndex];
         }
     }
 }

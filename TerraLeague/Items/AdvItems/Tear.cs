@@ -60,4 +60,19 @@ namespace TerraLeague.Items.AdvItems
                 return "";
         }
     }
+
+    public class ManaChargeGLOBAL : GlobalItem
+    {
+        public override bool OnPickup(Item item, Player player)
+        {
+            if (item.type == ItemID.Star || item.type == ItemID.SoulCake || item.type == ItemID.SugarPlum)
+            {
+                PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
+                if (modPlayer.manaCharge && modPlayer.manaChargeStacks < 750)
+                    modPlayer.manaChargeStacks++;
+            }
+
+            return base.OnPickup(item, player);
+        }
+    }
 }

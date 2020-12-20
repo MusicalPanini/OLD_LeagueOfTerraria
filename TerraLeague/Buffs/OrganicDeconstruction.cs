@@ -23,7 +23,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().OrgDest = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().OrgDest = true;
         }
     }
 }

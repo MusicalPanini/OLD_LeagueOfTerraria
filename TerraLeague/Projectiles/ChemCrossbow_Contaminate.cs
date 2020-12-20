@@ -76,7 +76,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            damage *= target.GetGlobalNPC<NPCsGLOBAL>().DeadlyVenomStacks + 1;
+            damage *= target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks + 1;
             crit = false;
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

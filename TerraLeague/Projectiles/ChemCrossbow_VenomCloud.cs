@@ -89,14 +89,14 @@ namespace TerraLeague.Projectiles
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
-            int stacks = target.GetGlobalNPC<NPCsGLOBAL>().DeadlyVenomStacks;
+            int stacks = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks;
 
             if (stacks < 4)
             {
-                target.GetGlobalNPC<NPCsGLOBAL>().DeadlyVenomStacks++;
+                target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks++;
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    target.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 3, target.whoAmI, target.GetGlobalNPC<NPCsGLOBAL>().DeadlyVenomStacks);
+                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 3, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().DeadlyVenomStacks);
             }
 
             target.AddBuff(BuffType<DeadlyVenom>(), 300);

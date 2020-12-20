@@ -89,7 +89,7 @@ namespace TerraLeague.Items.Weapons.Abilities
                 {
                     for (int i = 0; i < npcs.Count; i++)
                     {
-                        if (npcs[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - 15, (int)Main.MouseWorld.Y - 15, 30, 30)) && npcs[i].GetGlobalNPC<NPCs.NPCsGLOBAL>().umbralTrespass && npcs[i].aiStyle != 91 && player.CheckMana(GetBaseManaCost(), true))
+                        if (npcs[i].Hitbox.Intersects(new Rectangle((int)Main.MouseWorld.X - 15, (int)Main.MouseWorld.Y - 15, 30, 30)) && npcs[i].GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().umbralTrespass && npcs[i].aiStyle != 91 && player.CheckMana(GetBaseManaCost(), true))
                         {
                             player.GetModPlayer<PLAYERGLOBAL>().umbralTaggedNPC = npcs[i];
                             player.AddBuff(BuffType<UmbralTrespassing>(), 240);

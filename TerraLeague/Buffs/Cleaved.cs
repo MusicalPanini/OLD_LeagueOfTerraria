@@ -23,7 +23,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().cleaved = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().cleaved = true;
 
         }
     }

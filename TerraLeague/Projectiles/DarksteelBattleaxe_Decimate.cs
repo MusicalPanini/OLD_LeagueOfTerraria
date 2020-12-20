@@ -96,14 +96,14 @@ namespace TerraLeague.Projectiles
 
             player.lifeToHeal += 7;
 
-            int stacks = target.GetGlobalNPC<NPCsGLOBAL>().HemorrhageStacks;
+            int stacks = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().HemorrhageStacks;
 
             if (stacks < 4)
             {
-                target.GetGlobalNPC<NPCsGLOBAL>().HemorrhageStacks++;
+                target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().HemorrhageStacks++;
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    target.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 4, target.whoAmI, target.GetGlobalNPC<NPCsGLOBAL>().HemorrhageStacks);
+                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 4, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().HemorrhageStacks);
             }
 
             target.AddBuff(BuffType<Hemorrhage>(), 300);

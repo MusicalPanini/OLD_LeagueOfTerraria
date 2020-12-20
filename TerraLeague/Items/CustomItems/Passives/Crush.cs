@@ -21,14 +21,14 @@ namespace TerraLeague.Items.CustomItems.Passives
 
         public override void NPCHit(Item item, NPC target, ref int damage, ref float knockback, ref bool crit, ref int OnHitDamage, Player player, ModItem modItem)
         {
-            int stacks = target.GetGlobalNPC<NPCsGLOBAL>().CleavedStacks;
+            int stacks = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks;
 
             if (stacks < 5)
             {
-                target.GetGlobalNPC<NPCsGLOBAL>().CleavedStacks++;
+                target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks++;
 
                 if (Main.netMode == NetmodeID.MultiplayerClient)
-                    target.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 2, target.whoAmI, target.GetGlobalNPC<NPCsGLOBAL>().CleavedStacks);
+                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 2, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().CleavedStacks);
             }
 
             target.AddBuff(BuffType<Cleaved>(), 360);

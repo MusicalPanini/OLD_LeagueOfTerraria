@@ -31,9 +31,9 @@ namespace TerraLeague.Buffs
             {
                 if (initial)
                 {
-                    npc.GetGlobalNPC<NPCsGLOBAL>().initialSpeed = npc.velocity.X;
+                    npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().initialSpeed = npc.velocity.X;
                 }
-                npc.GetGlobalNPC<NPCsGLOBAL>().slowed = true;
+                npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().slowed = true;
                 initial = false;
             }
         }

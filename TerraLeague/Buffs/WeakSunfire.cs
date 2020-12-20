@@ -20,7 +20,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().weakSunfire = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().weakSunfire = true;
         }
     }
 }

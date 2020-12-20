@@ -136,7 +136,7 @@ namespace TerraLeague.NPCs
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 pos = new Vector2(WORLDGLOBAL.TargonCenterX * 16 + 8, (float)(Main.worldSurface + 50) * 16);
+                    Vector2 pos = new Vector2(TerraLeagueWORLDGLOBAL.TargonCenterX * 16 + 8, (float)(Main.worldSurface + 50) * 16);
 
                     Projectile proj = Projectile.NewProjectileDirect(pos, TerraLeague.CalcVelocityToPoint(pos, npc.position, 24), ProjectileType<TargonBoss_SoulShackles>(), TargonBossAttack.MorgDamage, 0, 255, Main.npc.First(x => x.type == NPCType<TargonBoss>()).whoAmI, -1);
                     proj.ai[0] = Main.npc.First(x => x.type == NPCType<TargonBoss>()).whoAmI;

@@ -53,7 +53,7 @@ namespace TerraLeague.Prefixes
 
         public override void Apply(Item item)
         {
-            item.GetGlobalItem<ITEMGLOBAL>().Armor = Armor;
+            item.GetGlobalItem<TerraLeaguePrefixGLOBAL>().Armor = Armor;
             if (Armor == 3)
                 item.rare += 2;
             else

@@ -10,7 +10,7 @@ namespace TerraLeague.Items.Weapons
 {
     public class VoidReaverScythe : ModItem
     {
-        public override bool OnlyShootOnSwing => false;
+        public override bool OnlyShootOnSwing => true;
 
         public override void SetStaticDefaults()
         {
@@ -35,7 +35,6 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<VoidReaverScythe_VoidSpike>();
             item.shootSpeed = 18;
             item.scale = 1.3f;
-            item.GetGlobalItem<ITEMGLOBAL>().meleeProjCooldown = true;
 
             AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.R, new EvolvedWings(this));

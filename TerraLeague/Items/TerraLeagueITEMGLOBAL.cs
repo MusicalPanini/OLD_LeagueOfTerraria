@@ -17,67 +17,14 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague.Items
 {
-    public class ITEMGLOBAL : GlobalItem
+    public class TerraLeagueITEMGLOBAL : GlobalItem
     {
-        public double HealingPowerLastStep = 0;
-        public bool Transedent;
-        public byte Armor;
-        public byte Resist;
-        public byte HealPower;
-        public byte MEL;
-        public byte RNG;
-        public byte MAG;
-        public byte SUM;
-
-        public bool meleeProjCooldown = false;
-
-        public ITEMGLOBAL()
-        {
-            Transedent = false;
-            Armor = 0;
-            Resist = 0;
-            HealPower = 0;
-            MEL = 0;
-            RNG = 0;
-            MAG = 0;
-            SUM = 0;
-        }
-
-        public override bool NewPreReforge(Item item)
-        {
-            Transedent = false;
-            Armor = 0;
-            Resist = 0;
-            HealPower = 0;
-            MEL = 0;
-            RNG = 0;
-            MAG = 0;
-            SUM = 0;
-
-            return base.NewPreReforge(item);
-        }
-
-        public override bool InstancePerEntity
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override bool CloneNewInstances
-        {
-            get
-            {
-                return true;
-            }
-        }
+        //public bool meleeProjCooldown = false;
 
         public override void SetDefaults(Item item)
         {
             if (item.type == ItemID.StoneBlock || item.type == ItemID.EbonstoneBlock || item.type == ItemID.CrimstoneBlock || item.type == ItemID.PearlstoneBlock)
             {
-                // Need an itemid from the mod to not conflict with other mods
                 item.ammo = ItemType<BlackIceChunk>();
             }
 
@@ -121,18 +68,6 @@ namespace TerraLeague.Items
             base.SetDefaults(item);
         }
 
-        public override bool OnPickup(Item item, Player player)
-        {
-            if (item.type == ItemID.Star || item.type == ItemID.SoulCake || item.type == ItemID.SugarPlum)
-            {
-                PLAYERGLOBAL modPlayer = player.GetModPlayer<PLAYERGLOBAL>();
-                if (modPlayer.manaCharge && modPlayer.manaChargeStacks < 750)
-                    modPlayer.manaChargeStacks++;
-            }
-
-            return base.OnPickup(item, player);
-        }
-
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item.summon)
@@ -145,7 +80,6 @@ namespace TerraLeague.Items
                     string damageWord = splitText.Last();
                     tt2.text = Math.Round(item.damage * Main.LocalPlayer.GetModPlayer<PLAYERGLOBAL>().minionDamageLastStep) + " minion damage";
                 }
-
             }
 
             if (item.type == ItemID.PirateHat)
@@ -180,73 +114,6 @@ namespace TerraLeague.Items
                     tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "15% chance to not consume ammo"));
             }
 
-            if (!item.social && item.prefix > 0)
-            {
-                if (Transedent)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixCDR", "+5 ability, item, and summoner spell haste")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-                if (Armor > 0)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixArmor", "+" + (2 * Armor) + " armor")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-                if (Resist > 0)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixResist", "+" + (2 * Resist) + " resist")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-                if (HealPower > 0)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixHealPower", "+" + (3 * HealPower) + "% healing power")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-                if (MEL > 0)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixMEL", "+" + (10 * MEL) + " MEL")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-                if (RNG > 0)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixRNG", "+" + (10 * RNG) + " RNG")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-                if (MAG > 0)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixMAG", "+" + (10 * MAG) + " MAG")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-                if (SUM > 0)
-                {
-                    TooltipLine line = new TooltipLine(mod, "PrefixSUM", "+" + (10 * SUM) + " SUM")
-                    {
-                        isModifier = true
-                    };
-                    tooltips.Add(line);
-                }
-            }
             base.ModifyTooltips(item, tooltips);
         }
 
@@ -288,27 +155,7 @@ namespace TerraLeague.Items
             base.UseStyle(item, player);
         }
 
-        public override void UpdateInventory(Item item, Player player)
-        {
-
-            if (item.healLife > 0)
-            {
-                int stack = item.stack;
-                bool fav = item.favorited;
-
-                item.SetDefaults(item.type);
-
-                item.stack = stack;
-                item.favorited = fav;
-
-                if (player.GetModPlayer<PLAYERGLOBAL>().hasSpiritualRestorationLastStep)
-                    item.healLife = (int)(item.healLife * 1.3);
-
-                item.healLife = player.GetModPlayer<PLAYERGLOBAL>().ScaleValueWithHealPower(item.healLife, true);
-            }
-
-            base.UpdateInventory(item, player);
-        }
+        
 
         public override bool CanUseItem(Item item, Player player)
         {
@@ -348,42 +195,6 @@ namespace TerraLeague.Items
 
         public override void UpdateEquip(Item item, Player player)
         {
-            // Prefixes
-            if (Transedent)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().abilityHaste += 5;
-                player.GetModPlayer<PLAYERGLOBAL>().itemHaste += 5;
-                player.GetModPlayer<PLAYERGLOBAL>().summonerHaste += 5;
-            }
-            else if (Armor > 0)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().armor += 2 * Armor;
-            }
-            else if (Resist > 0)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().resist += 2 * Resist;
-            }
-            else if (HealPower > 0)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().healPower += 0.03 * HealPower;
-            }
-            else if (MEL > 0)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().BonusMEL += 10 * MEL;
-            }
-            else if (RNG > 0)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().BonusRNG += 10 * RNG;
-            }
-            else if (MAG > 0)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().BonusMAG += 10 * MAG;
-            }
-            else if (SUM > 0)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().BonusSUM += 10 * SUM;
-            }
-
             // Pirate set
             if (item.type == ItemID.PirateHat)
             {
@@ -438,72 +249,6 @@ namespace TerraLeague.Items
             }
         }
 
-        public override bool ReforgePrice(Item item, ref int reforgePrice, ref bool canApplyDiscount)
-        {
-            // Prefixes
-            if (Transedent)
-            {
-                reforgePrice = (int)(reforgePrice * 1.21);
-            }
-            else if (Armor > 0)
-            {
-                if (Armor == 1)
-                    reforgePrice = (int)(reforgePrice * 1.21);
-                else if (Armor == 2)
-                    reforgePrice = (int)(reforgePrice * 1.3225);
-                else if (Armor == 3)
-                    reforgePrice = (int)(reforgePrice * 1.44);
-            }
-            else if (Resist > 0)
-            {
-                if (Resist == 1)
-                    reforgePrice = (int)(reforgePrice * 1.21);
-                else if (Resist == 2)
-                    reforgePrice = (int)(reforgePrice * 1.3225);
-                else if (Resist == 3)
-                    reforgePrice = (int)(reforgePrice * 1.44);
-            }
-            else if (HealPower > 0)
-            {
-                if (HealPower == 1)
-                    reforgePrice = (int)(reforgePrice * 1.21);
-                else if (HealPower == 2)
-                    reforgePrice = (int)(reforgePrice * 1.3225);
-                else if (HealPower == 3)
-                    reforgePrice = (int)(reforgePrice * 1.44);
-            }
-            else if (MEL > 0)
-            {
-                if (MEL == 1)
-                    reforgePrice = (int)(reforgePrice * 1.3225);
-                else if (MEL == 2)
-                    reforgePrice = (int)(reforgePrice * 1.44);
-            }
-            else if (RNG > 0)
-            {
-                if (RNG == 1)
-                    reforgePrice = (int)(reforgePrice * 1.3225);
-                else if (RNG == 2)
-                    reforgePrice = (int)(reforgePrice * 1.44);
-            }
-            else if (MAG > 0)
-            {
-                if (MAG == 1)
-                    reforgePrice = (int)(reforgePrice * 1.3225);
-                else if (MAG == 2)
-                    reforgePrice = (int)(reforgePrice * 1.44);
-            }
-            else if (SUM > 0)
-            {
-                if (SUM == 1)
-                    reforgePrice = (int)(reforgePrice * 1.3225);
-                else if (SUM == 2)
-                    reforgePrice = (int)(reforgePrice * 1.44);
-            }
-
-            return base.ReforgePrice(item, ref reforgePrice, ref canApplyDiscount);
-        }
-
         public override void UpdateArmorSet(Player player, string set)
         {
             if (set == "Pirate")
@@ -533,14 +278,14 @@ namespace TerraLeague.Items
 
         public override bool Shoot(Item item, Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            if (player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
-            {
-                return false;
-            }
-            else if (meleeProjCooldown && !player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
-            {
-                player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown = true;
-            }
+            //if (player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
+            //{
+            //    return false;
+            //}
+            //else if (meleeProjCooldown && !player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown)
+            //{
+            //    player.GetModPlayer<PLAYERGLOBAL>().meleeProjCooldown = true;
+            //}
 
             return base.Shoot(item, player, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
         }
@@ -569,44 +314,6 @@ namespace TerraLeague.Items
                     resultType = ItemType<Sunstone>();
                 }
             }
-        }
-
-        public override GlobalItem Clone(Item item, Item itemClone)
-        {
-            ITEMGLOBAL myClone = (ITEMGLOBAL)base.Clone(item, itemClone);
-            myClone.Transedent = Transedent;
-            myClone.Armor = Armor;
-            myClone.Resist = Resist;
-            myClone.HealPower = HealPower;
-            myClone.MEL = MEL;
-            myClone.RNG = RNG;
-            myClone.MAG = MAG;
-            myClone.SUM = SUM;
-            return myClone;
-        }
-
-        public override void NetSend(Item item, BinaryWriter writer)
-        {
-            writer.Write(Transedent);
-            writer.Write(Armor);
-            writer.Write(Resist);
-            writer.Write(HealPower);
-            writer.Write(MEL);
-            writer.Write(RNG);
-            writer.Write(MAG);
-            writer.Write(SUM);
-        }
-
-        public override void NetReceive(Item item, BinaryReader reader)
-        {
-            Transedent = reader.ReadBoolean();
-            Armor = reader.ReadByte();
-            Resist = reader.ReadByte();
-            HealPower = reader.ReadByte();
-            MEL = reader.ReadByte();
-            RNG = reader.ReadByte();
-            MAG = reader.ReadByte();
-            SUM = reader.ReadByte();
         }
     }
 }

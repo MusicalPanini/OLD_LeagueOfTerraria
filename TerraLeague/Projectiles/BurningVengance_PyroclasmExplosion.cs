@@ -59,7 +59,7 @@ namespace TerraLeague.Projectiles
         {
             hitDirection = projectile.Center.X > target.Center.X ? -1 : 1;
 
-            if (target.GetGlobalNPC<NPCsGLOBAL>().ablaze)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().ablaze)
             {
                 damage *= 2;
                 Projectile.NewProjectileDirect(target.Center, Vector2.Zero, ProjectileType<BurningVengance_PyroclasmExplosion>(), projectile.damage / 2, 5, projectile.owner);

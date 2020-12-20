@@ -50,7 +50,7 @@ namespace TerraLeague.Prefixes
 
         public override void Apply(Item item)
         {
-            item.GetGlobalItem<ITEMGLOBAL>().SUM = SUM;
+            item.GetGlobalItem<TerraLeaguePrefixGLOBAL>().SUM = SUM;
             if (SUM == 2)
                 item.rare += 2;
             else

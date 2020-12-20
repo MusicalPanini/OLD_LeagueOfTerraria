@@ -37,7 +37,7 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (target.GetGlobalNPC<NPCsGLOBAL>().illuminated)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().illuminated)
                 damage *= 2;
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

@@ -19,7 +19,7 @@ namespace TerraLeague.Buffs
         {
             if(!npc.boss)
             {
-                npc.GetGlobalNPC<NPCsGLOBAL>().bubbled = true;
+                npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled = true;
             }
         }
     }

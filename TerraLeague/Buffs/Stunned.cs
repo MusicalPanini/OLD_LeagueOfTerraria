@@ -25,7 +25,7 @@ namespace TerraLeague.Buffs
 
             if(!npc.boss)
             {
-                npc.GetGlobalNPC<NPCsGLOBAL>().stunned = true;
+                npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().stunned = true;
             }
         }
     }

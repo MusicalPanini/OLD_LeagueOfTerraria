@@ -10,7 +10,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 namespace TerraLeague.Tiles
 {
-    public class GLOBALTILE : GlobalTile
+    public class TerraLeagueTILEGLOBAL : GlobalTile
     {
 
         public override void SetDefaults()
@@ -37,7 +37,7 @@ namespace TerraLeague.Tiles
 
         public override bool CanPlace(int i, int j, int type)
         {
-            if (Main.tile[i, j].wall == WallType<Walls.TargonStoneWall_Arena>() && !WORLDGLOBAL.TargonArenaDefeated)
+            if (Main.tile[i, j].wall == WallType<Walls.TargonStoneWall_Arena>() && !TerraLeagueWORLDGLOBAL.TargonArenaDefeated)
                 return false;
             return base.CanPlace(i, j, type);
         }

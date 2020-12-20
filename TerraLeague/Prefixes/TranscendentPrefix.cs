@@ -28,7 +28,7 @@ namespace TerraLeague.Prefixes
 
         public override void Apply(Item item)
         {
-            item.GetGlobalItem<ITEMGLOBAL>().Transedent = true;
+            item.GetGlobalItem<TerraLeaguePrefixGLOBAL>().Transedent = true;
             item.rare += 1;
         }
     }

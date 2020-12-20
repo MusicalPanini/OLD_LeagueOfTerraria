@@ -29,14 +29,14 @@ namespace TerraLeague.Items.CustomItems.Passives
         {
             if (proj.magic)
             {
-                int stacks = target.GetGlobalNPC<NPCsGLOBAL>().PoxStacks;
+                int stacks = target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks;
 
                 if (stacks < 4)
                 {
-                    target.GetGlobalNPC<NPCsGLOBAL>().PoxStacks++;
+                    target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks++;
 
                     if (Main.netMode == NetmodeID.MultiplayerClient)
-                        target.GetGlobalNPC<NPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 5, target.whoAmI, target.GetGlobalNPC<NPCsGLOBAL>().PoxStacks);
+                        target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PacketHandler.SendSyncStats(Main.LocalPlayer.whoAmI, -1, 5, target.whoAmI, target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks);
                 }
 
                 target.AddBuff(BuffType<Buffs.Pox>(), 600);

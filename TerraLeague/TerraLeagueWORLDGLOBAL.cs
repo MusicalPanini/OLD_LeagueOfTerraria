@@ -24,7 +24,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace TerraLeague
 {
-    public class WORLDGLOBAL : ModWorld
+    public class TerraLeagueWORLDGLOBAL : ModWorld
     {
         public static bool targonBossActive = false;
         static bool TargonArenaActive = false;

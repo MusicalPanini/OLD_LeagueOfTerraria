@@ -20,7 +20,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().harbingersInferno = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().harbingersInferno = true;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace TerraLeague.Buffs
         {
             if (npc.HasBuff(BuffID.OnFire))
                 npc.DelBuff(npc.FindBuffIndex(BuffID.OnFire));
-            npc.GetGlobalNPC<NPCsGLOBAL>().ablaze = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().ablaze = true;
         }
     }
 }

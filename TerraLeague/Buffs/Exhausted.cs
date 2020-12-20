@@ -22,7 +22,7 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().exhaused = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().exhaused = true;
             npc.damage = (int)(npc.damage * 0.4);
         }
     }

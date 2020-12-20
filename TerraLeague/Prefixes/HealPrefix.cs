@@ -53,7 +53,7 @@ namespace TerraLeague.Prefixes
 
         public override void Apply(Item item)
         {
-            item.GetGlobalItem<ITEMGLOBAL>().HealPower = Heal;
+            item.GetGlobalItem<TerraLeaguePrefixGLOBAL>().HealPower = Heal;
             if (Heal == 3)
                 item.rare += 2;
             else

@@ -71,7 +71,7 @@ namespace TerraLeague.Projectiles
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             crit = false;
-            if (target.GetGlobalNPC<NPCsGLOBAL>().slowed)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().slowed)
             {
                 crit = true;
                 float multiplier = (Main.player[projectile.owner].rangedCrit + 75) * 0.01333f;

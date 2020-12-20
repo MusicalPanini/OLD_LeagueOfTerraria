@@ -53,7 +53,7 @@ namespace TerraLeague.Prefixes
 
         public override void Apply(Item item)
         {
-            item.GetGlobalItem<ITEMGLOBAL>().Resist = Resist;
+            item.GetGlobalItem<TerraLeaguePrefixGLOBAL>().Resist = Resist;
             if (Resist == 3)
                 item.rare += 2;
             else

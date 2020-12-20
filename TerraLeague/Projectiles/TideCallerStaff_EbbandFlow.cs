@@ -177,7 +177,7 @@ namespace TerraLeague.Projectiles
         {
             projectile.netUpdate = true;
 
-            if (target.GetGlobalNPC<NPCsGLOBAL>().stunned || target.GetGlobalNPC<NPCsGLOBAL>().bubbled)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().stunned || target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled)
             {
                 for (int i = 0; i < 12; i++)
                 {

@@ -20,7 +20,7 @@ namespace TerraLeague.Walls
 
         public override void KillWall(int i, int j, ref bool fail)
         {
-            fail = WORLDGLOBAL.TargonArenaDefeated;
+            fail = TerraLeagueWORLDGLOBAL.TargonArenaDefeated;
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)

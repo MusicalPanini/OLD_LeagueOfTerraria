@@ -76,9 +76,9 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            damage *= target.GetGlobalNPC<NPCsGLOBAL>().PoxStacks + 1;
-            Main.player[projectile.owner].ManaEffect((int)projectile.ai[1] * (target.GetGlobalNPC<NPCsGLOBAL>().PoxStacks + 1));
-            Main.player[projectile.owner].statMana += (int)projectile.ai[1] * (target.GetGlobalNPC<NPCsGLOBAL>().PoxStacks + 1);
+            damage *= target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks + 1;
+            Main.player[projectile.owner].ManaEffect((int)projectile.ai[1] * (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks + 1));
+            Main.player[projectile.owner].statMana += (int)projectile.ai[1] * (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().PoxStacks + 1);
             crit = false;
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);

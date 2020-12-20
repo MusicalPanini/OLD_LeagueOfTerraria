@@ -23,8 +23,8 @@ namespace TerraLeague.Buffs
 
         public override void Update(NPC npc, ref int buffIndex)
         {
-            npc.GetGlobalNPC<NPCsGLOBAL>().slowed = true;
-            npc.GetGlobalNPC<NPCsGLOBAL>().gravitumMark = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().slowed = true;
+            npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().gravitumMark = true;
         }
     }
 }

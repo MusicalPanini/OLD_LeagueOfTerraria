@@ -83,7 +83,7 @@ namespace TerraLeague.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.GetGlobalNPC<NPCsGLOBAL>().bubbled)
+            if (target.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled)
                 return false;
             else
                 return base.CanHitNPC(target);
