@@ -96,7 +96,7 @@ namespace TerraLeague.Items.Boots
 
         public void Update(Player player)
         {
-            item.value = 100000;
+            //item.value = 100000;
             if (Main.hardMode)
             {
                 player.GetModPlayer<PLAYERGLOBAL>().T5Boots = true;

@@ -20,6 +20,7 @@ namespace TerraLeague.Items.Boots
             item.height = 26;
             item.accessory = true;
             item.material = true;
+            base.SetDefaults();
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
