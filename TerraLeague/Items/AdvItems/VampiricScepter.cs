@@ -25,7 +25,6 @@ namespace TerraLeague.Items.AdvItems
             item.rare = ItemRarityID.Orange;
             item.accessory = true;
             item.material = true;
-            item.defense = 3;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
