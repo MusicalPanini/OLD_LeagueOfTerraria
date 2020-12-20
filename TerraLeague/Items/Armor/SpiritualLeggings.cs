@@ -12,7 +12,7 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Spiritual Leggings");
-            Tooltip.SetDefault("10% increased magic damage" +
+            Tooltip.SetDefault("Increases mana regeneration by 50%" +
                 "\n7% increased movement speed");
         }
 
@@ -27,8 +27,8 @@ namespace TerraLeague.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.magicDamage += 0.1f;
             player.moveSpeed += 0.07f;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
         }
 
         public override void AddRecipes()

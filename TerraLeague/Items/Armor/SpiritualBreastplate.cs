@@ -13,7 +13,7 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Spiritual Gown");
-            Tooltip.SetDefault("5% increased magic damage and critical strike chance");
+            Tooltip.SetDefault("30 increased MEL, RNG, MAG, and SUM");
         }
 
         public override void SetDefaults()
@@ -22,15 +22,17 @@ namespace TerraLeague.Items.Armor
             item.height = 20;
             item.value = 40000;
             item.rare = ItemRarityID.Orange;
-            item.defense = 7;
+            item.defense = 6;
             item.backSlot = (sbyte)mod.GetEquipSlot("SpiritualBreastplate", EquipType.Back);
         }
 
         public override void UpdateEquip(Player player)
         {
             player.back = item.backSlot;
-            player.magicDamage += 0.05f;
-            player.magicCrit += 5;
+            player.GetModPlayer<PLAYERGLOBAL>().BonusMEL += 30;
+            player.GetModPlayer<PLAYERGLOBAL>().BonusRNG += 30;
+            player.GetModPlayer<PLAYERGLOBAL>().BonusMAG += 30;
+            player.GetModPlayer<PLAYERGLOBAL>().BonusSUM += 30;
         }
 
         public override void UpdateVanity(Player player, EquipType type)

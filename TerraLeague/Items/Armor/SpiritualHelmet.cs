@@ -12,7 +12,7 @@ namespace TerraLeague.Items.Armor
         {
             DisplayName.SetDefault("Spiritual Head Piece");
             Tooltip.SetDefault("Increases maximum mana by 30" +
-                "\nIncreases ability haste by 10" +
+                "\nIncreases ability haste by 20" +
                 "\nIncreases item haste by 15");
             base.SetStaticDefaults();
         }
