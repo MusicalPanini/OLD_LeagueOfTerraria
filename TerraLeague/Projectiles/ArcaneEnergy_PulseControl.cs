@@ -51,12 +51,6 @@ namespace TerraLeague.Projectiles
                 //dust.velocity *= 0;
             }
 
-            if (projectile.soundDelay == 0 && projectile.localAI[0] < 600)
-            {
-                projectile.soundDelay = 30;
-                TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 15, -0.5f + projectile.localAI[0] / 600f);
-            }
-
             if (player.channel)
             {
                 projectile.Center = player.MountedCenter;
@@ -74,8 +68,29 @@ namespace TerraLeague.Projectiles
                     dust.customData = player;
                 }
 
-                if (projectile.localAI[0] < 600)
+                if (projectile.localAI[0] < 540)
+                {
+
+                    if (projectile.soundDelay == 0 && projectile.localAI[0] < 540 && projectile.localAI[0] > 29)
+                    {
+                        projectile.soundDelay = 30;
+                        TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 15, -0.5f + (projectile.localAI[0] - 30) / 540f);
+                    }
+
+                    if ((int)projectile.localAI[0] % 60 == 0)
+                    {
+                        string percent = (((int)projectile.localAI[0] / 60) * 100 + 100) + "%";
+                        CombatText.NewText(player.Hitbox, new Color(0, 100, 255), percent, false, true);
+                    }
+
                     projectile.localAI[0]++;
+
+                    if (projectile.localAI[0] >= 540)
+                    {
+                        CombatText.NewText(player.Hitbox, new Color(0, 100, 255), "1000%", true, true);
+                        TerraLeague.PlaySoundWithPitch(player.MountedCenter, 2, 15, -0.5f + 510f / 540f);
+                    }
+                }
                 player.itemTime = 24;
                 player.itemAnimation = 24;
             }

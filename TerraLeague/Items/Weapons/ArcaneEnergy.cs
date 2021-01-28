@@ -46,6 +46,7 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = false;
             item.channel = true;
             item.noMelee = true;
+            item.UseSound = new LegacySoundStyle(2, 82, Terraria.Audio.SoundType.Sound);
 
             AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.E, new ShockingOrb(this));
@@ -62,7 +63,6 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.noMelee = true;
             return true;
         }
 
