@@ -32,7 +32,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Toss 3 mushroom traps that will rupture and release clouds of venom when an enemy is near";
+            return "Toss " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "TURRETS", (int)Main.LocalPlayer.maxTurrets, 100) + " + 2 mushroom traps that rupture and release clouds of venom when an enemy is near";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -76,14 +76,16 @@ namespace TerraLeague.Items.Weapons.Abilities
             if (CheckIfNotOnCooldown(player, type) && player.CheckMana(GetBaseManaCost(), true))
             {
                 Vector2 position = player.MountedCenter;
-                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 8f);
+                Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 4f);
                 int projType = ProjectileType<ToxicBlowgun_NoxiousTrap>();
                 int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.SUM);
                 int knockback = 0;
 
-                Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(position, velocity * 1.5f, projType, damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(position, velocity * 0.5f, projType, damage, knockback, player.whoAmI);
+                for (int i = 0; i < 2 + player.maxTurrets; i++)
+                {
+                    Projectile.NewProjectile(position, velocity + (velocity * 0.5f * i), projType, damage, knockback, player.whoAmI);
+
+                }
 
                 SetAnimation(player, 20, 20, position + velocity);
                 DoEfx(player, type);
