@@ -32,7 +32,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Toss a bunch of small bombs that creates a mine field";
+            return "Toss a cluster of small bombs that creates a mine field";
         }
 
         public override int GetAbilityBaseDamage(Player player)

@@ -32,7 +32,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Launch " + Main.LocalPlayer.maxMinions * 2 + " dark spheres at a targeted enemy";
+            return "Launch " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)Main.LocalPlayer.maxMinions, 200) + " dark spheres at a targeted enemy";
         }
 
         public override int GetAbilityBaseDamage(Player player)
