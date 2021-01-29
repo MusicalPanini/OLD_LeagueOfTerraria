@@ -32,7 +32,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Throw 3 cards in a cone";
+            return "Throw " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)Main.LocalPlayer.maxMinions, 100) + " + 2 cards in a cone";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -45,7 +45,9 @@ namespace TerraLeague.Items.Weapons.Abilities
             switch (dam)
             {
                 case DamageType.MAG:
-                    return 65;
+                    return 50;
+                case DamageType.SUM:
+                    return 30;
                 default:
                     return 0;
             }
@@ -63,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " magic damage";
+            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " + " + GetScalingTooltip(player, DamageType.SUM) + " magic damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -78,16 +80,17 @@ namespace TerraLeague.Items.Weapons.Abilities
                 Vector2 position = player.MountedCenter;
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(position, 15 * 0.6f);
                 int projType = ProjectileType<MagicCards_GreenCard>();
-                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
+                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG) + GetAbilityScaledDamage(player, DamageType.SUM);
                 int knockback = 4;
 
-                int numberProjectiles = 3;
-                float startingAngle = 30;
+                int numberProjectiles = player.maxMinions + 2;
+                float baseAngle = 30 + (2.5f * (player.maxMinions - 1));
+                float startingAngle = baseAngle;
                 for (int i = 0; i < numberProjectiles; i++)
                 {
                     Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(startingAngle));
                     Projectile.NewProjectile(position, perturbedSpeed, projType, damage, knockback, player.whoAmI, 1);
-                    startingAngle -= 30f;
+                    startingAngle -= baseAngle * 2 / (numberProjectiles - 1);
                 }
                 SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
                 DoEfx(player, type);
