@@ -32,12 +32,12 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Summon 3 spectral flames that orbit around you";
+            return "Summon " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)Main.LocalPlayer.maxMinions, 100) + " + 2 spectral flames that orbit around you";
         }
 
         public override int GetAbilityBaseDamage(Player player)
         {
-            return (int)(abilityItem.item.damage * 2.5);
+            return (int)(abilityItem.item.damage * 1.5);
         }
 
         public override int GetAbilityScalingAmount(Player player, DamageType dam)
@@ -45,7 +45,9 @@ namespace TerraLeague.Items.Weapons.Abilities
             switch (dam)
             {
                 case DamageType.MAG:
-                    return 35;
+                    return 45;
+                case DamageType.SUM:
+                    return 25;
                 default:
                     return 0;
             }
@@ -63,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " magic damage";
+            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " + " + GetScalingTooltip(player, DamageType.SUM) + " magic damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -78,13 +80,15 @@ namespace TerraLeague.Items.Weapons.Abilities
                 Vector2 position = player.MountedCenter;
                 Vector2 velocity = Vector2.Zero;
                 int projType = ProjectileType<OrbofDeception_FoxFire>();
-                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
+                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG) + GetAbilityScaledDamage(player, DamageType.SUM);
 
                 int knockback = 1;
 
-                for (int i = 1; i < 4; i++)
+                int projCount = 2 + player.maxMinions;
+
+                for (int i = 1; i < projCount + 1; i++)
                 {
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, ((MathHelper.TwoPi * i) / 3));
+                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, ((MathHelper.TwoPi * i) / projCount));
                 }
                 DoEfx(player, type);
                 SetCooldowns(player, type);
