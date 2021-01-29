@@ -32,7 +32,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetAbilityTooltip()
         {
-            return "Prepare 5 rock shards and throw them in the original cast direction";
+            return "Prepare  " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", (int)Main.LocalPlayer.maxMinions, 100) + " + 4 rock shards and throw them in the original cast direction";
         }
 
         public override int GetAbilityBaseDamage(Player player)
@@ -45,7 +45,9 @@ namespace TerraLeague.Items.Weapons.Abilities
             switch (dam)
             {
                 case DamageType.MAG:
-                    return 40;
+                    return 35;
+                case DamageType.SUM:
+                    return 10;
                 default:
                     return 0;
             }
@@ -63,7 +65,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " magic damage";
+            return GetAbilityBaseDamage(player) + " + " + GetScalingTooltip(player, DamageType.MAG) + " + " + GetScalingTooltip(player, DamageType.SUM) + " magic damage";
         }
 
         public override bool CanBeCastWhileUsingItem()
@@ -78,14 +80,14 @@ namespace TerraLeague.Items.Weapons.Abilities
                 Vector2 position = player.MountedCenter;
                 Vector2 velocity = TerraLeague.CalcVelocityToMouse(player.Top, 1f);
                 int projType = ProjectileType<StoneweaversStaff_ThreadedVolley>();
-                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG);
+                int damage = GetAbilityBaseDamage(player) + GetAbilityScaledDamage(player, DamageType.MAG) + GetAbilityScaledDamage(player, DamageType.SUM);
                 int knockback = 3;
 
                 Main.PlaySound(new LegacySoundStyle(2, 70), player.Center);
 
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 4 + player.maxMinions; i++)
                 {
-                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, i);
+                    Projectile.NewProjectile(position, velocity, projType, damage, knockback, player.whoAmI, i, 100 / (4 + player.maxMinions));
                 }
                 SetAnimation(player, abilityItem.item.useTime, abilityItem.item.useAnimation, position + velocity);
                 SetCooldowns(player, type);

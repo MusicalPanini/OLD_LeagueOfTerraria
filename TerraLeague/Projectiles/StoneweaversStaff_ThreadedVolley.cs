@@ -23,8 +23,8 @@ namespace TerraLeague.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 10;
-            projectile.height = 10;
+            projectile.width = 16;
+            projectile.height = 16;
             projectile.timeLeft = 1000;
             projectile.penetrate = 1000;
             projectile.friendly = false;
@@ -43,7 +43,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if ((int)projectile.ai[1] == 0)
+            if ((int)projectile.localAI[1] == 0)
             {
                 if (projectile.alpha > 0)
                     projectile.alpha -= 10;
@@ -55,11 +55,11 @@ namespace TerraLeague.Projectiles
 
                 projectile.velocity = Vector2.Zero;
 
-                projectile.Center = new Vector2(Main.player[projectile.owner].MountedCenter.X + stonePos[(int)projectile.ai[0]].X, Main.player[projectile.owner].MountedCenter.Y + stonePos[(int)projectile.ai[0]].Y + (16 * (projectile.alpha / 255f)));
+                projectile.Center = new Vector2(Main.player[projectile.owner].MountedCenter.X + stonePos[(int)projectile.ai[0] % 5].X + projectile.ai[0], Main.player[projectile.owner].MountedCenter.Y + stonePos[(int)projectile.ai[0] % 5].Y + projectile.ai[0] /*+ (16 * (projectile.alpha / 255f))*/);
 
-                if (projectile.timeLeft == 970 - ((int)projectile.ai[0] * 20))
+                if (projectile.timeLeft == 970 - ((int)projectile.ai[0] * (int)projectile.ai[1]))
                 {
-                    projectile.ai[1] = 1;
+                    projectile.localAI[1] = 1;
                     projectile.velocity = new Vector2(0, -20).RotatedBy(projectile.rotation);
                     projectile.friendly = true;
                     projectile.tileCollide = true;
@@ -91,6 +91,12 @@ namespace TerraLeague.Projectiles
         {
             Prime();
             return false;
+        }
+
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough)
+        {
+            width = height = 10;
+            return base.TileCollideStyle(ref width, ref height, ref fallThrough);
         }
 
         public void Prime()
