@@ -1030,28 +1030,28 @@ namespace TerraLeague
 
         public override void OnEnterWorld(Player player)
         {
-            if (player.whoAmI == Main.LocalPlayer.whoAmI)
+            mod.Logger.Debug("Player: " + player.name);
+            for (int i = 0; i < sumSpells.Length; i++)
             {
-                for (int i = 0; i < sumSpells.Length; i++)
+                if (i == 0)
                 {
-                    if (i == 0)
-                    {
-                        if (initSum1 != null)
-                            sumSpells[i] = initSum1;
-                        else
-                            sumSpells[i] = (SummonerSpell)GetInstance<BarrierRune>();
+                    if (initSum1 != null)
+                        sumSpells[i] = initSum1;
+                    else
+                        sumSpells[i] = (SummonerSpell)GetInstance<BarrierRune>();
 
-                        mod.Logger.Debug("OnEnterWorld: set Sum 1 to" + sumSpells[i].Name);
-                    }
-                    else if (i == 1)
-                    {
-                        if (initSum2 != null)
-                            sumSpells[i] = initSum2;
-                        else
-                            sumSpells[i] = (SummonerSpell)GetInstance<GhostRune>();
+                    mod.Logger.Debug("OnEnterWorld: set Sum 1 to " + sumSpells[i].Name);
+                    initSum1 = null;
+                }
+                else if (i == 1)
+                {
+                    if (initSum2 != null)
+                        sumSpells[i] = initSum2;
+                    else
+                        sumSpells[i] = (SummonerSpell)GetInstance<GhostRune>();
 
-                        mod.Logger.Debug("OnEnterWorld: set Sum 2 to" + sumSpells[i].Name);
-                    }
+                    mod.Logger.Debug("OnEnterWorld: set Sum 2 to " + sumSpells[i].Name);
+                    initSum2 = null;
                 }
             }
         }
@@ -1060,23 +1060,41 @@ namespace TerraLeague
         {
             if (player.whoAmI == Main.LocalPlayer.whoAmI)
             {
-                mod.Logger.Debug("Completed Save with Sums " + sumSpells[0] + " and " + sumSpells[1]);
+                mod.Logger.Debug("Player: " + player.name);
+                mod.Logger.Debug("Save: Completed Save with Sums " + sumSpells[0] + " and " + sumSpells[1]);
+                mod.Logger.Debug("Player: Active = " + player.active);
 
-                return new TagCompound
+                if (player.active)
                 {
-                    {"manaChargeStacks", manaChargeStacks},
-                    {"sumSpellOne", sumSpells[0].GetType().Name},
-                    {"sumSpellTwo", sumSpells[1].GetType().Name},
-                    {"blessingCooldown", blessingCooldown},
-                };
+                    return new TagCompound
+                    {
+                        {"manaChargeStacks", manaChargeStacks},
+                        {"sumSpellOne", sumSpells[0].GetType().Name},
+                        {"sumSpellTwo", sumSpells[1].GetType().Name},
+                        {"blessingCooldown", blessingCooldown},
+                    };
+                }
+                else
+                {
+                    return new TagCompound
+                    {
+                        {"manaChargeStacks", manaChargeStacks},
+                        {"sumSpellOne", "BarrierRune"},
+                        {"sumSpellTwo", "GhostRune"},
+                        {"blessingCooldown", blessingCooldown},
+                    };
+                }
 
-                
             }
             return null;
         }
 
         public override void Load(TagCompound tag)
         {
+            if (player.name == "TestDude")
+            {
+
+            }
             if (Main.LocalPlayer.whoAmI == player.whoAmI)
             {
                 manaChargeStacks = tag.GetInt("manaChargeStacks");
@@ -1084,10 +1102,11 @@ namespace TerraLeague
                 initSum2 = (SummonerSpell)mod.GetItem(tag.GetString("sumSpellTwo"));
                 blessingCooldown = tag.GetInt("blessingCooldown");
 
-                mod.Logger.Debug("Completed Load with Sums " + initSum1 + " and " + initSum2);
+                mod.Logger.Debug("Player: " + player.name);
+                mod.Logger.Debug("Load: Completed Load"/* with Sums " + initSum1.Name + " and " + initSum2.Name*/);
             }
         }
-
+        
         public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
         {
             Item bag = new Item();
@@ -2175,7 +2194,7 @@ namespace TerraLeague
                 int onhitdamage = 0;
 
                 // Adds the mods custom minion damage stat to the modifier to apply the correct damage
-                if (TerraLeague.IsMinionDamage(proj) && !proj.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell)
+                if (TerraLeague.IsMinionDamage(proj) && (!proj.GetGlobalProjectile<PROJECTILEGLOBAL>().abilitySpell && !proj.GetGlobalProjectile<PROJECTILEGLOBAL>().summonAbility))
                 {
                     minionModifer *= (float)TrueMinionDamage + 1;
                 }
