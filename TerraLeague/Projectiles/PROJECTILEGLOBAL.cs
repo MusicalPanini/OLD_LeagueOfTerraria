@@ -96,7 +96,7 @@ namespace TerraLeague.Projectiles
             {
                 for (int i = 0; i < Main.maxNPCs; i++)
                 {
-                    if (Main.npc[i].active && projectile.modProjectile.CanHitNPC(Main.npc[i]) != false)
+                    if (Main.npc[i].active && ((projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().CanHitNPC(projectile, Main.npc[i]) != null && projectile.CanHit(Main.npc[i])) || projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().CanHitNPC(projectile, Main.npc[i]) == true))
                     {
                         if (projectile.Hitbox.Intersects(Main.npc[i].Hitbox))
                             projectile.Kill();
