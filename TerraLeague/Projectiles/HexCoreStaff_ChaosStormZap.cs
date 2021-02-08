@@ -22,13 +22,13 @@ namespace TerraLeague.Projectiles
             projectile.width = 20;
             projectile.height = 20;
             projectile.alpha = 255;
-            projectile.timeLeft = 100;
+            projectile.timeLeft = 3;
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.magic = true;
             projectile.tileCollide = true;
             projectile.ignoreWater = true;
-            projectile.extraUpdates = 100;
+            //projectile.extraUpdates = 100;
         }
 
         public override void AI()
