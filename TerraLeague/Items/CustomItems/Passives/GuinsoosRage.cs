@@ -26,7 +26,7 @@ namespace TerraLeague.Items.CustomItems.Passives
             player.meleeSpeed += (float)(meleeRangedAttackSpeed * 0.01 * passiveStat);
             modPlayer.rangedAttackSpeed += meleeRangedAttackSpeed * 0.01 * passiveStat;
 
-            if (modPlayer.accessoryStat[TerraLeague.FindAccessorySlotOnPlayer(player, modItem)] >= 6)
+            if (passiveStat >= 6)
             {
                 modPlayer.guinsoosRage = true;
             }
