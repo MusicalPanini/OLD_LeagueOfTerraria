@@ -33,7 +33,7 @@ namespace TerraLeague.Items.Weapons
             item.height = 38;
             item.useAnimation = 30;
             item.useTime = 30;
-            item.shootSpeed = 12f;
+            item.shootSpeed = 16f;
             item.noMelee = true;
             item.knockBack = 2;
             item.value = 310000 * 5;
@@ -66,7 +66,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            item.shootSpeed = 8f;
+            item.shootSpeed = 12f;
             player.GetModPlayer<PLAYERGLOBAL>().gravitumAmmo -= 5;
             Vector2 muzzleOffset = Vector2.Normalize(new Vector2(speedX - 20, speedY - 20)) * 20;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
