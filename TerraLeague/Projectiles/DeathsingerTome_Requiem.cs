@@ -27,7 +27,7 @@ namespace TerraLeague.Projectiles
             projectile.alpha = 255;
             projectile.scale = 1.2f;
             projectile.timeLeft = 301;
-            projectile.extraUpdates = 8;
+            //projectile.extraUpdates = 8;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.magic = true;
@@ -38,13 +38,15 @@ namespace TerraLeague.Projectiles
         {
             if(projectile.soundDelay == 0)
             {
+                TerraLeague.DustLine(projectile.Center, projectile.Center + new Vector2(0, -500), 261, 0.25f, 1.5f, new Color(24, 86, 69, 255), true, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2));
+
                 Main.PlaySound(new LegacySoundStyle(2, 88), projectile.Center);
                 if (projectile.owner == Main.LocalPlayer.whoAmI)
                     projectile.netUpdate = true;
 
                 for (int i = 0; i < 3; i++)
                 {
-                    Gore gore = Gore.NewGoreDirect(projectile.Center, default(Vector2), Main.rand.Next(61, 64), 1f);
+                    Gore gore = Gore.NewGoreDirect(projectile.Center + new Vector2(0, -500), default(Vector2), Main.rand.Next(61, 64), 1f);
                     gore.velocity.Y = gore.velocity.Y + 1.5f;
                 }
             }
@@ -81,28 +83,22 @@ namespace TerraLeague.Projectiles
                 projectile.velocity = (10 * projectile.velocity + move) / 2f;
                 AdjustMagnitude(ref projectile.velocity);
 
-                for (int i = 0; i < 3; i++)
-                {
-                    Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
-                    int dustBoxWidth = projectile.width - 12;
-                    int dustBoxHeight = projectile.height - 12;
-                    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 261, 0f, 0f, 100, new Color(24, 86, 69, 255), 1.5f);
-                    dust.noGravity = true;
-                    dust.velocity *= 0.1f;
-                    dust.velocity += projectile.velocity * 0.1f;
-                    dust.position.X -= projectile.velocity.X / 3f * (float)i;
-                    dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
-                }
-
                 //for (int i = 0; i < 3; i++)
                 //{
-                //    Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(24, 86, 69, 255), 1.5f);
-                //    dust.velocity *= 0f;
+                //    Vector2 dustBoxPosition = new Vector2(projectile.position.X + 6, projectile.position.Y + 6);
+                //    int dustBoxWidth = projectile.width - 12;
+                //    int dustBoxHeight = projectile.height - 12;
+                //    Dust dust = Dust.NewDustDirect(dustBoxPosition, dustBoxWidth, dustBoxHeight, 261, 0f, 0f, 100, new Color(24, 86, 69, 255), 1.5f);
                 //    dust.noGravity = true;
+                //    dust.velocity *= 0.1f;
+                //    dust.velocity += projectile.velocity * 0.1f;
+                //    dust.position.X -= projectile.velocity.X / 3f * (float)i;
+                //    dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
                 //}
-                Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(24, 86, 69, 255), 1.5f);
-                dust2.noGravity = true;
-                dust2.velocity *= 3f;
+
+                //Dust dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 261, 0, 0, 0, new Color(24, 86, 69, 255), 1.5f);
+                //dust2.noGravity = true;
+                //dust2.velocity *= 3f;
             }
         }
 

@@ -1455,7 +1455,7 @@ namespace TerraLeague
                     for (int i = 0; i < npcs.Count; i++)
                     {
                         NPC npc = Main.npc[npcs[i]];
-                        Projectile.NewProjectile(new Vector2(npc.Center.X, npc.Center.Y - 500), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), requiemDamage, 0, player.whoAmI, npc.whoAmI);
+                        Projectile.NewProjectile(new Vector2(npc.Center.X, npc.Center.Y), Vector2.Zero, ProjectileType<DeathsingerTome_Requiem>(), requiemDamage, 0, player.whoAmI, npc.whoAmI);
                     }
                 }
             }
