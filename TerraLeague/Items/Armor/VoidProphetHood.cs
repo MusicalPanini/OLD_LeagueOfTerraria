@@ -47,7 +47,7 @@ namespace TerraLeague.Items.Armor
 
         public override void UpdateArmorSet(Player player)
         {
-            player.setBonus = "Periodically spawn " + player.maxMinions + " Zz'rots";
+            player.setBonus = "Periodically spawn " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", player.maxMinions, 100) + " Zz'rots";
             player.armorEffectDrawShadowBasilisk = true;
             player.GetModPlayer<PLAYERGLOBAL>().prophetSet = true;
         }
