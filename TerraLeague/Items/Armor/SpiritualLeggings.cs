@@ -12,8 +12,8 @@ namespace TerraLeague.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Spiritual Leggings");
-            Tooltip.SetDefault("Increases mana regeneration by 50%" +
-                "\n7% increased movement speed");
+            Tooltip.SetDefault("Increases mana regeneration by 100%" +
+                "\n5% increased movement speed");
         }
 
         public override void SetDefaults()
@@ -22,13 +22,13 @@ namespace TerraLeague.Items.Armor
             item.height = 18;
             item.value = 40000;
             item.rare = ItemRarityID.Orange;
-            item.defense = 5;
+            item.defense = 3;
         }
 
         public override void UpdateEquip(Player player)
         {
-            player.moveSpeed += 0.07f;
-            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 0.5;
+            player.moveSpeed += 0.05f;
+            player.GetModPlayer<PLAYERGLOBAL>().manaRegenModifer += 1;
         }
 
         public override void AddRecipes()
