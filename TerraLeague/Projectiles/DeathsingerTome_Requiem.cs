@@ -38,7 +38,7 @@ namespace TerraLeague.Projectiles
         {
             if(projectile.soundDelay == 0)
             {
-                TerraLeague.DustLine(projectile.Center, projectile.Center + new Vector2(0, -500), 261, 0.25f, 1.5f, new Color(24, 86, 69, 255), true, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2));
+                TerraLeague.DustLine(projectile.Center, projectile.Center + new Vector2(0, -500), 261, 0.25f, 3f, new Color(24, 86, 69, 255), true, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2));
 
                 Main.PlaySound(new LegacySoundStyle(2, 88), projectile.Center);
                 if (projectile.owner == Main.LocalPlayer.whoAmI)
