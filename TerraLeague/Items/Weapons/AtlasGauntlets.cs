@@ -37,7 +37,7 @@ namespace TerraLeague.Items.Weapons
             item.autoReuse = true;
 
             AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
-            abilityItem.SetAbility(AbilityType.W, new DeathFromBelow(this));
+            abilityItem.SetAbility(AbilityType.E, new ExcessiveForce(this));
             abilityItem.ChampQuote = "Here comes the punch line!";
             abilityItem.IsAbilityItem = true;
         }
