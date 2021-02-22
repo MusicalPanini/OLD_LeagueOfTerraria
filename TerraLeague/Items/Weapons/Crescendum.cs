@@ -20,7 +20,7 @@ namespace TerraLeague.Items.Weapons
         {
             return "Uses 1% Crescendum Ammo" +
                 "\nEach Lunari gun has its own special ammo that rechages when the gun is not in use." +
-                "\nThrow up to " + Main.LocalPlayer.maxMinions + " + 5 returning chakrams";
+                "\nThrow up to 5 + " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", Main.LocalPlayer.maxMinions, 100) + " returning chakrams";
         }
 
         public override void SetDefaults()
