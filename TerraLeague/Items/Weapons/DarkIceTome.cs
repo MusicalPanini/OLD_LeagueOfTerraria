@@ -16,6 +16,13 @@ namespace TerraLeague.Items.Weapons
             Tooltip.SetDefault("");
         }
 
+        string GetWeaponTooltip()
+        {
+            return "Attacks slow hit enemies." +
+                "\nIf the enemy dies while slowed, they will shatter into icy shrapenel." +
+                "\nThe shrapenel deals 10% of the dead npcs max health as magic damage.";
+        }
+
         public override void SetDefaults()
         {
             item.damage = 50;
@@ -37,6 +44,7 @@ namespace TerraLeague.Items.Weapons
             AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new RingOfFrost(this));
             abilityItem.ChampQuote = "I will bury the world in ice";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
             abilityItem.IsAbilityItem = true;
         }
 

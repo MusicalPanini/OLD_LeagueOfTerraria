@@ -55,6 +55,8 @@ namespace TerraLeague.NPCs
         public bool calibrumMark = false;
         public bool gravitumMark = false;
         public bool infernumMark = false;
+        public bool icebornSubjugation = false;
+        public int icebornSubjugationOwner = -1;
 
         public bool snared = false;
         public bool stunned = false;
@@ -95,6 +97,8 @@ namespace TerraLeague.NPCs
             }
             requiem = false;
             bubbled = false;
+            if (!slowed)
+                icebornSubjugation = false;
             slowed = false;
             umbralTrespass = false;
             torment = false;
@@ -724,6 +728,27 @@ namespace TerraLeague.NPCs
 
         public override void NPCLoot(NPC npc)
         {
+            if (icebornSubjugation)
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    int type;
+                    switch (Main.rand.Next(0, 3))
+                    {
+                        case 0:
+                            type = ProjectileType<DarkIceTome_IceShardSmallA>();
+                            break;
+                        case 1:
+                            type = ProjectileType<DarkIceTome_IceShardSmallB>();
+                            break;
+                        default:
+                            type = ProjectileType<DarkIceTome_IceShardSmallC>();
+                            break;
+                    }
+
+                    Projectile.NewProjectileDirect(npc.Center, new Vector2(0, Main.rand.NextFloat(9, 12)).RotatedByRandom(MathHelper.TwoPi), type, npc.lifeMax/5, 1, icebornSubjugationOwner, npc.whoAmI);
+                }
+            }
             if (seeded)
             {
                 if (Main.rand.Next(0, 4) == 0)
@@ -793,6 +818,10 @@ namespace TerraLeague.NPCs
             if (vessel)
             {
                 drawColor = new Color(0, 255, 144);
+            }
+            if (icebornSubjugation)
+            {
+                drawColor = new Color(0, 144, 255);
             }
 
             base.DrawEffects(npc, ref drawColor);
