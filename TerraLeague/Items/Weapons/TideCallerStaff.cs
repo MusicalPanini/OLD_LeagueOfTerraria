@@ -12,7 +12,7 @@ namespace TerraLeague.Items.Weapons
 {
 	public class TideCallerStaff : ModItem
 	{
-        int healing = 5;
+        int healing = 8;
 
 		public override void SetStaticDefaults()
 		{
@@ -30,7 +30,7 @@ namespace TerraLeague.Items.Weapons
             int tt2 = tooltips.FindIndex(x => x.Name == "Damage" && x.mod == "Terraria");
             if (tt2 != -1)
             {
-                tooltips.Insert(tt2 + 1, new TooltipLine(TerraLeague.instance, "Healing", TerraLeague.CreateScalingTooltip(DamageType.NONE, modPlayer.ScaleValueWithHealPower(healing * (float)modPlayer.magicDamageLastStep, true), 100, true) + " magic healing"));
+                tooltips.Insert(tt2 + 1, new TooltipLine(TerraLeague.instance, "Healing", TerraLeague.CreateScalingTooltip(DamageType.NONE, (int)(healing * modPlayer.magicDamageLastStep), 100, true) + " magic healing"));
             }
         }
 
@@ -56,6 +56,7 @@ namespace TerraLeague.Items.Weapons
             item.shoot = ProjectileType<TideCallerStaff_EbbandFlow>();
             //item.shoot = ProjectileType<TideCallerStaff_WaterShot>();
             item.shootSpeed = 11f;
+            healing = 8;
 
             AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.Q, new AquaPrison(this));
