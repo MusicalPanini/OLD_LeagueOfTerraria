@@ -30,6 +30,7 @@ namespace TerraLeague.Projectiles
             projectile.tileCollide = true;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 5;
+            projectile.GetGlobalProjectile<PROJECTILEGLOBAL>().summonAbility = true;
         }
 
         public override void AI()
