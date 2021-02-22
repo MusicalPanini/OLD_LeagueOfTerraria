@@ -36,7 +36,7 @@ namespace TerraLeague.Items.SummonerSpells
 
         public override string GetTooltip()
         {
-            return "Teleport to a random location";
+            return "Open a menu of teleport targets";
         }
 
         public override void DoEffect(Player player, int spellSlot)

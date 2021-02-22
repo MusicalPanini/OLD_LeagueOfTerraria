@@ -97,6 +97,14 @@ namespace TerraLeague.UI
         {
             if (visible)
             {
+                for (int i = 0; i < TeleportButtons.Length; i++)
+                {
+                    TeleportButtons[i].Left.Set(9 + ((6 + TeleportButtons[i].Width.Pixels) * i), 0);
+                    TeleportButtons[i].Top.Set(35, 0);
+
+                    Append(TeleportButtons[i]);
+                }
+
                 CalculatedStyle dimensions = this.GetDimensions();
                 Point point1 = new Point((int)dimensions.X, (int)dimensions.Y);
                 spriteBatch.Draw(backgroundTexture, new Rectangle(point1.X, point1.Y, width, height), Color.White);
@@ -131,7 +139,7 @@ namespace TerraLeague.UI
         
         public override void Update(GameTime gameTime)
         {
-            if (CheckForTeleportSum(Main.LocalPlayer))
+            if (CheckForTeleportSum(Main.LocalPlayer) && !Main.LocalPlayer.dead)
             {
                 if (visible)
                 {
@@ -376,6 +384,7 @@ namespace TerraLeague.UI
         public static int playerNum = -1;
         Texture2D backgroundTexture;
         Texture2D noPlayers;
+        Texture2D ded;
         int activePlayers = 0;
 
         int width = 44;
@@ -389,6 +398,7 @@ namespace TerraLeague.UI
         {
             backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorder");
             noPlayers = TerraLeague.instance.GetTexture("UI/NoPlayers");
+            ded = TerraLeague.instance.GetTexture("UI/Ded");
             if (backgroundTexture != null)
             {
                 width = backgroundTexture.Width;
@@ -454,6 +464,10 @@ namespace TerraLeague.UI
                 {
                     dimensions = Parent.GetDimensions();
                     DrawPlayerHead(Main.player[playerNum], dimensions.X + Left.Pixels, dimensions.Y + Top.Pixels, 1, 1.5f);
+                    if (Main.player[playerNum].dead)
+                    {
+                        spriteBatch.Draw(noPlayers, new Rectangle(point1.X, point1.Y, 32, 32), Color.White);
+                    }
                 }
             }
             base.DrawSelf(spriteBatch);
@@ -462,7 +476,8 @@ namespace TerraLeague.UI
         public override void MouseUp(UIMouseEvent evt)
         {
             if (playerNum != -1)
-                TeleportRune.AttemptTP(Main.LocalPlayer, playerNum);
+                if (!Main.player[playerNum].dead)
+                    TeleportRune.AttemptTP(Main.LocalPlayer, playerNum);
 
             base.MouseUp(evt);
         }
@@ -473,8 +488,11 @@ namespace TerraLeague.UI
 
             if (playerNum != -1)
             {
-                name = Main.player[playerNum].name;
-                backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorderSelected");
+                if (!Main.player[playerNum].dead)
+                {
+                    name = Main.player[playerNum].name;
+                    backgroundTexture = TerraLeague.instance.GetTexture("UI/TeleportBorderSelected");
+                }
             }
 
             TeleportUI.nameText = name;
