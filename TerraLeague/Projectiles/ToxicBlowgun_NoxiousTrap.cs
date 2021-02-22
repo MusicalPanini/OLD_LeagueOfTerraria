@@ -41,6 +41,21 @@ namespace TerraLeague.Projectiles
             if (!grounded)
             {
                 projectile.velocity.Y += 0.3f;
+                if (projectile.velocity.Y > 0)
+                    for (int i = 0; i < Main.projectile.Length; i++)
+                    {
+                        if (Main.projectile[i].active)
+                            if (Main.projectile[i].type == projectile.type)
+                                if (Main.projectile[i].velocity.Length() < 0.0001f)
+                                    if (Main.projectile[i].Hitbox.Intersects(projectile.Hitbox))
+                                    {
+                                        projectile.velocity.Y = -6;
+                                        if (projectile.velocity.X < 3 && projectile.velocity.X >= 0)
+                                            projectile.velocity.X = 3;
+                                        if (projectile.velocity.X > -3 && projectile.velocity.X < 0)
+                                            projectile.velocity.X = -3;
+                                    }
+                    }
             }
             else
             {
@@ -109,7 +124,16 @@ namespace TerraLeague.Projectiles
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (projectile.velocity.Y <= 0)
+            if (projectile.velocity.X == 0)
+            {
+                projectile.velocity.X = oldVelocity.X * -0.5f;
+
+                if (projectile.velocity.X < 3 && projectile.velocity.X >= 0)
+                    projectile.velocity.X = 3;
+                if (projectile.velocity.X > -3 && projectile.velocity.X < 0)
+                    projectile.velocity.X = -3;
+            }
+            else if (projectile.velocity.Y == 0)
                 grounded = true;
 
             return false;
