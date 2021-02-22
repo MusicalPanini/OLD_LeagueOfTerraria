@@ -80,31 +80,77 @@ namespace TerraLeague.Items.Weapons.Abilities
                 switch (gunType)
                 {
                     case LunariGunType.Cal:
-                        abilityItem.item.SetDefaults(ItemType<Severum>());
-                        CombatText.NewText(player.Hitbox, new Color(216, 0, 32), "SEVERUM");
+                        if (ChangeWeapon(player, ItemType<Calibrum>(), ItemType<Severum>()))
+                        {
+                            CombatText.NewText(player.Hitbox, new Color(216, 0, 32), "SEVERUM");
+                            DoEfx(player, type);
+                            SetCooldowns(player, type);
+                        }
+                        //abilityItem.item.SetDefaults(ItemType<Severum>());
                         break;
                     case LunariGunType.Sev:
-                        abilityItem.item.SetDefaults(ItemType<Gravitum>());
-                        CombatText.NewText(player.Hitbox, new Color(200, 37, 255), "GRAVITUM");
+                        //abilityItem.item.SetDefaults(ItemType<Gravitum>());
+                        if (ChangeWeapon(player, ItemType<Severum>(), ItemType<Gravitum>()))
+                        {
+                            CombatText.NewText(player.Hitbox, new Color(200, 37, 255), "GRAVITUM");
+                            DoEfx(player, type);
+                            SetCooldowns(player, type);
+                        }
                         break;
                     case LunariGunType.Grv:
-                        abilityItem.item.SetDefaults(ItemType<Infernum>());
-                        CombatText.NewText(player.Hitbox, new Color(0, 148, 255), "INFERNUM");
+                        //player.inventory[0].SetDefaults(ItemType<Infernum>());
+                        if (ChangeWeapon(player, ItemType<Gravitum>(), ItemType<Infernum>()))
+                        {
+                            CombatText.NewText(player.Hitbox, new Color(0, 148, 255), "INFERNUM");
+                            DoEfx(player, type);
+                            SetCooldowns(player, type);
+                        }
                         break;
                     case LunariGunType.Inf:
-                        abilityItem.item.SetDefaults(ItemType<Crescendum>());
-                        CombatText.NewText(player.Hitbox, new Color(255, 255, 255), "CRESCENDUM");
+                        //abilityItem.item.SetDefaults(ItemType<Crescendum>());
+                        if (ChangeWeapon(player, ItemType<Infernum>(), ItemType<Crescendum>()))
+                        {
+                            CombatText.NewText(player.Hitbox, new Color(255, 255, 255), "CRESCENDUM");
+                            DoEfx(player, type);
+                            SetCooldowns(player, type);
+                        }
                         break;
                     case LunariGunType.Cre:
-                        abilityItem.item.SetDefaults(ItemType<Calibrum>());
-                        CombatText.NewText(player.Hitbox, new Color(141, 252, 245), "CALIBRUM");
+                        //abilityItem.item.SetDefaults(ItemType<Calibrum>());
+                        if (ChangeWeapon(player, ItemType<Crescendum>(), ItemType<Calibrum>()))
+                        {
+                            CombatText.NewText(player.Hitbox, new Color(141, 252, 245), "CALIBRUM");
+                            DoEfx(player, type);
+                            SetCooldowns(player, type);
+                        }
                         break;
                     default:
                         break;
                 }
-                DoEfx(player, type);
-                SetCooldowns(player, type);
+
             }
+        }
+
+        bool ChangeWeapon(Player player, int currentItem, int newItem)
+        {
+            if (player.HeldItem.type == currentItem && player.HeldItem.type != player.inventory[58].type)
+            {
+                player.HeldItem.SetDefaults(newItem);
+                return true;
+            }
+            else
+            {
+                for (int i = 0; i < player.inventory.Length; i++)
+                {
+                    if (player.inventory[i].type == currentItem && i != 58)
+                    {
+                        player.inventory[i].SetDefaults(newItem);
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 
