@@ -55,11 +55,14 @@ namespace TerraLeague.Projectiles
             }
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
             Split(target.whoAmI);
             target.AddBuff(BuffType<Buffs.Slowed>(), 240);
-            base.OnHitNPC(target, damage, knockback, crit);
+            target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().slowed = true;
+            target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().icebornSubjugation = true;
+            target.GetGlobalNPC<NPCs.TerraLeagueNPCsGLOBAL>().icebornSubjugationOwner = projectile.owner;
+            base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
