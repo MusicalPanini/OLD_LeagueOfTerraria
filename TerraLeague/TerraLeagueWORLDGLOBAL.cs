@@ -689,13 +689,13 @@ namespace TerraLeague
                     PacketHandler.SendBlackMist(-1, -1, BlackMistEvent);
             }
 
-            if (Main.hardMode)
-            {
-                if (!TargonOreSpawned)
-                {
-                    DropTargon();
-                }
-            }
+            //if (Main.hardMode)
+            //{
+            //    if (!TargonOreSpawned)
+            //    {
+            //        DropTargon();
+            //    }
+            //}
 
             if (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3 || NPC.downedQueenBee || Main.hardMode)
             {
