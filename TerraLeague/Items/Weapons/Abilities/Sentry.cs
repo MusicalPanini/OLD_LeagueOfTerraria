@@ -63,7 +63,7 @@ namespace TerraLeague.Items.Weapons.Abilities
 
         public override string GetDamageTooltip(Player player)
         {
-            return GetAbilityBaseDamage(player) + " x " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "TURRETS", (int)Main.LocalPlayer.maxMinions, 100) + " + " + GetScalingTooltip(player, DamageType.SUM) + " summon damage"
+            return TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "TURRETS", (int)Main.LocalPlayer.maxTurrets, GetAbilityBaseDamage(player) * 100) + " + " + GetScalingTooltip(player, DamageType.SUM) + " summon damage"
                  + "\nUses 10% Crescendum Ammo";
         }
 
@@ -83,7 +83,7 @@ namespace TerraLeague.Items.Weapons.Abilities
             {
                 player.GetModPlayer<PLAYERGLOBAL>().crescendumAmmo -= 10;
                 int projType = ProjectileType<Crescendum_Sentry>();
-                int damage = (GetAbilityBaseDamage(player) * player.maxTurrets) + GetAbilityScaledDamage(player, DamageType.RNG);
+                int damage = (GetAbilityBaseDamage(player) * player.maxTurrets) + GetAbilityScaledDamage(player, DamageType.SUM);
                 int knockback = 2;
 
                 player.FindSentryRestingSpot(projType, out int xPos, out int yPos, out int yDis);
