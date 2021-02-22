@@ -56,18 +56,18 @@ namespace TerraLeague.Projectiles
                 dust.position.Y -= projectile.velocity.Y / 3f * (float)i;
             }
 
-            player.itemTime = 5;
-            if (projectile.timeLeft > 210)
-            {
-                if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))
-                {
-                    player.ChangeDir(1);
-                }
-                else
-                {
-                    player.ChangeDir(-1);
-                }
-            }
+            //player.itemTime = 5;
+            //if (projectile.timeLeft > 210)
+            //{
+            //    if (projectile.position.X + (float)(projectile.width / 2) > player.position.X + (float)(player.width / 2))
+            //    {
+            //        player.ChangeDir(1);
+            //    }
+            //    else
+            //    {
+            //        player.ChangeDir(-1);
+            //    }
+            //}
 
             if (projectile.localAI[0] == 0f)
             {
