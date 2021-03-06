@@ -113,21 +113,21 @@ namespace TerraLeague.NPCs
                 npc.TargetClosest(true);
                 npc.velocity.X += (float)npc.direction * 0.3f;
                 npc.velocity.Y += (float)npc.directionY * 0.15f;
-                if (npc.velocity.X > 5f)
+                if (npc.velocity.X > 2.5f)
                 {
-                    npc.velocity.X = 5f;
+                    npc.velocity.X = 2.5f;
                 }
-                if (npc.velocity.X < -5f)
+                if (npc.velocity.X < -2.5f)
                 {
-                    npc.velocity.X = -5f;
+                    npc.velocity.X = -2.5f;
                 }
-                if (npc.velocity.Y > 4f)
+                if (npc.velocity.Y > 2.5f)
                 {
-                    npc.velocity.Y = 4f;
+                    npc.velocity.Y = 2.5f;
                 }
-                if (npc.velocity.Y < -4f)
+                if (npc.velocity.Y < -2.5f)
                 {
-                    npc.velocity.Y = -4f;
+                    npc.velocity.Y = -2.5f;
                 }
             }
             else
