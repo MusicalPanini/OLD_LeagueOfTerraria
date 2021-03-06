@@ -51,7 +51,7 @@ namespace TerraLeague.Projectiles
                 Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, 8, 226, 0, 0, 0, default(Color), 0.5f);
             }
 
-            if (Main.mouseLeftRelease && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
+            if (!Main.player[projectile.owner].channel && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
             {
                 projectile.alpha += 20;
                 if (projectile.alpha > 250)
@@ -63,7 +63,7 @@ namespace TerraLeague.Projectiles
 
             Player player = Main.player[projectile.owner];
             projectile.netUpdate = true;
-            player.itemTime = 5;
+            //player.itemTime = 5;
             if (projectile.Distance(player.MountedCenter) > 1000)
                 projectile.Kill();
 

@@ -43,6 +43,7 @@ namespace TerraLeague.Items.Weapons
             item.useTurn = true;
             item.autoReuse = false;
             item.mana = 40;
+            item.channel = true;
 
             AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
             abilityItem.SetAbility(AbilityType.W, new GravityField(this));
