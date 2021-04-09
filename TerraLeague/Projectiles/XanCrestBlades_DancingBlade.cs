@@ -33,7 +33,7 @@ namespace TerraLeague.Projectiles
             projectile.penetrate = -1;
             projectile.friendly = true;
             projectile.hostile = false;
-            projectile.melee = true;
+            projectile.minion = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.scale = 1;
@@ -43,7 +43,7 @@ namespace TerraLeague.Projectiles
 
         public override void AI()
         {
-            if (Main.mouseLeftRelease && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
+            if (/*Main.mouseLeftRelease */ !Main.player[projectile.owner].channel && projectile.timeLeft < 3600 && projectile.owner == Main.LocalPlayer.whoAmI || projectile.alpha != 0 || Main.player[projectile.owner].dead || !Main.player[projectile.owner].active)
             {
                 projectile.alpha += 20;
                 if (projectile.alpha > 250)
@@ -54,7 +54,7 @@ namespace TerraLeague.Projectiles
 
             Player player = Main.player[projectile.owner];
             projectile.netUpdate = true;
-            player.itemTime = 5;
+            //player.itemTime = 5;
 
             if (projectile.ai[0] == 0 && projectile.owner == Main.LocalPlayer.whoAmI)
             {
@@ -175,10 +175,10 @@ namespace TerraLeague.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            if (projectile.ai[0] == 1f)
-            {
-                crit = true;
-            }
+            //if (projectile.ai[0] == 1f)
+            //{
+            //    crit = true;
+            //}
 
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using TerraLeague.Items.Weapons.Abilities;
 using TerraLeague.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -15,9 +16,12 @@ namespace TerraLeague.Items.Weapons
         {
             DisplayName.SetDefault("Xan Crest Blades");
 
-            Tooltip.SetDefault("Manipulate flowing blades that deal damage based on their speed" +
-                "\nCan stack up to 12" +
-                "\n[c/cc9900:'Cut them down!']");
+            Tooltip.SetDefault("");
+        }
+
+        string GetWeaponTooltip()
+        {
+            return "Manipulate " + TerraLeague.CreateScalingTooltip(TerraLeague.MINIONMAXColor, "MINIONS", Main.LocalPlayer.maxMinions, 150) + " flowing blades that deal damage based on their speed";
         }
 
         public override void SetDefaults()
@@ -25,10 +29,11 @@ namespace TerraLeague.Items.Weapons
             item.damage = 34;
             item.width = 62;
             item.height = 26;
-            item.melee = true;
+            item.summon = true;
             item.useTime = 25;
+            item.mana = 20;
             item.useAnimation = 25;
-            item.useStyle = ItemUseStyleID.Stabbing;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 0;
             item.value = 350000;
             item.rare = ItemRarityID.Lime;
@@ -39,7 +44,13 @@ namespace TerraLeague.Items.Weapons
             item.useTurn = true;
             item.autoReuse = false;
             item.noUseGraphic = true;
-            item.maxStack = 12;
+            item.channel = true;
+
+            AbilityItemGLOBAL abilityItem = item.GetGlobalItem<AbilityItemGLOBAL>();
+            abilityItem.SetAbility(AbilityType.Q, new BladeSurge(this));
+            abilityItem.ChampQuote = "Cut them down!";
+            abilityItem.getWeaponTooltip = GetWeaponTooltip;
+            abilityItem.IsAbilityItem = true;
         }
 
         public override bool CanUseItem(Player player)
@@ -49,7 +60,7 @@ namespace TerraLeague.Items.Weapons
 
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
         {
-            for (int i = item.stack - 1; i >= 0; i--)
+            for (int i = (int)(player.maxMinions * 1.5) - 1; i >= 0; i--)
             {
                 Projectile.NewProjectileDirect(position, Vector2.Zero, ProjectileType<XanCrestBlades_DancingBlade>(), damage, knockBack, player.whoAmI, i).Center = player.Center;
             }
@@ -60,8 +71,8 @@ namespace TerraLeague.Items.Weapons
         public override void AddRecipes()
         {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ItemID.HallowedBar, 3);
-            recipe.AddIngredient(ItemID.SoulofMight, 3);
+            recipe.AddIngredient(ItemID.HallowedBar, 16);
+            recipe.AddIngredient(ItemID.SoulofMight, 10);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.SetResult(this);
             recipe.AddRecipe();

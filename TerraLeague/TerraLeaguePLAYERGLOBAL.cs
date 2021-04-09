@@ -2656,7 +2656,7 @@ namespace TerraLeague
         /// <returns></returns>
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
-            if (npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled || invincible || contactDodge)
+            if (npc.GetGlobalNPC<TerraLeagueNPCsGLOBAL>().bubbled || invincible || contactDodge || player.ownedProjectileCounts[ProjectileType<XanCrestBlades_BladeSurge>()] > 0)
             {
                 return false;
             }
