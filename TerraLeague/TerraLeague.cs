@@ -59,6 +59,7 @@ namespace TerraLeague
         internal HealthbarUI healthbarUI;
         internal ToolTipUI tooltipUI;
         internal TeleportUI teleportUI;
+        internal PlayerUI playerUI;
         internal bool canLog = false;
         internal bool debugMode = false;
         public static bool UseModResourceBar = false;
@@ -68,6 +69,7 @@ namespace TerraLeague
         private UserInterface userInterface1;
         private UserInterface userInterface2;
         private UserInterface userInterface3;
+        private UserInterface PlayerInterface;
         public UserInterface HealthbarInterface;
         public UserInterface tooltipInterface;
         public UserInterface teleportInterface;
@@ -239,7 +241,7 @@ namespace TerraLeague
             ARMORColor = "FFFF00";
             RESISTColor = "B0C4DE";
             HEALColor = "008000";
-            CDRColor = "FFFFFF";
+            CDRColor = "FFDD8F";
             RNGATSColor = "808080";
             MANAREDUCTColor = "4169E1";
             MINIONMAXColor = "4682b4";
@@ -296,6 +298,10 @@ namespace TerraLeague
                 teleportUI = new TeleportUI();
                 TeleportUI.visible = false;
                 teleportInterface.SetState(teleportUI);
+
+                PlayerInterface = new UserInterface();
+                playerUI = new PlayerUI();
+                PlayerInterface.SetState(playerUI);
             }
 
             Main.instance.GUIBarsDraw();
@@ -454,6 +460,15 @@ namespace TerraLeague
             },
             InterfaceScaleType.UI));
 
+            layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
+            "TerraLeague: Player Hud",
+            delegate
+            {
+                    PlayerInterface.Update(Main._drawInterfaceGameTime);
+                    playerUI.Draw(Main.spriteBatch);
+                return true;
+            },
+            InterfaceScaleType.Game));
             layers.Insert(inventoryLayer, new LegacyGameInterfaceLayer(
             "TerraLeague: Item Hud",
             delegate
